@@ -111,6 +111,7 @@ public class terms extends AppCompatActivity {
                     startActivity(new Intent(terms.this, MainActivity.class));
                 }
             }
+            // commit test 02.21
         });
     }
 }
