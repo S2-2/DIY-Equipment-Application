@@ -1,9 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".front.signIn.terms">
+    android:orientation="vertical"
+    android:layout_margin="20dp"
+    android:gravity="center">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:text="이용약관"
+        android:textSize="30sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <CheckBox
+            android:id="@+id/cb_termsAll"
+            android:text="전체 동의"
+            android:textSize="20sp"
+            android:textColor="#6A6666"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal">
+        <CheckBox
+            android:id="@+id/cb_terms1"
+            android:layout_weight="1"
+            android:text="[필수] 서비스 이용약관"
+            android:textSize="18sp"
+            android:textColor="#6A6666"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btn_terms1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="약관 보기"
+            android:textSize="18sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+        <CheckBox
+            android:id="@+id/cb_terms2"
+            android:layout_weight="1"
+            android:text="[필수] 개인정보 처리방침"
+            android:textSize="18sp"
+            android:textColor="#6A6666"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/btn_terms2"
+            android:text="약관 보기"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+        <CheckBox
+            android:id="@+id/cb_terms3"
+            android:layout_weight="1"
+            android:text="[필수] 위치정보 이용약관"
+            android:textSize="18sp"
+            android:textColor="#6A6666"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/btn_terms3"
+            android:text="약관 보기"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="40dp"
+        android:gravity="center">
+        <Button
+            android:id="@+id/btn_next1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="다음"
+            android:textSize="18sp">
+        </Button>
+    </LinearLayout>
+
+
+</LinearLayout>
+
+
