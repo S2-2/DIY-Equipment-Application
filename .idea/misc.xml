@@ -10,7 +10,7 @@
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/eq_detail_page_comment.xml" value="0.28125" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/eq_list.xml" value="0.28125" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/eq_register.xml" value="0.28125" />
-        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/home.xml" value="0.28125" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/home.xml" value="0.22" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/message.xml" value="0.28125" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/navi_header.xml" value="0.28125" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/navi_header2.xml" value="0.3328804347826087" />
@@ -22,7 +22,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
