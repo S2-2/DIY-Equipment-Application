@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="userid"
+            android:text="아이디"
             android:textStyle="bold" />
 
         <TextView
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="right"
-            android:text="date" />
+            android:text="일시" />
 
     </LinearLayout>
 
@@ -34,12 +34,12 @@
         android:id="@+id/cmt_content_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="content"
+        android:text="댓글 내용"
         android:textColor="#333333" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_margin="16dp"
-        android:background="#000000" />
+        android:background="#FFFFFF" />
 </LinearLayout>

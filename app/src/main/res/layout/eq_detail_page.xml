@@ -27,14 +27,14 @@
                     android:padding="16dp"
                     android:text="제목" />
 
-                <TextView
+                <EditText
                     android:id="@+id/title_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="#eeeeee"
                     android:padding="16dp"
-                    android:text="제목입니다." />
+                    android:text="제목을 입력해 주세요." />
             </LinearLayout>
 
             <LinearLayout
@@ -48,14 +48,14 @@
                     android:padding="16dp"
                     android:text="작성일" />
 
-                <TextView
+                <EditText
                     android:id="@+id/date_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="#eeeeee"
                     android:padding="16dp"
-                    android:text="제목입니다." />
+                    android:text="날짜를 입력해 주세요." />
             </LinearLayout>
 
             <TextView
@@ -64,11 +64,12 @@
                 android:padding="16dp"
                 android:text="내용" />
 
-            <TextView
+            <EditText
                 android:id="@+id/content_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#eeeeee"
+
                 android:padding="16dp"
                 android:text="내용입니다." />
 
@@ -106,6 +107,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:padding="8dp"
-            android:text="등록하기" />
+            android:text="댓글달기" />
     </LinearLayout>
 </LinearLayout>
