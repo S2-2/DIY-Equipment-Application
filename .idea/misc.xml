@@ -3,18 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <!--
-        <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_auth_login.xml" value="0.1802536231884058" />
-        <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_auth_main.xml" value="0.1802536231884058" />
-        <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_terms.xml" value="0.2" />
-        <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/community.xml" value="0.22192028985507245" />
-        <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/community_detail_page.xml" value="0.22192028985507245" />
-        <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/eq_detail_page.xml" value="0.22192028985507245" />
-        <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/eq_list.xml" value="0.22192028985507245" />
-        <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/message.xml" value="0.22327898550724637" />
-        <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/sign_in.xml" value="0.1453125" />
-        -->
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_auth_login.xml" value="0.1328125" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_auth_main.xml" value="0.25885416666666666" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_auth_register.xml" value="0.24427083333333333" />
