@@ -25,6 +25,9 @@
             android:name=".front.signIn.auth.AuthLoginActivity"
             android:exported="false" />
         <activity
+            android:name=".front.signIn.terms"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

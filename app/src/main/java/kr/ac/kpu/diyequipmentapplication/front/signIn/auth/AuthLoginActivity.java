@@ -26,11 +26,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import kr.ac.kpu.diyequipmentapplication.R;
+import kr.ac.kpu.diyequipmentapplication.front.signIn.terms;
 
 //로그인 액티비티 클래스
 public class AuthLoginActivity extends AppCompatActivity{
@@ -78,10 +80,29 @@ public class AuthLoginActivity extends AppCompatActivity{
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {    //task객체로 로그인 유무 파악
                             if (task.isSuccessful()) {
-                                //로그인 성공
-                                Intent intent = new Intent(AuthLoginActivity.this, AuthMainActivity.class);
-                                startActivity(intent);  //AuthMainActivity 이동
-                                finish();   //현재 액티비티 파괴
+
+                                Intent intent = new Intent(AuthLoginActivity.this, terms.class);
+                                startActivity(intent);  //AuthTerms 이동
+                                finish();
+                                /*
+                                                                FirebaseUser firebaseUser = nFirebaseAuth.getCurrentUser();     //Firebase 사용자 객체 참조
+
+                                AuthUserAccount account = new AuthUserAccount();        // 인증된 사용자 계정 객체 생성
+                                account.setTerms(firebaseUser.getTerms());
+
+                                if(account.getTerms()){
+                                    // 약관 true일시 - 로그인 성공
+                                    Intent intent = new Intent(AuthLoginActivity.this, AuthMainActivity.class);
+                                    startActivity(intent);  //AuthTerms 이동
+                                    finish();
+                                }
+                                else{
+                                    // 약관 false일시 - 약관동의 페이지로
+                                    Intent intent = new Intent(AuthLoginActivity.this, terms.class);
+                                    startActivity(intent);  //activity_terms.xml 페이지로 이동
+                                    finish();   //현재 액티비티 파괴
+                                }
+                                 */
                             } else {
                                 //로그인 실패
                                 Toast.makeText(AuthLoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();

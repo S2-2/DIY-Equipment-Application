@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import kr.ac.kpu.diyequipmentapplication.MainActivity;
 import kr.ac.kpu.diyequipmentapplication.R;
+import kr.ac.kpu.diyequipmentapplication.front.signIn.auth.AuthMainActivity;
 
 public class terms extends AppCompatActivity {
 
@@ -100,15 +101,15 @@ public class terms extends AppCompatActivity {
             public void onClick(View view) {
                 if (!TERMS_AGREE_ALL){  // 전체 동의 체크 안된 경우
                     if(TERMS_AGREE_1&&TERMS_AGREE_2&&TERMS_AGREE_3){
-                        startActivity(new Intent(terms.this, MainActivity.class));
+                        startActivity(new Intent(terms.this, AuthMainActivity.class));
                     }
                     else{
-                        Toast myToast = Toast.makeText(terms.this.getApplicationContext(),"약관을 체크해주세요.",Toast.LENGTH_SHORT);
+                        Toast myToast = Toast.makeText(terms.this.getApplicationContext(),"약관에 동의해주세요.",Toast.LENGTH_SHORT);
                         return;
                     }
                 }
                 else{       // 전체 동의 체크 된 경우
-                    startActivity(new Intent(terms.this, MainActivity.class));
+                    startActivity(new Intent(terms.this, AuthMainActivity.class));
                 }
             }
             // commit test 02.212222222

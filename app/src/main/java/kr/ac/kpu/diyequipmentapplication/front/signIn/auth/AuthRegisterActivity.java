@@ -1,5 +1,6 @@
 package kr.ac.kpu.diyequipmentapplication.front.signIn.auth;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import kr.ac.kpu.diyequipmentapplication.R;
+import kr.ac.kpu.diyequipmentapplication.front.signIn.terms;
 
 //회원가입 액티비티 클래스
 public class AuthRegisterActivity extends AppCompatActivity {
@@ -59,6 +61,7 @@ public class AuthRegisterActivity extends AppCompatActivity {
                             account.setIdToken(firebaseUser.getUid());              //인증된 사용자 계정에  firebaseUser.getUid()참조
                             account.setEmailId(firebaseUser.getEmail());            //인증된 사용자 계정에 firebaseUser.getEmail()참조
                             account.setPassword(strPwd);                            //인증된 사용자 계정에 strPwd 참조
+                            account.setTerms(false);                                //인증된 사용자 계정에 약관여부 참조
 
                             nDatabaseRef.child("AuthUserAccount").child(firebaseUser.getUid()).setValue(account);   //Firebase DB에 인증된 사용자 계정 정보 등록!
 
