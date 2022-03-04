@@ -48,7 +48,6 @@ public class AuthRegisterActivity extends AppCompatActivity {
                 String strEmail = nEtEmail.getText().toString().trim();    //사용자가 입력한 아이디 가져옴
                 String strPwd = nEtPwd.getText().toString().trim();        //사용자가 입력한 패스워드 가져옴
 
-
                 //Firebase 인증 계정 등록
                 nFirebaseAuth.createUserWithEmailAndPassword(strEmail, strPwd).addOnCompleteListener(AuthRegisterActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -61,7 +60,7 @@ public class AuthRegisterActivity extends AppCompatActivity {
                             account.setIdToken(firebaseUser.getUid());              //인증된 사용자 계정에  firebaseUser.getUid()참조
                             account.setEmailId(firebaseUser.getEmail());            //인증된 사용자 계정에 firebaseUser.getEmail()참조
                             account.setPassword(strPwd);                            //인증된 사용자 계정에 strPwd 참조
-                            account.setTerms(false);                                //인증된 사용자 계정에 약관여부 참조
+                            account.setTerms("false");                                //인증된 사용자 계정에 약관여부 참조
 
                             nDatabaseRef.child("AuthUserAccount").child(firebaseUser.getUid()).setValue(account);   //Firebase DB에 인증된 사용자 계정 정보 등록!
 

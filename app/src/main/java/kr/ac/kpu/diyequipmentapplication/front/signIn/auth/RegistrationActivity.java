@@ -72,6 +72,7 @@ public class RegistrationActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+
         if (requestCode == Gallery_Code && resultCode == RESULT_OK)
         {
             imageUrl = data.getData();
@@ -95,9 +96,11 @@ public class RegistrationActivity extends AppCompatActivity {
                     //Firebase storage에 등록된 이미지 경로 참조
                     StorageReference filepath = mStorage.getReference().child("imagePost").child(imageUrl.getLastPathSegment());
                     filepath.putFile(imageUrl).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             Task<Uri> downloadUrl = taskSnapshot.getStorage().getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+
                                 @Override
                                 public void onComplete(@NonNull Task<Uri> task) {
                                     //Firebase DB에 공급자가 입력한 데이터 등록
@@ -114,10 +117,8 @@ public class RegistrationActivity extends AppCompatActivity {
                                     startActivity(intent);
                                 }
                             });
-
                         }
                     });
-
                 }
             }
         });
