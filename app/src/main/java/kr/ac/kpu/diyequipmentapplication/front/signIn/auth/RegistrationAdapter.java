@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -38,8 +39,9 @@ public class RegistrationAdapter extends RecyclerView.Adapter<RegistrationAdapte
     public void onBindViewHolder(@NonNull RegistrationAdapter.ViewHolder holder, int position) {
 
         EquipmentRegistration equipmentRegistration = equipmentRegistrationList.get(position);
-        holder.tvModelText.setText("Model Inform \n"+equipmentRegistration.getModelText()+"\n");
-        holder.tvModelName.setText("Model Name \n"+equipmentRegistration.getModelName());
+        holder.tvModelName.setText("Model Name: "+equipmentRegistration.getModelName()+"\n");
+        holder.tvModelText.setText("Model Inform: \n"+equipmentRegistration.getModelText()+"\n");
+        holder.tvMyPick.setText("Model Pick: "+equipmentRegistration.getMyPick()+"\n");
 
         String imageUri = null;
         imageUri=equipmentRegistration.getImage();
@@ -55,7 +57,7 @@ public class RegistrationAdapter extends RecyclerView.Adapter<RegistrationAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
-        TextView tvModelName, tvModelText;
+        TextView tvModelName, tvModelText, tvMyPick;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -63,6 +65,7 @@ public class RegistrationAdapter extends RecyclerView.Adapter<RegistrationAdapte
             imageView = itemView.findViewById(R.id.image_recyclerView_id);
             tvModelName = itemView.findViewById(R.id.modelName_recyclerView_id);
             tvModelText = itemView.findViewById(R.id.modelText_recyclerView_id);
+            tvMyPick = itemView.findViewById(R.id.myPick_recyclerView_id);
 
         }
     }

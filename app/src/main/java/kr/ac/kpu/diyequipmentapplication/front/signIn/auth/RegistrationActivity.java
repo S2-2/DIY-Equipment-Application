@@ -110,6 +110,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                     newPost.child("ModelName").setValue(mn);
                                     newPost.child("ModelText").setValue(mt);
                                     newPost.child("image").setValue(task.getResult().toString());
+                                    newPost.child("myPick").setValue(0);
                                     progressDialog.dismiss();
 
                                     //공급자가 입력한 DIY 등록 액티비티에서 DIY 목록 액티비티로 이동
