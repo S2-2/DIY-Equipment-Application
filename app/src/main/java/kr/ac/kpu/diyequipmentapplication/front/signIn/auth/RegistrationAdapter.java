@@ -1,12 +1,14 @@
 package kr.ac.kpu.diyequipmentapplication.front.signIn.auth;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,6 +48,16 @@ public class RegistrationAdapter extends RecyclerView.Adapter<RegistrationAdapte
         String imageUri = null;
         imageUri=equipmentRegistration.getImage();
         Picasso.get().load(imageUri).into(holder.imageView);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), RentalDetailActivity.class);
+                view.getContext().startActivity(intent);
+                Toast.makeText(view.getContext(), "클릭 되었습니다.", Toast.LENGTH_SHORT).show();
+
+            }
+        });
 
     }
 

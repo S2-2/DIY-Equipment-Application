@@ -3,7 +3,6 @@ package kr.ac.kpu.diyequipmentapplication.front.signIn.auth;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,16 +26,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import kr.ac.kpu.diyequipmentapplication.R;
-import kr.ac.kpu.diyequipmentapplication.front.signIn.terms;
 
 //로그인 액티비티 클래스
 public class AuthLoginActivity extends AppCompatActivity{
@@ -83,33 +77,20 @@ public class AuthLoginActivity extends AppCompatActivity{
                     nFirebaseAuth.signInWithEmailAndPassword(strEmail, strPwd).addOnCompleteListener(AuthLoginActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {    //task객체로 로그인 유무 파악
-                            if (task.isSuccessful()) {
-                                FirebaseUser firebaseUser = nFirebaseAuth.getCurrentUser();     //Firebase 사용자 객체 참조
+                            if (nFirebaseAuth.getCurrentUser().isEmailVerified()) { //파이어베이스에 등록된 계정으로 인증 메일 전송
+                                Toast.makeText(AuthLoginActivity.this, "이메일 인증 성공!", Toast.LENGTH_SHORT).show();
 
-                                // Firebase의 실시간db에서 데이터 "terms"까지 접근
-                                nDatabaseRef.child("AuthUserAccount").child(firebaseUser.getUid()).child("terms").addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            if(snapshot.getValue().equals("false")){    // "terms" 값이 "false"면 약관 페이지로 이동
-                                                Intent intent = new Intent(AuthLoginActivity.this, terms.class);
-                                                startActivity(intent);
-                                                finish();
-                                            }
-                                            else{   // "terms" 값이 "true"면 메인 페이지로 이동
-                                                Intent intent = new Intent(AuthLoginActivity.this, AuthMainActivity.class);
-                                                startActivity(intent);
-                                                finish();
-                                            }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-                                    }
-                                });
-
+                                if (task.isSuccessful()) {
+                                    //로그인 성공
+                                    Intent intent = new Intent(AuthLoginActivity.this, AuthMainActivity.class);
+                                    startActivity(intent);  //AuthMainActivity 이동
+                                    finish();   //현재 액티비티 파괴
+                                } else {
+                                    //로그인 실패
+                                    Toast.makeText(AuthLoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
+                                }
                             } else {
-                                //로그인 실패
-                                Toast.makeText(AuthLoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AuthLoginActivity.this, "이메일 인증 실패!", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -117,19 +98,19 @@ public class AuthLoginActivity extends AppCompatActivity{
             }
         });
         
-        // 회원가입 단계
+        //회원가입 단계
         Button btn_register = findViewById(R.id.btn_register);      //btn_register 뷰 객체 참조
         btn_register.setOnClickListener(new View.OnClickListener() {    //btn_register 이벤트 리스너 등록
             @Override
             public void onClick(View view) {
 
-                // 회원가입 화면으로 이동
+                //회원가입 화면으로 이동
                 Intent intent = new Intent(AuthLoginActivity.this, AuthRegisterActivity.class);
                 startActivity(intent);
             }
         });
 
-        // Google Login 이벤트
+        //Google Login 이벤트
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -184,6 +165,7 @@ public class AuthLoginActivity extends AppCompatActivity{
                         {
                             Toast.makeText(AuthLoginActivity.this, "Google Login Failure!",Toast.LENGTH_SHORT).show();
                         }
+
                     }
                 });
     }

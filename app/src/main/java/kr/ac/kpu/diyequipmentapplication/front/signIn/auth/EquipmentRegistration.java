@@ -1,22 +1,27 @@
 package kr.ac.kpu.diyequipmentapplication.front.signIn.auth;
 
-import android.content.Intent;
-
 //Firebase DB에 등록하기 위해 공급자가 등록한 DIY공구 클래스 선언
 public class EquipmentRegistration {
-    String ModelName;
-    String ModelText;
-    String image;
-    Integer myPick;
+    private String ModelName;
+    private String ModelText;
+    private String image;
+    private String rentalType;
+    private String rentalCost;
+    private String rentalAddress;
+
+
 
     public EquipmentRegistration() {}
 
-    public EquipmentRegistration(String modelName, String modelText, String image, Integer myPick)
+    public EquipmentRegistration(String modelName, String modelText, String image, String rentalType,
+                                 String rentalCost, String rentalAddress)
     {
-        ModelName = modelName;
-        ModelText = modelText;
+        this.ModelName = modelName;
+        this.ModelText = modelText;
         this.image = image;
-        this.myPick = myPick;
+        this.rentalType = rentalType;
+        this.rentalCost = rentalCost;
+        this.rentalAddress = rentalAddress;
     }
 
     public String getModelName() {
@@ -24,7 +29,7 @@ public class EquipmentRegistration {
     }
 
     public void setModelName(String modelName) {
-        ModelName = modelName;
+        this.ModelName = modelName;
     }
 
     public String getModelText() {
@@ -32,7 +37,7 @@ public class EquipmentRegistration {
     }
 
     public void setModelText(String modelText) {
-        ModelText = modelText;
+        this.ModelText = modelText;
     }
 
     public String getImage() {
@@ -43,7 +48,27 @@ public class EquipmentRegistration {
         this.image = image;
     }
 
-    public Integer getMyPick() { return myPick; }
+    public String getRentalType() {
+        return rentalType;
+    }
 
-    public  void setMyPick(Integer myPick) { this.myPick = myPick; }
+    public void setRentalType(String rentalType) {
+        this.rentalType = rentalType;
+    }
+
+    public String getRentalCost() {
+        return rentalCost;
+    }
+
+    public void setRentalCost(String rentalCost) {
+        this.rentalCost = rentalCost;
+    }
+
+    public String getRentalAddress() {
+        return rentalAddress;
+    }
+
+    public void setRentalAddress(String rentalAddress) {
+        this.rentalAddress = rentalAddress;
+    }
 }

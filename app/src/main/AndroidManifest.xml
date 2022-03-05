@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DIYEquipmentApplication">
         <activity
+            android:name=".front.signIn.auth.RentalDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".front.signIn.auth.RegistrationRecyclerView"
             android:exported="false" />
         <activity

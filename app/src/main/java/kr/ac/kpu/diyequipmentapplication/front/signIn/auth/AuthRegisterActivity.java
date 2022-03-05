@@ -1,6 +1,5 @@
 package kr.ac.kpu.diyequipmentapplication.front.signIn.auth;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,7 +18,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import kr.ac.kpu.diyequipmentapplication.R;
-import kr.ac.kpu.diyequipmentapplication.front.signIn.terms;
 
 //회원가입 액티비티 클래스
 public class AuthRegisterActivity extends AppCompatActivity {
@@ -48,7 +46,6 @@ public class AuthRegisterActivity extends AppCompatActivity {
                 String strEmail = nEtEmail.getText().toString().trim();    //사용자가 입력한 아이디 가져옴
                 String strPwd = nEtPwd.getText().toString().trim();        //사용자가 입력한 패스워드 가져옴
 
-                //Firebase 인증 계정 등록
                 nFirebaseAuth.createUserWithEmailAndPassword(strEmail, strPwd).addOnCompleteListener(AuthRegisterActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -56,11 +53,22 @@ public class AuthRegisterActivity extends AppCompatActivity {
                         {
                             FirebaseUser firebaseUser = nFirebaseAuth.getCurrentUser();     //Firebase 사용자 객체 참조
 
+                            //Firebase에 등록된 이메일 계정으로 인증 확인 메일 전송
+                            firebaseUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()) {
+                                        Toast.makeText(AuthRegisterActivity.this, "Verification email sent to "+ firebaseUser.getEmail(), Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(AuthRegisterActivity.this, "Failed to send verification email.", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+
                             AuthUserAccount account = new AuthUserAccount();        // 인증된 사용자 계정 객체 생성
                             account.setIdToken(firebaseUser.getUid());              //인증된 사용자 계정에  firebaseUser.getUid()참조
                             account.setEmailId(firebaseUser.getEmail());            //인증된 사용자 계정에 firebaseUser.getEmail()참조
                             account.setPassword(strPwd);                            //인증된 사용자 계정에 strPwd 참조
-                            account.setTerms("false");                                //인증된 사용자 계정에 약관여부 참조
 
                             nDatabaseRef.child("AuthUserAccount").child(firebaseUser.getUid()).setValue(account);   //Firebase DB에 인증된 사용자 계정 정보 등록!
 
