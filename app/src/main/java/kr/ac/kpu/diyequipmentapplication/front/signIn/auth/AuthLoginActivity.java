@@ -77,14 +77,20 @@ public class AuthLoginActivity extends AppCompatActivity{
                     nFirebaseAuth.signInWithEmailAndPassword(strEmail, strPwd).addOnCompleteListener(AuthLoginActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {    //task객체로 로그인 유무 파악
-                            if (task.isSuccessful()) {
-                                //로그인 성공
-                                Intent intent = new Intent(AuthLoginActivity.this, AuthMainActivity.class);
-                                startActivity(intent);  //AuthMainActivity 이동
-                                finish();   //현재 액티비티 파괴
+                            if (nFirebaseAuth.getCurrentUser().isEmailVerified()) { //파이어베이스에 등록된 계정으로 인증 메일 전송
+                                Toast.makeText(AuthLoginActivity.this, "이메일 인증 성공!", Toast.LENGTH_SHORT).show();
+
+                                if (task.isSuccessful()) {
+                                    //로그인 성공
+                                    Intent intent = new Intent(AuthLoginActivity.this, AuthMainActivity.class);
+                                    startActivity(intent);  //AuthMainActivity 이동
+                                    finish();   //현재 액티비티 파괴
+                                } else {
+                                    //로그인 실패
+                                    Toast.makeText(AuthLoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
+                                }
                             } else {
-                                //로그인 실패
-                                Toast.makeText(AuthLoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AuthLoginActivity.this, "이메일 인증 실패!", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });

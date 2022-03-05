@@ -40,7 +40,7 @@ public class RegistrationRecyclerView extends AppCompatActivity {
 
         //RecyclerView 필드 참조
         mDatabase = FirebaseDatabase.getInstance();
-        mRef = mDatabase.getReference().child("DIY_Model");
+        mRef = mDatabase.getReference().child("DIY_Equipment_Rental");
         mStorage = FirebaseStorage.getInstance();
         recyclerView = findViewById(R.id.recyclerview_id);
         recyclerView.setHasFixedSize(true);

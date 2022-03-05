@@ -46,14 +46,24 @@ public class AuthRegisterActivity extends AppCompatActivity {
                 String strEmail = nEtEmail.getText().toString().trim();    //사용자가 입력한 아이디 가져옴
                 String strPwd = nEtPwd.getText().toString().trim();        //사용자가 입력한 패스워드 가져옴
 
-
-                //Firebase 인증 계정 등록
                 nFirebaseAuth.createUserWithEmailAndPassword(strEmail, strPwd).addOnCompleteListener(AuthRegisterActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful())     //Firebase 인증 성공
                         {
                             FirebaseUser firebaseUser = nFirebaseAuth.getCurrentUser();     //Firebase 사용자 객체 참조
+
+                            //Firebase에 등록된 이메일 계정으로 인증 확인 메일 전송
+                            firebaseUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()) {
+                                        Toast.makeText(AuthRegisterActivity.this, "Verification email sent to "+ firebaseUser.getEmail(), Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(AuthRegisterActivity.this, "Failed to send verification email.", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
 
                             AuthUserAccount account = new AuthUserAccount();        // 인증된 사용자 계정 객체 생성
                             account.setIdToken(firebaseUser.getUid());              //인증된 사용자 계정에  firebaseUser.getUid()참조
