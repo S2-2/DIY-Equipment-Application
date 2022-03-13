@@ -10,8 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import kr.ac.kpu.diyequipmentapplication.front.signIn.auth.AuthLoginActivity;
 
 public class MainActivity extends AppCompatActivity {
-
-    //test02.10
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

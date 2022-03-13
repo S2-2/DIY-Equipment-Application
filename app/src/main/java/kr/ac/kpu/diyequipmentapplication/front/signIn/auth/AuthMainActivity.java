@@ -56,5 +56,16 @@ public class AuthMainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Button btn_diyGoogMap = findViewById(R.id.btn_dyiGoogleMap);
+        btn_diyGoogMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Toast.makeText(AuthMainActivity.this,"DIY Google Map 개발중.......", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(AuthMainActivity.this, RentalGoogleMap.class);
+                startActivity(intent);
+            }
+        });
     }
 }
