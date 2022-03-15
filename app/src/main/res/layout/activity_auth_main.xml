@@ -18,7 +18,7 @@
 
     <Button
         android:id="@+id/btn_logout"
-        android:layout_width="wrap_content"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:text="로그아웃"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,7 +27,7 @@
 
     <Button
         android:id="@+id/btn_register"
-        android:layout_width="wrap_content"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:text="DIY 등록"
@@ -37,7 +37,7 @@
 
     <Button
         android:id="@+id/btn_dyiView"
-        android:layout_width="wrap_content"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
         android:text="DIY 목록"
@@ -45,5 +45,14 @@
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
+    <Button
+        android:id="@+id/btn_dyiGoogleMap"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="DIY Google Map"
+        app:layout_constraintEnd_toEndOf="@+id/btn_dyiView"
+        app:layout_constraintStart_toStartOf="@+id/btn_dyiView"
+        app:layout_constraintTop_toBottomOf="@+id/btn_dyiView"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

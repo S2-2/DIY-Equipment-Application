@@ -16,68 +16,65 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/backgrounds/scenic"/>
 
-    <EditText
+    <TextView
         android:id="@+id/ed_userEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="userEmail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_rentalImage" />
 
-    <EditText
-        android:id="@+id/modelName"
+    <TextView
+        android:id="@+id/ed_modelName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="ModelName"
-        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="@+id/ed_userEmail"
         app:layout_constraintStart_toStartOf="@+id/ed_userEmail"
         app:layout_constraintTop_toBottomOf="@+id/ed_userEmail"/>
 
-    <EditText
-        android:id="@+id/modelText"
+    <TextView
+        android:id="@+id/ed_modelInform"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="ModelText"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/modelName"
-        app:layout_constraintStart_toStartOf="@+id/modelName"
-        app:layout_constraintTop_toBottomOf="@+id/modelName" />
+        app:layout_constraintEnd_toEndOf="@+id/ed_modelName"
+        app:layout_constraintStart_toStartOf="@+id/ed_modelName"
+        app:layout_constraintTop_toBottomOf="@+id/ed_modelName" />
 
-
-
-    <EditText
-        android:id="@+id/ed_rgResult"
+    <TextView
+        android:id="@+id/ed_rentalDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="RentalType"
-        app:layout_constraintEnd_toEndOf="@+id/modelText"
-        app:layout_constraintStart_toStartOf="@+id/modelText"
-        app:layout_constraintTop_toBottomOf="@+id/modelText"/>
+        app:layout_constraintEnd_toEndOf="@+id/ed_modelInform"
+        app:layout_constraintStart_toStartOf="@+id/ed_modelInform"
+        app:layout_constraintTop_toBottomOf="@+id/ed_modelInform" />
 
-    <EditText
+    <TextView
+        android:id="@+id/ed_rentalType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        app:layout_constraintEnd_toEndOf="@+id/ed_rentalDate"
+        app:layout_constraintStart_toStartOf="@+id/ed_rentalDate"
+        app:layout_constraintTop_toBottomOf="@+id/ed_rentalDate"/>
+
+    <TextView
         android:id="@+id/ed_rentalCost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="number"
-        android:hint="RentalCost"
-        app:layout_constraintEnd_toEndOf="@+id/ed_rgResult"
-        app:layout_constraintStart_toStartOf="@+id/ed_rgResult"
-        app:layout_constraintTop_toBottomOf="@+id/ed_rgResult"/>
+        app:layout_constraintEnd_toEndOf="@+id/ed_rentalType"
+        app:layout_constraintStart_toStartOf="@+id/ed_rentalType"
+        app:layout_constraintTop_toBottomOf="@+id/ed_rentalType"/>
 
-    <EditText
+    <TextView
         android:id="@+id/ed_rentalAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPostalAddress"
-        android:hint="RentalAddress"
         app:layout_constraintEnd_toEndOf="@+id/ed_rentalCost"
         app:layout_constraintStart_toStartOf="@+id/ed_rentalCost"
         app:layout_constraintTop_toBottomOf="@+id/ed_rentalCost"/>
@@ -86,12 +83,21 @@
         android:id="@+id/btn_checkOK"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="311dp"
-        android:text="확인"
+        android:layout_margin="8dp"
+        android:text="DIY 장비 목록"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_rentalGoogleMap"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_rentalGoogleMap"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="DIY 장비 대여 맵"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/ed_rentalAddress"
-        app:layout_constraintTop_toBottomOf="@+id/ed_rentalAddress" />
+        app:layout_constraintStart_toEndOf="@+id/btn_checkOK"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

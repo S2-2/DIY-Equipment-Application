@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -54,6 +55,15 @@ public class AuthMainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(AuthMainActivity.this, RegistrationRecyclerView.class);
                 startActivity(intent);
+            }
+        });
+
+        //DIY 구글맵 액티비티로 이동
+        Button btn_diyGoogMap = findViewById(R.id.btn_dyiGoogleMap);
+        btn_diyGoogMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(AuthMainActivity.this,"DIY Google Map 개발중.......", Toast.LENGTH_SHORT).show();
             }
         });
     }
