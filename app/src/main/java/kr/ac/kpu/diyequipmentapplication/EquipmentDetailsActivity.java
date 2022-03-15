@@ -1,4 +1,4 @@
-package kr.ac.kpu.diyequipmentapplication.front.signIn.auth;
+package kr.ac.kpu.diyequipmentapplication;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -30,10 +30,8 @@ import com.google.firebase.storage.UploadTask;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import kr.ac.kpu.diyequipmentapplication.R;
-
 //공급자가 DIY장비 등록하는 액티비티
-public class RegistrationActivity extends AppCompatActivity {
+public class EquipmentDetailsActivity extends AppCompatActivity {
 
     //DIY장비 등록 액티비티 필드 선언
     private FirebaseUser registrationFirebaseAuth = null;      //파이어베이스 인증 객체 참조 변수
@@ -58,7 +56,7 @@ public class RegistrationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registration);
+        setContentView(R.layout.activity_equipment_details);
 
 
         //DIY장비 등록 액티비티 필드 초기화
@@ -69,7 +67,7 @@ public class RegistrationActivity extends AppCompatActivity {
         registrationBtnAdd = findViewById(R.id.btn_registrationAdd);
         registrationRentalGroup = findViewById(R.id.rg_registrationRentalGroup);
         registrationFeeRental = findViewById(R.id.rBtn_registrationFeeRental);
-        registrationFreeRental = findViewById(R.id.rBtn_registrationFreeRental);
+        registrationFreeRental = findViewById(R.id.rBtn_registrationFree);
         registrationRentalType = findViewById(R.id.et_registrationRentalType);
         registrationRentalCost = findViewById(R.id.et_registrationRentalCost);
         registrationRentalAddress = findViewById(R.id.et_registrationRentalAddress);
@@ -89,7 +87,7 @@ public class RegistrationActivity extends AppCompatActivity {
             registrationUserEmail.setText(registrationGetUserEmail);        //등록 이메일 에디트텍스트 뷰에  이메일 설정
         }
         else{       //계정 정보가 없는 경우
-            Toast.makeText(RegistrationActivity.this, "인증 이메일 가져오기 실패!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(EquipmentDetailsActivity.this, "인증 이메일 가져오기 실패!", Toast.LENGTH_SHORT).show();
         }
 
         //렌탈 종류, 렌탈 가격 뷰 비활성화
@@ -107,7 +105,7 @@ public class RegistrationActivity extends AppCompatActivity {
                         registrationRentalType.setText(registrationFeeRental.getText().toString().trim());
                         break;
 
-                    case R.id.rBtn_registrationFreeRental:    //무료인 경우
+                    case R.id.rBtn_registrationFree:    //무료인 경우
                         registrationRentalCost.setEnabled(false);
                         registrationRentalCost.setText("무료");
                         registrationRentalType.setText(registrationFreeRental.getText().toString().trim());
@@ -182,7 +180,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                     registrationProgressDialog.dismiss();
 
                                     //공급자가 입력한 DIY 등록 액티비티에서 DIY 메인 액티비티로 이동
-                                    Intent intent = new Intent(RegistrationActivity.this, AuthMainActivity.class);
+                                    Intent intent = new Intent(EquipmentDetailsActivity.this, MainActivity.class);
                                     startActivity(intent);
                                 }
                             });

@@ -1,4 +1,4 @@
-package kr.ac.kpu.diyequipmentapplication.front.signIn.auth;
+package kr.ac.kpu.diyequipmentapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,15 +13,13 @@ import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 
-import kr.ac.kpu.diyequipmentapplication.R;
-
 
 //미완성 장비
 // 목록 클릭시 상세화면으로 전환되는 액티비티클래스
 public class RentalDetailActivity extends AppCompatActivity {
     private ImageView ivRentalImage;
     private TextView etUserEmail, etModelName, etModelInform, etRentalType, etRentalCost, etRentalAddress, etRentalDate;
-    private Button btCheckOk, btnRentalMap;
+    private Button btn_back, btnRentalMap;
     private String getImageUrl;
     private DecimalFormat decimalFormat;
     private String getRentalFeeCost, temp, getRentalAddress;
@@ -40,7 +38,7 @@ public class RentalDetailActivity extends AppCompatActivity {
         etRentalCost = findViewById(R.id.ed_rentalCost);
         etRentalAddress = findViewById(R.id.ed_rentalAddress);
         etRentalDate = findViewById(R.id.ed_rentalDate);
-        btCheckOk = findViewById(R.id.btn_checkOK);
+        btn_back = findViewById(R.id.btn_back);
         btnRentalMap = findViewById(R.id.btn_rentalGoogleMap);
         decimalFormat = new DecimalFormat("###,###");
 
@@ -66,7 +64,7 @@ public class RentalDetailActivity extends AppCompatActivity {
             etRentalCost.setText("RentalCost : "+getRentalFeeCost+"원");
         }
 
-        btCheckOk.setOnClickListener(new View.OnClickListener() {
+        btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();   //현재 액티비티 종료

@@ -1,104 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".front.signIn.auth.RentalDetailActivity">
+    android:orientation="vertical"
+    tools:context=".RentalDetailActivity">
+
+    // 상단 드로어 메뉴랑 검색창
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/btn_drawer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_baseline_menu_24"
+            tools:layout_editor_absoluteX="28dp"
+            tools:layout_editor_absoluteY="43dp" />
+
+        <TextView
+            android:id="@+id/text_appname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="앱 이름"
+            tools:layout_editor_absoluteX="59dp"
+            tools:layout_editor_absoluteY="50dp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/btn_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_baseline_search_24"
+            tools:layout_editor_absoluteX="346dp"
+            tools:layout_editor_absoluteY="50dp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24"
+        tools:layout_editor_absoluteX="28dp"
+        tools:layout_editor_absoluteY="43dp" />
 
     <ImageView
         android:id="@+id/iv_rentalImage"
-        android:layout_width="415dp"
-        android:layout_height="160dp"
-        android:layout_marginTop="2dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/backgrounds/scenic"/>
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-    <TextView
-        android:id="@+id/ed_userEmail"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_rentalImage" />
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/ed_modelName"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="게시자 이메일" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="공구 이름" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="설명" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="게시날짜" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="대여기간" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="대여료" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="장비 위치" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/ed_userEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_rentalImage" />
+
+            <TextView
+                android:id="@+id/ed_modelName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                app:layout_constraintEnd_toEndOf="@+id/ed_userEmail"
+                app:layout_constraintStart_toStartOf="@+id/ed_userEmail"
+                app:layout_constraintTop_toBottomOf="@+id/ed_userEmail" />
+
+            <TextView
+                android:id="@+id/ed_modelInform"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                app:layout_constraintEnd_toEndOf="@+id/ed_modelName"
+                app:layout_constraintStart_toStartOf="@+id/ed_modelName"
+                app:layout_constraintTop_toBottomOf="@+id/ed_modelName" />
+
+            <TextView
+                android:id="@+id/ed_rentalDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                app:layout_constraintEnd_toEndOf="@+id/ed_modelInform"
+                app:layout_constraintStart_toStartOf="@+id/ed_modelInform"
+                app:layout_constraintTop_toBottomOf="@+id/ed_modelInform" />
+
+            <TextView
+                android:id="@+id/ed_rentalType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                app:layout_constraintEnd_toEndOf="@+id/ed_rentalDate"
+                app:layout_constraintStart_toStartOf="@+id/ed_rentalDate"
+                app:layout_constraintTop_toBottomOf="@+id/ed_rentalDate" />
+
+            <TextView
+                android:id="@+id/ed_rentalCost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                app:layout_constraintEnd_toEndOf="@+id/ed_rentalType"
+                app:layout_constraintStart_toStartOf="@+id/ed_rentalType"
+                app:layout_constraintTop_toBottomOf="@+id/ed_rentalType" />
+
+            <TextView
+                android:id="@+id/ed_rentalAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                app:layout_constraintEnd_toEndOf="@+id/ed_rentalCost"
+                app:layout_constraintStart_toStartOf="@+id/ed_rentalCost"
+                app:layout_constraintTop_toBottomOf="@+id/ed_rentalCost" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    // 하단 버튼
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        app:layout_constraintEnd_toEndOf="@+id/ed_userEmail"
-        app:layout_constraintStart_toStartOf="@+id/ed_userEmail"
-        app:layout_constraintTop_toBottomOf="@+id/ed_userEmail"/>
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/ed_modelInform"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        app:layout_constraintEnd_toEndOf="@+id/ed_modelName"
-        app:layout_constraintStart_toStartOf="@+id/ed_modelName"
-        app:layout_constraintTop_toBottomOf="@+id/ed_modelName" />
+        <Button
+            android:id="@+id/btn_rentalGoogleMap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="지도로 장비 현황 보기"/>
 
-    <TextView
-        android:id="@+id/ed_rentalDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        app:layout_constraintEnd_toEndOf="@+id/ed_modelInform"
-        app:layout_constraintStart_toStartOf="@+id/ed_modelInform"
-        app:layout_constraintTop_toBottomOf="@+id/ed_modelInform" />
+        <Button
+            android:id="@+id/btn_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="거래자와 채팅하기" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/ed_rentalType"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        app:layout_constraintEnd_toEndOf="@+id/ed_rentalDate"
-        app:layout_constraintStart_toStartOf="@+id/ed_rentalDate"
-        app:layout_constraintTop_toBottomOf="@+id/ed_rentalDate"/>
-
-    <TextView
-        android:id="@+id/ed_rentalCost"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        app:layout_constraintEnd_toEndOf="@+id/ed_rentalType"
-        app:layout_constraintStart_toStartOf="@+id/ed_rentalType"
-        app:layout_constraintTop_toBottomOf="@+id/ed_rentalType"/>
-
-    <TextView
-        android:id="@+id/ed_rentalAddress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        app:layout_constraintEnd_toEndOf="@+id/ed_rentalCost"
-        app:layout_constraintStart_toStartOf="@+id/ed_rentalCost"
-        app:layout_constraintTop_toBottomOf="@+id/ed_rentalCost"/>
-
-    <Button
-        android:id="@+id/btn_checkOK"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="DIY 장비 목록"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btn_rentalGoogleMap"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/btn_rentalGoogleMap"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="DIY 장비 대여 맵"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_checkOK"/>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
 
 

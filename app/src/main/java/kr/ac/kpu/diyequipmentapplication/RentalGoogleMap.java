@@ -1,4 +1,4 @@
-package kr.ac.kpu.diyequipmentapplication.front.signIn.auth;
+package kr.ac.kpu.diyequipmentapplication;
 
 import android.content.Context;
 import android.content.Intent;

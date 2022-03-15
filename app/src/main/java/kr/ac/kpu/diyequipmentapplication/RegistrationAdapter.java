@@ -1,4 +1,4 @@
-package kr.ac.kpu.diyequipmentapplication.front.signIn.auth;
+package kr.ac.kpu.diyequipmentapplication;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +15,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import kr.ac.kpu.diyequipmentapplication.R;
 //공급자가 입력한 데이터를 list_equipmentitem.xml파일에 등록하는 Adapter Class 구현
 public class RegistrationAdapter extends RecyclerView.Adapter<RegistrationAdapter.ViewHolder> {
 

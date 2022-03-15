@@ -1,5 +1,6 @@
-package kr.ac.kpu.diyequipmentapplication.front.signIn.auth;
+package kr.ac.kpu.diyequipmentapplication;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,8 +31,6 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import kr.ac.kpu.diyequipmentapplication.R;
-
 //로그인 액티비티 클래스
 public class LoginActivity extends AppCompatActivity{
 
@@ -39,11 +38,12 @@ public class LoginActivity extends AppCompatActivity{
     private FirebaseAuth authLoginFirebaseAuth = null;                  //파이어베이스 인증 객체 참조 변수
     private DatabaseReference authLoginDatabaseReference = null;        //RealTimeDB 객체 참조 변수
     private EditText authLoginEmail = null, authLoginPwd = null;        //사용자 이메일, 패스워드 뷰 참조 변수
-    private Button authLoginButton = null, authLoginRegister = null;    //로그인 버튼, 회원가입 버튼 뷰 참조 변수
+    private Button login = null, signup = null, backBtn;    //로그인 버튼, 회원가입 버튼 뷰 참조 변수
     private SignInButton authLoginSignInButton = null;                  //구글 로그인 뷰 참조 변수
     private GoogleSignInClient authLoginGoogleSignInClient = null;      //구글 계정 클라이언트 객체 참조 변수
     private String userEmail = null, userPwd = null;                    //사용자 입력 이메일, 패스워드 참조 변수
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,29 +51,31 @@ public class LoginActivity extends AppCompatActivity{
 
         authLoginFirebaseAuth = FirebaseAuth.getInstance();     //Firebase 인증 객체 참조
         authLoginDatabaseReference = FirebaseDatabase.getInstance().getReference("DIY-Auth-DB"); //Firebase DB 객체 참조
-        authLoginEmail = findViewById(R.id.et_authLoginEmail);              //et_authLoginEmail 뷰 객체 참조
-        authLoginPwd = findViewById(R.id.et_authLoginPwd);                  //et_authLoginPwd 뷰 객체 참조
-        authLoginButton = findViewById(R.id.btn_authLogin);                 //btn_login 뷰 객체 참조
-        authLoginRegister = findViewById(R.id.btn_authLoginRegister);      //btn_register 뷰 객체 참조
-        authLoginSignInButton = findViewById(R.id.btn_authLoginGoogle);    //btn_authLoginGoogle 뷰 객체 참조
-        
+        authLoginEmail = findViewById(R.id.et_email);              //et_email 뷰 객체 참조
+        authLoginPwd = findViewById(R.id.et_pwd);                  //et_pwd 뷰 객체 참조
+        login = findViewById(R.id.btn_login);                 //btn_login 뷰 객체 참조
+        signup = findViewById(R.id.btn_register);      //btn_signup 뷰 객체 참조
+        authLoginSignInButton = findViewById(R.id.btn_google);    //btn_google 뷰 객체 참조
+
+
+
         //이메일 계정 인증 단계
-        authLoginButton.setOnClickListener(new View.OnClickListener() {
+        login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 userEmail = authLoginEmail.getText().toString().trim();     //사용자가 입력한 이메일 참조
                 userPwd = authLoginPwd.getText().toString().trim();         //사용자가 입력한 패스워드 참조
 
                 if (userEmail.isEmpty() && userPwd.isEmpty()) {       // 사용자 이메일, 패스워드 미입력인 경우
-                    Toast.makeText(LoginActivity.this, "이메일, 패스워드 입력하세요!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "이메일과 비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
                 }
                 else if(userEmail.isEmpty())     //사용자 이메일 미입력인 경우
                 {
-                    Toast.makeText(LoginActivity.this, "이메일 입력하세요!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "이메일을 입력해주세요", Toast.LENGTH_SHORT).show();
                 }
                 else if (userPwd.isEmpty())      //사용자 패스워드 미입력인 경우
                 {
-                    Toast.makeText(LoginActivity.this, "패스워드 입력하세요!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "비밀번호를 입력해주세요", Toast.LENGTH_SHORT).show();
                 }
                 else{   //사용자 이메일, 패스워드 입력한 경우
                     firebaseAuthWithEmail(userEmail, userPwd);  //Firebase Authentication 메서드 호출
@@ -81,13 +83,11 @@ public class LoginActivity extends AppCompatActivity{
             }
         });
         
-        //회원가입 단계
-        authLoginRegister.setOnClickListener(new View.OnClickListener() {
+        //회원가입 화면으로 전환
+        signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //회원가입 화면으로 이동
-                Intent intent = new Intent(LoginActivity.this, AuthRegisterActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(LoginActivity.this,SignupActivity.class));
             }
         });
 
@@ -137,12 +137,12 @@ public class LoginActivity extends AppCompatActivity{
                     Toast.makeText(LoginActivity.this, "Email Authentication Success!", Toast.LENGTH_SHORT).show();
 
                     if (task.isSuccessful()) {  //Firebase 인증 및 로그인 성공인 경우
-                        Intent intent = new Intent(LoginActivity.this, AuthMainActivity.class); //Intent객체 생성 및 초기화
-                        startActivity(intent);  //AuthMainActivity 이동
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class); //Intent객체 생성 및 초기화
+                        startActivity(intent);  //MainActivity 이동
                         finish();   //현재 액티비티 파괴
-                        Toast.makeText(LoginActivity.this, "Login Success!",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "로그인 성공",Toast.LENGTH_SHORT).show();
                     } else {    //Firebase 인증 성공이지만, 로그인 실패인 경우
-                        Toast.makeText(LoginActivity.this, "Login Failure!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
                     }
                 } else {    //Firebase에 등록된 계정으로 인증 메일 전송 실패인 경우
                    Toast.makeText(LoginActivity.this, "Email Authentication Failure!", Toast.LENGTH_SHORT).show();
@@ -160,12 +160,12 @@ public class LoginActivity extends AppCompatActivity{
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {  //구글 로그인 성공인 경우
-                            startActivity(new Intent(LoginActivity.this, AuthMainActivity.class));
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             finish();
-                            Toast.makeText(LoginActivity.this, "Google Login Success!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "구글 계정으로 로그인하였습니다.", Toast.LENGTH_SHORT).show();
                         }
                         else { //구글 로그인 실패인 경우
-                            Toast.makeText(LoginActivity.this, "Google Login Failure!",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "구글 계정으로 로그인에 실패하였습니다.",Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

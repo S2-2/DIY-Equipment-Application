@@ -10,29 +10,35 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DIYEquipmentApplication">
         <activity
-            android:name=".front.signIn.auth.RegistrationRecyclerView"
+            android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".front.signIn.auth.RegistrationActivity"
+            android:name=".NavigationDrawerActivity"
             android:exported="false" />
         <activity
-            android:name=".front.signIn.auth.AuthRegisterActivity"
+            android:name=".ChattingActivity"
             android:exported="false" />
         <activity
-            android:name=".front.signIn.auth.MainActivity"
+            android:name=".RegistrationRecyclerView"
             android:exported="false" />
         <activity
-            android:name=".front.signIn.auth.LoginActivity"
-            android:exported="true" >
+            android:name=".EquipmentDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignupActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="false"/>
     </application>
 
 </manifest>

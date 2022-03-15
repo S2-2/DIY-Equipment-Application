@@ -1,7 +1,6 @@
-package kr.ac.kpu.diyequipmentapplication.front.signIn;
+package kr.ac.kpu.diyequipmentapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatCheckBox;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +9,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Toast;
-
-import kr.ac.kpu.diyequipmentapplication.MainActivity;
-import kr.ac.kpu.diyequipmentapplication.R;
 
 public class terms extends AppCompatActivity {
 
