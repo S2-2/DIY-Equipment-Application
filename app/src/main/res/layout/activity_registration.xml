@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".front.signIn.auth.RegistrationActivity">
+
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="415dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <EditText
+        android:id="@+id/modelName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="16dp"
+        android:ems="10"
+        android:hint="ModelName"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton2" />
+
+    <EditText
+        android:id="@+id/modelText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:ems="10"
+        android:hint="ModelText"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/modelName"
+        app:layout_constraintStart_toStartOf="@+id/modelName"
+        app:layout_constraintTop_toBottomOf="@+id/modelName" />
+
+    <Button
+        android:id="@+id/btn_Insert"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="311dp"
+        android:text="Insert"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/modelText"
+        app:layout_constraintTop_toBottomOf="@+id/modelText" />
+</androidx.constraintlayout.widget.ConstraintLayout>
