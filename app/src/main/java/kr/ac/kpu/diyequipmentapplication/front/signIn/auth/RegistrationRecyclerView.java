@@ -16,7 +16,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import kr.ac.kpu.diyequipmentapplication.R;
 
@@ -29,18 +28,17 @@ public class RegistrationRecyclerView extends AppCompatActivity {
     FirebaseStorage mStorage;
     RecyclerView recyclerView;
     RegistrationAdapter registrationAdapter;
-    List<EquipmentRegistration> equipmentRegistrationList;
-
+    //List<EquipmentRegistration> equipmentRegistrationList;
+    ArrayList<EquipmentRegistration> equipmentRegistrationList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_recycler_view);
 
-
         //RecyclerView 필드 참조
         mDatabase = FirebaseDatabase.getInstance();
-        mRef = mDatabase.getReference().child("DIY_Model");
+        mRef = mDatabase.getReference().child("DIY_Equipment_Rental");
         mStorage = FirebaseStorage.getInstance();
         recyclerView = findViewById(R.id.recyclerview_id);
         recyclerView.setHasFixedSize(true);
@@ -57,28 +55,17 @@ public class RegistrationRecyclerView extends AppCompatActivity {
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 EquipmentRegistration equipmentRegistration = snapshot.getValue(EquipmentRegistration.class);
                 equipmentRegistrationList.add(equipmentRegistration);
-                registrationAdapter.notifyDataSetChanged();;
+                registrationAdapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) { }
             @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) { }
             @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) { }
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError error) { }
         });
     }
 }

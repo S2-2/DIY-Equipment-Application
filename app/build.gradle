@@ -17,6 +17,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -58,9 +59,10 @@ dependencies {
 
     //Firebase DB
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
-
     implementation 'com.squareup.picasso:picasso:2.71828'
 
-
-
+    //GoogleMap
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.android.support:multidex:2.0.1'
 }

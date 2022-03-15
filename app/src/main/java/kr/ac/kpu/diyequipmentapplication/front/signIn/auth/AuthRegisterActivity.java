@@ -22,56 +22,87 @@ import kr.ac.kpu.diyequipmentapplication.R;
 //회원가입 액티비티 클래스
 public class AuthRegisterActivity extends AppCompatActivity {
 
-    private FirebaseAuth nFirebaseAuth; //파이어베이스 인증 참조 변수 선언
-    private DatabaseReference nDatabaseRef; //실시간 데이터베이스 참조 변수 선언
-    private EditText nEtEmail, nEtPwd;  //사용자가 입력한 이메일, 패스워드 참조 변수 선언
-    private Button nBtnRegister;        //회원가입 버튼 참조 변수 선언
+    //회원가입 액티비티 클래스 필드 선언
+    private FirebaseAuth authRegisterFirebaseAuth = null;               //파이어베이스 인증 참조 변수
+    private DatabaseReference authRegisterDatabaseRef = null;           //RealTimeDB 참조 변수
+    private EditText authRegisterEmail = null, authRegisterPwd = null;  //사용자 이메일, 패스워드 뷰 참조 변수
+    private Button authRegisterButton = null;                           //회원가입 버튼 뷰 참조 변수
+    private String registerEmail = null, registerPwd = null;            //사용자 이메일, 패스워드 뷰 값을 참조할 변수
+    private FirebaseUser authRegisterFirebaseUser = null;               //Firebase인증에 등록된 사용자 계정 참조 변수
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth_register);
 
-        nFirebaseAuth = FirebaseAuth.getInstance();     //Firebase 인증 객체 참조
-        nDatabaseRef = FirebaseDatabase.getInstance().getReference("DIY-Auth-DB");     //Firebase DB 객체 참조
+        //회원가입 액티비티 클래스 필드 초기화
+        authRegisterFirebaseAuth = FirebaseAuth.getInstance();                                          //Firebase 인증 객체 참조
+        authRegisterDatabaseRef = FirebaseDatabase.getInstance().getReference("DIY-Auth-DB");     //Firebase DB 객체 참조
+        authRegisterEmail = findViewById(R.id.et_authRegisterEmail);                                   //et_authRegisterEmail 뷰 객체 참조
+        authRegisterPwd = findViewById(R.id.et_authRegisterPwd);                                       //et_authRegisterPwd 뷰 객체 참조
+        authRegisterButton = findViewById(R.id.btn_authRegister);                                      //btn_authRegister 뷰 객체 참조
 
-        nEtEmail = findViewById(R.id.et_email);         //et_email 뷰 객체 참조
-        nEtPwd = findViewById(R.id.et_pwd);             //et_pwd 뷰 객체 참조
-        nBtnRegister = findViewById(R.id.btn_register); //btn_register 뷰 객체 참조
-
-        nBtnRegister.setOnClickListener(new View.OnClickListener() {    //nBtnRegister 이벤트 리스너 등록
+        //회원가입 등록
+        authRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //회원가입 처리 이벤트 리스너
-                String strEmail = nEtEmail.getText().toString().trim();    //사용자가 입력한 아이디 가져옴
-                String strPwd = nEtPwd.getText().toString().trim();        //사용자가 입력한 패스워드 가져옴
+                registerEmail = authRegisterEmail.getText().toString().trim();  //authRegisterEmail 뷰 객체 값 참조
+                registerPwd = authRegisterPwd.getText().toString().trim();      //authRegisterPwd 뷰 객체 값 참조
 
+                if (registerEmail.isEmpty() && registerPwd.isEmpty()) {       // 등록할 이메일, 패스워드 미입력인 경우
+                    Toast.makeText(AuthRegisterActivity.this, "등록할 이메일, 패스워드 입력하세요!", Toast.LENGTH_SHORT).show();
+                }
+                else if(registerEmail.isEmpty())     //이메일 미입력인 경우
+                {
+                    Toast.makeText(AuthRegisterActivity.this, "등록할 이메일 입력하세요!", Toast.LENGTH_SHORT).show();
+                }
+                else if (registerPwd.isEmpty())      //패스워드 미입력인 경우
+                {
+                    Toast.makeText(AuthRegisterActivity.this, "등록할 패스워드 입력하세요!", Toast.LENGTH_SHORT).show();
+                }
+                else{   //등록할 이메일, 패스워드 입력한 경우
+                    firebaseAuthCreateUser(registerEmail, registerPwd); //사용자가 등록할 이메일, 패스워드 인자를 가지고 Firebase 인증계정 생성 메서드 호출
+                }
+            }
+        });
+    }
 
-                //Firebase 인증 계정 등록
-                nFirebaseAuth.createUserWithEmailAndPassword(strEmail, strPwd).addOnCompleteListener(AuthRegisterActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful())     //Firebase 인증 성공
-                        {
-                            FirebaseUser firebaseUser = nFirebaseAuth.getCurrentUser();     //Firebase 사용자 객체 참조
+    //Firebase 인증계정 생성 및 RealTimeDB 등록 메서드
+    private void firebaseAuthCreateUser(String registerEmail, String registerPwd) {
+        authRegisterFirebaseAuth.createUserWithEmailAndPassword(registerEmail, registerPwd).addOnCompleteListener(AuthRegisterActivity.this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful())     //Firebase인증 등록 성공
+                {
+                    authRegisterFirebaseUser = authRegisterFirebaseAuth.getCurrentUser();     //Firebase인증에 등록된 계정 정보 참조
 
-                            AuthUserAccount account = new AuthUserAccount();        // 인증된 사용자 계정 객체 생성
-                            account.setIdToken(firebaseUser.getUid());              //인증된 사용자 계정에  firebaseUser.getUid()참조
-                            account.setEmailId(firebaseUser.getEmail());            //인증된 사용자 계정에 firebaseUser.getEmail()참조
-                            account.setPassword(strPwd);                            //인증된 사용자 계정에 strPwd 참조
-
-                            nDatabaseRef.child("AuthUserAccount").child(firebaseUser.getUid()).setValue(account);   //Firebase DB에 인증된 사용자 계정 정보 등록!
-
-                            Toast.makeText(AuthRegisterActivity.this, "회원가입 성공!",Toast.LENGTH_SHORT).show();
-                            finish();
+                    //Firebase에 등록된 이메일 계정으로 인증 확인 메일 전송
+                    authRegisterFirebaseUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()) {   //인증 메일 전송 성공인 경우
+                                Toast.makeText(AuthRegisterActivity.this, "Verification email sent to "+ authRegisterFirebaseUser.getEmail(), Toast.LENGTH_SHORT).show();
+                            } else {    //인증 메일 전송 실패인 경우
+                                Toast.makeText(AuthRegisterActivity.this, "Failed to send verification email.", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                        else    //Firebase 인증 실패
-                        {
-                            Toast.makeText(AuthRegisterActivity.this, "회원가입 실패!",Toast.LENGTH_SHORT).show();
-                        }
+                    });
 
-                    }
-                });
+                    AuthUserAccount account = new AuthUserAccount();                    //인증된 사용자 계정 객체 생성 및 초기화
+                    account.setIdToken(authRegisterFirebaseUser.getUid());              //Firebase인증에 등록된 계정 Uid 참조
+                    account.setEmailId(authRegisterFirebaseUser.getEmail());            //Firebase인증에 등록된 계정 Email 참조
+                    account.setPassword(registerPwd);                                   //사용자 패스워드 참조
+
+                    authRegisterDatabaseRef.child("AuthUserAccount").child(authRegisterFirebaseUser.getUid()).setValue(account);   //Firebase DB에 인증된 사용자 계정 정보 등록!
+
+                    Toast.makeText(AuthRegisterActivity.this, "Sign Up Success!",Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                else    //Firebase 인증 실패
+                {
+                    Toast.makeText(AuthRegisterActivity.this, "Sign Up Failure!",Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }
