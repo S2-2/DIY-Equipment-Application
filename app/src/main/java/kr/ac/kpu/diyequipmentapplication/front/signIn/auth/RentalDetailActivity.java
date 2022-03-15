@@ -21,10 +21,10 @@ import kr.ac.kpu.diyequipmentapplication.R;
 public class RentalDetailActivity extends AppCompatActivity {
     private ImageView ivRentalImage;
     private TextView etUserEmail, etModelName, etModelInform, etRentalType, etRentalCost, etRentalAddress, etRentalDate;
-    private Button btCheckOk;
+    private Button btCheckOk, btnRentalMap;
     private String getImageUrl;
     private DecimalFormat decimalFormat;
-    private String getRentalFeeCost, temp;
+    private String getRentalFeeCost, temp, getRentalAddress;
     private int temNum;
 
     @Override
@@ -41,6 +41,7 @@ public class RentalDetailActivity extends AppCompatActivity {
         etRentalAddress = findViewById(R.id.ed_rentalAddress);
         etRentalDate = findViewById(R.id.ed_rentalDate);
         btCheckOk = findViewById(R.id.btn_checkOK);
+        btnRentalMap = findViewById(R.id.btn_rentalGoogleMap);
         decimalFormat = new DecimalFormat("###,###");
 
         Intent intent = getIntent();
@@ -49,11 +50,13 @@ public class RentalDetailActivity extends AppCompatActivity {
         etModelName.setText("ModelName : "+intent.getStringExtra("ModelName"));
         etModelInform.setText("ModelInform : "+intent.getStringExtra("ModelInform"));
         etRentalType.setText("RentalType : "+intent.getStringExtra("RentalType"));
-        etRentalAddress.setText("RentalAddress : "+intent.getStringExtra("RentalAddress"));
+        //etRentalAddress.setText("RentalAddress : "+intent.getStringExtra("RentalAddress"));
         etUserEmail.setText("UserEmail : "+intent.getStringExtra("UserEmail"));
         etRentalDate.setText("RentalDate : "+intent.getStringExtra("RentalDate"));
         //etRentalCost.setText("RentalCost : "+intent.getStringExtra("RentalCost"));
         temp = intent.getStringExtra("RentalCost");
+        getRentalAddress = intent.getStringExtra("RentalAddress");
+        etRentalAddress.setText("RentalAddress : "+getRentalAddress);
 
         if (temp.equals("무료"))
             etRentalCost.setText("RentalCost : "+temp);
@@ -66,9 +69,17 @@ public class RentalDetailActivity extends AppCompatActivity {
         btCheckOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent1 = new Intent(RentalDetailActivity.this, AuthMainActivity.class);
-                startActivity(intent1);
-                finish();
+                finish();   //현재 액티비티 종료
+            }
+        });
+
+        //상세 페이지에서 구글맵으로 이동하는 버튼 이벤트
+        btnRentalMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent2 = new Intent(RentalDetailActivity.this, RentalGoogleMap.class);
+                intent2.putExtra("GetRentalAddress", getRentalAddress);
+                startActivity(intent2);
             }
         });
     }

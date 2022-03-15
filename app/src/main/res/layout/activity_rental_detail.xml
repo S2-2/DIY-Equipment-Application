@@ -83,12 +83,21 @@
         android:id="@+id/btn_checkOK"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="311dp"
-        android:text="확인"
+        android:layout_margin="8dp"
+        android:text="DIY 장비 목록"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_rentalGoogleMap"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_rentalGoogleMap"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="DIY 장비 대여 맵"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/ed_rentalAddress"
-        app:layout_constraintTop_toBottomOf="@+id/ed_rentalAddress" />
+        app:layout_constraintStart_toEndOf="@+id/btn_checkOK"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
