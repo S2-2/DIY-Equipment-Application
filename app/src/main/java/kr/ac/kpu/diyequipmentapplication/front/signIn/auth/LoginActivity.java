@@ -33,7 +33,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import kr.ac.kpu.diyequipmentapplication.R;
 
 //로그인 액티비티 클래스
-public class AuthLoginActivity extends AppCompatActivity{
+public class LoginActivity extends AppCompatActivity{
 
     private FirebaseAuth nFirebaseAuth; //파이어베이스 인증
     private DatabaseReference nDatabaseRef; //실시간 데이터베이스
@@ -44,7 +44,7 @@ public class AuthLoginActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_auth_login);
+        setContentView(R.layout.activity_login);
 
         nFirebaseAuth = FirebaseAuth.getInstance();     //Firebase 인증 객체 참조
         nDatabaseRef = FirebaseDatabase.getInstance().getReference("DIY-Auth-DB"); //Firebase DB 객체 참조
@@ -61,30 +61,30 @@ public class AuthLoginActivity extends AppCompatActivity{
                 String strEmail = nEtEmail.getText().toString();    //사용자가 입력한 아이디 가져옴
                 String strPwd = nEtPwd.getText().toString();        //사용자가 입력한 패스워드 가져옴
 
-                if (strEmail.isEmpty() && strPwd.isEmpty()) {       // 사용자가 입력한 이메일, 패스워드가 empty인 경우
-                    Toast.makeText(AuthLoginActivity.this, "이메일/패스워드 입력하세요!", Toast.LENGTH_SHORT).show();
+                if (strEmail.isEmpty() && strPwd.isEmpty()) {       // 사용자가 입력한 이메일, 비밀번호가 empty인 경우
+                    Toast.makeText(LoginActivity.this, "이메일 및 비밀번호를 입력하세요", Toast.LENGTH_SHORT).show();
                 }
                 else if(strEmail.isEmpty())     //이메일만 empty인 경우
                 {
-                    Toast.makeText(AuthLoginActivity.this, "이메일 입력하세요!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "이메일을 입력하세요", Toast.LENGTH_SHORT).show();
                 }
                 else if (strPwd.isEmpty())      //패스워드만 empty인 경우
                 {
-                    Toast.makeText(AuthLoginActivity.this, "패스워드 입력하세요!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "비밀번호를 입력하세요", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     //Firebase에 인증된 정보를 통해 로그인 기능
-                    nFirebaseAuth.signInWithEmailAndPassword(strEmail, strPwd).addOnCompleteListener(AuthLoginActivity.this, new OnCompleteListener<AuthResult>() {
+                    nFirebaseAuth.signInWithEmailAndPassword(strEmail, strPwd).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {    //task객체로 로그인 유무 파악
                             if (task.isSuccessful()) {
                                 //로그인 성공
-                                Intent intent = new Intent(AuthLoginActivity.this, AuthMainActivity.class);
-                                startActivity(intent);  //AuthMainActivity 이동
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);  //MainActivity 이동
                                 finish();   //현재 액티비티 파괴
                             } else {
                                 //로그인 실패
-                                Toast.makeText(AuthLoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -99,7 +99,7 @@ public class AuthLoginActivity extends AppCompatActivity{
             public void onClick(View view) {
 
                 //회원가입 화면으로 이동
-                Intent intent = new Intent(AuthLoginActivity.this, AuthRegisterActivity.class);
+                Intent intent = new Intent(LoginActivity.this, AuthRegisterActivity.class);
                 startActivity(intent);
             }
         });
@@ -151,13 +151,13 @@ public class AuthLoginActivity extends AppCompatActivity{
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful())
                         {
-                            startActivity(new Intent(AuthLoginActivity.this, AuthMainActivity.class));
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             finish();
-                            Toast.makeText(AuthLoginActivity.this, "Google Login Success!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "구글 계정으로 로그인되었습니다", Toast.LENGTH_SHORT).show();
                         }
                         else
                         {
-                            Toast.makeText(AuthLoginActivity.this, "Google Login Failure!",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "구글 계정으로 로그인에 실패하였습니다",Toast.LENGTH_SHORT).show();
                         }
 
                     }

@@ -62,12 +62,12 @@ public class AuthRegisterActivity extends AppCompatActivity {
 
                             nDatabaseRef.child("AuthUserAccount").child(firebaseUser.getUid()).setValue(account);   //Firebase DB에 인증된 사용자 계정 정보 등록!
 
-                            Toast.makeText(AuthRegisterActivity.this, "회원가입에 성공!",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AuthRegisterActivity.this, "회원가입 성공!",Toast.LENGTH_SHORT).show();
                             finish();
                         }
                         else    //Firebase 인증 실패
                         {
-                            Toast.makeText(AuthRegisterActivity.this, "회원가입에 실패!",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AuthRegisterActivity.this, "회원가입 실패!",Toast.LENGTH_SHORT).show();
                         }
 
                     }
