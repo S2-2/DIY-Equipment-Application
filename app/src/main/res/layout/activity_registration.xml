@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".front.signIn.auth.RegistrationActivity">
 
 
@@ -12,50 +13,27 @@
         android:id="@+id/imgBtn_diyRental"
         android:layout_width="415dp"
         android:layout_height="160dp"
-        android:layout_marginTop="2dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <EditText
         android:id="@+id/et_registrationEmail"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:hint="Email"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgBtn_diyRental" />
+        android:hint="Email" />
 
     <EditText
         android:id="@+id/et_registrationModelName"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
         android:hint="ModelName"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/et_registrationEmail"
-        app:layout_constraintStart_toStartOf="@+id/et_registrationEmail"
-        app:layout_constraintTop_toBottomOf="@+id/et_registrationEmail" />
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/et_registrationModelInform"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
-        android:ems="10"
         android:hint="ModelInform"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/et_registrationModelName"
-        app:layout_constraintStart_toStartOf="@+id/et_registrationModelName"
-        app:layout_constraintTop_toBottomOf="@+id/et_registrationModelName" />
+        android:inputType="textPersonName" />
 
     <RadioGroup
         android:id="@+id/rg_registrationRentalGroup"
@@ -77,50 +55,39 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
+        <RadioButton
+            android:id="@+id/rBtn_registrationFree"
+            android:text="무료 나눔"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
     </RadioGroup>
 
     <EditText
         android:id="@+id/et_registrationRentalType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="RentalType"
-        app:layout_constraintEnd_toEndOf="@+id/rg_registrationRentalGroup"
-        app:layout_constraintStart_toStartOf="@+id/rg_registrationRentalGroup"
-        app:layout_constraintTop_toBottomOf="@+id/rg_registrationRentalGroup"/>
+        android:hint="RentalType" />
 
     <EditText
         android:id="@+id/et_registrationRentalCost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
         android:inputType="number"
-        android:hint="RentalCost"
-        app:layout_constraintEnd_toEndOf="@+id/et_registrationRentalType"
-        app:layout_constraintStart_toStartOf="@+id/et_registrationRentalType"
-        app:layout_constraintTop_toBottomOf="@+id/et_registrationRentalType"/>
+        android:hint="RentalCost" />
 
     <EditText
         android:id="@+id/et_registrationRentalAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
         android:inputType="textPostalAddress"
-        android:hint="RentalAddress"
-        app:layout_constraintEnd_toEndOf="@+id/et_registrationRentalCost"
-        app:layout_constraintStart_toStartOf="@+id/et_registrationRentalCost"
-        app:layout_constraintTop_toBottomOf="@+id/et_registrationRentalCost"/>
+        android:hint="RentalAddress" />
 
     <Button
         android:id="@+id/btn_registrationAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="311dp"
-        android:text="Registration"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/et_registrationRentalAddress"
-        app:layout_constraintTop_toBottomOf="@+id/et_registrationRentalAddress" />
+        android:layout_gravity="center"
+        android:text="등록하기"/>
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
