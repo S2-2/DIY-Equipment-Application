@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".front.signIn.auth.RegistrationActivity">
 
-
     <ImageButton
         android:id="@+id/imageButton2"
         android:layout_width="415dp"
@@ -16,6 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
 
     <EditText
         android:id="@+id/modelName"
@@ -45,11 +45,9 @@
 
     <Button
         android:id="@+id/btn_Insert"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="311dp"
-        android:text="Insert"
+        android:text="등록하기"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/modelText"
         app:layout_constraintTop_toBottomOf="@+id/modelText" />
