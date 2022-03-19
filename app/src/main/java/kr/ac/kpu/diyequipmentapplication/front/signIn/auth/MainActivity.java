@@ -13,17 +13,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import kr.ac.kpu.diyequipmentapplication.R;
 
 //Firebase 인증을 통해 접근 가능한 메인 액티비티 클래스
-public class AuthMainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
     private FirebaseAuth nFirebaseAuth;     //FirebaseAuth 참조 변수 선언
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_auth_main);
+        setContentView(R.layout.activity_main);
 
 
         nFirebaseAuth = FirebaseAuth.getInstance();     //FirebaseAuth 참조
-
+/*
         Button btn_logout = findViewById(R.id.btn_logout);  //btn_logout 뷰 객체 참조
         btn_logout.setOnClickListener(new View.OnClickListener() {  //btn_logout 이벤트 리스너 등록
             @Override
@@ -32,18 +32,18 @@ public class AuthMainActivity extends AppCompatActivity {
                 nFirebaseAuth.signOut();    //Firebase 인증된 계정 로그아웃
 
                 //로그인 화면으로 이동
-                Intent intent = new Intent(AuthMainActivity.this, AuthLoginActivity.class);
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
-
+*/
         //DIY 등록 액티비티로 이동
         Button btn_register = findViewById(R.id.btn_register);
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AuthMainActivity.this, RegistrationActivity.class);
+                Intent intent = new Intent(MainActivity.this, RegistrationActivity.class);
                 startActivity(intent);
             }
         });
@@ -53,7 +53,7 @@ public class AuthMainActivity extends AppCompatActivity {
         btn_diyView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AuthMainActivity.this, RegistrationRecyclerView.class);
+                Intent intent = new Intent(MainActivity.this, RegistrationRecyclerView.class);
                 startActivity(intent);
             }
         });
