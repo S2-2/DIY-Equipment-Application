@@ -98,7 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="약관 보기"
-                android:textSize="18sp" />
+                android:textSize="18dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -112,14 +112,14 @@
                 android:layout_weight="1"
                 android:text="[필수] 위치정보 이용약관"
                 android:textColor="#6A6666"
-                android:textSize="18sp" />
+                android:textSize="18dp" />
 
             <Button
                 android:id="@+id/btn_terms3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="약관 보기"
-                android:textSize="18sp" />
+                android:textSize="18dp" />
         </LinearLayout>
 
     </LinearLayout>
