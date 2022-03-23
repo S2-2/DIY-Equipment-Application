@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, EquipmentDetailsActivity.class);
+                Intent intent = new Intent(MainActivity.this, EquipmentRegistrationActivity.class);
                 startActivity(intent);
             }
         });

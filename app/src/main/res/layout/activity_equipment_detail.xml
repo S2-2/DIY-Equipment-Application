@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".RentalDetailActivity">
+    tools:context=".EquipmentDetailActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,7 +13,7 @@
         android:background="#BFBFBF"
         android:gravity="center_vertical">
 
-        <ImageView
+        <ImageButton
             android:id="@+id/btn_drawer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
             tools:layout_editor_absoluteX="28dp"
             tools:layout_editor_absoluteY="43dp" />
 
-        <TextView
+        <EditText
             android:id="@+id/text_appname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
             android:gravity="center"
             android:text="앱 이름" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/btn_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical">
 
-        <ImageView
+        <ImageButton
             android:id="@+id/btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
             tools:layout_editor_absoluteX="28dp"
             tools:layout_editor_absoluteY="43dp" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/btn_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -60,6 +60,7 @@
     </LinearLayout>
 
 
+    <!--작성자 정보 및 채팅 연결 버튼-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -85,14 +86,16 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <TextView
+                <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/et_userNickname"
                     android:text="(작성자 별명)" />
 
-                <TextView
+                <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/et_userLocation"
                     android:text="(작성자 위치)" />
             </LinearLayout>
 
@@ -104,10 +107,9 @@
         </LinearLayout>
     </LinearLayout>
 
-
-    <!--공구 사진-->
+    <!--공구와 관련하여 등록된 모든 정보 DB에서 불러와서 화면에 출력!-->
     <ImageView
-        android:id="@+id/iv_rentalImage"
+        android:id="@+id/iv_EquipmentImage"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
@@ -123,9 +125,10 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <TextView
+            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/et_title"
                 android:layout_weight="1"
                 android:text="(제목)\nex) 코메론 줄자 필요하신 분 가져가세요"
                 android:textColor="@color/black"
@@ -141,13 +144,13 @@
                 app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
         </LinearLayout>
 
-        <TextView
+        <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="(게시일시) ex) 2일 전"
             android:textSize="10dp" />
 
-        <TextView
+        <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="(카테고리) ex) 측정공구 > 산업용줄자/각도기 "
@@ -164,9 +167,10 @@
             android:background="@color/browser_actions_bg_grey"
             android:text="거래 종류" />
 
-        <TextView
+        <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/et_rentalType"
             android:text="ex) 대여"
             android:textColor="@color/black" />
     </LinearLayout>
@@ -181,9 +185,10 @@
             android:background="@color/browser_actions_bg_grey"
             android:text="대여 가능 기간" />
 
-        <TextView
+        <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/et_rentalPeriod"
             android:text="ex) 2022년 3월 7일 ~ 2022년 4월"
             android:textColor="@color/black" />
     </LinearLayout>
@@ -198,17 +203,19 @@
             android:background="@color/browser_actions_bg_grey"
             android:text="대여료" />
 
-        <TextView
+        <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/et_rentalCost"
             android:text="ex) 1일 / 1,000원"
             android:textColor="@color/black" />
     </LinearLayout>
 
-    <TextView
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="(설명)"
+        android:id="@+id/et_explanation"
         android:textColor="@color/black"
         android:textSize="16dp" />
 

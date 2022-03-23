@@ -71,7 +71,7 @@ public class RegistrationAdapter extends RecyclerView.Adapter<RegistrationAdapte
                     int pos = getBindingAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION) {
                         EquipmentRegistration equipmentRegistration = equipmentRegistrationList.get(pos);
-                        Intent intent = new Intent(context, RentalDetailActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        Intent intent = new Intent(context, EquipmentDetailActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra("ModelName", equipmentRegistration.getModelName());
                         intent.putExtra("ModelInform", equipmentRegistration.getModelInform());
                         intent.putExtra("RentalImage",equipmentRegistration.getRentalImage());
