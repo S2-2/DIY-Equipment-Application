@@ -22,7 +22,7 @@
             android:name=".RegistrationRecyclerView"
             android:exported="false" />
         <activity
-            android:name=".EquipmentDetailsActivity"
+            android:name=".EquipmentRegistrationActivity"
             android:exported="false" />
         <activity
             android:name=".SignupActivity"

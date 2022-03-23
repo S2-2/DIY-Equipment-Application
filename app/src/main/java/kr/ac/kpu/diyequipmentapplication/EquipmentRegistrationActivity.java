@@ -31,7 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 //공급자가 DIY장비 등록하는 액티비티
-public class EquipmentDetailsActivity extends AppCompatActivity {
+public class EquipmentRegistrationActivity extends AppCompatActivity {
 
     //DIY장비 등록 액티비티 필드 선언
     private FirebaseUser registrationFirebaseAuth = null;      //파이어베이스 인증 객체 참조 변수
@@ -56,7 +56,7 @@ public class EquipmentDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_equipment_details);
+        setContentView(R.layout.activity_equipment_registration);
 
 
         //DIY장비 등록 액티비티 필드 초기화
@@ -87,7 +87,7 @@ public class EquipmentDetailsActivity extends AppCompatActivity {
             registrationUserEmail.setText(registrationGetUserEmail);        //등록 이메일 에디트텍스트 뷰에  이메일 설정
         }
         else{       //계정 정보가 없는 경우
-            Toast.makeText(EquipmentDetailsActivity.this, "인증 이메일 가져오기 실패!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(EquipmentRegistrationActivity.this, "인증 이메일 가져오기 실패!", Toast.LENGTH_SHORT).show();
         }
 
         //렌탈 종류, 렌탈 가격 뷰 비활성화
@@ -180,7 +180,7 @@ public class EquipmentDetailsActivity extends AppCompatActivity {
                                     registrationProgressDialog.dismiss();
 
                                     //공급자가 입력한 DIY 등록 액티비티에서 DIY 메인 액티비티로 이동
-                                    Intent intent = new Intent(EquipmentDetailsActivity.this, MainActivity.class);
+                                    Intent intent = new Intent(EquipmentRegistrationActivity.this, MainActivity.class);
                                     startActivity(intent);
                                 }
                             });

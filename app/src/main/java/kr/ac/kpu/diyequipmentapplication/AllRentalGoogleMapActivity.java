@@ -168,7 +168,7 @@ public class AllRentalGoogleMapActivity extends AppCompatActivity implements OnM
             case 3:
                 //gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.568256, 126.897240), 15)); //월드컵경기장 위치
 
-                //Intent intent = new Intent(RentalGoogleMap.this, RentalDetailActivity.class);
+                //Intent intent = new Intent(RentalGoogleMap.this, EquipmentDetailActivity.class);
                 //startActivity(intent);
                 finish();
                 return true;
