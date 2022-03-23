@@ -4,24 +4,64 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import kr.ac.kpu.diyequipmentapplication.front.signIn.auth.AuthLoginActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
+//Firebase 인증을 통해 접근 가능한 메인 액티비티 클래스
 public class MainActivity extends AppCompatActivity {
+    private FirebaseAuth nFirebaseAuth;     //FirebaseAuth 참조 변수 선언
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button btn_next = findViewById(R.id.btn_nextLogin);
-        btn_next.setOnClickListener(new View.OnClickListener() {
+
+        nFirebaseAuth = FirebaseAuth.getInstance();     //FirebaseAuth 참조
+/*
+        Button btn_logout = findViewById(R.id.btn_logout);  //btn_logout 뷰 객체 참조
+        btn_logout.setOnClickListener(new View.OnClickListener() {  //btn_logout 이벤트 리스너 등록
             @Override
             public void onClick(View view) {
-                //로그인 화면으로 이동동
-                Intent intent = new Intent(MainActivity.this, AuthLoginActivity.class);
+                //로그아웃 하기
+                nFirebaseAuth.signOut();    //Firebase 인증된 계정 로그아웃
+
+                //로그인 화면으로 이동
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
+                finish();
+            }
+        });
+*/
+        //DIY 등록 액티비티로 이동
+        Button btn_register = findViewById(R.id.btn_register);
+        btn_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, EquipmentRegistrationActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //DIY 목록 액티비티로 이동
+        Button btn_diyView = findViewById(R.id.btn_dyiView);
+        btn_diyView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, RegistrationRecyclerView.class);
+                startActivity(intent);
+            }
+        });
+
+        //DIY 구글맵 액티비티로 이동
+        Button btn_diyGoogMap = findViewById(R.id.btn_dyiGoogleMap);
+        btn_diyGoogMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this,"DIY Google Map 개발중.......", Toast.LENGTH_SHORT).show();
             }
         });
     }
