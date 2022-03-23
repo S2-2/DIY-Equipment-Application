@@ -2,12 +2,12 @@
     <!-- Base application theme. -->
     <style name="Theme.DIYEquipmentApplication" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#834C24</item>
-        <item name="colorPrimaryVariant">#1F1209</item>
+        <item name="colorPrimary">#336699</item>
+        <item name="colorPrimaryVariant">#003366</item>
         <item name="colorOnPrimary">#FFF8DC</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">#336699</item>
-        <item name="colorSecondaryVariant">#003366</item>
+        <item name="colorSecondary">#834C24</item>
+        <item name="colorSecondaryVariant">#1F1209</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>

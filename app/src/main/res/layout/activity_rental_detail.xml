@@ -7,11 +7,11 @@
     android:orientation="vertical"
     tools:context=".RentalDetailActivity">
 
-    // 상단 드로어 메뉴랑 검색창
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="30dp"
+        android:background="#BFBFBF"
+        android:gravity="center_vertical">
 
         <ImageView
             android:id="@+id/btn_drawer"
@@ -25,14 +25,9 @@
             android:id="@+id/text_appname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="앱 이름"
-            tools:layout_editor_absoluteX="59dp"
-            tools:layout_editor_absoluteY="50dp" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="앱 이름" />
 
         <ImageView
             android:id="@+id/btn_search"
@@ -43,14 +38,74 @@
             tools:layout_editor_absoluteY="50dp" />
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/btn_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24"
-        tools:layout_editor_absoluteX="28dp"
-        tools:layout_editor_absoluteY="43dp" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24"
+            tools:layout_editor_absoluteX="28dp"
+            tools:layout_editor_absoluteY="43dp" />
+
+        <ImageView
+            android:id="@+id/btn_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_baseline_home_24" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_UserProfilePhoto"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="(작성자 별명)" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="(작성자 위치)" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="거래자와 채팅하기" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <!--공구 사진-->
     <ImageView
         android:id="@+id/iv_rentalImage"
         android:layout_width="match_parent"
@@ -60,138 +115,102 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="게시자 이메일" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="공구 이름" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="설명" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="게시날짜" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="대여기간" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="대여료" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="장비 위치" />
-        </LinearLayout>
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/ed_userEmail"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_rentalImage" />
+                android:layout_weight="1"
+                android:text="(제목)\nex) 코메론 줄자 필요하신 분 가져가세요"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/ed_modelName"
-                android:layout_width="match_parent"
+            <!--찜 버튼-->
+            <!--클릭 시 하트가 채워지고 유저의 DB 찜 목록에 저장되도록 할 것!-->
+            <ImageView
+                android:id="@+id/btn_like"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                app:layout_constraintEnd_toEndOf="@+id/ed_userEmail"
-                app:layout_constraintStart_toStartOf="@+id/ed_userEmail"
-                app:layout_constraintTop_toBottomOf="@+id/ed_userEmail" />
-
-            <TextView
-                android:id="@+id/ed_modelInform"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                app:layout_constraintEnd_toEndOf="@+id/ed_modelName"
-                app:layout_constraintStart_toStartOf="@+id/ed_modelName"
-                app:layout_constraintTop_toBottomOf="@+id/ed_modelName" />
-
-            <TextView
-                android:id="@+id/ed_rentalDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                app:layout_constraintEnd_toEndOf="@+id/ed_modelInform"
-                app:layout_constraintStart_toStartOf="@+id/ed_modelInform"
-                app:layout_constraintTop_toBottomOf="@+id/ed_modelInform" />
-
-            <TextView
-                android:id="@+id/ed_rentalType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                app:layout_constraintEnd_toEndOf="@+id/ed_rentalDate"
-                app:layout_constraintStart_toStartOf="@+id/ed_rentalDate"
-                app:layout_constraintTop_toBottomOf="@+id/ed_rentalDate" />
-
-            <TextView
-                android:id="@+id/ed_rentalCost"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                app:layout_constraintEnd_toEndOf="@+id/ed_rentalType"
-                app:layout_constraintStart_toStartOf="@+id/ed_rentalType"
-                app:layout_constraintTop_toBottomOf="@+id/ed_rentalType" />
-
-            <TextView
-                android:id="@+id/ed_rentalAddress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                app:layout_constraintEnd_toEndOf="@+id/ed_rentalCost"
-                app:layout_constraintStart_toStartOf="@+id/ed_rentalCost"
-                app:layout_constraintTop_toBottomOf="@+id/ed_rentalCost" />
-
+                app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
         </LinearLayout>
-    </LinearLayout>
 
-    // 하단 버튼
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(게시일시) ex) 2일 전"
+            android:textSize="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(카테고리) ex) 측정공구 > 산업용줄자/각도기 "
+            android:textSize="10dp" />
+    </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/btn_rentalGoogleMap"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="지도로 장비 현황 보기"/>
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:background="@color/browser_actions_bg_grey"
+            android:text="거래 종류" />
 
-        <Button
-            android:id="@+id/btn_message"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="거래자와 채팅하기" />
+            android:text="ex) 대여"
+            android:textColor="@color/black" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:background="@color/browser_actions_bg_grey"
+            android:text="대여 가능 기간" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ex) 2022년 3월 7일 ~ 2022년 4월"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:background="@color/browser_actions_bg_grey"
+            android:text="대여료" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ex) 1일 / 1,000원"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(설명)"
+        android:textColor="@color/black"
+        android:textSize="16dp" />
 
 </LinearLayout>
 

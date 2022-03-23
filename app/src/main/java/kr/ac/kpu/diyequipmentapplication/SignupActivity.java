@@ -31,7 +31,7 @@ public class SignupActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
+        setContentView(R.layout.activity_signup_2);
 
         //회원가입 액티비티 클래스 필드 초기화
         authRegisterFirebaseAuth = FirebaseAuth.getInstance();                                          //Firebase 인증 객체 참조
