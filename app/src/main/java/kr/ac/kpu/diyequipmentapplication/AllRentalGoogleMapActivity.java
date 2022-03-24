@@ -1,4 +1,4 @@
-package kr.ac.kpu.diyequipmentapplication.front.signIn.auth;
+package kr.ac.kpu.diyequipmentapplication;
 
 import android.content.Context;
 import android.location.Address;
@@ -28,8 +28,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import kr.ac.kpu.diyequipmentapplication.R;
 
 //현재 작업중인 액티비티 클래스입니다.
 //등록된 전체 장비 대여 주소를 구글맵에 마커로 표기하는 클래스 구현
@@ -170,7 +168,7 @@ public class AllRentalGoogleMapActivity extends AppCompatActivity implements OnM
             case 3:
                 //gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.568256, 126.897240), 15)); //월드컵경기장 위치
 
-                //Intent intent = new Intent(RentalGoogleMap.this, RentalDetailActivity.class);
+                //Intent intent = new Intent(RentalGoogleMap.this, EquipmentDetailActivity.class);
                 //startActivity(intent);
                 finish();
                 return true;

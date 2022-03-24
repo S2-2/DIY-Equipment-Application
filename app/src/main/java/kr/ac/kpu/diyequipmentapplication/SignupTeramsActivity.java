@@ -1,7 +1,6 @@
-package kr.ac.kpu.diyequipmentapplication.front.signIn;
+package kr.ac.kpu.diyequipmentapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatCheckBox;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,10 +10,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
-import kr.ac.kpu.diyequipmentapplication.MainActivity;
-import kr.ac.kpu.diyequipmentapplication.R;
-
-public class terms extends AppCompatActivity {
+public class SignupTeramsActivity extends AppCompatActivity {
 
     // 다음 페이지로 진행하는 버튼
     public Button btn_next1;
@@ -28,7 +24,7 @@ public class terms extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_terms);
+        setContentView(R.layout.activity_signup_1_terms);
 
         // 체크박스
         CheckBox check_all = (CheckBox) findViewById(R.id.cb_termsAll); // 전체약관 체크박스
@@ -37,7 +33,7 @@ public class terms extends AppCompatActivity {
         CheckBox check3 = (CheckBox) findViewById(R.id.cb_terms3);  // 위치정보 이용약관 체크박스
 
         // 다음버튼
-        btn_next1 = (Button) findViewById(R.id.btn_next1);
+        btn_next1 = (Button) findViewById(R.id.btn_signupNext);
 
         // 전체동의
         check_all.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
@@ -100,18 +96,17 @@ public class terms extends AppCompatActivity {
             public void onClick(View view) {
                 if (!TERMS_AGREE_ALL){  // 전체 동의 체크 안된 경우
                     if(TERMS_AGREE_1&&TERMS_AGREE_2&&TERMS_AGREE_3){
-                        startActivity(new Intent(terms.this, MainActivity.class));
+                        startActivity(new Intent(SignupTeramsActivity.this, MainActivity.class));
                     }
                     else{
-                        Toast myToast = Toast.makeText(terms.this.getApplicationContext(),"약관을 체크해주세요.",Toast.LENGTH_SHORT);
+                        Toast myToast = Toast.makeText(SignupTeramsActivity.this.getApplicationContext(),"약관을 체크해주세요.",Toast.LENGTH_SHORT);
                         return;
                     }
                 }
                 else{       // 전체 동의 체크 된 경우
-                    startActivity(new Intent(terms.this, MainActivity.class));
+                    startActivity(new Intent(SignupTeramsActivity.this, SignupActivity.class));
                 }
             }
-            // commit test 02.212222222
         });
     }
 }

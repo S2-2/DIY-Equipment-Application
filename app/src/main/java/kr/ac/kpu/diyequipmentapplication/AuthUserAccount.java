@@ -1,9 +1,10 @@
-package kr.ac.kpu.diyequipmentapplication.front.signIn.auth;
+package kr.ac.kpu.diyequipmentapplication;
 
 //Firebase DB에 등록하기 위해 인증된 사용자 계정 클래스 선언
 public class AuthUserAccount {
     private String emailId;     //Firebase 인증 이메일을 참조하기 위한 변수 선언
     private String password;    //Firebase 인증 패스워드을 참조하기 위한 변수 선언
+    private String name;
     private String idToken;     //Firebase Uid 고유 토큰정보 참조하기 위한 변수 선언
 
     public AuthUserAccount() { }    //기본 생성자
@@ -25,10 +26,17 @@ public class AuthUserAccount {
         this.emailId = emailId;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
     }

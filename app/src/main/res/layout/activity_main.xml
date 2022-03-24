@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".front.signIn.auth.MainActivity">
+    android:orientation="vertical">
 
     // 상단 드로어 메뉴랑 검색창
     <LinearLayout
@@ -13,7 +12,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/btn_drawer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_baseline_menu_24"
@@ -21,7 +20,7 @@
             tools:layout_editor_absoluteY="43dp" />
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/text_appname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="앱 이름"
@@ -34,7 +33,7 @@
             android:layout_weight="1" />
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/btn_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_baseline_search_24"

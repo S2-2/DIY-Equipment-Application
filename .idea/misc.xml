@@ -3,6 +3,35 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+<<<<<<<<< Temporary merge branch 1
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_auth_login.xml" value="0.22083333333333333" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_auth_main.xml" value="0.22083333333333333" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_auth_register.xml" value="0.22083333333333333" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_login.xml" value="0.1875" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_main.xml" value="0.18697916666666667" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_registration.xml" value="0.22083333333333333" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_registration_recycler_view.xml" value="0.22083333333333333" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_terms.xml" value="0.22083333333333333" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/community.xml" value="0.28125" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/community_detail_page.xml" value="0.28125" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/eq_detail_page.xml" value="0.28125" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/eq_detail_page_comment.xml" value="0.28125" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/eq_list.xml" value="0.28125" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/eq_register.xml" value="0.28125" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/first.xml" value="0.2625" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/home.xml" value="0.22" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/list_equipmentitem.xml" value="0.22083333333333333" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/message.xml" value="0.28125" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/message_detail_page.xml" value="0.33" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/mypage.xml" value="0.22083333333333333" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/navi_header.xml" value="0.28125" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/navi_header2.xml" value="0.3328804347826087" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/navi_menu.xml" value="0.3328804347826087" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/sign_in.xml" value="0.33" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/sign_up.xml" value="0.28125" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/single_eq_list.xml" value="0.3328804347826087" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/menu/navi_menu.xml" value="0.36614583333333334" />
+=========
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_all_rental_google_map.xml" value="0.25885416666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_auth_login.xml" value="0.1328125" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_auth_main.xml" value="0.25885416666666666" />
@@ -19,10 +48,11 @@
         <entry key="..\:/DIY_test00/app/src/main/res/layout/sign_in.xml" value="0.1328125" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/sign_up.xml" value="0.1328125" />
         <entry key="..\:/DIY_test00/app/src/main/res/menu/menu.xml" value="0.25885416666666666" />
+>>>>>>>>> Temporary merge branch 2
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

@@ -47,24 +47,27 @@
             android:name=".front.signIn.auth.AuthRegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".front.signIn.auth.AuthMainActivity"
+            android:name=".front.signIn.auth.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".front.signIn.auth.AuthLoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".front.signIn.auth.LoginActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<<<< Temporary merge branch 1
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"/>
+=========
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyDi4ubxd4x_jzamTruNiYjUMpi9WT78vzU" />
+>>>>>>>>> Temporary merge branch 2
     </application>
 
 </manifest>

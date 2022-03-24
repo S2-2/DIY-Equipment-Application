@@ -95,6 +95,15 @@ public class AuthRegisterActivity extends AppCompatActivity {
 
                     authRegisterDatabaseRef.child("AuthUserAccount").child(authRegisterFirebaseUser.getUid()).setValue(account);   //Firebase DB에 인증된 사용자 계정 정보 등록!
 
+<<<<<<<<< Temporary merge branch 1
+                            Toast.makeText(AuthRegisterActivity.this, "회원가입 성공!",Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                        else    //Firebase 인증 실패
+                        {
+                            Toast.makeText(AuthRegisterActivity.this, "회원가입 실패!",Toast.LENGTH_SHORT).show();
+                        }
+=========
                     Toast.makeText(AuthRegisterActivity.this, "Sign Up Success!",Toast.LENGTH_SHORT).show();
                     finish();
                 }
@@ -102,6 +111,7 @@ public class AuthRegisterActivity extends AppCompatActivity {
                 {
                     Toast.makeText(AuthRegisterActivity.this, "Sign Up Failure!",Toast.LENGTH_SHORT).show();
                 }
+>>>>>>>>> Temporary merge branch 2
 
             }
         });

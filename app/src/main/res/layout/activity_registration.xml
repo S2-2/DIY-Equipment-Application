@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".front.signIn.auth.RegistrationActivity">
 
-
     <ImageButton
         android:id="@+id/imgBtn_diyRental"
         android:layout_width="415dp"
@@ -17,6 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
 
     <EditText
         android:id="@+id/et_registrationEmail"
@@ -112,12 +112,19 @@
         app:layout_constraintTop_toBottomOf="@+id/et_registrationRentalCost"/>
 
     <Button
+<<<<<<<<< Temporary merge branch 1
+        android:id="@+id/btn_Insert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="등록하기"
+=========
         android:id="@+id/btn_registrationAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="311dp"
         android:text="Registration"
+>>>>>>>>> Temporary merge branch 2
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/et_registrationRentalAddress"
         app:layout_constraintTop_toBottomOf="@+id/et_registrationRentalAddress" />
