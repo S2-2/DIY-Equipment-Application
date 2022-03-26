@@ -143,6 +143,7 @@ public class LoginActivity extends AppCompatActivity{
                         Toast.makeText(LoginActivity.this, "로그인 성공",Toast.LENGTH_SHORT).show();
                     } else {    //Firebase 인증 성공이지만, 로그인 실패인 경우
                         Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
+
                     }
                 } else {    //Firebase에 등록된 계정으로 인증 메일 전송 실패인 경우
                    Toast.makeText(LoginActivity.this, "Email Authentication Failure!", Toast.LENGTH_SHORT).show();

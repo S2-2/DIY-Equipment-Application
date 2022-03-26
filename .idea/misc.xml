@@ -7,20 +7,26 @@
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_auth_login.xml" value="0.1328125" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_auth_main.xml" value="0.25885416666666666" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_auth_register.xml" value="0.24427083333333333" />
-        <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_main.xml" value="0.1328126" />
+        <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_chatting.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_equipment_detail.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_equipment_registration.xml" value="0.2" />
+        <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_login.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_main2222222222222.xml" value="0.16875" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_registration.xml" value="0.264" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_registration_recycler_view.xml" value="0.25885416666666666" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_rental_detail.xml" value="0.25448028673835127" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_rental_google_map.xml" value="0.25885416666666666" />
+        <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_signup_1_terms.xml" value="0.1" />
+        <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_signup_2.xml" value="0.1" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_splash.xml" value="0.128125" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_terms.xml" value="0.1328127" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/list_equipmentitem.xml" value="0.1" />
-        <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/list_rentaldetail.xml" value="0.2588541666666666" />
+        <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/list_rentaldetail.xml" value="0.258854166666666" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/mypage.xml" value="0.1328128" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/sign_in.xml" value="0.1328129" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/sign_up.xml" value="0.1328124" />
-        <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/menu/menu.xml" value="0.2588541666666666" />
+        <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/menu/menu.xml" value="0.2588541666666661" />
       </map>
     </option>
   </component>

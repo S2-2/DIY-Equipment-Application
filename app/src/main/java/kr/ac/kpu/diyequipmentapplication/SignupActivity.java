@@ -91,6 +91,7 @@ public class SignupActivity extends AppCompatActivity {
                     account.setEmailId(authRegisterFirebaseUser.getEmail());            //Firebase인증에 등록된 계정 Email 참조
                     account.setPassword(registerPwd);                                   //사용자 패스워드 참조
 
+
                     authRegisterDatabaseRef.child("AuthUserAccount").child(authRegisterFirebaseUser.getUid()).setValue(account);   //Firebase DB에 인증된 사용자 계정 정보 등록!
 
                     Toast.makeText(SignupActivity.this, "Sign Up Success!",Toast.LENGTH_SHORT).show();
