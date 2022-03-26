@@ -3,9 +3,7 @@ package kr.ac.kpu.diyequipmentapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -34,11 +32,11 @@ public class MainActivity extends AppCompatActivity {
 */
         
         //DIY 장비 거래 액티비티로 이동
-        ImageButton btn_rentalList = findViewById(R.id.btn_main_rentalList);
+        ImageButton btn_rentalList = findViewById(R.id.main_btn_rentalList);
         btn_rentalList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, RegistrationRecyclerView.class);
+                Intent intent = new Intent(MainActivity.this, RegistrationRecyclerview.class);
                 startActivity(intent);
             }
         });

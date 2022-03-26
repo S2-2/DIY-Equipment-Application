@@ -12,7 +12,7 @@
         android:paddingTop="20dp">
 
         <ImageButton
-            android:id="@+id/btn_back"
+            android:id="@+id/signup_btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24" />
@@ -62,7 +62,7 @@
                 android:text="아이디 : " />
 
             <EditText
-                android:id="@+id/et_checkId"
+                android:id="@+id/checkId_et_checkId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="text"
@@ -78,7 +78,7 @@
 
         <!--btn_checkId_login은 activity_login하고 연결-->
         <Button
-            android:id="@+id/btn_checkId_login"
+            android:id="@+id/checkId_btn_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -89,7 +89,7 @@
 
         <!--btn_checkId_changePwd은 activity_change_pwd하고 연결-->
         <Button
-            android:id="@+id/btn_checkId_changePwd"
+            android:id="@+id/checkId_btn_changePwd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

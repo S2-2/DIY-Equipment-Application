@@ -61,10 +61,10 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
 
         //DIY장비 등록 액티비티 필드 초기화
         registrationImgBtn = findViewById(R.id.imgBtn_diyRental);
-        registrationUserEmail = findViewById(R.id.et_registrationEmail);
+        registrationUserEmail = findViewById(R.id.equipmentRegistration_et_nickname);
         registrationModelName = findViewById(R.id.et_registrationModelName);
         registrationModelInform = findViewById(R.id.et_registrationModelInform);
-        registrationBtnAdd = findViewById(R.id.btn_registrationAdd);
+        registrationBtnAdd = findViewById(R.id.equipmentRegistration_btn_registration);
         registrationRentalGroup = findViewById(R.id.rg_registrationRentalGroup);
         registrationFeeRental = findViewById(R.id.rBtn_registrationFeeRental);
         registrationFreeRental = findViewById(R.id.rBtn_registrationFree);

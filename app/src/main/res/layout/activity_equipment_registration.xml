@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <ImageButton
-        android:id="@+id/btn_back"
+        android:id="@+id/signup_btn_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24" />
@@ -19,12 +19,14 @@
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <EditText
-        android:id="@+id/et_registrationEmail"
+        android:id="@+id/equipmentRegistration_et_nickname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email"
+        android:hint="유저 닉네임 나오게 설정하기"
         android:textSize="20dp" />
 
+
+    <!-- 이하 수정 중 -->
     <EditText
         android:id="@+id/et_registrationModelName"
         android:layout_width="match_parent"
@@ -86,7 +88,7 @@
         android:textSize="20dp" />
 
     <Button
-        android:id="@+id/btn_registrationAdd"
+        android:id="@+id/equipmentRegistration_btn_registration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="등록하기"

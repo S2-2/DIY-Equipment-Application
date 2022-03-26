@@ -14,7 +14,7 @@
         android:gravity="center_vertical">
 
         <ImageButton
-            android:id="@+id/btn_drawer"
+            android:id="@+id/registrationRecyclerview_btn_drawer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_baseline_menu_24"
@@ -29,7 +29,7 @@
             android:text="앱 이름" />
 
         <ImageButton
-            android:id="@+id/btn_search"
+            android:id="@+id/registrationRecyclerview_btn_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_baseline_search_24"
@@ -44,7 +44,7 @@
         android:gravity="center_vertical">
 
         <ImageButton
-            android:id="@+id/btn_back"
+            android:id="@+id/signup_btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24"
@@ -52,7 +52,7 @@
             tools:layout_editor_absoluteY="43dp" />
 
         <ImageButton
-            android:id="@+id/btn_home"
+            android:id="@+id/registrationRecyclerview_btn_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_baseline_home_24" />
@@ -88,18 +88,18 @@
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/et_userNickname"
+                    android:id="@+id/equipmentDetail_et_nickname"
                     android:text="(작성자 별명)" />
 
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/et_userLocation"
+                    android:id="@+id/equipmentDetail_et_location"
                     android:text="(작성자 위치)" />
             </LinearLayout>
 
             <Button
-                android:id="@+id/btn_message"
+                android:id="@+id/equipmentDetail_btn_chatting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="거래자와 채팅하기" />
@@ -137,19 +137,21 @@
             <!--찜 버튼-->
             <!--클릭 시 하트가 채워지고 유저의 DB 찜 목록에 저장되도록 할 것!-->
             <ImageButton
-                android:id="@+id/btn_like"
+                android:id="@+id/equipmentDetail_btn_like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
         </LinearLayout>
 
         <EditText
+            android:id="@+id/equipmentDetail_et_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="(게시일시) ex) 2일 전"
             android:textSize="10dp" />
 
         <EditText
+            android:id="@+id/equipmentDetail_et_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="(카테고리) ex) 측정공구 > 산업용줄자/각도기 "
@@ -169,7 +171,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/et_rentalType"
+            android:id="@+id/equipmentDetail_et_rentalType"
             android:text="ex) 대여"
             android:textColor="@color/black" />
     </LinearLayout>
@@ -187,7 +189,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/et_rentalPeriod"
+            android:id="@+id/equipmentDetail_et_rentalPeriod"
             android:text="ex) 2022년 3월 7일 ~ 2022년 4월"
             android:textColor="@color/black" />
     </LinearLayout>
@@ -205,7 +207,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/et_rentalCost"
+            android:id="@+id/equipmentDetail_et_rentalCost"
             android:text="ex) 1일 / 1,000원"
             android:textColor="@color/black" />
     </LinearLayout>
@@ -214,7 +216,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="(설명)"
-        android:id="@+id/et_explanation"
+        android:id="@+id/equipmentDetail_et_explanation"
         android:textColor="@color/black"
         android:textSize="16dp" />
 

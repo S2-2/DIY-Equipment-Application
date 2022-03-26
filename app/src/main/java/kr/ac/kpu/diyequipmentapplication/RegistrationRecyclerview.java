@@ -18,7 +18,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import java.util.ArrayList;
 
 //공급자가 입력한 데이터를 RecyclerView를 이용해 DIY-목록으로 보여주는 액티비티 클래스 구현
-public class RegistrationRecyclerView extends AppCompatActivity {
+public class RegistrationRecyclerview extends AppCompatActivity {
 
     //RecyclerView 필드
     FirebaseDatabase mDatabase;
@@ -32,19 +32,19 @@ public class RegistrationRecyclerView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registration_recycler_view);
+        setContentView(R.layout.activity_registration_recyclerview);
 
         //RecyclerView 필드 참조
         mDatabase = FirebaseDatabase.getInstance();
         mRef = mDatabase.getReference().child("DIY_Equipment_Rental");
         mStorage = FirebaseStorage.getInstance();
-        recyclerView = findViewById(R.id.recyclerview_id);
+        recyclerView = findViewById(R.id.registrationRecyclerview_recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //RecyclerView에 RegistrationAdapter 클래스 등록 구현
         equipmentRegistrationList = new ArrayList<EquipmentRegistration>();
-        registrationAdapter = new RegistrationAdapter(RegistrationRecyclerView.this,equipmentRegistrationList);
+        registrationAdapter = new RegistrationAdapter(RegistrationRecyclerview.this,equipmentRegistrationList);
 
         recyclerView.setAdapter(registrationAdapter);
 

@@ -29,7 +29,7 @@ public class RegistrationAdapter extends RecyclerView.Adapter<RegistrationAdapte
     @NonNull
     @Override
     public RegistrationAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_equipmentitem,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.registration_recyclerview_item,parent,false);
         return new ViewHolder(v);
     }
 
@@ -61,9 +61,9 @@ public class RegistrationAdapter extends RecyclerView.Adapter<RegistrationAdapte
             super(itemView);
 
             //list_equipmentitem.xml파일에 있는 뷰 객체 참조
-            imageView = itemView.findViewById(R.id.image_recyclerView_id);
-            tvModelName = itemView.findViewById(R.id.modelName_recyclerView_id);
-            tvModelText = itemView.findViewById(R.id.modelText_recyclerView_id);
+            imageView = itemView.findViewById(R.id.registrationRecyclerviewItem_iv);
+            tvModelName = itemView.findViewById(R.id.registrationRecyclerviewItem_tv_title);
+            tvModelText = itemView.findViewById(R.id.registrationRecyclerviewItem_tv_modelText);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

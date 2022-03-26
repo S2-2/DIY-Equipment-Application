@@ -15,13 +15,12 @@
         android:gravity="center">
 
         <ImageButton
-            android:id="@+id/btn_drawer"
+            android:id="@+id/registrationRecyclerview_btn_drawer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_baseline_menu_24" />
 
         <TextView
-            android:id="@+id/text_appName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -31,7 +30,7 @@
 
 
         <ImageButton
-            android:id="@+id/btn_search"
+            android:id="@+id/registrationRecyclerview_btn_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_baseline_search_24" />
@@ -47,7 +46,7 @@
             android:text="안녕하세요, " />
 
         <EditText
-            android:id="@+id/tv_main_nickname"
+            android:id="@+id/main_et_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="(별명)" />
@@ -63,7 +62,7 @@
             android:layout_weight="1" />
 
         <ImageButton
-            android:id="@+id/imageView3"
+            android:id="@+id/main_btn_alarm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
@@ -96,15 +95,16 @@
                     android:text="실시간 공구 거래" />
 
                 <ImageButton
-                    android:id="@+id/btn_main_rentalList"
+                    android:id="@+id/main_btn_rentalList"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_arrow_forward_ios_24" />
 
             </LinearLayout>
 
+            <!-- 리스트뷰는 아직 수정 중 -->
             <ListView
-                android:id="@+id/lv_main_deal"
+                android:id="@+id/main_lv_rentalLIst"
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
         </LinearLayout>
@@ -132,14 +132,15 @@
                         android:text="커뮤니티" />
 
                     <ImageButton
-                        android:id="@+id/btn_main_bestRental"
+                        android:id="@+id/main_btn_community"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24" />
                 </LinearLayout>
 
+                <!-- 리스트뷰는 아직 수정 중 -->
                 <ListView
-                    android:id="@+id/lv_main_community"
+                    android:id="@+id/main_lv_community"
                     android:layout_width="match_parent"
                     android:layout_height="200dp" />
             </LinearLayout>
@@ -154,7 +155,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
  -->
-
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

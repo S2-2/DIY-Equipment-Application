@@ -12,7 +12,7 @@
         android:paddingTop="20dp">
 
         <ImageButton
-            android:id="@+id/btn_back"
+            android:id="@+id/signup_btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24" />
@@ -58,7 +58,7 @@
             android:text="이름" />
 
         <EditText
-            android:id="@+id/et_findId_name"
+            android:id="@+id/findId_et_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
@@ -71,7 +71,7 @@
             android:text="본인 확인 이메일" />
 
         <EditText
-            android:id="@+id/et_findId_email"
+            android:id="@+id/findId_et_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
@@ -79,14 +79,14 @@
             android:textSize="20dp" />
 
         <Button
-            android:id="@+id/btn_findId_authNum"
+            android:id="@+id/findId_btn_authNum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="인증번호 받기" />
 
         <EditText
-            android:id="@+id/et_findId_authNum"
+            android:id="@+id/findId_et_authNum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -98,7 +98,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_next"
+        android:id="@+id/findPwd_btn_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

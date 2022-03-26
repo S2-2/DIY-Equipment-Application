@@ -51,11 +51,11 @@ public class LoginActivity extends AppCompatActivity{
 
         authLoginFirebaseAuth = FirebaseAuth.getInstance();     //Firebase 인증 객체 참조
         authLoginDatabaseReference = FirebaseDatabase.getInstance().getReference("DIY-Auth-DB"); //Firebase DB 객체 참조
-        authLoginEmail = findViewById(R.id.et_email);              //et_email 뷰 객체 참조
-        authLoginPwd = findViewById(R.id.et_pwd);                  //et_pwd 뷰 객체 참조
-        login = findViewById(R.id.btn_login);                 //btn_login 뷰 객체 참조
-        signup = findViewById(R.id.btn_register);      //btn_signup 뷰 객체 참조
-        authLoginSignInButton = findViewById(R.id.btn_google);    //btn_google 뷰 객체 참조
+        authLoginEmail = findViewById(R.id.login_et_id);              //et_email 뷰 객체 참조
+        authLoginPwd = findViewById(R.id.login_et_pwd);                  //et_pwd 뷰 객체 참조
+        login = findViewById(R.id.login_btn_login);                 //btn_login 뷰 객체 참조
+        signup = findViewById(R.id.login_btn_signup);      //btn_signup 뷰 객체 참조
+        authLoginSignInButton = findViewById(R.id.login_btn_loginGoogle);    //btn_google 뷰 객체 참조
 
 
 
