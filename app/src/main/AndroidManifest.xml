@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="kr.ac.kpu.diyequipmentapplication">
 
     <application
@@ -11,6 +10,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DIYEquipmentApplication">
         <activity
+            android:name=".CommunityRegistrationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CommunityActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CheckIdActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChangePwdActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FindPwdActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FindIdActivity"
+            android:exported="false" />
+        <activity
             android:name=".LoginActivity"
             android:exported="true" >
             <intent-filter>
@@ -19,6 +36,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".NavigationDrawerActivity"
             android:exported="false" />

@@ -33,12 +33,18 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_2);
 
+
+
+
+        /*
         //회원가입 액티비티 클래스 필드 초기화
         authRegisterFirebaseAuth = FirebaseAuth.getInstance();                                          //Firebase 인증 객체 참조
         authRegisterDatabaseRef = FirebaseDatabase.getInstance().getReference("DIY-Auth-DB");     //Firebase DB 객체 참조
         authRegisterEmail = findViewById(R.id.et_signupEmail);                                   //et_authRegisterEmail 뷰 객체 참조
         authRegisterPwd = findViewById(R.id.et_signupPwd);                                       //et_authRegisterPwd 뷰 객체 참조
         authRegisterButton = findViewById(R.id.btn_signup);                                      //btn_authRegister 뷰 객체 참조
+*/
+
 
         //회원가입 등록
         authRegisterButton.setOnClickListener(new View.OnClickListener() {
@@ -101,6 +107,7 @@ public class SignupActivity extends AppCompatActivity {
                 {
                     Toast.makeText(SignupActivity.this, "Sign Up Failure!",Toast.LENGTH_SHORT).show();
                 }
+
 
             }
         });
