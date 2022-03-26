@@ -21,8 +21,7 @@
             tools:layout_editor_absoluteX="28dp"
             tools:layout_editor_absoluteY="43dp" />
 
-        <EditText
-            android:id="@+id/text_appname"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

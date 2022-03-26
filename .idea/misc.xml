@@ -10,6 +10,8 @@
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_change_pwd.xml" value="0.253125" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_chatting.xml" value="0.22083333333333333" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_check_id.xml" value="0.2677083333333333" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_community.xml" value="0.2677083333333333" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_community_registration.xml" value="0.2677083333333333" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_equipment_detail.xml" value="0.2677083333333333" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_equipment_details.xml" value="0.2677083333333333" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_equipment_registration.xml" value="0.2677083333333333" />
@@ -20,12 +22,12 @@
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_main2222222222222.xml" value="0.22083333333333333" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_navigation_drawer.xml" value="0.1" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_registration.xml" value="0.2640449438202247" />
-        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_registration_recycler_view.xml" value="0.22083333333333333" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_registration_recycler_view.xml" value="0.25" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_rental_detail.xml" value="0.1" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_rental_google_map.xml" value="0.22083333333333333" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_signup.xml" value="0.21" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_signup_1_terms.xml" value="0.13019250253292808" />
-        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_signup_2.xml" value="0.2677083333333333" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_signup_2.xml" value="0.1" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_splash.xml" value="0.3594936708860759" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_terms.xml" value="0.22083333333333333" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/community.xml" value="0.28125" />
