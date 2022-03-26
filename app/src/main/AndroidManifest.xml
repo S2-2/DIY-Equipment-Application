@@ -10,6 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DIYEquipmentApplication">
         <activity
+            android:name=".CheckIdActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChangePwdActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FindPwdActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FindIdActivity"
+            android:exported="false" />
+        <activity
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
