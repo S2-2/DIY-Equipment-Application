@@ -1,4 +1,4 @@
-package kr.ac.kpu.diyequipmentapplication.front.signIn.auth;
+package kr.ac.kpu.diyequipmentapplication;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -47,16 +47,14 @@ public class LoginActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-<<<<<<<<< Temporary merge branch 1:app/src/main/java/kr/ac/kpu/diyequipmentapplication/front/signIn/auth/LoginActivity.java
         setContentView(R.layout.activity_login);
 
-        nFirebaseAuth = FirebaseAuth.getInstance();     //Firebase 인증 객체 참조
-        nDatabaseRef = FirebaseDatabase.getInstance().getReference("DIY-Auth-DB"); //Firebase DB 객체 참조
+        authLoginFirebaseAuth = FirebaseAuth.getInstance();     //Firebase 인증 객체 참조
+        authLoginDatabaseReference = FirebaseDatabase.getInstance().getReference("DIY-Auth-DB"); //Firebase DB 객체 참조
 
-        nEtEmail = findViewById(R.id.et_email);     //et_email 뷰 객체 참조
-        nEtPwd = findViewById(R.id.et_pwd);         //et_pwd 뷰 객체 참조
-=========
-        setContentView(R.layout.activity_auth_login);   //activity_auth_login.xml파일  화면 출력
+        authLoginEmail = findViewById(R.id.et_email);     //et_email 뷰 객체 참조
+        authLoginPwd = findViewById(R.id.et_pwd);         //et_pwd 뷰 객체 참조
+        setContentView(R.layout.activity_login);   //activity_auth_login.xml파일  화면 출력
 
         authLoginFirebaseAuth = FirebaseAuth.getInstance();     //Firebase 인증 객체 참조
         authLoginDatabaseReference = FirebaseDatabase.getInstance().getReference("DIY-Auth-DB"); //Firebase DB 객체 참조
@@ -65,7 +63,6 @@ public class LoginActivity extends AppCompatActivity{
         authLoginButton = findViewById(R.id.btn_authLogin);                 //btn_login 뷰 객체 참조
         authLoginRegister = findViewById(R.id.btn_authLoginRegister);      //btn_register 뷰 객체 참조
         authLoginSignInButton = findViewById(R.id.btn_authLoginGoogle);    //btn_authLoginGoogle 뷰 객체 참조
->>>>>>>>> Temporary merge branch 2:app/src/main/java/kr/ac/kpu/diyequipmentapplication/front/signIn/auth/AuthLoginActivity.java
         
         //이메일 계정 인증 단계
         authLoginButton.setOnClickListener(new View.OnClickListener() {
@@ -74,13 +71,10 @@ public class LoginActivity extends AppCompatActivity{
                 userEmail = authLoginEmail.getText().toString().trim();     //사용자가 입력한 이메일 참조
                 userPwd = authLoginPwd.getText().toString().trim();         //사용자가 입력한 패스워드 참조
 
-<<<<<<<<< Temporary merge branch 1:app/src/main/java/kr/ac/kpu/diyequipmentapplication/front/signIn/auth/LoginActivity.java
                 if (strEmail.isEmpty() && strPwd.isEmpty()) {       // 사용자가 입력한 이메일, 비밀번호가 empty인 경우
                     Toast.makeText(LoginActivity.this, "이메일 및 비밀번호를 입력하세요", Toast.LENGTH_SHORT).show();
-=========
                 if (userEmail.isEmpty() && userPwd.isEmpty()) {       // 사용자 이메일, 패스워드 미입력인 경우
                     Toast.makeText(AuthLoginActivity.this, "이메일, 패스워드 입력하세요!", Toast.LENGTH_SHORT).show();
->>>>>>>>> Temporary merge branch 2:app/src/main/java/kr/ac/kpu/diyequipmentapplication/front/signIn/auth/AuthLoginActivity.java
                 }
                 else if(userEmail.isEmpty())     //사용자 이메일 미입력인 경우
                 {
@@ -90,7 +84,6 @@ public class LoginActivity extends AppCompatActivity{
                 {
                     Toast.makeText(LoginActivity.this, "비밀번호를 입력하세요", Toast.LENGTH_SHORT).show();
                 }
-<<<<<<<<< Temporary merge branch 1:app/src/main/java/kr/ac/kpu/diyequipmentapplication/front/signIn/auth/LoginActivity.java
                 else{
                     //Firebase에 인증된 정보를 통해 로그인 기능
                     nFirebaseAuth.signInWithEmailAndPassword(strEmail, strPwd).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
@@ -107,10 +100,8 @@ public class LoginActivity extends AppCompatActivity{
                             }
                         }
                     });
-=========
                 else{   //사용자 이메일, 패스워드 입력한 경우
                     firebaseAuthWithEmail(userEmail, userPwd);  //Firebase Authentication 메서드 호출
->>>>>>>>> Temporary merge branch 2:app/src/main/java/kr/ac/kpu/diyequipmentapplication/front/signIn/auth/AuthLoginActivity.java
                 }
             }
         });
@@ -193,25 +184,19 @@ public class LoginActivity extends AppCompatActivity{
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-<<<<<<<<< Temporary merge branch 1:app/src/main/java/kr/ac/kpu/diyequipmentapplication/front/signIn/auth/LoginActivity.java
                         if (task.isSuccessful())
                         {
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
-=========
                         if (task.isSuccessful()) {  //구글 로그인 성공인 경우
                             startActivity(new Intent(AuthLoginActivity.this, AuthMainActivity.class));
->>>>>>>>> Temporary merge branch 2:app/src/main/java/kr/ac/kpu/diyequipmentapplication/front/signIn/auth/AuthLoginActivity.java
                             finish();
                             Toast.makeText(LoginActivity.this, "구글 계정으로 로그인되었습니다", Toast.LENGTH_SHORT).show();
                         }
-<<<<<<<<< Temporary merge branch 1:app/src/main/java/kr/ac/kpu/diyequipmentapplication/front/signIn/auth/LoginActivity.java
                         else
                         {
                             Toast.makeText(LoginActivity.this, "구글 계정으로 로그인에 실패하였습니다",Toast.LENGTH_SHORT).show();
-=========
                         else { //구글 로그인 실패인 경우
                             Toast.makeText(AuthLoginActivity.this, "Google Login Failure!",Toast.LENGTH_SHORT).show();
->>>>>>>>> Temporary merge branch 2:app/src/main/java/kr/ac/kpu/diyequipmentapplication/front/signIn/auth/AuthLoginActivity.java
                         }
                     }
                 });
