@@ -4,72 +4,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="10dp"
     android:orientation="vertical">
 
     // 상단 드로어 메뉴랑 검색창
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center">
 
-        <ImageView
+        <ImageButton
             android:id="@+id/btn_drawer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_baseline_menu_24"
-            tools:layout_editor_absoluteX="28dp"
-            tools:layout_editor_absoluteY="43dp" />
+            app:srcCompat="@drawable/ic_baseline_menu_24" />
 
         <TextView
-            android:id="@+id/text_appname"
+            android:id="@+id/text_appName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
             android:text="앱 이름"
-            tools:layout_editor_absoluteX="59dp"
-            tools:layout_editor_absoluteY="50dp" />
+            android:textSize="30dp" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/btn_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_baseline_search_24"
-            tools:layout_editor_absoluteX="346dp"
-            tools:layout_editor_absoluteY="50dp" />
+            app:srcCompat="@drawable/ic_baseline_search_24" />
     </LinearLayout>
-    <!--
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/btn_logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="로그아웃" />
-    </LinearLayout>
--->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/textView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="안녕하세요, " />
 
-        <TextView
-            android:id="@+id/textView10"
+        <EditText
+            android:id="@+id/tv_main_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="홍길동" />
+            android:text="(별명)" />
 
         <TextView
-            android:id="@+id/textView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="님" />
@@ -79,7 +62,7 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/imageView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -88,30 +71,90 @@
             tools:layout_editor_absoluteX="346dp"
             tools:layout_editor_absoluteY="121dp" />
     </LinearLayout>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_margin="20dp">
-    <Button
-        android:id="@+id/btn_register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="DIY 등록"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <Button
-        android:id="@+id/btn_dyiView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="DIY 목록"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+    <!-- 실시간 인기 거래 목록 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
+        android:orientation="vertical">
 
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="실시간 공구 거래" />
+
+                <ImageButton
+                    android:id="@+id/btn_main_rentalList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_arrow_forward_ios_24" />
+
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/lv_main_deal"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+        </LinearLayout>
+
+        <!-- 커뮤니티 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="커뮤니티" />
+
+                    <ImageButton
+                        android:id="@+id/btn_main_bestRental"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24" />
+                </LinearLayout>
+
+                <ListView
+                    android:id="@+id/lv_main_community"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
+            </LinearLayout>
+
+            <!-- 공구 등록
+            <Button
+                android:id="@+id/btn_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DIY 등록"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+ -->
+
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

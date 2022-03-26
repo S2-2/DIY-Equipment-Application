@@ -137,7 +137,7 @@
 
             <!--찜 버튼-->
             <!--클릭 시 하트가 채워지고 유저의 DB 찜 목록에 저장되도록 할 것!-->
-            <ImageView
+            <ImageButton
                 android:id="@+id/btn_like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
