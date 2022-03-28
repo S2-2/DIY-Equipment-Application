@@ -2,16 +2,16 @@ package kr.ac.kpu.diyequipmentapplication;
 
 import static android.content.ContentValues.TAG;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.LinearLayout;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -68,7 +68,6 @@ public class SplashActivity extends AppCompatActivity {
                 }
             });
             builder.create().show();
-
         }else {
             startActivity(new Intent(this,LoginActivity.class));
         }
