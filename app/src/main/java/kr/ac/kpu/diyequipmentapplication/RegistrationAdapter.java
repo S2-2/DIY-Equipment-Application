@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,8 +29,7 @@ public class RegistrationAdapter extends RecyclerView.Adapter<RegistrationAdapte
     @NonNull
     @Override
     public RegistrationAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_equipmentitem,parent,false);
-
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.registration_recyclerview_item,parent,false);
         return new ViewHolder(v);
     }
 
@@ -46,16 +44,6 @@ public class RegistrationAdapter extends RecyclerView.Adapter<RegistrationAdapte
         imageUri=equipmentRegistration.getRentalImage();
         Picasso.get().load(imageUri).into(holder.imageView);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), EquipmentDetailActivity.class);
-                view.getContext().startActivity(intent);
-                Toast.makeText(view.getContext(), "클릭 되었습니다.", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
     }
 
     @Override
@@ -65,7 +53,6 @@ public class RegistrationAdapter extends RecyclerView.Adapter<RegistrationAdapte
 
     //ViewHolder 클래스 구현
     public class ViewHolder extends RecyclerView.ViewHolder {
-
         ImageView imageView;
         TextView tvModelName, tvModelText;
 
@@ -74,9 +61,9 @@ public class RegistrationAdapter extends RecyclerView.Adapter<RegistrationAdapte
             super(itemView);
 
             //list_equipmentitem.xml파일에 있는 뷰 객체 참조
-            imageView = itemView.findViewById(R.id.image_recyclerView_id);
-            tvModelName = itemView.findViewById(R.id.modelName_recyclerView_id);
-            tvModelText = itemView.findViewById(R.id.modelText_recyclerView_id);
+            imageView = itemView.findViewById(R.id.registrationRecyclerviewItem_iv);
+            tvModelName = itemView.findViewById(R.id.registrationRecyclerviewItem_tv_title);
+            tvModelText = itemView.findViewById(R.id.registrationRecyclerviewItem_tv_modelText);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

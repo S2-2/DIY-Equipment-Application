@@ -44,7 +44,7 @@
             android:name=".ChattingActivity"
             android:exported="false" />
         <activity
-            android:name=".RegistrationRecyclerView"
+            android:name=".RegistrationRecyclerview"
             android:exported="false" />
         <activity
             android:name=".EquipmentRegistrationActivity"

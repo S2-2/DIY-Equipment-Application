@@ -36,19 +36,19 @@ class terms extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup_1_terms);
+        setContentView(R.layout.activity_signup_terms);
 
         nFirebaseAuth = FirebaseAuth.getInstance();     //Firebase 인증 객체 참조
         nDatabaseRef = FirebaseDatabase.getInstance().getReference("DIY-Auth-DB"); //Firebase DB 객체 참조
 
         // 체크박스
-        CheckBox check_all = (CheckBox) findViewById(R.id.cb_termsAll); // 전체약관 체크박스
-        CheckBox check1 = (CheckBox) findViewById(R.id.cb_terms1);  // 서비스 이용약관 체크박스
-        CheckBox check2 = (CheckBox) findViewById(R.id.cb_terms2);  // 개인정보 처리방침 체크박스
-        CheckBox check3 = (CheckBox) findViewById(R.id.cb_terms3);  // 위치정보 이용약관 체크박스
+        CheckBox check_all = (CheckBox) findViewById(R.id.signupTerms_cb_termsAll); // 전체약관 체크박스
+        CheckBox check1 = (CheckBox) findViewById(R.id.signupTerms_cb_terms1);  // 서비스 이용약관 체크박스
+        CheckBox check2 = (CheckBox) findViewById(R.id.signupTerms_cb_terms2);  // 개인정보 처리방침 체크박스
+        CheckBox check3 = (CheckBox) findViewById(R.id.signupTerms_cb_terms3);  // 위치정보 이용약관 체크박스
 
         // 다음버튼
-        btn_next1 = (Button) findViewById(R.id.btn_signupNext);
+        btn_next1 = (Button) findViewById(R.id.signupTerms_btn_next);
 
         // 전체동의
         check_all.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){

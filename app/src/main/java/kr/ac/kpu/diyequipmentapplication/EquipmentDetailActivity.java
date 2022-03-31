@@ -30,13 +30,13 @@ public class EquipmentDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_equipment_detail);
 
         ivRentalImage = findViewById(R.id.iv_EquipmentImage);
-        etUserNickname = findViewById(R.id.et_userNickname);
+        etUserNickname = findViewById(R.id.equipmentDetail_et_nickname);
         etTitle = findViewById(R.id.et_title);
-        etExplanation = findViewById(R.id.et_explanation);
-        etRentalType = findViewById(R.id.et_rentalType);
-        etRentalCost = findViewById(R.id.et_rentalCost);
-        etUserLocation = findViewById(R.id.et_userLocation);
-        etRentalPeriod = findViewById(R.id.et_rentalPeriod);
+        etExplanation = findViewById(R.id.equipmentDetail_et_explanation);
+        etRentalType = findViewById(R.id.equipmentDetail_et_rentalType);
+        etRentalCost = findViewById(R.id.equipmentDetail_et_rentalCost);
+        etUserLocation = findViewById(R.id.equipmentDetail_et_location);
+        etRentalPeriod = findViewById(R.id.equipmentDetail_et_rentalPeriod);
 
         decimalFormat = new DecimalFormat("###,###");
 
