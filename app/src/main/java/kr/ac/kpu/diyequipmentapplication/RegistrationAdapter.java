@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -80,6 +81,8 @@ public class RegistrationAdapter extends RecyclerView.Adapter<RegistrationAdapte
                         intent.putExtra("RentalAddress", equipmentRegistration.getRentalAddress());
                         intent.putExtra("UserEmail", equipmentRegistration.getUserEmail());
                         intent.putExtra("RentalDate", equipmentRegistration.getRentalDate());
+                        intent.putExtra("ModelCategory1",equipmentRegistration.getModelCategory1());
+                        intent.putExtra("ModelCategory2",equipmentRegistration.getModelCategory2());
                         context.startActivity(intent);
                     }
                 }

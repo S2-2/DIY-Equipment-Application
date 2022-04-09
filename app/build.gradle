@@ -40,6 +40,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:21.0.1'
     implementation 'com.google.firebase:firebase-database:20.0.3'
     implementation 'com.google.firebase:firebase-storage:20.0.0'
+
+    // 파이어베이스 파이어스토어
+    implementation 'com.google.firebase:firebase-firestore'
+
     implementation 'com.google.android.gms:play-services-base:18.0.1'
     implementation 'com.google.firebase:firebase-config:21.0.2'
     testImplementation 'junit:junit:4.+'

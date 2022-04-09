@@ -1,6 +1,9 @@
 package kr.ac.kpu.diyequipmentapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -8,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,6 +33,9 @@ public class RegistrationRecyclerview extends AppCompatActivity {
     //List<EquipmentRegistration> equipmentRegistrationList;
     ArrayList<EquipmentRegistration> equipmentRegistrationList;
 
+    // 장비등록 페이지로 이동하는 버튼
+    FloatingActionButton btnModelEnroll;    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +54,7 @@ public class RegistrationRecyclerview extends AppCompatActivity {
         registrationAdapter = new RegistrationAdapter(RegistrationRecyclerview.this,equipmentRegistrationList);
 
         recyclerView.setAdapter(registrationAdapter);
+        btnModelEnroll = findViewById(R.id.registrationRecyclerview_fab);      // 장비등록 버튼
 
         mRef.addChildEventListener(new ChildEventListener() {
             @Override
@@ -64,6 +72,14 @@ public class RegistrationRecyclerview extends AppCompatActivity {
             public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) { }
             @Override
             public void onCancelled(@NonNull DatabaseError error) { }
+        });
+
+        btnModelEnroll.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RegistrationRecyclerview.this, EquipmentRegistrationActivity.class); // 장비등록 페이지로 이동
+                startActivity(intent);  //MainActivity 이동
+            }
         });
     }
 }
