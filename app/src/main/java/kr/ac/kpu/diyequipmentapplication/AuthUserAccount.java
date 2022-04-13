@@ -6,6 +6,7 @@ public class AuthUserAccount {
     private String password;    //Firebase 인증 패스워드을 참조하기 위한 변수 선언
     private String name;
     private String idToken;     //Firebase Uid 고유 토큰정보 참조하기 위한 변수 선언
+    private String terms;       //Firebase 약관 동의 정보를 참조하기 위한 변수 선언
 
     public AuthUserAccount() { }    //기본 생성자
 
@@ -41,4 +42,7 @@ public class AuthUserAccount {
         this.password = password;
     }
 
+    public String getTerms(){return terms;}
+
+    public void setTerms(String terms) { this.terms = terms; }
 }
