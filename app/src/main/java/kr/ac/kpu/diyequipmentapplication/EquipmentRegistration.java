@@ -14,10 +14,12 @@ public class EquipmentRegistration implements Serializable {
     private String RentalAddress;   //장비 대여 장소
     private String UserEmail;       //사용자 이메일
     private String RentalDate;      //장비 등록일
+    private String ModelCategory1;  //장비 카테고리1
+    private String ModelCategory2;  //장비 카테고리2
 
     public EquipmentRegistration() {}   //기본 생성자
 
-    public EquipmentRegistration(String modelName, String modelInform, String rentalImage, String rentalType, String rentalCost, String rentalAddress, String userEmail, String rentalDate) {
+    public EquipmentRegistration(String modelName, String modelInform, String rentalImage, String rentalType, String rentalCost, String rentalAddress, String userEmail, String rentalDate, String modelCategory1, String modelCategory2) {
         ModelName = modelName;
         ModelInform = modelInform;
         RentalImage = rentalImage;
@@ -26,6 +28,8 @@ public class EquipmentRegistration implements Serializable {
         RentalAddress = rentalAddress;
         UserEmail = userEmail;
         RentalDate = rentalDate;
+        ModelCategory1 = modelCategory1;
+        ModelCategory2 = modelCategory2;
     }
 
     //장비 필드에 대한 Getter / Setter 메서드 기능 구현
@@ -80,4 +84,10 @@ public class EquipmentRegistration implements Serializable {
         return RentalDate;
     }
     public void setRentalDate(String rentalDate) { RentalDate = rentalDate; }
+
+    public String getModelCategory1() { return ModelCategory1; }
+    public void setModelCategory1(String modelCategory1) { ModelCategory1 = modelCategory1; }
+
+    public String getModelCategory2() { return ModelCategory2; }
+    public void setModelCategory2(String modelCategory2) { ModelCategory2 = modelCategory2; }
 }

@@ -10,7 +10,19 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
-public class SignupTeramsActivity extends AppCompatActivity {
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import kr.ac.kpu.diyequipmentapplication.MainActivity;
+import kr.ac.kpu.diyequipmentapplication.R;
+import kr.ac.kpu.diyequipmentapplication.AuthUserAccount;
+
+class terms extends AppCompatActivity {
+
+    private FirebaseAuth nFirebaseAuth; //파이어베이스 인증 참조 변수 선언
+    private DatabaseReference nDatabaseRef; //실시간 데이터베이스 참조 변수 선언
 
     // 다음 페이지로 진행하는 버튼
     public Button btn_next1;
@@ -25,6 +37,9 @@ public class SignupTeramsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_terms);
+
+        nFirebaseAuth = FirebaseAuth.getInstance();     //Firebase 인증 객체 참조
+        nDatabaseRef = FirebaseDatabase.getInstance().getReference("DIY-Auth-DB"); //Firebase DB 객체 참조
 
         // 체크박스
         CheckBox check_all = (CheckBox) findViewById(R.id.signupTerms_cb_termsAll); // 전체약관 체크박스
@@ -94,17 +109,23 @@ public class SignupTeramsActivity extends AppCompatActivity {
         btn_next1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FirebaseUser firebaseUser = nFirebaseAuth.getCurrentUser();     //Firebase 사용자 객체 참조
+
                 if (!TERMS_AGREE_ALL){  // 전체 동의 체크 안된 경우
-                    if(TERMS_AGREE_1&&TERMS_AGREE_2&&TERMS_AGREE_3){
-                        startActivity(new Intent(SignupTeramsActivity.this, MainActivity.class));
+                    if(TERMS_AGREE_1&&TERMS_AGREE_2&&TERMS_AGREE_3){    // 3박스 모두 체크되어있으면 메인페이지로 이동
+                        nDatabaseRef.child("AuthUserAccount").child(firebaseUser.getUid()).child("terms").setValue("true");   //Firebase DB에 인증된 사용자 계정 정보에서 "terms"의 값을 "true"로!
+                        startActivity(new Intent(terms.this, MainActivity.class));
+                        finish();
                     }
-                    else{
-                        Toast myToast = Toast.makeText(SignupTeramsActivity.this.getApplicationContext(),"약관을 체크해주세요.",Toast.LENGTH_SHORT);
+                    else{   // 3박스 모두 체크 안되면 메시지 띄움
+                        Toast myToast = Toast.makeText(terms.this.getApplicationContext(),"약관에 동의해주세요.",Toast.LENGTH_SHORT);
                         return;
                     }
                 }
                 else{       // 전체 동의 체크 된 경우
-                    startActivity(new Intent(SignupTeramsActivity.this, SignupActivity.class));
+                    nDatabaseRef.child("AuthUserAccount").child(firebaseUser.getUid()).child("terms").setValue("true");   //Firebase DB에 인증된 사용자 계정 정보에서 "terms"의 값을 "true"로!
+                    startActivity(new Intent(terms.this, MainActivity.class));
+                    finish();
                 }
             }
         });

@@ -1,15 +1,21 @@
 package kr.ac.kpu.diyequipmentapplication;
 
+import static android.content.ContentValues.TAG;
+
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,12 +29,22 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.sql.Array;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 //공급자가 DIY장비 등록하는 액티비티
 public class EquipmentRegistrationActivity extends AppCompatActivity {
@@ -36,6 +52,12 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
     //DIY장비 등록 액티비티 필드 선언
     private FirebaseUser registrationFirebaseAuth = null;      //파이어베이스 인증 객체 참조 변수
     private FirebaseDatabase registrationDatabase = null;      //파이어베이스 객체 참조 변수
+
+    private FirebaseFirestore registrationFirestore = null;     // 파이어스토어 객체 참조 변수
+    private CollectionReference registrationColRef = null;       // 파이어스토어 DB Collection 참조 변수
+    private DocumentReference registrationDocRef = null;
+    private DocumentReference registrationDocRef2 = null;
+
     private DatabaseReference registrationDBRef = null;        //데이터베이스 객체 참조 변수
     private FirebaseStorage registrationStorage = null;        //Storage 객체 참조 변수
     private ImageButton registrationImgBtn = null;             //이미지 버튼 뷰 참조 변수
@@ -53,11 +75,19 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
     private Date registrationDate = null;   //등록 날짜 참조할 변수
     private String registrationGetDate = null;      //장비 등록 날짜 참조 변수
 
+    // Spinner 관련 변수 모음
+    private Spinner sprModelCat1 = null;   // 장비 카테고리1 참조 변수
+    private Spinner sprModelCat2 = null;   // 장비 카테고리2 참조 변수
+    private List<String> cat1Subjects = null;
+    private ArrayAdapter<String> cat1Adapter = null;
+    private List<String> cat2Subjects = null;
+    private ArrayAdapter<String> cat2Adapter = null;
+    private String cat1String = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment_registration);
-
 
         //DIY장비 등록 액티비티 필드 초기화
         registrationImgBtn = findViewById(R.id.imgBtn_diyRental);
@@ -70,6 +100,7 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
         registrationFreeRental = findViewById(R.id.rBtn_registrationFree);
         registrationRentalType = findViewById(R.id.et_registrationRentalType);
         registrationRentalCost = findViewById(R.id.et_registrationRentalCost);
+
         registrationRentalAddress = findViewById(R.id.et_registrationRentalAddress);
         registrationDatabase = FirebaseDatabase.getInstance();
         registrationDBRef = registrationDatabase.getReference().child("DIY_Equipment_Rental");
@@ -78,6 +109,78 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
         registrationDateFormat = new SimpleDateFormat("yyyy-MM-dd");    //날짜 형식 설정 객체 생성 및 초기화
         registrationDate = new Date();  //날짜 객체 생성 및 초기화
         registrationGetDate = registrationDateFormat.format(registrationDate);  //장비 등록일 참조
+
+        // Firestore에 있는 항목을 Spinner에 가져오기
+        registrationFirestore = FirebaseFirestore.getInstance();
+        registrationColRef = registrationFirestore.collection("DIY_Equipment_Category");
+        registrationDocRef = registrationFirestore.document("DIY_Equipment_Category/Category1");
+        registrationDocRef2 = registrationFirestore.document("DIY_Equipment_Category/Category2");
+        sprModelCat1 = findViewById(R.id.spr_registrationCat1);
+        sprModelCat2 = findViewById(R.id.spr_registrationCat2);
+
+        cat1Subjects = new ArrayList<>();
+        cat1Adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item,cat1Subjects);
+        cat1Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sprModelCat1.setAdapter(cat1Adapter);
+
+        registrationDocRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    List list = (List) document.getData().get("list");
+                    for(int i=0; i<list.size();i++){
+                        String cat1Subject = list.get(i).toString();
+                        Log.i("Test","cat1Subject["+i+"] >" + cat1Subject);
+                        cat1Subjects.add(cat1Subject);
+                    }
+                    cat1Adapter.notifyDataSetChanged();
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
+                }
+//                if(){
+//                    registrationDocRef = registrationFirestore.document("DIY_Equipment_Category/"+cat1String);
+//                }
+            }
+        });
+
+
+        sprModelCat1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                cat2Subjects = new ArrayList<>();
+                cat2Adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item,cat2Subjects);
+                cat2Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                sprModelCat2.setAdapter(cat2Adapter);
+                cat1String = sprModelCat1.getItemAtPosition(position).toString();
+                Log.i("Test","cat1String >" + cat1String);
+
+                registrationDocRef2.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            List list2 = (List) document.getData().get(cat1String);
+
+                            for(int j=0; j<list2.size();j++){
+                                String cat2Subject = list2.get(j).toString();
+                                Log.i("Test","cat2Subject["+j+"] >" + cat2Subject);
+                                cat2Subjects.add(cat2Subject);
+                            }
+                            cat2Adapter.notifyDataSetChanged();
+                        } else {
+                            Log.d(TAG, "get failed with ", task.getException());
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Toast.makeText(EquipmentRegistrationActivity.this, "아무것도 선택되지 않음", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         //사용자 인증 이메일 가져오는 구간
         registrationFirebaseAuth = FirebaseAuth.getInstance().getCurrentUser();
@@ -148,10 +251,12 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
                 final String rt = registrationRentalType.getText().toString().trim();
                 final String ra = registrationRentalAddress.getText().toString().trim();
                 final String rc = registrationRentalCost.getText().toString().trim();
+                final String mc1 = sprModelCat1.getSelectedItem().toString().trim();
+                final String mc2 = sprModelCat2.getSelectedItem().toString().trim();
 
 
                 //공급자가 입력한 데이터 등록 성공
-                if (!(mn.isEmpty() && mt.isEmpty() && rt.isEmpty() && ra.isEmpty() && rc.isEmpty() && registrationImageUrl != null))
+                if (!(mn.isEmpty() && mt.isEmpty() && rt.isEmpty() && ra.isEmpty() && rc.isEmpty() && mc1.isEmpty() && mc2.isEmpty() && registrationImageUrl != null))
                 {
                     registrationProgressDialog.setTitle("DIY Rental Registration Uploading...");
                     registrationProgressDialog.show();
@@ -176,6 +281,8 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
                                     newPost.child("RentalAddress").setValue(ra);
                                     newPost.child("RentalImage").setValue(task.getResult().toString());
                                     newPost.child("RentalDate").setValue(registrationGetDate);
+                                    newPost.child("ModelCategory1").setValue(mc1);
+                                    newPost.child("ModelCategory2").setValue(mc2);
 
                                     registrationProgressDialog.dismiss();
 
