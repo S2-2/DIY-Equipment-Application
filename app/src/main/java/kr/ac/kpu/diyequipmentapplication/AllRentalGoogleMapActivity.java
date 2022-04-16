@@ -45,7 +45,6 @@ public class AllRentalGoogleMapActivity extends AppCompatActivity implements OnM
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_rental_google_map);
 
-
         mDatabase = FirebaseDatabase.getInstance();     //Firebase RealTime DB root 객체 참조
         mRef = mDatabase.getReference().child("DIY_Equipment_Rental");  //Firebase RealTime DB의 root객체의 자식인 DIY_Equipment_Rental 객체 참조
         mStorage = FirebaseStorage.getInstance();       //Firebase Storage 객체 참조

@@ -56,6 +56,7 @@ public class RegistrationRecyclerview extends AppCompatActivity {
         recyclerView.setAdapter(registrationAdapter);
         btnModelEnroll = findViewById(R.id.registrationRecyclerview_fab);      // 장비등록 버튼
 
+        // 이거다.
         mRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {

@@ -2,10 +2,13 @@ package kr.ac.kpu.diyequipmentapplication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +24,7 @@ public class RegistrationAdapter extends RecyclerView.Adapter<RegistrationAdapte
 
     Context context;
     List<EquipmentRegistration> equipmentRegistrationList;
+    EditText etSearch;
 
     public RegistrationAdapter(Context context, List<EquipmentRegistration> equipmentRegistrationList) {
         this.context = context;
@@ -65,6 +69,25 @@ public class RegistrationAdapter extends RecyclerView.Adapter<RegistrationAdapte
             imageView = itemView.findViewById(R.id.registrationRecyclerviewItem_iv);
             tvModelName = itemView.findViewById(R.id.registrationRecyclerviewItem_tv_title);
             tvModelText = itemView.findViewById(R.id.registrationRecyclerviewItem_tv_modelText);
+            etSearch = itemView.findViewById(R.id.registrationRecyclerview_et_search);
+
+            etSearch.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    String searchText = etSearch.getText().toString();
+
+                }
+            });
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
