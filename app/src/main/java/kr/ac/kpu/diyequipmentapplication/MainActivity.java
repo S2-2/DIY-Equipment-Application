@@ -30,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 */
-        
-        //DIY 장비 거래 액티비티로 이동
+
+        // 공구 거래 목록으로 이동
         ImageButton btn_rentalList = findViewById(R.id.main_btn_rentalList);
         btn_rentalList.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,15 +41,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*
-        //DIY 구글맵 액티비티로 이동
-        Button btn_diyGoogMap = findViewById(R.id.btn_dyiGoogleMap);
-        btn_diyGoogMap.setOnClickListener(new View.OnClickListener() {
+        // 커뮤니티로 이동
+        ImageButton btn_community = findViewById(R.id.main_btn_community);
+        btn_community.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this,"DIY Google Map 개발중.......", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, CommunityActivity.class);
+                startActivity(intent);
             }
         });
-         */
+
     }
 }
