@@ -1,18 +1,26 @@
 package kr.ac.kpu.diyequipmentapplication;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 //회원가입 액티비티 클래스
 public class SignupActivity extends AppCompatActivity {
     //회원가입 액티비티 클래스 필드 선언
-    private DatabaseReference signupDatabaseReference = null;           //RealTimeDB 참조 변수
+    private FirebaseAuth signupFirebaseAuth = null;
+    private FirebaseFirestore signupFirestoreDB = null;
     private EditText etUserId = null, etUserPwd1 = null, etUserPwd2 = null,
             etUserName = null, etUserNickname = null, etUserEmail = null;  //사용자 이메일, 패스워드 뷰 참조 변수
     private Button btnSignup = null;                           //회원가입 버튼 뷰 참조 변수
@@ -24,7 +32,9 @@ public class SignupActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         //회원가입 액티비티 클래스 필드 초기화
-        signupDatabaseReference = FirebaseDatabase.getInstance().getReference("DIY-Signup");
+        signupFirebaseAuth = FirebaseAuth.getInstance();
+        signupFirestoreDB = FirebaseFirestore.getInstance();
+
         etUserId = (EditText) findViewById(R.id.signup_et_id);
         etUserPwd1 = (EditText) findViewById(R.id.signup_et_pwd);
         etUserPwd2 = (EditText) findViewById(R.id.signup_et_pwd2);
@@ -74,17 +84,7 @@ public class SignupActivity extends AppCompatActivity {
                     etUserPwd2.setText("");
                 } else {
                     if (etUserPwd1.getText().toString().equals(etUserPwd2.getText().toString())) {
-                        Toast.makeText(SignupActivity.this, "사용자 재확인 패스워드 일치!", Toast.LENGTH_SHORT).show();
-
-                        DatabaseReference newSignupDatabaseReference = signupDatabaseReference.push();
-                        newSignupDatabaseReference.child("userID").setValue(userId);
-                        newSignupDatabaseReference.child("userPwd1").setValue(userPwd1);
-                        newSignupDatabaseReference.child("userPwd2").setValue(userPwd2);
-                        newSignupDatabaseReference.child("userName").setValue(userName);
-                        newSignupDatabaseReference.child("userNickname").setValue(userNickname);
-                        newSignupDatabaseReference.child("userEmail").setValue(userEmail);
-                        Toast.makeText(SignupActivity.this, "회원가입 성공!", Toast.LENGTH_SHORT).show();
-                        finish();
+                        firebaseAuthCreateUser(userId, userPwd1, userPwd2, userName, userNickname, userEmail);
                         } else {
                             Toast.makeText(SignupActivity.this, "사용자 재확인 패스워드 불일치!", Toast.LENGTH_SHORT).show();
                             Toast.makeText(SignupActivity.this, "사용자 재확인 패스워드 다시 입력하세요!", Toast.LENGTH_SHORT).show();
@@ -92,6 +92,21 @@ public class SignupActivity extends AppCompatActivity {
                         }
                     }
                 }
+        });
+    }
+    private void firebaseAuthCreateUser(String userId, String userPwd1, String userPwd2, String userName, String userNickname, String userEmail) {
+        signupFirebaseAuth.createUserWithEmailAndPassword(userEmail, userPwd1).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    AuthUserAccount authUserAccount = new AuthUserAccount(userEmail, userId, userName, userNickname, userPwd1, userPwd2);
+                    signupFirestoreDB.collection("DIY_Signup").document(userId).set(authUserAccount);
+                    Toast.makeText(SignupActivity.this, "회원가입 성공!", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    Toast.makeText(SignupActivity.this, "회원가입 실패!", Toast.LENGTH_SHORT).show();
+                }
+            }
         });
     }
 }
