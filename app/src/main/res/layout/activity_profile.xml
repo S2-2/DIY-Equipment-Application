@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ProfileActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp">
+
+        <!-- 메뉴 액티비티(activity_menu)로 연결 -->
+        <ImageButton
+            android:id="@+id/profile_btn_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24" />
+
+        <!-- 홈 액티비티(activity_main)로 연결 -->
+        <ImageButton
+            android:id="@+id/profile_btn_home"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/ic_baseline_home_24" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingLeft="80dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PROFILE"
+                android:textSize="24dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- 현재 액티비티 실행 시 현재 프로필 사진과 별명이 입력되어 있는 상태여야 함. -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- 프로필 사진 설정 버튼 -->
+        <ImageButton
+            android:id="@+id/profile_btn_profile"
+            android:layout_width="150dp"
+            android:layout_height="150dp" />
+
+        <!-- 별명 수정할 수 있는 에디트 텍스트 -->
+        <EditText
+            android:id="@+id/profile_et_nickname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="별명"
+            android:textSize="22dp" />
+
+        <!-- 버튼 클릭 시 'activity_menu'로 이동하면서 새로 입력한 프로필 사진과 별명으로 수정됨. -->
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="프로필 수정"
+            android:textSize="16dp" />
+
+    </LinearLayout>
+</LinearLayout>
