@@ -26,6 +26,8 @@ public class SignupActivity extends AppCompatActivity {
     private Button btnSignup = null;                           //회원가입 버튼 뷰 참조 변수
     private ImageButton imgBtnBack = null;
 
+    private FirebaseFirestore signupFirebaseFirestore = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +45,7 @@ public class SignupActivity extends AppCompatActivity {
         etUserEmail = (EditText) findViewById(R.id.signup_et_email);
         btnSignup = (Button) findViewById(R.id.signup_btn_signup);
         imgBtnBack = (ImageButton) findViewById(R.id.signup_btn_back);
+        signupFirebaseFirestore = FirebaseFirestore.getInstance();
 
         //이미지 버튼 클릭 이벤트
         imgBtnBack.setOnClickListener(new View.OnClickListener() {
@@ -85,13 +88,13 @@ public class SignupActivity extends AppCompatActivity {
                 } else {
                     if (etUserPwd1.getText().toString().equals(etUserPwd2.getText().toString())) {
                         firebaseAuthCreateUser(userId, userPwd1, userPwd2, userName, userNickname, userEmail);
-                        } else {
-                            Toast.makeText(SignupActivity.this, "사용자 재확인 패스워드 불일치!", Toast.LENGTH_SHORT).show();
-                            Toast.makeText(SignupActivity.this, "사용자 재확인 패스워드 다시 입력하세요!", Toast.LENGTH_SHORT).show();
-                            etUserPwd2.setText("");
-                        }
+                    } else {
+                        Toast.makeText(SignupActivity.this, "사용자 재확인 패스워드 불일치!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignupActivity.this, "사용자 재확인 패스워드 다시 입력하세요!", Toast.LENGTH_SHORT).show();
+                        etUserPwd2.setText("");
                     }
                 }
+            }
         });
     }
     private void firebaseAuthCreateUser(String userId, String userPwd1, String userPwd2, String userName, String userNickname, String userEmail) {
@@ -99,8 +102,8 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    AuthUserAccount authUserAccount = new AuthUserAccount(userEmail, userId, userName, userNickname, userPwd1, userPwd2);
-                    signupFirestoreDB.collection("DIY_Signup").document(userId).set(authUserAccount);
+                    SignupAccountDB signupAccountDB = new SignupAccountDB(userId, userPwd1, userPwd2, userName, userNickname, userEmail);
+                    signupFirebaseFirestore.collection("DIY_Signup").document(userId).set(signupAccountDB);
                     Toast.makeText(SignupActivity.this, "회원가입 성공!", Toast.LENGTH_SHORT).show();
                     finish();
                 } else {
