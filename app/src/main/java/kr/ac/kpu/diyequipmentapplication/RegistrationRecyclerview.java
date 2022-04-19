@@ -2,8 +2,13 @@ package kr.ac.kpu.diyequipmentapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,9 +37,12 @@ public class RegistrationRecyclerview extends AppCompatActivity {
     RegistrationAdapter registrationAdapter;
     //List<EquipmentRegistration> equipmentRegistrationList;
     ArrayList<EquipmentRegistration> equipmentRegistrationList;
+    ArrayList<EquipmentRegistration> filteredEquipementList;
 
     // 장비등록 페이지로 이동하는 버튼
-    FloatingActionButton btnModelEnroll;    
+    FloatingActionButton btnModelEnroll;
+    ImageButton btnModelMap;
+    EditText etSearch; //  검색필터링
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +61,13 @@ public class RegistrationRecyclerview extends AppCompatActivity {
         equipmentRegistrationList = new ArrayList<EquipmentRegistration>();
         registrationAdapter = new RegistrationAdapter(RegistrationRecyclerview.this,equipmentRegistrationList);
 
+        //검색에 의해 필터링 될 EquipmentRegistration 리스트
+        filteredEquipementList = new ArrayList<EquipmentRegistration>();
+
         recyclerView.setAdapter(registrationAdapter);
         btnModelEnroll = findViewById(R.id.registrationRecyclerview_fab);      // 장비등록 버튼
+        btnModelMap = findViewById(R.id.registrationRecyclerview_btn_search);   // 구글맵으로 이동
+        etSearch = findViewById(R.id.registrationRecyclerview_et_search);
 
         // 이거다.
         mRef.addChildEventListener(new ChildEventListener() {
@@ -62,11 +75,13 @@ public class RegistrationRecyclerview extends AppCompatActivity {
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 EquipmentRegistration equipmentRegistration = snapshot.getValue(EquipmentRegistration.class);
                 equipmentRegistrationList.add(equipmentRegistration);
+                filteredEquipementList.add(equipmentRegistration);
                 registrationAdapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) { }
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) { }
             @Override
@@ -75,11 +90,50 @@ public class RegistrationRecyclerview extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) { }
         });
 
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String searchText = etSearch.getText().toString();
+                // 검색 필터링 구현
+                equipmentRegistrationList.clear();
+                if(searchText.length()==0){
+                    equipmentRegistrationList.addAll(filteredEquipementList);
+                }
+                else{
+                    for( EquipmentRegistration equipment : filteredEquipementList)
+                    {
+                        if(equipment.getModelName().contains(searchText)||equipment.getModelInform().contains(searchText))
+                        {
+                            equipmentRegistrationList.add(equipment);
+                        }
+                    }
+                }
+                registrationAdapter.notifyDataSetChanged();
+            }
+        });
+
         btnModelEnroll.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(RegistrationRecyclerview.this, EquipmentRegistrationActivity.class); // 장비등록 페이지로 이동
                 startActivity(intent);  //MainActivity 이동
+            }
+        });
+
+        btnModelMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RegistrationRecyclerview.this, RentalGoogleMap.class);
+                startActivity(intent);
             }
         });
     }
