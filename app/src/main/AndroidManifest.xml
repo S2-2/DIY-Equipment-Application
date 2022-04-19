@@ -46,9 +46,6 @@
             android:name=".NavigationDrawerActivity"
             android:exported="false" />
         <activity
-            android:name=".ChattingActivity"
-            android:exported="false" />
-        <activity
             android:name=".RegistrationRecyclerview"
             android:exported="false" />
         <activity
