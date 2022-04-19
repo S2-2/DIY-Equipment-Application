@@ -17,28 +17,22 @@ public class AuthUserAccount {
     public void setIdToken(String idToken) {
         this.idToken = idToken;
     }
-
     public String getEmailId() {
         return emailId;
     }
-
     public void setEmailId(String emailId) {
         this.emailId = emailId;
     }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public String getPassword() {
         return password;
     }
     public void setPassword(String password) {
         this.password = password;
     }
-
 }

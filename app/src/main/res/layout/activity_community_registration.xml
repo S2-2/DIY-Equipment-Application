@@ -7,6 +7,8 @@
     android:orientation="vertical">
 
     <ImageButton
+        android:background="@android:color/transparent"
+        android:layout_gravity="center_vertical"
         android:id="@+id/communityRegistration_btn_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

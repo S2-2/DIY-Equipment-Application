@@ -12,6 +12,8 @@
         android:paddingTop="20dp">
 
         <ImageButton
+            android:background="@android:color/transparent"
+            android:layout_gravity="center_vertical"
             android:id="@+id/signup_btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
