@@ -46,9 +46,6 @@
             android:name=".NavigationDrawerActivity"
             android:exported="false" />
         <activity
-            android:name=".ChattingActivity"
-            android:exported="false" />
-        <activity
             android:name=".RegistrationRecyclerview"
             android:exported="false" />
         <activity
@@ -60,6 +57,13 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
+        <activity
+            android:name=".AllRentalGoogleMapActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".RentalGoogleMap"
+            android:exported="false"/>
+
     </application>
 
 </manifest>

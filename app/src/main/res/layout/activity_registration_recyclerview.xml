@@ -68,6 +68,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/ic_baseline_home_24" />
+
+            <EditText
+                android:id="@+id/registrationRecyclerview_et_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:hint="검색어를 입력하세요."/>
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -75,6 +82,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false" />
+
     </LinearLayout>
 
     <!-- 'activity_equipment_registration'로 연결 -->
