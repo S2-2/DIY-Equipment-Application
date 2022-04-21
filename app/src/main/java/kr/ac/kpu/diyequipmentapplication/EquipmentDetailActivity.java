@@ -2,6 +2,7 @@ package kr.ac.kpu.diyequipmentapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,13 +13,15 @@ import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 
+import kr.ac.kpu.diyequipmentapplication.chat.ChatActivity;
+
 
 //미완성 장비
 // 목록 클릭시 상세화면으로 전환되는 액티비티클래스
 public class EquipmentDetailActivity extends AppCompatActivity {
     private ImageView ivRentalImage;
     private TextView etUserNickname, etTitle, etExplanation, etRentalType, etRentalCost, etUserLocation, etRentalPeriod;
-    private Button btnMenu, btnBack, btnHome;
+    private Button btnMenu, btnBack, btnHome, btnChat;
     private String getImageUrl;
     private DecimalFormat decimalFormat;
     private String getRentalFeeCost, temp, getRentalAddress;
@@ -37,6 +40,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
         etRentalCost = findViewById(R.id.equipmentDetail_et_rentalCost);
         etUserLocation = findViewById(R.id.equipmentDetail_et_location);
         etRentalPeriod = findViewById(R.id.equipmentDetail_et_rentalPeriod);
+        btnChat =findViewById(R.id.equipmentDetail_btn_chatting);
 
         decimalFormat = new DecimalFormat("###,###");
 
@@ -62,5 +66,11 @@ public class EquipmentDetailActivity extends AppCompatActivity {
             etRentalCost.setText("RentalCost : "+getRentalFeeCost+"원");
         }
 
+        btnChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(EquipmentDetailActivity.this, ChatActivity.class);
+                startActivity(intent); }
+        });
     }
 }

@@ -63,6 +63,14 @@
         <activity
             android:name=".RentalGoogleMap"
             android:exported="false"/>
+        <activity
+            android:name=".EquipmentDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".chat.ChatActivity"
+            android:exported="false"/>
+        <activity android:name=".chat.ChatStartActivity"
+            android:exported="false"/>
 
     </application>
 

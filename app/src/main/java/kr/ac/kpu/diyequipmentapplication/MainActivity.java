@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import kr.ac.kpu.diyequipmentapplication.chat.ChatStartActivity;
 
 //Firebase 인증을 통해 접근 가능한 메인 액티비티 클래스
 public class MainActivity extends AppCompatActivity {
@@ -76,6 +77,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, CommunityActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // 채팅초기화면으로 이동
+        ImageButton btn_startchatting = findViewById(R.id.main_btn_chat);
+        btn_startchatting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ChatStartActivity.class);
                 startActivity(intent);
             }
         });
