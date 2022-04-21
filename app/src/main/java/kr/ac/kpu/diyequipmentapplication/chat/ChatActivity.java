@@ -38,8 +38,6 @@ import kr.ac.kpu.diyequipmentapplication.R;
 public class ChatActivity extends AppCompatActivity {
 
     private String CHAT_NUM = null;
-    private String CHAT_OTHER_EMAIL = null;
-    private String CHAT_OTHER_NICKNAME = null;
     private String CHAT_USER_EMAIL = null;
     private String CHAT_USER_NICKNAME = null;
 
@@ -101,10 +99,7 @@ public class ChatActivity extends AppCompatActivity {
             Random rand = new Random();
             Integer iValue = null;
 
-            for(int i = 0; i < 100; i++) {
-                iValue = rand.nextInt(10);  // 0 <= iValue < 10
-            }
-
+            iValue = rand.nextInt(10000);  // 0 <= iValue < 10000
             CHAT_NUM = iValue.toString();
         }
 

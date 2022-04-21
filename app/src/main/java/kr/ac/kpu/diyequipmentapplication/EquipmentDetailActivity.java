@@ -20,7 +20,7 @@ import kr.ac.kpu.diyequipmentapplication.chat.ChatActivity;
 // 목록 클릭시 상세화면으로 전환되는 액티비티클래스
 public class EquipmentDetailActivity extends AppCompatActivity {
     private ImageView ivRentalImage;
-    private TextView etUserNickname, etTitle, etExplanation, etRentalType, etRentalCost, etUserLocation, etRentalPeriod;
+    private TextView etUserNickname, etTitle, etExplanation, etRentalType, etRentalCost, etUserLocation, etRentalPeriod, etCategory;
     private Button btnMenu, btnBack, btnHome, btnChat;
     private String getImageUrl;
     private DecimalFormat decimalFormat;
@@ -36,6 +36,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
         etUserNickname = findViewById(R.id.equipmentDetail_et_nickname);
         etTitle = findViewById(R.id.et_title);
         etExplanation = findViewById(R.id.equipmentDetail_et_explanation);
+        etCategory = findViewById(R.id.equipmentDetail_et_category);
         etRentalType = findViewById(R.id.equipmentDetail_et_rentalType);
         etRentalCost = findViewById(R.id.equipmentDetail_et_rentalCost);
         etUserLocation = findViewById(R.id.equipmentDetail_et_location);
@@ -49,6 +50,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
         Picasso.get().load(getImageUrl).into(ivRentalImage);
         etTitle.setText("ModelName : "+intent.getStringExtra("ModelName"));
         etExplanation.setText("ModelInform : "+intent.getStringExtra("ModelInform"));
+        etCategory.setText("ModelCategory: " + intent.getStringExtra("ModelCategory1") + " > " + intent.getStringExtra("ModelCategory2"));
         etRentalType.setText("RentalType : "+intent.getStringExtra("RentalType"));
         //etRentalAddress.setText("RentalAddress : "+intent.getStringExtra("RentalAddress"));
         etUserNickname.setText("UserEmail : "+intent.getStringExtra("UserEmail"));

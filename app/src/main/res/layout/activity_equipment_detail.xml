@@ -160,12 +160,25 @@
             android:text="(게시일시) ex) 2일 전"
             android:textSize="10dp" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:background="@color/browser_actions_bg_grey"
+            android:text="카테고리" />
+
         <EditText
-            android:id="@+id/equipmentDetail_et_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="(카테고리) ex) 측정공구 > 산업용줄자/각도기 "
-            android:textSize="10dp" />
+            android:id="@+id/equipmentDetail_et_category"
+            android:text="ex) 측정공구 > 산업용줄자/각도기 "
+            android:textSize="15dp"
+            android:textColor="@color/black" />
     </LinearLayout>
 
     <LinearLayout
