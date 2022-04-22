@@ -141,6 +141,26 @@
         android:inputType="textPostalAddress"
         android:textSize="20dp" />
 
+<!--    <LinearLayout-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content">-->
+<!--        <DatePicker-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:datePickerMode="spinner"-->
+<!--            android:calendarViewShown="false"-->
+<!--            android:layout_weight="1"/>-->
+<!--        <DatePicker-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:datePickerMode="spinner"-->
+<!--            android:calendarViewShown="false"-->
+<!--            android:layout_weight="1"/>-->
+
+<!--    </LinearLayout>-->
+
+
     <Button
         android:id="@+id/equipmentRegistration_btn_registration"
         android:layout_width="wrap_content"
