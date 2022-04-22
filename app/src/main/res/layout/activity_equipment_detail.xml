@@ -97,13 +97,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/equipmentDetail_et_nickname"
-                    android:text="(작성자 별명)" />
+                    android:text="(작성자 별명)"
+                    android:textColor="@color/black"/>
 
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/equipmentDetail_et_location"
-                    android:text="(작성자 위치)" />
+                    android:text="(작성자 위치)"
+                    android:textColor="@color/black"/>
             </LinearLayout>
 
             <Button

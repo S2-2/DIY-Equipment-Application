@@ -68,6 +68,17 @@ public class EquipmentDetailActivity extends AppCompatActivity {
             etRentalCost.setText("RentalCost : "+getRentalFeeCost+"원");
         }
 
+        // 수정불가능
+        etTitle.setEnabled(false);
+        etExplanation.setEnabled(false);
+        etUserNickname.setEnabled(false);
+        etRentalType.setEnabled(false);
+        etRentalPeriod.setEnabled(false);
+        etCategory.setEnabled(false);
+        etUserLocation.setEnabled(false);
+        etRentalCost.setEnabled(false);
+
+
         btnChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
