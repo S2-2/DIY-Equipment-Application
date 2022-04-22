@@ -11,9 +11,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -48,6 +50,7 @@ public class ChatActivity extends AppCompatActivity {
     private ListView lvChatList;
     private EditText etChatMsg;
     private Button btnChatSend;
+    private TextView tvChatNum;
 
     private FirebaseAuth chatAuth = null;
     private FirebaseDatabase chatFDB = null;
@@ -70,6 +73,7 @@ public class ChatActivity extends AppCompatActivity {
         lvChatList = (ListView) findViewById(R.id.chat_lv_msg);
         etChatMsg = (EditText) findViewById(R.id.chat_et_msg_box);
         btnChatSend = (Button) findViewById(R.id.chat_btn_msg_send);
+        tvChatNum = (TextView) findViewById(R.id.chat_tv_room_num);
         chatModels = new ArrayList<ChatModel>();
         chatAdapter = new ChatAdapter(chatModels, getLayoutInflater());
         lvChatList.setAdapter(chatAdapter);
@@ -104,6 +108,7 @@ public class ChatActivity extends AppCompatActivity {
         }
 
         // 채팅방번호 입장
+        tvChatNum.setText(" ROOM " + CHAT_NUM);
         Log.e("LOG", "chatnum:"+CHAT_NUM);
         chatWithUser(CHAT_NUM);
         

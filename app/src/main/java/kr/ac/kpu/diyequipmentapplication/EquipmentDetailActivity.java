@@ -48,17 +48,17 @@ public class EquipmentDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         getImageUrl = intent.getStringExtra("RentalImage");
         Picasso.get().load(getImageUrl).into(ivRentalImage);
-        etTitle.setText("ModelName : "+intent.getStringExtra("ModelName"));
-        etExplanation.setText("ModelInform : "+intent.getStringExtra("ModelInform"));
-        etCategory.setText("ModelCategory: " + intent.getStringExtra("ModelCategory1") + " > " + intent.getStringExtra("ModelCategory2"));
-        etRentalType.setText("RentalType : "+intent.getStringExtra("RentalType"));
+        etTitle.setText("장비명: " + intent.getStringExtra("ModelName"));
+        etExplanation.setText(intent.getStringExtra("ModelInform"));
+        etCategory.setText(intent.getStringExtra("ModelCategory1") + " > " + intent.getStringExtra("ModelCategory2"));
+        etRentalType.setText(intent.getStringExtra("RentalType"));
         //etRentalAddress.setText("RentalAddress : "+intent.getStringExtra("RentalAddress"));
-        etUserNickname.setText("UserEmail : "+intent.getStringExtra("UserEmail"));
-        etRentalPeriod.setText("RentalDate : "+intent.getStringExtra("RentalDate"));
+        etUserNickname.setText("등록자 이메일: " + intent.getStringExtra("UserEmail"));
+        etRentalPeriod.setText(intent.getStringExtra("RentalDate"));
         //etRentalCost.setText("RentalCost : "+intent.getStringExtra("RentalCost"));
         temp = intent.getStringExtra("RentalCost");
         getRentalAddress = intent.getStringExtra("RentalAddress");
-        etUserLocation.setText("RentalAddress : "+getRentalAddress);
+        etUserLocation.setText(getRentalAddress);
 
         if (temp.equals("무료"))
             etRentalCost.setText("RentalCost : "+temp);

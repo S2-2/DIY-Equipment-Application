@@ -100,12 +100,6 @@
                     android:text="(작성자 별명)"
                     android:textColor="@color/black"/>
 
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/equipmentDetail_et_location"
-                    android:text="(작성자 위치)"
-                    android:textColor="@color/black"/>
             </LinearLayout>
 
             <Button
@@ -114,6 +108,7 @@
                 android:layout_height="wrap_content"
                 android:text="거래자와 채팅하기" />
         </LinearLayout>
+
     </LinearLayout>
 
     <!--공구와 관련하여 등록된 모든 정보 DB에서 불러와서 화면에 출력!-->
@@ -154,15 +149,44 @@
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:background="@color/browser_actions_bg_grey"
+                android:text="거래 위치" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/equipmentDetail_et_location"
+                android:text="(작성자 위치)"
+                android:textColor="@color/black"
+                android:textSize="15dp"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:background="@color/browser_actions_bg_grey"
+            android:text="장비 등록일" />
 
         <EditText
             android:id="@+id/equipmentDetail_et_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="(게시일시) ex) 2일 전"
-            android:textSize="10dp" />
-
+            android:textSize="15dp" />
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -209,7 +233,7 @@
             android:layout_width="120dp"
             android:layout_height="match_parent"
             android:background="@color/browser_actions_bg_grey"
-            android:text="대여 가능 기간" />
+            android:text="장비 대여기간" />
 
         <EditText
             android:layout_width="wrap_content"
@@ -225,7 +249,7 @@
 
         <TextView
             android:layout_width="120dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/browser_actions_bg_grey"
             android:text="대여료" />
 
@@ -237,13 +261,25 @@
             android:textColor="@color/black" />
     </LinearLayout>
 
-    <EditText
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="(설명)"
-        android:id="@+id/equipmentDetail_et_explanation"
-        android:textColor="@color/black"
-        android:textSize="16dp" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:background="@color/browser_actions_bg_grey"
+            android:text="장비 설명" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(설명)"
+            android:id="@+id/equipmentDetail_et_explanation"
+            android:textColor="@color/black"
+            android:textSize="16dp" />
+    </LinearLayout>
+
 
 </LinearLayout>
 
