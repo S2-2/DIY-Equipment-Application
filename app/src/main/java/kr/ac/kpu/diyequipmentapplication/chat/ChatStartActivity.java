@@ -61,10 +61,13 @@ public class ChatStartActivity extends AppCompatActivity {
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,android.R.id.text1);
         lvChatList.setAdapter(adapter);
 
+
+
         // 현재 자신에게 등록되어 있는 채팅 데이터 받아오기 및 리스너 관리
         chatRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
                 Log.e("LOG","snapshot.getKey() : "+snapshot.getKey());
                 adapter.add(snapshot.getKey());
             }
@@ -89,5 +92,6 @@ public class ChatStartActivity extends AppCompatActivity {
 
             }
         });
+
     }
 }
