@@ -31,7 +31,7 @@
             android:textSize="30dp" />
 
         <ImageButton
-            android:id="@+id/registrationRecyclerview_btn_search"
+            android:id="@+id/registrationRecyclerview_btn_map"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
