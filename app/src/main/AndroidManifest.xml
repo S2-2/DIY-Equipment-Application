@@ -82,6 +82,15 @@
         <activity
             android:name=".RentalGoogleMap"
             android:exported="false" />
+            android:exported="false"/>
+        <activity
+            android:name=".EquipmentDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".chat.ChatActivity"
+            android:exported="false"/>
+        <activity android:name=".chat.ChatStartActivity"
+            android:exported="false"/>
 
         <meta-data android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyDm3HS5Prg2QJvNPWaQNKrkVqacLHgs77s"/>
