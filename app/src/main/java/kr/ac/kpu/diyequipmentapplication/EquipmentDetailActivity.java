@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,6 +28,9 @@ public class EquipmentDetailActivity extends AppCompatActivity {
     private String getRentalFeeCost, temp, getRentalAddress;
     private int temNum;
 
+    private ImageButton imgBtn_menu = null;
+    private ImageButton imgBtn_back = null;
+    private ImageButton imgBtn_home = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,12 +82,42 @@ public class EquipmentDetailActivity extends AppCompatActivity {
         etUserLocation.setEnabled(false);
         etRentalCost.setEnabled(false);
 
+        imgBtn_menu = (ImageButton)findViewById(R.id.registrationRecyclerview_btn_drawer);
+        imgBtn_back = (ImageButton)findViewById(R.id.signup_btn_back);
+        imgBtn_home = (ImageButton)findViewById(R.id.registrationRecyclerview_btn_home);
+
 
         btnChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(EquipmentDetailActivity.this, ChatActivity.class);
                 startActivity(intent); }
+        });
+
+        //메뉴 버튼 클릭시 메뉴 페이지 이동
+        imgBtn_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //뒤로가기 버튼 클릭시 장비 목록 페이지에서 장비 메인 페이지 이동
+        imgBtn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        //홈 버튼 클릭시 장비 메인 페이지 이동
+        imgBtn_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), DiyMainActivity.class);
+                startActivity(intent);
+            }
         });
     }
 }

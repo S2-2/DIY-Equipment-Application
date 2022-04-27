@@ -1,5 +1,6 @@
 package kr.ac.kpu.diyequipmentapplication;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,14 +19,18 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import kr.ac.kpu.diyequipmentapplication.chat.ChatStartActivity;
+
 public class MenuActivity extends AppCompatActivity {
     private FirebaseFirestore menuFirebaseFirestore = null;     //파이어스토어 참조 변수 선언
     private TextView tvNickname = null;
     private TextView tvuserLocation = null;
 
     private ImageButton imgBtn_back = null;
+    private ImageButton imgBtn_home = null;
     private Button btn_logout = null;
     private Button btn_withdraw = null;
+    private Button btn_startChat = null;
 
     private FirebaseAuth menuFirebaseAuth = null;
 
@@ -35,8 +40,10 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
 
         imgBtn_back = (ImageButton) findViewById(R.id.menu_btn_back);
+        imgBtn_home = (ImageButton) findViewById(R.id.menu_home);
         btn_logout = (Button) findViewById(R.id.menu_btn_logout);
         btn_withdraw = (Button) findViewById(R.id.menu_btn_withdraw);
+        btn_startChat = (Button) findViewById(R.id.menu_btn_chatting);
 
         tvNickname = (TextView) findViewById(R.id.menu_tv_nickname);    //사용자 닉네임 참조
         tvuserLocation = (TextView) findViewById(R.id.menu_tv_userlocation);    //사용자 닉네임 참조
@@ -68,6 +75,15 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
+        imgBtn_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), DiyMainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,6 +100,14 @@ public class MenuActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+        btn_startChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ChatStartActivity.class);
+                startActivity(intent);
             }
         });
     }

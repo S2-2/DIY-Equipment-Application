@@ -149,6 +149,7 @@
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -279,8 +280,6 @@
             android:textColor="@color/black"
             android:textSize="16dp" />
     </LinearLayout>
-
-
 </LinearLayout>
 
 

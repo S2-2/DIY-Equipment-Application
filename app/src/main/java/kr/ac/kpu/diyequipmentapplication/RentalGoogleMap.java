@@ -32,7 +32,6 @@ public class RentalGoogleMap extends AppCompatActivity implements OnMapReadyCall
     GoogleMap gMap;             //구글맵 객체 참조하는 변수
     MapFragment mapFrag;        //구글맵 프레그먼트 객체 참조하는 변수
     Context context = this;     //RentalGoogleMap 참조하는 변수
-    private String userRentalAddress;   //상세 페이지에 등록된 장비 대여 주소를 참조하는 변수
     private LatLng rentalLatlng = null;
     private FirebaseFirestore rentalMapFirebaseFirestore = null;
     private ArrayList<String> getAddressArrayList = null;
@@ -42,7 +41,6 @@ public class RentalGoogleMap extends AppCompatActivity implements OnMapReadyCall
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rental_google_map);
 
-        userRentalAddress = "경기도 하남시 하남대로947";
         rentalMapFirebaseFirestore = FirebaseFirestore.getInstance();
         getAddressArrayList = new ArrayList<String>();
 
@@ -69,7 +67,7 @@ public class RentalGoogleMap extends AppCompatActivity implements OnMapReadyCall
                                 rentalLatlng = new LatLng(rentalLocation.getLatitude(), rentalLocation.getLongitude());
                                 MarkerOptions markerOptions = new MarkerOptions();
                                 markerOptions.position(rentalLatlng);
-                                markerOptions.title(userRentalAddress);
+                                markerOptions.title(queryDocumentSnapshot.get("rentalAddress").toString().trim());
                                 gMap.addMarker(markerOptions);
                                 i++;
                             }
