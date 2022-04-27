@@ -27,23 +27,17 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.sql.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 //공급자가 DIY장비 등록하는 액티비티
@@ -51,14 +45,10 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
 
     //DIY장비 등록 액티비티 필드 선언
     private FirebaseUser registrationFirebaseAuth = null;      //파이어베이스 인증 객체 참조 변수
-    private FirebaseDatabase registrationDatabase = null;      //파이어베이스 객체 참조 변수
-
     private FirebaseFirestore registrationFirestore = null;     // 파이어스토어 객체 참조 변수
     private CollectionReference registrationColRef = null;       // 파이어스토어 DB Collection 참조 변수
     private DocumentReference registrationDocRef = null;
     private DocumentReference registrationDocRef2 = null;
-
-    private DatabaseReference registrationDBRef = null;        //데이터베이스 객체 참조 변수
     private FirebaseStorage registrationStorage = null;        //Storage 객체 참조 변수
     private ImageButton registrationImgBtn = null;             //이미지 버튼 뷰 참조 변수
     private EditText registrationModelName = null, registrationModelInform = null;      //장비 모델명, 장비 정보 뷰 참조 변수
@@ -84,6 +74,9 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
     private ArrayAdapter<String> cat2Adapter = null;
     private String cat1String = null;
 
+    //장비 등록 파이어스토어 DB 참조 변수 선언
+    private FirebaseFirestore registrationFirebaseFirestoreDB = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,8 +95,6 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
         registrationRentalCost = findViewById(R.id.et_registrationRentalCost);
 
         registrationRentalAddress = findViewById(R.id.et_registrationRentalAddress);
-        registrationDatabase = FirebaseDatabase.getInstance();
-        registrationDBRef = registrationDatabase.getReference().child("DIY_Equipment_Rental");
         registrationStorage = FirebaseStorage.getInstance();
         registrationProgressDialog = new ProgressDialog(this);
         registrationDateFormat = new SimpleDateFormat("yyyy-MM-dd");    //날짜 형식 설정 객체 생성 및 초기화
@@ -122,6 +113,9 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
         cat1Adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item,cat1Subjects);
         cat1Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sprModelCat1.setAdapter(cat1Adapter);
+
+        //장비 등록 Firestore DB 참조 및 초기화
+        registrationFirebaseFirestoreDB = FirebaseFirestore.getInstance();
 
         registrationDocRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -271,23 +265,12 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<Uri> task) {
                                     //Firebase DB에 공급자가 입력한 데이터 등록
                                     String t = task.getResult().toString();
-                                    DatabaseReference newPost = registrationDBRef.push();
-
-                                    newPost.child("UserEmail").setValue(registrationGetUserEmail);
-                                    newPost.child("ModelName").setValue(mn);
-                                    newPost.child("ModelInform").setValue(mt);
-                                    newPost.child("RentalType").setValue(rt);
-                                    newPost.child("RentalCost").setValue(rc);
-                                    newPost.child("RentalAddress").setValue(ra);
-                                    newPost.child("RentalImage").setValue(task.getResult().toString());
-                                    newPost.child("RentalDate").setValue(registrationGetDate);
-                                    newPost.child("ModelCategory1").setValue(mc1);
-                                    newPost.child("ModelCategory2").setValue(mc2);
-
+                                    EquipmentRegistration equipmentRegistration = new EquipmentRegistration(mn,mt,task.getResult().toString(), rt, rc, ra, registrationGetUserEmail, registrationGetDate, mc1, mc2);
+                                    registrationFirebaseFirestoreDB.collection("DIY_Equipment_Rental").document().set(equipmentRegistration);
                                     registrationProgressDialog.dismiss();
 
                                     //공급자가 입력한 DIY 등록 액티비티에서 DIY 메인 액티비티로 이동
-                                    Intent intent = new Intent(EquipmentRegistrationActivity.this, MainActivity.class);
+                                    Intent intent = new Intent(EquipmentRegistrationActivity.this, DiyMainActivity.class);
                                     startActivity(intent);
                                 }
                             });

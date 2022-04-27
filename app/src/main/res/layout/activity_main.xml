@@ -109,10 +109,17 @@
             </LinearLayout>
 
             <!-- 리스트뷰는 아직 수정 중 -->
+            <!--
             <ListView
                 android:id="@+id/main_lv_rentalLIst"
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="200dp" /> -->
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/registrationRecyclerview_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false" />
         </LinearLayout>
 
         <!-- 커뮤니티 -->

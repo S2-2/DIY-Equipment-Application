@@ -50,7 +50,6 @@
         android:padding="20dp">
 
         <ImageView
-            android:id="@+id/menu_iv_profile"
             android:layout_width="50dp"
             android:layout_height="50dp" />
 
@@ -68,7 +67,7 @@
                 android:textSize="20dp" />
 
             <TextView
-                android:id="@+id/menu_tv_nickname"
+                android:id="@+id/menu_tv_userlocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="사용자 위치"
@@ -147,17 +146,18 @@
                 android:textSize="16dp" />
 
             <Button
-                android:id="@+id/menu_btn_logout"
+                android:id="@+id/menu_btn_tradelist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:gravity="center"
                 android:text="거래 목록"
                 android:textColor="@color/black"
-                android:textSize="18dp" />
+                android:textSize="18dp"
+                tools:ignore="DuplicateIds" />
 
             <Button
-                android:id="@+id/menu_btn_logout"
+                android:id="@+id/menu_btn_communitylist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"

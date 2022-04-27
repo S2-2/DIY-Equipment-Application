@@ -3,7 +3,6 @@ package kr.ac.kpu.diyequipmentapplication;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,6 +41,9 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient loginGoogleSignInClient = null;
     private FirebaseAuth loginFirebaseAuth = null;
     private FirebaseFirestore loginFirebaseFirestore = null;
+    private String loginGetEmail = null;
+    private String loginGetPwd = null;
+    private String loginGetId = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,8 @@ public class LoginActivity extends AppCompatActivity {
                 final String tempId = etUserId.getText().toString().trim();
                 final String tempPwd = etUserPwd.getText().toString().trim();
 
+
+
                 if (tempId.isEmpty() && tempPwd.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "아이디, 패스워드 미입력!", Toast.LENGTH_SHORT).show();
                     Toast.makeText(getApplicationContext(), "아이디, 패스워드 입력하세요!", Toast.LENGTH_SHORT).show();
@@ -75,30 +79,35 @@ public class LoginActivity extends AppCompatActivity {
                 } else if (tempPwd.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "패스워드 미입력!", Toast.LENGTH_SHORT).show();
                     Toast.makeText(getApplicationContext(), "패스워드 입력하세요!", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                }  else{
                     loginFirebaseFirestore.collection("DIY_Signup")
-                            .whereEqualTo("userID", tempId)
                             .get()
                             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                     if (task.isSuccessful()) {
                                         for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
-
-                                            Log.d("hhh", queryDocumentSnapshot.get("userID").toString().trim());
-                                            Log.d("hhh", queryDocumentSnapshot.get("userEmail").toString().trim());
-                                            Log.d("hhh", queryDocumentSnapshot.get("userPwd1").toString().trim());
-                                            firebaseAuthWithEmail(queryDocumentSnapshot.get("userEmail").toString().trim(), queryDocumentSnapshot.get("userPwd1").toString().trim());
-
+                                            if (tempId.equals(queryDocumentSnapshot.get("userID").toString().trim())
+                                                    && tempPwd.equals(queryDocumentSnapshot.get("userPwd1").toString().trim())) {
+                                                loginGetEmail = queryDocumentSnapshot.get("userEmail").toString().trim();
+                                                loginGetPwd = queryDocumentSnapshot.get("userPwd1").toString().trim();
+                                                firebaseAuthWithEmail(loginGetEmail, loginGetPwd);
+                                            }
+                                            else if (tempId.equals(queryDocumentSnapshot.get("userID").toString().trim())
+                                                    && !tempPwd.equals(queryDocumentSnapshot.get("userPwd1").toString().trim())) {
+                                                loginGetId = queryDocumentSnapshot.get("userID").toString().trim();
+                                                Toast.makeText(getApplicationContext(), "로그인 실패!", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getApplicationContext(), "패스워드가 틀립니다!", Toast.LENGTH_SHORT).show();
+                                            } else { continue; }
                                         }
+                                        if (loginGetId == null && loginGetEmail == null)
+                                            Toast.makeText(getApplicationContext(), "등록된 계정이 아닙니다!\n회원가입 하세요!", Toast.LENGTH_SHORT).show();
                                     } else {
-
+                                        Toast.makeText(getApplicationContext(), "로그인 실패!!", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
                 }
-
             }
         });
 
@@ -167,7 +176,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {  //구글 로그인 성공인 경우
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            startActivity(new Intent(LoginActivity.this, DiyMainActivity.class));
                             finish();
                             Toast.makeText(LoginActivity.this, "Google Login Success!", Toast.LENGTH_SHORT).show();
                         } else { //구글 로그인 실패인 경우
@@ -176,14 +185,13 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
-
     //Firebase에 등록된 인증 메일로 로그인 기능 구현 메서드
     private void firebaseAuthWithEmail(String userEmail, String userPwd) {
         loginFirebaseAuth.signInWithEmailAndPassword(userEmail, userPwd).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {    //task객체로 로그인 유무 파악
                     if (task.isSuccessful()) {  //Firebase 인증 및 로그인 성공인 경우
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class); //Intent객체 생성 및 초기화
+                        Intent intent = new Intent(LoginActivity.this, DiyMainActivity.class); //Intent객체 생성 및 초기화
                         startActivity(intent);  //AuthMainActivity 이동
                         finish();   //현재 액티비티 파괴
                         Toast.makeText(LoginActivity.this, "Login Success!",Toast.LENGTH_SHORT).show();
