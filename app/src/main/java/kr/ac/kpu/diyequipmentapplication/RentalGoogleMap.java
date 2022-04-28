@@ -7,6 +7,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -28,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //등록된 대여 장비 주소를 이용해 구글맵 마커 표기하는 액티비티 클래스 구현
-public class RentalGoogleMap extends AppCompatActivity implements OnMapReadyCallback {
+public class RentalGoogleMap extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
     GoogleMap gMap;             //구글맵 객체 참조하는 변수
     MapFragment mapFrag;        //구글맵 프레그먼트 객체 참조하는 변수
     Context context = this;     //RentalGoogleMap 참조하는 변수
@@ -67,7 +69,10 @@ public class RentalGoogleMap extends AppCompatActivity implements OnMapReadyCall
                                 rentalLatlng = new LatLng(rentalLocation.getLatitude(), rentalLocation.getLongitude());
                                 MarkerOptions markerOptions = new MarkerOptions();
                                 markerOptions.position(rentalLatlng);
-                                markerOptions.title(queryDocumentSnapshot.get("rentalAddress").toString().trim());
+                                markerOptions.title("사용자 메일 : "+queryDocumentSnapshot.get("userEmail").toString().trim()+"\n"
+                                        +"장비 모델명 : "+queryDocumentSnapshot.get("modelName").toString().trim()+"\n"
+                                        +"장비 정보  : "+queryDocumentSnapshot.get("modelInform").toString().trim()+"\n"
+                                        +"대여 주소  : "+queryDocumentSnapshot.get("rentalAddress").toString().trim());
                                 gMap.addMarker(markerOptions);
                                 i++;
                             }
@@ -75,7 +80,9 @@ public class RentalGoogleMap extends AppCompatActivity implements OnMapReadyCall
                     }
                 });
 
-        final LatLng lastLatLng = new LatLng(38.300603, 126.262021);
+        //final LatLng lastLatLng = new LatLng(38.300603, 126.262021);
+        final LatLng lastLatLng = new LatLng(37.541, 126.986);
+        googleMap.setOnMarkerClickListener(this);
 
         googleMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() {
             @Override
@@ -135,5 +142,11 @@ public class RentalGoogleMap extends AppCompatActivity implements OnMapReadyCall
                 return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        Toast.makeText(getApplicationContext(), marker.getTitle(), Toast.LENGTH_SHORT).show();
+        return true;
     }
 }
