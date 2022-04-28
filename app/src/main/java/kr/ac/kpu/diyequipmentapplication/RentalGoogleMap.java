@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 //등록된 대여 장비 주소를 이용해 구글맵 마커 표기하는 액티비티 클래스 구현
 public class RentalGoogleMap extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
     GoogleMap gMap;             //구글맵 객체 참조하는 변수
