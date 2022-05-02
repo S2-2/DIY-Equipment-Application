@@ -1,6 +1,6 @@
 package kr.ac.kpu.diyequipmentapplication;
 
-import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,8 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -84,30 +86,92 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
+        //로그아웃 버튼 클릭 이벤트
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                menuFirebaseAuth.signOut();
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        btn_withdraw.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                menuFirebaseAuth.getCurrentUser().delete();
-                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(intent);
-                finish();
+                AlertDialog.Builder dlg = new AlertDialog.Builder(MenuActivity.this);
+                dlg.setTitle("로그아웃");
+                dlg.setMessage("로그아웃 하시겠습니까?");
+                dlg.setIcon(R.mipmap.ic_launcher);
+
+                dlg.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        menuFirebaseAuth.signOut();
+                        Toast.makeText(getApplicationContext(), "로그아웃 되었습니다!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+
+                dlg.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(getApplicationContext(), "로그아웃 취소되었습니다!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                dlg.show();
             }
         });
 
+        //회원탈퇴 버튼 클릭 이벤트
+        btn_withdraw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder dlg = new AlertDialog.Builder(MenuActivity.this);
+                dlg.setTitle("회원 탈퇴");
+                dlg.setMessage("회원 탈퇴하시겠습니까?");
+                dlg.setIcon(R.mipmap.ic_launcher);
+
+                dlg.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        menuFirebaseAuth.getCurrentUser().delete();
+                        Toast.makeText(getApplicationContext(), "회원 탈퇴되었습니다!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+
+                dlg.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(getApplicationContext(), "회원 탈퇴 취소되었습니다!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                dlg.show();
+            }
+        });
+
+        //채팅 버튼 클릭 이벤트
         btn_startChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ChatStartActivity.class);
-                startActivity(intent);
+                AlertDialog.Builder dlg = new AlertDialog.Builder(MenuActivity.this);
+                dlg.setTitle("DIY_채팅");
+                dlg.setMessage("채팅창으로 접속하시겠습니까?");
+                dlg.setIcon(R.mipmap.ic_launcher);
+
+                dlg.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(getApplicationContext(), "채팅창으로 접속되었습니다!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), ChatStartActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+
+                dlg.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(getApplicationContext(), "채팅창 접속이 취소되었습니다!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                dlg.show();
             }
         });
     }
