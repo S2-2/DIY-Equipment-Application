@@ -71,14 +71,14 @@ public class LoginActivity extends AppCompatActivity {
 
 
                 if (tempId.isEmpty() && tempPwd.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "아이디, 패스워드 미입력!", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getApplicationContext(), "아이디, 패스워드 입력하세요!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "아이디, 패스워드 미입력!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "아이디, 패스워드 입력하세요!", Toast.LENGTH_SHORT).show();
                 } else if (tempId.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "아이디 미입력!", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getApplicationContext(), "아이디 입력하세요!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "아이디 미입력!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "아이디 입력하세요!", Toast.LENGTH_SHORT).show();
                 } else if (tempPwd.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "패스워드 미입력!", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getApplicationContext(), "패스워드 입력하세요!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "패스워드 미입력!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "패스워드 입력하세요!", Toast.LENGTH_SHORT).show();
                 }  else{
                     loginFirebaseFirestore.collection("DIY_Signup")
                             .get()
@@ -96,14 +96,14 @@ public class LoginActivity extends AppCompatActivity {
                                             else if (tempId.equals(queryDocumentSnapshot.get("userID").toString().trim())
                                                     && !tempPwd.equals(queryDocumentSnapshot.get("userPwd1").toString().trim())) {
                                                 loginGetId = queryDocumentSnapshot.get("userID").toString().trim();
-                                                Toast.makeText(getApplicationContext(), "로그인 실패!", Toast.LENGTH_SHORT).show();
-                                                Toast.makeText(getApplicationContext(), "패스워드가 틀립니다!", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(LoginActivity.this, "로그인 실패!", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(LoginActivity.this, "패스워드가 틀립니다!", Toast.LENGTH_SHORT).show();
                                             } else { continue; }
                                         }
                                         if (loginGetId == null && loginGetEmail == null)
-                                            Toast.makeText(getApplicationContext(), "등록된 계정이 아닙니다!\n회원가입 하세요!", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(LoginActivity.this, "등록된 계정이 아닙니다!\n회원가입 하세요!", Toast.LENGTH_SHORT).show();
                                     } else {
-                                        Toast.makeText(getApplicationContext(), "로그인 실패!!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(LoginActivity.this, "로그인 실패!!", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
@@ -115,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
         btnFindId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentFindId = new Intent(getApplicationContext(), FindIdActivity.class);
+                Intent intentFindId = new Intent(LoginActivity.this, FindIdActivity.class);
                 startActivity(intentFindId);
             }
         });
@@ -124,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
         btnFindPwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentFindPwd = new Intent(getApplicationContext(), FindPwdActivity.class);
+                Intent intentFindPwd = new Intent(LoginActivity.this, FindPwdActivity.class);
                 startActivity(intentFindPwd);
             }
         });
@@ -133,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentSignup = new Intent(getApplicationContext(), SignupActivity.class);
+                Intent intentSignup = new Intent(LoginActivity.this, SignupActivity.class);
                 startActivity(intentSignup);
             }
         });
@@ -176,7 +176,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {  //구글 로그인 성공인 경우
-                            startActivity(new Intent(LoginActivity.this, DiyMainActivity.class));
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
                             finish();
                             Toast.makeText(LoginActivity.this, "Google Login Success!", Toast.LENGTH_SHORT).show();
                         } else { //구글 로그인 실패인 경우
@@ -191,7 +191,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {    //task객체로 로그인 유무 파악
                     if (task.isSuccessful()) {  //Firebase 인증 및 로그인 성공인 경우
-                        Intent intent = new Intent(LoginActivity.this, DiyMainActivity.class); //Intent객체 생성 및 초기화
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class); //Intent객체 생성 및 초기화
                         startActivity(intent);  //AuthMainActivity 이동
                         finish();   //현재 액티비티 파괴
                         Toast.makeText(LoginActivity.this, "Login Success!",Toast.LENGTH_SHORT).show();

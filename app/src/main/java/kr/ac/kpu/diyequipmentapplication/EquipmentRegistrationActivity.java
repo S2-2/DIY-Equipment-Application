@@ -270,7 +270,7 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
                                     registrationProgressDialog.dismiss();
 
                                     //공급자가 입력한 DIY 등록 액티비티에서 DIY 메인 액티비티로 이동
-                                    Intent intent = new Intent(EquipmentRegistrationActivity.this, DiyMainActivity.class);
+                                    Intent intent = new Intent(EquipmentRegistrationActivity.this, MainActivity.class);
                                     startActivity(intent);
                                 }
                             });

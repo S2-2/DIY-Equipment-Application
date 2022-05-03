@@ -27,8 +27,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="앱 이름"
-            android:textSize="30dp" />
+            android:text="DIY Equipment Rental"
+            android:textSize="30dp"
+            android:textStyle="bold|italic"/>
 
         <ImageButton
             android:id="@+id/registrationRecyclerview_btn_search"
@@ -116,10 +117,13 @@
                 android:layout_height="200dp" /> -->
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/registrationRecyclerview_recyclerview"
+                android:id="@+id/main_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clipToPadding="false" />
+                android:clipToPadding="false"
+                android:scrollbars="horizontal"
+                android:scrollbarFadeDuration="0"/>
+
         </LinearLayout>
 
         <!-- 커뮤니티 -->

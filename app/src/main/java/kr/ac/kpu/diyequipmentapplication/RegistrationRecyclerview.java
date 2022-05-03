@@ -53,7 +53,8 @@ public class RegistrationRecyclerview extends AppCompatActivity {
         mStorage = FirebaseStorage.getInstance();
         recyclerView = findViewById(R.id.registrationRecyclerview_recyclerview);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));   //리사이클러뷰 세로 화면
+        //recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)); //리사이클러뷰 가로 화면
 
         //RecyclerView에 RegistrationAdapter 클래스 등록 구현
         equipmentRegistrationList = new ArrayList<EquipmentRegistration>();
@@ -150,7 +151,7 @@ public class RegistrationRecyclerview extends AppCompatActivity {
         imgBtn_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                Intent intent = new Intent(RegistrationRecyclerview.this, MenuActivity.class);
                 startActivity(intent);
             }
         });
@@ -167,7 +168,7 @@ public class RegistrationRecyclerview extends AppCompatActivity {
         imgBtn_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), DiyMainActivity.class);
+                Intent intent = new Intent(RegistrationRecyclerview.this, MainActivity.class);
                 startActivity(intent);
             }
         });

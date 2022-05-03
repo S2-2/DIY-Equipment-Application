@@ -80,7 +80,7 @@ public class MenuActivity extends AppCompatActivity {
         imgBtn_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), DiyMainActivity.class);
+                Intent intent = new Intent(MenuActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -95,21 +95,21 @@ public class MenuActivity extends AppCompatActivity {
                 dlg.setMessage("로그아웃 하시겠습니까?");
                 dlg.setIcon(R.mipmap.ic_launcher);
 
-                dlg.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         menuFirebaseAuth.signOut();
-                        Toast.makeText(getApplicationContext(), "로그아웃 되었습니다!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        Toast.makeText(MenuActivity.this, "로그아웃 되었습니다!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(MenuActivity.this, LoginActivity.class);
                         startActivity(intent);
                         finish();
                     }
                 });
 
-                dlg.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                dlg.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(getApplicationContext(), "로그아웃 취소되었습니다!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MenuActivity.this, "로그아웃 취소되었습니다!", Toast.LENGTH_SHORT).show();
                     }
                 });
                 dlg.show();
@@ -125,21 +125,21 @@ public class MenuActivity extends AppCompatActivity {
                 dlg.setMessage("회원 탈퇴하시겠습니까?");
                 dlg.setIcon(R.mipmap.ic_launcher);
 
-                dlg.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         menuFirebaseAuth.getCurrentUser().delete();
-                        Toast.makeText(getApplicationContext(), "회원 탈퇴되었습니다!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        Toast.makeText(MenuActivity.this, "회원 탈퇴되었습니다!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(MenuActivity.this, LoginActivity.class);
                         startActivity(intent);
                         finish();
                     }
                 });
 
-                dlg.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                dlg.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(getApplicationContext(), "회원 탈퇴 취소되었습니다!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MenuActivity.this, "회원 탈퇴 취소되었습니다!", Toast.LENGTH_SHORT).show();
                     }
                 });
                 dlg.show();
@@ -155,20 +155,20 @@ public class MenuActivity extends AppCompatActivity {
                 dlg.setMessage("채팅창으로 접속하시겠습니까?");
                 dlg.setIcon(R.mipmap.ic_launcher);
 
-                dlg.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(getApplicationContext(), "채팅창으로 접속되었습니다!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getApplicationContext(), ChatStartActivity.class);
+                        Toast.makeText(MenuActivity.this, "채팅창으로 접속되었습니다!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(MenuActivity.this, ChatStartActivity.class);
                         startActivity(intent);
                         finish();
                     }
                 });
 
-                dlg.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                dlg.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Toast.makeText(getApplicationContext(), "채팅창 접속이 취소되었습니다!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MenuActivity.this, "채팅창 접속이 취소되었습니다!", Toast.LENGTH_SHORT).show();
                     }
                 });
                 dlg.show();
