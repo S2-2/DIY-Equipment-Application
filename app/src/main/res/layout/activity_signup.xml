@@ -4,14 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="20dp"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="20dp">
+        android:layout_marginBottom="20dp">
 
         <ImageButton
+            android:background="@android:color/transparent"
             android:id="@+id/signup_btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,12 +42,14 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="18dp"
             android:text="아이디" />
 
         <EditText
@@ -53,11 +57,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
-            android:textSize="20dp" />
+            android:textSize="18dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="18dp"
             android:text="비밀번호" />
 
         <EditText
@@ -67,11 +72,12 @@
             android:layout_marginBottom="20dp"
             android:hint=""
             android:inputType="textPassword"
-            android:textSize="20dp" />
+            android:textSize="18dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="18dp"
             android:text="비밀번호 재확인" />
 
         <EditText
@@ -81,11 +87,12 @@
             android:layout_marginBottom="20dp"
             android:hint=""
             android:inputType="textPassword"
-            android:textSize="20dp" />
+            android:textSize="18dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="18dp"
             android:text="이름" />
 
         <EditText
@@ -95,11 +102,12 @@
             android:layout_marginBottom="20dp"
             android:hint=""
             android:inputType="text"
-            android:textSize="20dp" />
+            android:textSize="18dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="18dp"
             android:text="별명" />
 
         <EditText
@@ -109,11 +117,12 @@
             android:layout_marginBottom="20dp"
             android:hint=""
             android:inputType="text"
-            android:textSize="20dp" />
+            android:textSize="18dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="18dp"
             android:text="본인 확인 이메일" />
 
         <EditText
@@ -123,7 +132,7 @@
             android:layout_marginBottom="20dp"
             android:hint=""
             android:inputType="text"
-            android:textSize="20dp" />
+            android:textSize="18dp" />
     </LinearLayout>
 
     <!--회원가입 버튼-->
@@ -132,10 +141,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
         android:text="가입하기"
-        android:textSize="20dp" />
+        android:textSize="18dp" />
 
         </LinearLayout>
     </ScrollView>
