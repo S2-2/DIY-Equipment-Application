@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DIYEquipmentApplication">
         <activity
+            android:name=".ScheduleActivity"
+            android:exported="false" />
+        <activity
             android:name=".ProfileActivity"
             android:exported="false" />
         <activity
@@ -59,19 +62,19 @@
             android:exported="false" />
         <activity
             android:name=".AllRentalGoogleMapActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".RentalGoogleMap"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".EquipmentDetailActivity"
             android:exported="false" />
         <activity
             android:name=".chat.ChatActivity"
-            android:exported="false"/>
-        <activity android:name=".chat.ChatStartActivity"
-            android:exported="false"/>
-
+            android:exported="false" />
+        <activity
+            android:name=".chat.ChatStartActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
