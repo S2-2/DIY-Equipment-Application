@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="20dp"
     android:orientation="vertical"
     tools:context=".EquipmentDetailActivity">
 
@@ -17,16 +18,15 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="#BFBFBF"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical">
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:layout_gravity="center_vertical"
             android:id="@+id/registrationRecyclerview_btn_drawer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/transparent"
             app:srcCompat="@drawable/ic_baseline_menu_24"
             tools:layout_editor_absoluteX="28dp"
             tools:layout_editor_absoluteY="43dp" />
@@ -36,14 +36,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
+            android:textSize="18dp"
             android:text="앱 이름" />
 
         <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:id="@+id/registrationRecyclerview_btn_map"
-            android:layout_width="wrap_content"
             android:background="@android:color/transparent"
             android:layout_gravity="center_vertical"
-            android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_baseline_search_24"
             tools:layout_editor_absoluteX="346dp"
             tools:layout_editor_absoluteY="50dp" />
@@ -59,18 +60,18 @@
             android:id="@+id/signup_btn_back"
             android:background="@android:color/transparent"
             android:layout_gravity="center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24"
             tools:layout_editor_absoluteX="28dp"
             tools:layout_editor_absoluteY="43dp" />
 
         <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:id="@+id/registrationRecyclerview_btn_home"
-            android:layout_width="wrap_content"
             android:background="@android:color/transparent"
             android:layout_gravity="center_vertical"
-            android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_baseline_home_24" />
     </LinearLayout>
 

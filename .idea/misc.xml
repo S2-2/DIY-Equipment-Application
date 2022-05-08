@@ -9,7 +9,10 @@
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_auth_main.xml" value="0.22083333333333333" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_auth_register.xml" value="0.22083333333333333" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_change_pwd.xml" value="0.253125" />
-        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_chatting.xml" value="0.22083333333333333" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_chat_myform.xml" value="0.18697916666666667" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_chat_otherform.xml" value="0.18697916666666667" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_chatstart_form.xml" value="0.22" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_chatting.xml" value="0.25" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_check_id.xml" value="0.2677083333333333" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_community.xml" value="0.2677083333333333" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_community_recyclerview.xml" value="0.24895833333333334" />
