@@ -98,7 +98,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
         imgBtn_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                Intent intent = new Intent(EquipmentDetailActivity.this, MenuActivity.class);
                 startActivity(intent);
             }
         });
@@ -115,7 +115,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
         imgBtn_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), DiyMainActivity.class);
+                Intent intent = new Intent(EquipmentDetailActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });

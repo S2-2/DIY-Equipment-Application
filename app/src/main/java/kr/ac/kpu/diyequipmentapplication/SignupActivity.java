@@ -107,7 +107,7 @@ public class SignupActivity extends AppCompatActivity {
                                         }
                                     }
                                 } else {
-                                    Toast.makeText(getApplicationContext(), "DIY_Signup DB 읽기 실패!!!",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(SignupActivity.this, "DIY_Signup DB 읽기 실패!!!",Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -183,7 +183,7 @@ public class SignupActivity extends AppCompatActivity {
                                         }
                                     }
                                 } else {
-                                    Toast.makeText(getApplicationContext(), "DIY_Signup DB 읽기 실패!!!",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(SignupActivity.this, "DIY_Signup DB 읽기 실패!!!",Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
