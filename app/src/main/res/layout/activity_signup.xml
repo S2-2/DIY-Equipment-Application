@@ -15,8 +15,8 @@
         <ImageButton
             android:background="@android:color/transparent"
             android:id="@+id/signup_btn_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24" />
 
         <TextView
@@ -57,8 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
-            android:hint="아이디 입력하세요."
-            android:textSize="20dp" />
+            android:textSize="18dp" />
         <TextView
             android:id="@+id/signup_tv_checkId"
             android:layout_width="match_parent"
@@ -76,7 +75,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:hint="비밀번호 입력하세요."
             android:inputType="textPassword"
             android:textSize="18dp" />
 
@@ -90,7 +88,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:hint="비밀번호 재확인 입력하세요."
             android:inputType="textPassword"
             android:textSize="18dp" />
         <TextView
@@ -109,7 +106,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:hint="이름 입력하세요."
             android:inputType="text"
             android:textSize="18dp" />
 
@@ -124,7 +120,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:hint="별명 입력하세요."
             android:inputType="text"
             android:textSize="18dp" />
 
@@ -139,10 +134,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:hint="본인 확인 이메일 입력하세요."
             android:inputType="text"
             android:textSize="18dp" />
-            android:textSize="20dp" />
         <TextView
             android:id="@+id/signup_tv_checkEmail"
             android:layout_width="match_parent"
