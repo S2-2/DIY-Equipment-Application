@@ -12,7 +12,8 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="match_parent"\
+
             android:layout_height="30dp"
             android:background="#BFBFBF"
             android:gravity="center_vertical">
@@ -37,10 +38,10 @@
             <ImageButton
                 android:background="@android:color/transparent"
                 android:layout_gravity="center_vertical"
-                android:id="@+id/registrationRecyclerview_btn_search"
+                android:id="@+id/registrationRecyclerview_btn_map"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_baseline_search_24"
+                app:srcCompat="@drawable/ic_baseline_map_24"
                 tools:layout_editor_absoluteX="346dp"
                 tools:layout_editor_absoluteY="50dp" />
         </LinearLayout>

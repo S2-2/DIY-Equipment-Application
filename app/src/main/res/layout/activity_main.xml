@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
+    android:layout_margin="20dp"
     android:orientation="vertical">
 
     // 상단 드로어 메뉴랑 검색창
@@ -32,7 +32,7 @@
             android:textStyle="bold|italic"/>
 
         <ImageButton
-            android:id="@+id/registrationRecyclerview_btn_search"
+            android:id="@+id/registrationRecyclerview_btn_map"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
@@ -40,25 +40,31 @@
             app:srcCompat="@drawable/ic_baseline_search_24" />
     </LinearLayout>
 
+    <!-- 실시간 인기 거래 목록 -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="안녕하세요, " />
+            android:text="안녕하세요, "
+            android:textSize="14dp" />
 
         <EditText
             android:id="@+id/main_et_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="(별명)" />
+            android:text="(별명)"
+            android:textSize="18dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="님" />
+            android:text="님"
+            android:textSize="16dp" />
 
         <View
             android:layout_width="0dp"
@@ -68,24 +74,25 @@
         <ImageButton
             android:id="@+id/main_btn_alarm"
             android:layout_width="wrap_content"
-            android:background="@android:color/transparent"
-            android:layout_gravity="center_vertical"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/transparent"
             app:srcCompat="@drawable/ic_baseline_notifications_active_24"
             tools:layout_editor_absoluteX="346dp"
             tools:layout_editor_absoluteY="121dp" />
     </LinearLayout>
 
-    <!-- 실시간 인기 거래 목록 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:orientation="vertical">
 
             <LinearLayout
@@ -95,8 +102,10 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:textColor="@color/black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="18dp"
                     android:text="실시간 공구 거래" />
 
                 <ImageButton
@@ -130,6 +139,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -144,8 +155,10 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:textColor="@color/black"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textSize="18dp"
                         android:text="커뮤니티" />
 
                     <ImageButton
@@ -165,7 +178,8 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -174,6 +188,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"
                     android:text="거래 채팅" />
 
                 <ImageButton
