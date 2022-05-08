@@ -1,16 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-        <item
-            android:id="@+id/item_info"
-            android:title="내 정보" />
-
-        <item
-            android:id="@+id/item_info2"
-            android:title="내 정보2" />
-
-        <item
-            android:id="@+id/item_info3"
-            android:title="내 정보3" />
-
+        <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/tradedetail"
+                    android:icon="@drawable/ic_launcher_foreground"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                    android:title="거래내역"
+                        />
+                <item
+                    android:id="@+id/startchatting"
+                    android:icon="@drawable/ic_launcher_foreground"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                    android:title="채팅"
+                    />
+                <item
+                    android:id="@+id/diymap"
+                    android:icon="@drawable/ic_launcher_foreground"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                    android:title="장비대여맵"
+                    />
+                <item
+                    android:id="@+id/mycommunity"
+                    android:icon="@drawable/ic_launcher_foreground"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                    android:title="내가 쓴 커뮤니티"
+                    />
+                <item
+                    android:id="@+id/tradelist"
+                    android:icon="@drawable/ic_launcher_foreground"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                    android:title="거래목록"
+                    />
+                <item
+                    android:id="@+id/communitylist"
+                    android:icon="@drawable/ic_launcher_foreground"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                    android:title="커뮤니티 목록"
+                    />
+                <item
+                    android:id="@+id/locationset"
+                    android:icon="@drawable/ic_launcher_foreground"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                    android:title="위치설정"
+                    />
+                <item
+                    android:id="@+id/logout"
+                    android:icon="@drawable/ic_launcher_foreground"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                    android:title="로그아웃"
+                    />
+                <item
+                    android:id="@+id/withdraw"
+                    android:icon="@drawable/ic_launcher_foreground"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                    android:title="회원탈퇴"
+                    />
+        </group>
 </menu>
