@@ -1,6 +1,7 @@
 package kr.ac.kpu.diyequipmentapplication.chat;
 
-
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -34,14 +36,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
 
+import kr.ac.kpu.diyequipmentapplication.MainActivity;
 import kr.ac.kpu.diyequipmentapplication.R;
-
 
 public class ChatActivity extends AppCompatActivity {
 
     private String CHAT_NUM = null;
     private String CHAT_USER_EMAIL = null;
     private String CHAT_USER_NICKNAME = null;
+    private String CHAT_USER_TEXT = null;
 
     private ArrayList<ChatModel> chatModels;
     private ChatModel chatModel;
@@ -55,7 +58,6 @@ public class ChatActivity extends AppCompatActivity {
     private FirebaseAuth chatAuth = null;
     private FirebaseDatabase chatFDB = null;
     private DatabaseReference chatRef = null;
-
     private FirebaseFirestore userFS = null;
 
     @Override
@@ -80,6 +82,7 @@ public class ChatActivity extends AppCompatActivity {
 
         // 사용자 이메일 및 닉네임 가져오기
         CHAT_USER_EMAIL = chatAuth.getCurrentUser().getEmail().toString();
+
         userFS.collection("DIY_Signup")
                 .whereEqualTo("userEmail", chatAuth.getCurrentUser().getEmail().toString().trim())
                 .get()
@@ -115,25 +118,31 @@ public class ChatActivity extends AppCompatActivity {
         btnChatSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 이름 비어있을시 리턴
-                if(etChatMsg.getText().toString().equals(""))
-                    return;
-
-                // 캘랜더 시간 가져오기
-                Calendar calendar = Calendar.getInstance();
-                String timestamp = calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE);
-
-                // firebaseDB에 데이터 저장
-                chatModel = new ChatModel(CHAT_USER_EMAIL, CHAT_USER_NICKNAME, etChatMsg.getText().toString(),timestamp);
-                chatRef.child(CHAT_NUM).push().setValue(chatModel);
-
-                // 입력한 메세지 보냈으면 초기화
-                etChatMsg.setText("");
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
-
+            // 이름 비어있을시 리턴
+            if(etChatMsg.getText().toString().equals(""))
+                return;
+            else{
+                CHAT_USER_TEXT = etChatMsg.getText().toString();
             }
-        });
+
+            // 캘랜더 시간 가져오기
+            Calendar calendar = Calendar.getInstance();
+            String timestamp = calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE);
+
+            // firebaseDB에 데이터 저장
+            chatModel = new ChatModel(CHAT_USER_EMAIL, CHAT_USER_NICKNAME, CHAT_USER_TEXT,timestamp);
+            chatRef.child(CHAT_NUM).push().setValue(chatModel);
+
+            // 채팅알림 보내기
+            chatAlarm(CHAT_USER_NICKNAME, CHAT_USER_TEXT);
+
+            // 입력한 메세지 보냈으면 초기화
+            etChatMsg.setText("");
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
+
+        }
+    });
     }
 
     private void chatWithUser(String chat_num) {
@@ -168,5 +177,27 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void chatAlarm(String chatTitle, String chatText){
+
+        Intent chatIntent = new Intent(getApplicationContext(), ChatActivity.class);
+        chatIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent chatPendIntent = PendingIntent.getActivity(this,0, chatIntent, 0);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(ChatActivity.this)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(chatTitle)
+                .setContentText(chatText)
+                .setDefaults(NotificationCompat.DEFAULT_VIBRATE)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(chatPendIntent)
+                .setAutoCancel(true)
+                .setVisibility(NotificationCompat.VISIBILITY_PRIVATE);
+
+        Log.e("LOG", "채팅보내기 완료 - " + chatText);
+
+        NotificationManager chatAlarmManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        chatAlarmManager.notify(0,builder.build());
     }
 }

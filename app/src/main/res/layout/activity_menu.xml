@@ -68,7 +68,7 @@
                 android:textSize="20dp" />
 
             <TextView
-                android:id="@+id/menu_tv_nickname"
+                android:id="@+id/menu_tv_userlocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="사용자 위치"
@@ -103,7 +103,6 @@
                 android:text="나의 활동"
                 android:textSize="16dp" />
 
-            <!-- 'activity_chatting'하고 연결 -->
             <Button
                 android:id="@+id/menu_btn_myDeal"
                 android:layout_width="match_parent"
@@ -114,6 +113,7 @@
                 android:textColor="@color/black"
                 android:textSize="18dp" />
 
+            <!-- 'activity_chatting'하고 연결 -->
             <Button
                 android:id="@+id/menu_btn_chatting"
                 android:layout_width="match_parent"
@@ -147,17 +147,18 @@
                 android:textSize="16dp" />
 
             <Button
-                android:id="@+id/menu_btn_deal"
+                android:id="@+id/menu_btn_tradelist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:gravity="center"
                 android:text="거래 목록"
                 android:textColor="@color/black"
-                android:textSize="18dp" />
+                android:textSize="18dp"
+                tools:ignore="DuplicateIds" />
 
             <Button
-                android:id="@+id/menu_btn_community"
+                android:id="@+id/menu_btn_communitylist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"

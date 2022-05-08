@@ -57,6 +57,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
+            android:hint="아이디 입력하세요."
+            android:textSize="20dp" />
+        <TextView
+            android:id="@+id/signup_tv_checkId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
             android:textSize="18dp" />
 
         <TextView
@@ -70,14 +76,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:hint=""
+            android:hint="비밀번호 입력하세요."
             android:inputType="textPassword"
             android:textSize="18dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
             android:text="비밀번호 재확인" />
 
         <EditText
@@ -85,9 +90,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:hint=""
+            android:hint="비밀번호 재확인 입력하세요."
             android:inputType="textPassword"
             android:textSize="18dp" />
+        <TextView
+            android:id="@+id/signup_tv_checkPwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:layout_width="match_parent"
@@ -100,7 +109,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:hint=""
+            android:hint="이름 입력하세요."
             android:inputType="text"
             android:textSize="18dp" />
 
@@ -115,7 +124,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:hint=""
+            android:hint="별명 입력하세요."
             android:inputType="text"
             android:textSize="18dp" />
 
@@ -130,9 +139,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:hint=""
+            android:hint="본인 확인 이메일 입력하세요."
             android:inputType="text"
             android:textSize="18dp" />
+            android:textSize="20dp" />
+        <TextView
+            android:id="@+id/signup_tv_checkEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <!--회원가입 버튼-->

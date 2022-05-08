@@ -3,7 +3,6 @@ package kr.ac.kpu.diyequipmentapplication;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,6 +41,9 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient loginGoogleSignInClient = null;
     private FirebaseAuth loginFirebaseAuth = null;
     private FirebaseFirestore loginFirebaseFirestore = null;
+    private String loginGetEmail = null;
+    private String loginGetPwd = null;
+    private String loginGetId = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,39 +68,46 @@ public class LoginActivity extends AppCompatActivity {
                 final String tempId = etUserId.getText().toString().trim();
                 final String tempPwd = etUserPwd.getText().toString().trim();
 
+
+
                 if (tempId.isEmpty() && tempPwd.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "아이디, 패스워드 미입력!", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getApplicationContext(), "아이디, 패스워드 입력하세요!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "아이디, 패스워드 미입력!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "아이디, 패스워드 입력하세요!", Toast.LENGTH_SHORT).show();
                 } else if (tempId.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "아이디 미입력!", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getApplicationContext(), "아이디 입력하세요!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "아이디 미입력!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "아이디 입력하세요!", Toast.LENGTH_SHORT).show();
                 } else if (tempPwd.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "패스워드 미입력!", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getApplicationContext(), "패스워드 입력하세요!", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                    Toast.makeText(LoginActivity.this, "패스워드 미입력!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "패스워드 입력하세요!", Toast.LENGTH_SHORT).show();
+                }  else{
                     loginFirebaseFirestore.collection("DIY_Signup")
-                            .whereEqualTo("userID", tempId)
                             .get()
                             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                     if (task.isSuccessful()) {
                                         for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
-
-                                            Log.d("hhh", queryDocumentSnapshot.get("userID").toString().trim());
-                                            Log.d("hhh", queryDocumentSnapshot.get("userEmail").toString().trim());
-                                            Log.d("hhh", queryDocumentSnapshot.get("userPwd1").toString().trim());
-                                            firebaseAuthWithEmail(queryDocumentSnapshot.get("userEmail").toString().trim(), queryDocumentSnapshot.get("userPwd1").toString().trim());
-
+                                            if (tempId.equals(queryDocumentSnapshot.get("userID").toString().trim())
+                                                    && tempPwd.equals(queryDocumentSnapshot.get("userPwd1").toString().trim())) {
+                                                loginGetEmail = queryDocumentSnapshot.get("userEmail").toString().trim();
+                                                loginGetPwd = queryDocumentSnapshot.get("userPwd1").toString().trim();
+                                                firebaseAuthWithEmail(loginGetEmail, loginGetPwd);
+                                            }
+                                            else if (tempId.equals(queryDocumentSnapshot.get("userID").toString().trim())
+                                                    && !tempPwd.equals(queryDocumentSnapshot.get("userPwd1").toString().trim())) {
+                                                loginGetId = queryDocumentSnapshot.get("userID").toString().trim();
+                                                Toast.makeText(LoginActivity.this, "로그인 실패!", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(LoginActivity.this, "패스워드가 틀립니다!", Toast.LENGTH_SHORT).show();
+                                            } else { continue; }
                                         }
+                                        if (loginGetId == null && loginGetEmail == null)
+                                            Toast.makeText(LoginActivity.this, "등록된 계정이 아닙니다!\n회원가입 하세요!", Toast.LENGTH_SHORT).show();
                                     } else {
-
+                                        Toast.makeText(LoginActivity.this, "로그인 실패!!", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
                 }
-
             }
         });
 
@@ -106,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
         btnFindId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentFindId = new Intent(getApplicationContext(), FindIdActivity.class);
+                Intent intentFindId = new Intent(LoginActivity.this, FindIdActivity.class);
                 startActivity(intentFindId);
             }
         });
@@ -115,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
         btnFindPwd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentFindPwd = new Intent(getApplicationContext(), FindPwdActivity.class);
+                Intent intentFindPwd = new Intent(LoginActivity.this, FindPwdActivity.class);
                 startActivity(intentFindPwd);
             }
         });
@@ -124,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentSignup = new Intent(getApplicationContext(), SignupActivity.class);
+                Intent intentSignup = new Intent(LoginActivity.this, SignupActivity.class);
                 startActivity(intentSignup);
             }
         });
@@ -176,7 +185,6 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
-
     //Firebase에 등록된 인증 메일로 로그인 기능 구현 메서드
     private void firebaseAuthWithEmail(String userEmail, String userPwd) {
         loginFirebaseAuth.signInWithEmailAndPassword(userEmail, userPwd).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {

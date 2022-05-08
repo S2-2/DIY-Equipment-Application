@@ -7,6 +7,14 @@
     android:orientation="vertical"
     tools:context=".EquipmentDetailActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
@@ -149,6 +157,7 @@
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -280,7 +289,8 @@
             android:textSize="16dp" />
     </LinearLayout>
 
-
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
 
 
