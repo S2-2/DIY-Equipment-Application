@@ -4,19 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="20dp"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="20dp">
+        android:layout_height="wrap_content">
 
         <ImageButton
-            android:id="@+id/signup_btn_back"
             android:background="@android:color/transparent"
-            android:layout_gravity="center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/findId_btn_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24" />
 
         <LinearLayout
@@ -35,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="본인 확인"
-                android:textSize="16dp" />
+                android:textSize="14dp" />
         </LinearLayout>
     </LinearLayout>
 
@@ -56,8 +55,9 @@
 
         <TextView
             android:layout_width="match_parent"
+            android:textSize="18dp"
             android:layout_height="wrap_content"
-            android:text="비밀번호를 찾고자 하는 아이디를 입력해 주세요." />
+            android:text="아이디" />
 
         <EditText
             android:id="@+id/findPwd_et_id"
@@ -66,10 +66,11 @@
             android:layout_marginBottom="20dp"
             android:hint=""
             android:inputType="text"
-            android:textSize="20dp" />
+            android:textSize="18dp" />
 
         <TextView
             android:layout_width="match_parent"
+            android:textSize="18dp"
             android:layout_height="wrap_content"
             android:text="이름" />
 
@@ -79,10 +80,11 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:inputType="text"
-            android:textSize="20dp" />
+            android:textSize="18dp" />
 
         <TextView
             android:layout_width="match_parent"
+            android:textSize="18dp"
             android:layout_height="wrap_content"
             android:text="본인 확인 이메일" />
 
@@ -92,23 +94,25 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:inputType="text"
-            android:textSize="20dp" />
+            android:textSize="18dp" />
 
         <Button
             android:id="@+id/findPwd_btn_authNum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="18dp"
             android:layout_gravity="center"
             android:text="인증번호 받기" />
 
         <EditText
             android:id="@+id/findPwd_et_authNum"
-            android:layout_width="match_parent"
+            android:layout_width="150dp"
+            android:layout_gravity="center"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="인증번호 6자리 숫자 입력"
+            android:hint="인증번호 6자리"
             android:inputType="number"
-            android:textSize="16dp" />
+            android:textSize="18dp" />
 
     </LinearLayout>
 
@@ -120,6 +124,6 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:text="다음"
-        android:textSize="20dp" />
+        android:textSize="18dp" />
 
 </LinearLayout>

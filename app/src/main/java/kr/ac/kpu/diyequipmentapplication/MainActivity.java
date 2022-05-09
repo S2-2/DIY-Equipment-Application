@@ -124,15 +124,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // 채팅초기화면으로 이동
-        ImageButton btn_startchatting = findViewById(R.id.main_btn_chat);
-        btn_startchatting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ChatStartActivity.class);
-                startActivity(intent);
-            }
-        });
 
         //장비 목록 RecyclerView 필드 참조
         mainFirebaseFirestoreDB = FirebaseFirestore.getInstance();

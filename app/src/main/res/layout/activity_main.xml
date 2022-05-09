@@ -52,11 +52,22 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+    <!-- 실시간 인기 거래 목록 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="안녕하세요, " />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="안녕하세요, "
+            android:textSize="14dp" />
 
             <EditText
                 android:id="@+id/main_et_nickname"
@@ -64,11 +75,22 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold|italic"
                 android:text="(별명)" />
+        <EditText
+            android:id="@+id/main_et_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(별명)"
+            android:textSize="18dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="님" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="님"
+            android:textSize="16dp" />
 
             <View
                 android:layout_width="0dp"
@@ -83,17 +105,29 @@
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/ic_baseline_notifications_active_24" />
         </LinearLayout>
+        <ImageButton
+            android:id="@+id/main_btn_alarm"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/ic_baseline_notifications_active_24"
+            tools:layout_editor_absoluteX="346dp"
+            tools:layout_editor_absoluteY="121dp" />
+    </LinearLayout>
 
     <!-- 실시간 인기 거래 목록 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:orientation="vertical">
 
             <LinearLayout
@@ -103,8 +137,10 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:textColor="@color/black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="18dp"
                     android:text="실시간 공구 거래" />
 
                 <ImageButton
@@ -131,6 +167,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -145,8 +183,10 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:textColor="@color/black"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textSize="18dp"
                         android:text="커뮤니티" />
 
                     <ImageButton
@@ -155,6 +195,8 @@
                         android:id="@+id/main_btn_community"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="@android:color/transparent"
                         app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24" />
                 </LinearLayout>
 
