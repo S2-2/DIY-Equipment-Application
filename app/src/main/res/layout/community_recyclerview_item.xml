@@ -36,7 +36,7 @@
     <!--내용-->
     <TextView
         android:id="@+id/communityRecyclerviewItem_tv_contents"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="100dp"
         android:textSize="24dp" />
 
