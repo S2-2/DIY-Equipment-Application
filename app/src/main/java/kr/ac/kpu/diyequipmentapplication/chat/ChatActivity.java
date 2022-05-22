@@ -130,7 +130,7 @@ public class ChatActivity extends AppCompatActivity {
             String timestamp = calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE);
 
             // firebaseDB에 데이터 저장
-            chatModel = new ChatModel(CHAT_USER_EMAIL, CHAT_USER_NICKNAME, CHAT_USER_TEXT,timestamp);
+            chatModel = new ChatModel(CHAT_NUM, CHAT_USER_EMAIL, CHAT_USER_NICKNAME, CHAT_USER_TEXT,timestamp);
             chatRef.child(CHAT_NUM).push().setValue(chatModel);
 
             // 채팅알림 보내기

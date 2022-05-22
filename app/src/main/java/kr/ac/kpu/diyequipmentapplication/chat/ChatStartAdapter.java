@@ -1,5 +1,8 @@
 package kr.ac.kpu.diyequipmentapplication.chat;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +18,10 @@ import kr.ac.kpu.diyequipmentapplication.R;
 public class ChatStartAdapter extends BaseAdapter {
     ArrayList<ChatModel> chattingStartList;
     LayoutInflater inflater;
+    Context context;
 
-    public ChatStartAdapter(ArrayList<ChatModel> chattingStartList, LayoutInflater inflater) {
+    public ChatStartAdapter(Context context, ArrayList<ChatModel> chattingStartList, LayoutInflater inflater) {
+        this.context = context;
         this.chattingStartList = chattingStartList;
         this.inflater = inflater;
     }
@@ -43,13 +48,24 @@ public class ChatStartAdapter extends BaseAdapter {
 
         itemView = inflater.inflate(R.layout.activity_chatstart_form,viewGroup,false);
 
+        TextView tvChatnum = itemView.findViewById(R.id.chatStartform_tv_chatnum);
         TextView tvNickname = itemView.findViewById(R.id.chatStartform_tv_userNickname);
         TextView tvLastchat = itemView.findViewById(R.id.chatStartform_tv_lastchat);
-        TextView tvLasttime = itemView.findViewById(R.id.chatStartform_tv_lastchattime);
+        TextView tvPastime = itemView.findViewById(R.id.chatStartform_tv_lastchattime);
 
         tvNickname.setText(chat.getUserNickname());
         tvLastchat.setText(chat.getUserMsg());
-        tvLasttime.setText(chat.getTimestamp());
+        tvPastime.setText(chat.getTimestamp());
+        tvChatnum.setText(chat.getChatNum());
+
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context.getApplicationContext(), ChatActivity.class);
+                intent.putExtra("chatNum", chat.getChatNum());
+                context.startActivity(intent);
+            }
+        });
 
         return itemView;
     }

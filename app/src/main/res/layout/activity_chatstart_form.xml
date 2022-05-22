@@ -1,64 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/chatStartform_iv_profile"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
-            android:src="@drawable/free_icon_heart_833472"
-            app:layout_constraintEnd_toStartOf="@id/chatStartform_tv_userNickname"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
 
     <!-- 위치, 게시시간, 가격으로 수정해야 함! -->
 
-    <TextView
-        android:id="@+id/chatStartform_tv_userNickname"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+    <ImageView
+        android:id="@+id/chatStartform_iv_profile"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        android:hint="닉네임"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/chatStartform_iv_profile"
-        app:layout_constraintTop_toTopOf="@id/chatStartform_iv_profile" />
+        android:src="@drawable/free_icon_heart_833472"
+        tools:srcCompat="@tools:sample/avatars" />
 
-    <TextView
-        android:id="@+id/chatStartform_tv_lastchat"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:gravity="right"
-        android:hint="채팅내역"
-        android:maxLength="20"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="@id/chatStartform_tv_userNickname"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@id/chatStartform_tv_userNickname"
-        app:layout_constraintTop_toBottomOf="@id/chatStartform_tv_userNickname" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/chatStartform_tv_lastchattime"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="24dp"
-        android:gravity="right"
-        android:hint="날짜"
-        android:textColor="#A9FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/chatStartform_tv_lastchat"
-        app:layout_constraintTop_toBottomOf="@id/chatStartform_tv_lastchat" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/chatStartform_tv_userNickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="32dp"
+                android:hint="닉네임"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/chatStartform_tv_chatnum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="32dp"
+                android:visibility="invisible"/>
+        </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/chatStartform_tv_lastchat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:ellipsize="end"
+                android:gravity="left"
+                android:hint="채팅내역"
+                android:maxLength="20"
+                android:maxLines="1"
+                android:textSize="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="0dp" />
+
+            <TextView
+                android:id="@+id/chatStartform_tv_lastchattime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:gravity="right"
+                android:hint="날짜"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.93"
+                app:layout_constraintStart_toEndOf="@+id/chatStartform_tv_lastchat"
+                tools:layout_editor_absoluteY="0dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
+<!--<androidx.constraintlayout.widget.ConstraintLayout-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent">-->
+
+<!--    &lt;!&ndash; 위치, 게시시간, 가격으로 수정해야 함! &ndash;&gt;-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/chatStartform_iv_profile"-->
+<!--        android:layout_width="56dp"-->
+<!--        android:layout_height="56dp"-->
+<!--        android:layout_marginStart="8dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:layout_marginEnd="32dp"-->
+<!--        android:src="@drawable/free_icon_heart_833472"-->
+<!--        app:layout_constraintEnd_toStartOf="@id/chatStartform_tv_userNickname"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        tools:srcCompat="@tools:sample/avatars" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/chatStartform_tv_userNickname"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginEnd="32dp"-->
+<!--        android:hint="닉네임"-->
+<!--        android:textSize="20dp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toEndOf="@id/chatStartform_iv_profile"-->
+<!--        app:layout_constraintTop_toTopOf="@id/chatStartform_iv_profile" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/chatStartform_tv_lastchat"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="4dp"-->
+<!--        android:gravity="left"-->
+<!--        android:hint="채팅내역"-->
+<!--        android:maxLength="20"-->
+<!--        android:textSize="16dp"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/chatStartform_tv_userNickname"-->
+<!--        app:layout_constraintHorizontal_bias="1.0"-->
+<!--        app:layout_constraintStart_toStartOf="@id/chatStartform_tv_userNickname"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/chatStartform_tv_userNickname" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/chatStartform_tv_lastchattime"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="4dp"-->
+<!--        android:layout_marginEnd="24dp"-->
+<!--        android:gravity="right"-->
+<!--        android:hint="날짜"-->
+<!--        android:textColor="#A9FFFFFF"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="@id/chatStartform_tv_lastchat"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/chatStartform_tv_lastchat" />-->
+
+<!--</androidx.constraintlayout.widget.ConstraintLayout>-->
