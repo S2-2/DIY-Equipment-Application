@@ -1,4 +1,4 @@
-package kr.ac.kpu.diyequipmentapplication.deal;
+package kr.ac.kpu.diyequipmentapplication.equipment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
