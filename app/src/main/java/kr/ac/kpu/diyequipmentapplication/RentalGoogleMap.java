@@ -1,15 +1,19 @@
 package kr.ac.kpu.diyequipmentapplication;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -21,6 +25,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -38,6 +43,9 @@ public class RentalGoogleMap extends AppCompatActivity implements OnMapReadyCall
     private LatLng rentalLatlng = null;
     private FirebaseFirestore rentalMapFirebaseFirestore = null;
     private ArrayList<String> getAddressArrayList = null;
+
+    private FirebaseAuth mainFirebaseAuth;     //FirebaseAuth 참조 변수 선언
+    private String tempAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,10 +78,15 @@ public class RentalGoogleMap extends AppCompatActivity implements OnMapReadyCall
                                 rentalLatlng = new LatLng(rentalLocation.getLatitude(), rentalLocation.getLongitude());
                                 MarkerOptions markerOptions = new MarkerOptions();
                                 markerOptions.position(rentalLatlng);
-                                markerOptions.title("사용자 메일 : "+queryDocumentSnapshot.get("userEmail").toString().trim()+"\n"
-                                        +"장비 모델명 : "+queryDocumentSnapshot.get("modelName").toString().trim()+"\n"
-                                        +"장비 정보  : "+queryDocumentSnapshot.get("modelInform").toString().trim()+"\n"
-                                        +"대여 주소  : "+queryDocumentSnapshot.get("rentalAddress").toString().trim());
+                                /*
+                                markerOptions.title("사용자 메일 : " + queryDocumentSnapshot.get("userEmail").toString().trim() + "\n"
+                                        + "장비 모델명 : " + queryDocumentSnapshot.get("modelName").toString().trim() + "\n"
+                                        + "장비 정보  : " + queryDocumentSnapshot.get("modelInform").toString().trim() + "\n"
+                                        + "대여 주소  : " + queryDocumentSnapshot.get("rentalAddress").toString().trim());
+
+                                 */
+
+                                markerOptions.title(queryDocumentSnapshot.get("rentalAddress").toString().trim());
                                 gMap.addMarker(markerOptions);
                                 i++;
                             }
@@ -121,9 +134,9 @@ public class RentalGoogleMap extends AppCompatActivity implements OnMapReadyCall
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
 
-        menu.add(0,1,0,"위성 지도");
-        menu.add(0,2,0,"일반 지도");
-        menu.add(0,3,0,"Rental Detail");
+        menu.add(0, 1, 0, "위성 지도");
+        menu.add(0, 2, 0, "일반 지도");
+        menu.add(0, 3, 0, "Rental Detail");
         //menu.add(0,3,0,"월드컵경기장 바로가기");
         //menu.add(0,4,0,"대여 장비 지도");
         return true;
@@ -147,7 +160,56 @@ public class RentalGoogleMap extends AppCompatActivity implements OnMapReadyCall
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        Toast.makeText(RentalGoogleMap.this, marker.getTitle(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(RentalGoogleMap.this, marker.getTitle(), Toast.LENGTH_SHORT).show();
+
+        AlertDialog.Builder dlg = new AlertDialog.Builder(RentalGoogleMap.this);
+        dlg.setTitle("장비대여 상세페이지");
+        dlg.setMessage("장비대여 상세페이지로 이동하시겠습니까?");
+        dlg.setIcon(R.mipmap.ic_launcher);
+
+        dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(RentalGoogleMap.this, "장비대여 상세페이지로 이동되었습니다!", Toast.LENGTH_SHORT).show();
+
+                tempAddress = marker.getTitle().toString().trim();
+                Log.d("click", tempAddress);
+
+                rentalMapFirebaseFirestore.collection("DIY_Equipment_Rental")
+                        .whereEqualTo("rentalAddress",tempAddress)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                                        Intent intent = new Intent(RentalGoogleMap.this, EquipmentDetailActivity.class);
+                                        intent.putExtra("ModelName", queryDocumentSnapshot.get("modelName").toString().trim());
+                                        intent.putExtra("ModelInform", queryDocumentSnapshot.get("modelInform").toString().trim());
+                                        intent.putExtra("RentalImage",queryDocumentSnapshot.get("rentalImage").toString().trim());
+                                        intent.putExtra("RentalType", queryDocumentSnapshot.get("rentalType").toString().trim());
+                                        intent.putExtra("RentalCost", queryDocumentSnapshot.get("rentalCost").toString().trim());
+                                        intent.putExtra("RentalAddress", queryDocumentSnapshot.get("rentalAddress").toString().trim());
+                                        intent.putExtra("UserEmail", queryDocumentSnapshot.get("userEmail").toString().trim());
+                                        intent.putExtra("RentalDate", queryDocumentSnapshot.get("rentalDate").toString().trim());
+                                        intent.putExtra("ModelCategory1",queryDocumentSnapshot.get("modelCategory1").toString().trim());
+                                        intent.putExtra("ModelCategory2",queryDocumentSnapshot.get("modelCategory1").toString().trim());
+                                        startActivity(intent);
+                                    }
+                                }
+                            }
+                        });
+                finish();
+            }
+        });
+
+        dlg.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(RentalGoogleMap.this, "장비대여 상세페이지 이동 취소되었습니다!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        dlg.show();
         return true;
     }
 }
