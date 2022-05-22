@@ -3,20 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="20dp"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp">
+        android:layout_marginBottom="20dp">
 
         <ImageButton
             android:background="@android:color/transparent"
-            android:layout_gravity="center_vertical"
             android:id="@+id/signup_btn_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24" />
 
         <TextView
@@ -42,7 +41,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="이용약관"
-            android:textSize="30sp"
+            android:textSize="28dp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -55,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:text="전체 동의"
                 android:textColor="#6A6666"
-                android:textSize="20sp" />
+                android:textSize="18dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -70,14 +69,14 @@
                 android:layout_weight="1"
                 android:text="[필수] 서비스 이용약관"
                 android:textColor="#6A6666"
-                android:textSize="18sp" />
+                android:textSize="16dp" />
 
             <Button
                 android:id="@+id/signupTerms_btn_terms1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="약관 보기"
-                android:textSize="18sp" />
+                android:textSize="16dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -91,14 +90,14 @@
                 android:layout_weight="1"
                 android:text="[필수] 개인정보 처리방침"
                 android:textColor="#6A6666"
-                android:textSize="18sp" />
+                android:textSize="16dp" />
 
             <Button
                 android:id="@+id/signupTerms_btn_terms2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="약관 보기"
-                android:textSize="18dp" />
+                android:textSize="16dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -112,14 +111,14 @@
                 android:layout_weight="1"
                 android:text="[필수] 위치정보 이용약관"
                 android:textColor="#6A6666"
-                android:textSize="18dp" />
+                android:textSize="16dp" />
 
             <Button
                 android:id="@+id/signupTerms_btn_terms3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="약관 보기"
-                android:textSize="18dp" />
+                android:textSize="16dp" />
         </LinearLayout>
 
     </LinearLayout>
@@ -132,7 +131,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:text="다음"
-        android:textSize="20dp" />
+        android:textSize="18dp" />
 
 </LinearLayout>
 

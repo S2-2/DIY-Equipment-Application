@@ -21,17 +21,21 @@
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="wrap_content">
+
         <EditText
             android:id="@+id/login_et_id"
-            android:textSize="18dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="아이디를 입력하세요." />
+            android:hint="아이디를 입력하세요."
+            android:singleLine="true"
+            android:textSize="18dp" />
+
         <EditText
             android:id="@+id/login_et_pwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18dp"
+            android:singleLine="true"
             android:hint="비밀번호을 입력하세요."
             android:inputType="textPassword" />
     <Button

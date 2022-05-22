@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -49,7 +50,7 @@ public class RegistrationRecyclerview extends AppCompatActivity {
 
     // 장비등록 페이지로 이동하는 버튼
     FloatingActionButton btnModelEnroll;
-    ImageButton btnModelMap;
+    Button btnModelMap;
     EditText etSearch; //  검색필터링
 
     private ImageButton imgBtn_back = null;
