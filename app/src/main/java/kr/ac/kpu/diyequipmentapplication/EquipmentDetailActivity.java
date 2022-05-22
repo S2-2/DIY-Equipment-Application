@@ -251,9 +251,6 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                 else if(id == R.id.communitylist){
                     Toast.makeText(context, title + ": 커뮤니티 목록", Toast.LENGTH_SHORT).show();
                 }
-                else if(id == R.id.locationset){
-                    Toast.makeText(context, title + ": 위치설정", Toast.LENGTH_SHORT).show();
-                }
                 else if(id == R.id.logout){
                     //Toast.makeText(context, title + ": 로그아웃", Toast.LENGTH_SHORT).show();
                     AlertDialog.Builder dlg = new AlertDialog.Builder(EquipmentDetailActivity.this);

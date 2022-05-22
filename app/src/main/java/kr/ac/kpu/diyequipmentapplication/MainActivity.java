@@ -119,11 +119,22 @@ public class MainActivity extends AppCompatActivity {
         btn_community.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, CommunityActivity.class);
+                Intent intent = new Intent(MainActivity.this, CommunityRecyclerview.class);
                 startActivity(intent);
             }
         });
 
+        /*
+        // 환경 설정으로 이동
+        ImageButton btn_setting = findViewById(R.id.navi_header_btn_setting);
+        btn_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, MenuSettingActivity.class);
+                startActivity(intent);
+            }
+        });
+        */
 
         //장비 목록 RecyclerView 필드 참조
         mainFirebaseFirestoreDB = FirebaseFirestore.getInstance();
@@ -248,9 +259,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else if(id == R.id.communitylist){
                     Toast.makeText(context, title + ": 커뮤니티 목록", Toast.LENGTH_SHORT).show();
-                }
-                else if(id == R.id.locationset){
-                    Toast.makeText(context, title + ": 위치설정", Toast.LENGTH_SHORT).show();
                 }
                 else if(id == R.id.logout){
                     //Toast.makeText(context, title + ": 로그아웃", Toast.LENGTH_SHORT).show();
