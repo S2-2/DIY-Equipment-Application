@@ -38,7 +38,7 @@ public class MenuActivity extends AppCompatActivity {
 
     private FirebaseAuth menuFirebaseAuth = null;
 
-    Button btn_myDeal, btn_chatting, btn_myCommunity, btn_deal, btn_community, btn_location, btn_logout, btn_withdraw;
+    Button btn_myDeal, btn_chatting, btn_myCommunity, btn_deal, btn_community, btn_location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
