@@ -1,15 +1,17 @@
-package kr.ac.kpu.diyequipmentapplication;
+package kr.ac.kpu.diyequipmentapplication.equipment;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,108 +21,88 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.squareup.picasso.Picasso;
+import com.google.firebase.storage.FirebaseStorage;
 
-import java.text.DecimalFormat;
+import java.util.ArrayList;
 
-import kr.ac.kpu.diyequipmentapplication.chat.ChatActivity;
+import kr.ac.kpu.diyequipmentapplication.MainActivity;
+import kr.ac.kpu.diyequipmentapplication.R;
 import kr.ac.kpu.diyequipmentapplication.chat.ChatStartActivity;
+import kr.ac.kpu.diyequipmentapplication.login.LoginActivity;
 
+//공급자가 입력한 데이터를 RecyclerView를 이용해 DIY-목록으로 보여주는 액티비티 클래스 구현
+public class RegistrationRecyclerview extends AppCompatActivity {
+    FirebaseStorage mStorage;
+    RecyclerView recyclerView;
+    RegistrationAdapter registrationAdapter;
+    ArrayList<EquipmentRegistration> equipmentRegistrationList;
+    ArrayList<EquipmentRegistration> filteredEquipementList;
 
-//미완성 장비
-// 목록 클릭시 상세화면으로 전환되는 액티비티클래스
-public class EquipmentDetailActivity extends AppCompatActivity {
-    private ImageView ivRentalImage;
-    private TextView etUserNickname, etTitle, etExplanation, etRentalType, etRentalCost, etUserLocation, etRentalPeriod, etCategory;
-    private Button btnChat;
-    private String getImageUrl;
-    private DecimalFormat decimalFormat;
-    private String getRentalFeeCost, temp, getRentalAddress;
-    private int temNum;
+    private FirebaseFirestore rRfirebaseFirestoreDB = null;
+
+    // 장비등록 페이지로 이동하는 버튼
+    FloatingActionButton btnModelEnroll;
+    Button btnModelMap;
+    EditText etSearch; //  검색필터링
+
     private ImageButton imgBtn_back = null;
     private ImageButton imgBtn_home = null;
-
 
     //네비게이션 드로어 참조 변수
     private DrawerLayout mDrawerLayout;
     private Context context = this;
-    private FirebaseAuth equipmentDetailFirebaseAuth;     //FirebaseAuth 참조 변수 선언
-    private FirebaseFirestore equipmentDetailFirebaseFirestore;
+    private FirebaseAuth registrationListFirebaseAuth;     //FirebaseAuth 참조 변수 선언
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_equipment_detail);
+        setContentView(R.layout.activity_registration_recyclerview);
 
-        ivRentalImage = findViewById(R.id.iv_EquipmentImage);
-        etUserNickname = findViewById(R.id.equipmentDetail_et_nickname);
-        etTitle = findViewById(R.id.et_title);
-        etExplanation = findViewById(R.id.equipmentDetail_et_explanation);
-        etCategory = findViewById(R.id.equipmentDetail_et_category);
-        etRentalType = findViewById(R.id.equipmentDetail_et_rentalType);
-        etRentalCost = findViewById(R.id.equipmentDetail_et_rentalCost);
-        etUserLocation = findViewById(R.id.equipmentDetail_et_location);
-        etRentalPeriod = findViewById(R.id.equipmentDetail_et_rentalPeriod);
-        btnChat =findViewById(R.id.equipmentDetail_btn_chatting);
+        //RecyclerView 필드 참조
+        rRfirebaseFirestoreDB = FirebaseFirestore.getInstance();
+        mStorage = FirebaseStorage.getInstance();
+        recyclerView = findViewById(R.id.registrationRecyclerview_recyclerview);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));   //리사이클러뷰 세로 화면
+        //recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)); //리사이클러뷰 가로 화면
 
-        decimalFormat = new DecimalFormat("###,###");
+        //RecyclerView에 RegistrationAdapter 클래스 등록 구현
+        equipmentRegistrationList = new ArrayList<EquipmentRegistration>();
+        registrationAdapter = new RegistrationAdapter(RegistrationRecyclerview.this,equipmentRegistrationList);
 
-        Intent intent = getIntent();
-        getImageUrl = intent.getStringExtra("RentalImage");
-        Picasso.get().load(getImageUrl).into(ivRentalImage);
-        etTitle.setText("장비명: " + intent.getStringExtra("ModelName"));
-        etExplanation.setText(intent.getStringExtra("ModelInform"));
-        etCategory.setText(intent.getStringExtra("ModelCategory1") + " > " + intent.getStringExtra("ModelCategory2"));
-        etRentalType.setText(intent.getStringExtra("RentalType"));
-        //etRentalAddress.setText("RentalAddress : "+intent.getStringExtra("RentalAddress"));
-        etUserNickname.setText("등록자 이메일: " + intent.getStringExtra("UserEmail"));
-        etRentalPeriod.setText(intent.getStringExtra("RentalDate"));
-        //etRentalCost.setText("RentalCost : "+intent.getStringExtra("RentalCost"));
-        temp = intent.getStringExtra("RentalCost");
-        getRentalAddress = intent.getStringExtra("RentalAddress");
-        etUserLocation.setText(getRentalAddress);
+        //검색에 의해 필터링 될 EquipmentRegistration 리스트
+        filteredEquipementList = new ArrayList<EquipmentRegistration>();
 
-        if (temp.equals("무료"))
-            etRentalCost.setText("RentalCost : "+temp);
-        else {
-            temNum = Integer.parseInt(temp);
-            getRentalFeeCost = decimalFormat.format(temNum);
-            etRentalCost.setText("RentalCost : "+getRentalFeeCost+"원");
-        }
+        recyclerView.setAdapter(registrationAdapter);
+        btnModelEnroll = findViewById(R.id.registrationRecyclerview_fab);      // 장비등록 버튼
+        btnModelMap = findViewById(R.id.registrationRecyclerview_btn_map);   // 구글맵으로 이동
+        etSearch = findViewById(R.id.registrationRecyclerview_et_search);
 
-        // 수정불가능
-        etTitle.setEnabled(false);
-        etExplanation.setEnabled(false);
-        etUserNickname.setEnabled(false);
-        etRentalType.setEnabled(false);
-        etRentalPeriod.setEnabled(false);
-        etCategory.setEnabled(false);
-        etUserLocation.setEnabled(false);
-        etRentalCost.setEnabled(false);
-
-        imgBtn_back = (ImageButton)findViewById(R.id.signup_btn_back);
+        imgBtn_back = (ImageButton)findViewById(R.id.registrationRecyclerview_btn_back);
         imgBtn_home = (ImageButton)findViewById(R.id.registrationRecyclerview_btn_home);
-
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View nav_header_view = navigationView.getHeaderView(0);
         TextView nav_header_nickname = (TextView) nav_header_view.findViewById(R.id.navi_header_tv_nickname);
         TextView nav_header_address = (TextView) nav_header_view.findViewById(R.id.navi_header_tv_userlocation);
-        equipmentDetailFirebaseAuth = FirebaseAuth.getInstance();                  //FirebaseAuth 초기화 및 객체 참조
-        equipmentDetailFirebaseFirestore = FirebaseFirestore.getInstance();        //파이어스토어 초기화 및 객체 참조
+        registrationListFirebaseAuth = FirebaseAuth.getInstance();                  //FirebaseAuth 초기화 및 객체 참조
 
         //DIY_Signup DB에서 사용자 계정에 맞는 닉네임 가져오는 기능 구현.
         //사용자 이메일 정보와 일치하는 데이터를 DIY_Signup DB에서 찾아서 etNickname 참조 변수에 닉네임 값 참조.
-        equipmentDetailFirebaseFirestore.collection("DIY_Signup")
-                .whereEqualTo("userEmail", equipmentDetailFirebaseAuth.getCurrentUser().getEmail().toString().trim())
+        rRfirebaseFirestoreDB.collection("DIY_Signup")
+                .whereEqualTo("userEmail", registrationListFirebaseAuth.getCurrentUser().getEmail().toString().trim())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -134,8 +116,8 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                     }
                 });
 
-        equipmentDetailFirebaseFirestore.collection("DIY_Equipment_Rental")
-                .whereEqualTo("userEmail", equipmentDetailFirebaseAuth.getCurrentUser().getEmail().toString().trim())
+        rRfirebaseFirestoreDB.collection("DIY_Equipment_Rental")
+                .whereEqualTo("userEmail", registrationListFirebaseAuth.getCurrentUser().getEmail().toString().trim())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -148,11 +130,79 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                     }
                 });
 
-        btnChat.setOnClickListener(new View.OnClickListener() {
+        //Firestore DB 변경
+        //Firestore DB에 등록된 장비 등록 정보 읽기 기능 구현
+        rRfirebaseFirestoreDB.collection("DIY_Equipment_Rental")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                                EquipmentRegistration equipmentRegistration = new EquipmentRegistration(
+                                        queryDocumentSnapshot.get("modelName").toString().trim(),
+                                        queryDocumentSnapshot.get("modelInform").toString().trim(),
+                                        queryDocumentSnapshot.get("rentalImage").toString().trim(),
+                                        queryDocumentSnapshot.get("rentalType").toString().trim(),
+                                        queryDocumentSnapshot.get("rentalCost").toString().trim(),
+                                        queryDocumentSnapshot.get("rentalAddress").toString().trim(),
+                                        queryDocumentSnapshot.get("userEmail").toString().trim(),
+                                        queryDocumentSnapshot.get("rentalDate").toString().trim(),
+                                        queryDocumentSnapshot.get("modelCategory1").toString().trim(),
+                                        queryDocumentSnapshot.get("modelCategory2").toString().trim());
+                                equipmentRegistrationList.add(equipmentRegistration);
+                                filteredEquipementList.add(equipmentRegistration);
+                                registrationAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
+                });
+
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String searchText = etSearch.getText().toString();
+                // 검색 필터링 구현
+                equipmentRegistrationList.clear();
+                if(searchText.length()==0){
+                    equipmentRegistrationList.addAll(filteredEquipementList);
+                }
+                else{
+                    for( EquipmentRegistration equipment : filteredEquipementList)
+                    {
+                        if(equipment.getModelName().contains(searchText)||equipment.getModelInform().contains(searchText))
+                        {
+                            equipmentRegistrationList.add(equipment);
+                        }
+                    }
+                }
+                registrationAdapter.notifyDataSetChanged();
+            }
+        });
+
+        btnModelEnroll.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(EquipmentDetailActivity.this, ChatActivity.class);
-                startActivity(intent); }
+                Intent intent = new Intent(RegistrationRecyclerview.this, EquipmentRegistrationActivity.class); // 장비등록 페이지로 이동
+                startActivity(intent);  //MainActivity 이동
+            }
+        });
+
+        btnModelMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RegistrationRecyclerview.this, RentalGoogleMap.class);
+                startActivity(intent);
+            }
         });
 
         //뒤로가기 버튼 클릭시 장비 목록 페이지에서 장비 메인 페이지 이동
@@ -167,10 +217,12 @@ public class EquipmentDetailActivity extends AppCompatActivity {
         imgBtn_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(EquipmentDetailActivity.this, MainActivity.class);
+                Intent intent = new Intent(RegistrationRecyclerview.this, MainActivity.class);
                 startActivity(intent);
             }
         });
+
+
 
         //네비게이션 드로어 기능 구현
         androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
@@ -196,7 +248,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                 else if(id == R.id.startchatting){
                     //Toast.makeText(context, title + ": 채팅.", Toast.LENGTH_SHORT).show();
 
-                    AlertDialog.Builder dlg = new AlertDialog.Builder(EquipmentDetailActivity.this);
+                    AlertDialog.Builder dlg = new AlertDialog.Builder(RegistrationRecyclerview.this);
                     dlg.setTitle("DIY_채팅");
                     dlg.setMessage("채팅창으로 접속하시겠습니까?");
                     dlg.setIcon(R.mipmap.ic_launcher);
@@ -204,8 +256,8 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                     dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(EquipmentDetailActivity.this, "채팅창으로 접속되었습니다!", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(EquipmentDetailActivity.this, ChatStartActivity.class);
+                            Toast.makeText(RegistrationRecyclerview.this, "채팅창으로 접속되었습니다!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(RegistrationRecyclerview.this, ChatStartActivity.class);
                             startActivity(intent);
                             finish();
                         }
@@ -214,12 +266,12 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                     dlg.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(EquipmentDetailActivity.this, "채팅창 접속이 취소되었습니다!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegistrationRecyclerview.this, "채팅창 접속이 취소되었습니다!", Toast.LENGTH_SHORT).show();
                         }
                     });
                     dlg.show();
                 } else if (id == R.id.diymap) {
-                    AlertDialog.Builder dlg = new AlertDialog.Builder(EquipmentDetailActivity.this);
+                    AlertDialog.Builder dlg = new AlertDialog.Builder(RegistrationRecyclerview.this);
                     dlg.setTitle("DIY_장비대여맵");
                     dlg.setMessage("장비대여맵으로 접속하시겠습니까?");
                     dlg.setIcon(R.mipmap.ic_launcher);
@@ -227,8 +279,8 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                     dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(EquipmentDetailActivity.this, "장비대여맵으로 접속되었습니다!", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(EquipmentDetailActivity.this, RentalGoogleMap.class);
+                            Toast.makeText(RegistrationRecyclerview.this, "장비대여맵으로 접속되었습니다!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(RegistrationRecyclerview.this, RentalGoogleMap.class);
                             startActivity(intent);
                             finish();
                         }
@@ -237,7 +289,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                     dlg.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(EquipmentDetailActivity.this, "장비대여맵 접속이 취소되었습니다!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegistrationRecyclerview.this, "장비대여맵 접속이 취소되었습니다!", Toast.LENGTH_SHORT).show();
                         }
                     });
                     dlg.show();
@@ -253,7 +305,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                 }
                 else if(id == R.id.logout){
                     //Toast.makeText(context, title + ": 로그아웃", Toast.LENGTH_SHORT).show();
-                    AlertDialog.Builder dlg = new AlertDialog.Builder(EquipmentDetailActivity.this);
+                    AlertDialog.Builder dlg = new AlertDialog.Builder(RegistrationRecyclerview.this);
                     dlg.setTitle("로그아웃");
                     dlg.setMessage("로그아웃 하시겠습니까?");
                     dlg.setIcon(R.mipmap.ic_launcher);
@@ -261,9 +313,9 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                     dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            equipmentDetailFirebaseAuth.signOut();
-                            Toast.makeText(EquipmentDetailActivity.this, "로그아웃 되었습니다!", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(EquipmentDetailActivity.this, LoginActivity.class);
+                            registrationListFirebaseAuth.signOut();
+                            Toast.makeText(RegistrationRecyclerview.this, "로그아웃 되었습니다!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(RegistrationRecyclerview.this, LoginActivity.class);
                             startActivity(intent);
                             finish();
                         }
@@ -272,7 +324,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                     dlg.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(EquipmentDetailActivity.this, "로그아웃 취소되었습니다!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegistrationRecyclerview.this, "로그아웃 취소되었습니다!", Toast.LENGTH_SHORT).show();
                         }
                     });
                     dlg.show();
@@ -280,7 +332,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                 else if(id == R.id.withdraw){
                     //Toast.makeText(context, title + ": 회원탈퇴", Toast.LENGTH_SHORT).show();
 
-                    AlertDialog.Builder dlg = new AlertDialog.Builder(EquipmentDetailActivity.this);
+                    AlertDialog.Builder dlg = new AlertDialog.Builder(RegistrationRecyclerview.this);
                     dlg.setTitle("회원 탈퇴");
                     dlg.setMessage("회원 탈퇴하시겠습니까?");
                     dlg.setIcon(R.mipmap.ic_launcher);
@@ -288,9 +340,9 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                     dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            equipmentDetailFirebaseAuth.getCurrentUser().delete();
-                            Toast.makeText(EquipmentDetailActivity.this, "회원 탈퇴되었습니다!", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(EquipmentDetailActivity.this, LoginActivity.class);
+                            registrationListFirebaseAuth.getCurrentUser().delete();
+                            Toast.makeText(RegistrationRecyclerview.this, "회원 탈퇴되었습니다!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(RegistrationRecyclerview.this, LoginActivity.class);
                             startActivity(intent);
                             finish();
                         }
@@ -299,11 +351,12 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                     dlg.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(EquipmentDetailActivity.this, "회원 탈퇴 취소되었습니다!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegistrationRecyclerview.this, "회원 탈퇴 취소되었습니다!", Toast.LENGTH_SHORT).show();
                         }
                     });
                     dlg.show();
                 }
+
                 return true;
             }
         });

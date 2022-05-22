@@ -1,4 +1,4 @@
-package kr.ac.kpu.diyequipmentapplication;
+package kr.ac.kpu.diyequipmentapplication.equipment;
 
 import android.content.Context;
 import android.location.Address;
@@ -28,6 +28,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import kr.ac.kpu.diyequipmentapplication.R;
 
 //현재 작업중인 액티비티 클래스입니다.
 //등록된 전체 장비 대여 주소를 구글맵에 마커로 표기하는 클래스 구현

@@ -1,8 +1,10 @@
-package kr.ac.kpu.diyequipmentapplication;
+package kr.ac.kpu.diyequipmentapplication.community;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import kr.ac.kpu.diyequipmentapplication.R;
 
 public class CommunityRegistrationActivity extends AppCompatActivity {
 
