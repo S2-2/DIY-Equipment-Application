@@ -14,49 +14,17 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="370dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:gravity="center"
-                android:text="입장할 방번호를 입력해주세요."
-                android:textSize="20dp" />
-
-            <EditText
-                android:id="@+id/start_chat_et_num"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
-                android:gravity="center"
-                android:hint="CHAT NUM"
-                android:inputType="textPersonName" />
-
-            <Button
-                android:id="@+id/start_chat_btn_go"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="시작하기" />
-
-        </LinearLayout>
-
-        <LinearLayout
             android:layout_weight="2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
             <TextView
+                android:background="#BD6403"
+                android:textColor="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"                android:text="현재 개설된 채팅방"
+                android:layout_height="30dp"
+                android:textSize="20dp"
+                android:text="현재 개설된 채팅방"
                 android:layout_marginBottom="20dp"
                 android:gravity="center"/>
             <ListView
