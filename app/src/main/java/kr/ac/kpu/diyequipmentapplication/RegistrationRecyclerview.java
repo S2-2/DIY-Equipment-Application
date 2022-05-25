@@ -83,7 +83,7 @@ public class RegistrationRecyclerview extends AppCompatActivity {
 
         recyclerView.setAdapter(registrationAdapter);
         btnModelEnroll = findViewById(R.id.registrationRecyclerview_fab);      // 장비등록 버튼
-        btnModelMap = findViewById(R.id.registrationRecyclerview_btn_map);   // 구글맵으로 이동
+        //btnModelMap = findViewById(R.id.registrationRecyclerview_btn_map);   // 구글맵으로 이동
         etSearch = findViewById(R.id.registrationRecyclerview_et_search);
 
         imgBtn_back = (ImageButton)findViewById(R.id.registrationRecyclerview_btn_back);

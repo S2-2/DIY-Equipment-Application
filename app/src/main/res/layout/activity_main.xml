@@ -97,23 +97,15 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <ImageButton
-                android:id="@+id/main_btn_alarm"
-                android:layout_width="wrap_content"
-                android:background="@android:color/transparent"
-                android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_baseline_notifications_active_24" />
-        </LinearLayout>
         <ImageButton
             android:id="@+id/main_btn_alarm"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center_vertical"
             android:background="@android:color/transparent"
-            app:srcCompat="@drawable/ic_baseline_notifications_active_24"
-            tools:layout_editor_absoluteX="346dp"
-            tools:layout_editor_absoluteY="121dp" />
+            app:srcCompat="@drawable/ic_baseline_notifications_active_24" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <!-- 실시간 인기 거래 목록 -->
@@ -195,8 +187,6 @@
                         android:id="@+id/main_btn_community"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:background="@android:color/transparent"
                         app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24" />
                 </LinearLayout>
 
