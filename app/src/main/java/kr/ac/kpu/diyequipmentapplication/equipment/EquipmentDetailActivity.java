@@ -1,4 +1,4 @@
-package kr.ac.kpu.diyequipmentapplication;
+package kr.ac.kpu.diyequipmentapplication.equipment;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -31,6 +31,9 @@ import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 
+import kr.ac.kpu.diyequipmentapplication.login.LoginActivity;
+import kr.ac.kpu.diyequipmentapplication.MainActivity;
+import kr.ac.kpu.diyequipmentapplication.R;
 import kr.ac.kpu.diyequipmentapplication.chat.ChatActivity;
 import kr.ac.kpu.diyequipmentapplication.chat.ChatStartActivity;
 
@@ -250,9 +253,6 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                 }
                 else if(id == R.id.communitylist){
                     Toast.makeText(context, title + ": 커뮤니티 목록", Toast.LENGTH_SHORT).show();
-                }
-                else if(id == R.id.locationset){
-                    Toast.makeText(context, title + ": 위치설정", Toast.LENGTH_SHORT).show();
                 }
                 else if(id == R.id.logout){
                     //Toast.makeText(context, title + ": 로그아웃", Toast.LENGTH_SHORT).show();

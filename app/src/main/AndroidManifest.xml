@@ -28,30 +28,36 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DIYEquipmentApplication">
+        <activity
+            android:name=".menu.LocationActivity"
+            android:exported="false" />
 
         <activity
-            android:name=".ProfileActivity"
+            android:name=".menu.MenuSettingActivity"
             android:exported="false" />
         <activity
-            android:name=".CommunityRegistrationActivity"
+            android:name=".menu.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".CommunityActivity"
+            android:name=".community.CommunityRegistrationActivity"
             android:exported="false" />
         <activity
-            android:name=".CheckIdActivity"
+            android:name=".community.CommunityActivity"
             android:exported="false" />
         <activity
-            android:name=".ChangePwdActivity"
+            android:name=".login.CheckIdActivity"
             android:exported="false" />
         <activity
-            android:name=".FindPwdActivity"
+            android:name=".login.ChangePwdActivity"
             android:exported="false" />
         <activity
-            android:name=".FindIdActivity"
+            android:name=".login.FindPwdActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".login.FindIdActivity"
+            android:exported="false" />
+        <activity
+            android:name=".login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -60,25 +66,26 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RegistrationRecyclerview"
+            android:name=".equipment.RegistrationRecyclerview"
             android:exported="false" />
         <activity
-            android:name=".EquipmentRegistrationActivity"
+            android:name=".equipment.EquipmentRegistrationActivity"
             android:exported="false" />
         <activity
-            android:name=".SignupActivity"
+            android:name=".login.SignupActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".EquipmentDetailActivity"
+            android:name=".equipment.EquipmentDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".AllRentalGoogleMapActivity"
+            android:name=".equipment.AllRentalGoogleMapActivity"
             android:exported="false" />
         <activity
             android:name=".RentalGoogleMap"
+            android:name=".equipment.RentalGoogleMap"
             android:exported="false" />
             android:exported="false"/>
         <activity

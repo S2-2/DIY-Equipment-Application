@@ -1,4 +1,4 @@
-package kr.ac.kpu.diyequipmentapplication;
+package kr.ac.kpu.diyequipmentapplication.login;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -21,6 +21,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import kr.ac.kpu.diyequipmentapplication.R;
 
 //회원가입 액티비티 클래스
 public class SignupActivity extends AppCompatActivity {

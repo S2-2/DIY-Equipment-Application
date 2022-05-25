@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ProfileActivity">
+    tools:context=".menu.ProfileActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,20 +28,6 @@
             android:background="@android:color/transparent"
             app:srcCompat="@drawable/ic_baseline_home_24" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="vertical"
-            android:paddingLeft="80dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="PROFILE"
-                android:textSize="24dp" />
-
-        </LinearLayout>
     </LinearLayout>
 
     <!-- 현재 액티비티 실행 시 현재 프로필 사진과 별명이 입력되어 있는 상태여야 함. -->
@@ -53,6 +39,12 @@
         android:padding="20dp">
 
         <!-- 프로필 사진 설정 버튼 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PROFILE"
+            android:textSize="24dp" />
+
         <ImageButton
             android:id="@+id/profile_btn_profile"
             android:layout_width="150dp"
@@ -77,4 +69,4 @@
             android:textSize="16dp" />
 
     </LinearLayout>
-</LinearLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

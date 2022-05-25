@@ -1,4 +1,4 @@
-package kr.ac.kpu.diyequipmentapplication;
+package kr.ac.kpu.diyequipmentapplication.equipment;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -32,6 +32,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import kr.ac.kpu.diyequipmentapplication.R;
 
 
 //등록된 대여 장비 주소를 이용해 구글맵 마커 표기하는 액티비티 클래스 구현

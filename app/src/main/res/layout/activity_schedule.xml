@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ScheduleActivity">
+    tools:context=".equipment.ScheduleActivity">
 <!-- 채팅에서 버튼으로 넘어와 거래 관련 일정을 설정하는 첫 거래 액티비티 -->
 
     <LinearLayout

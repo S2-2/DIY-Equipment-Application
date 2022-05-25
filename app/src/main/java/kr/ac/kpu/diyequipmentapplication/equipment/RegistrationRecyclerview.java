@@ -1,4 +1,4 @@
-package kr.ac.kpu.diyequipmentapplication;
+package kr.ac.kpu.diyequipmentapplication.equipment;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -35,7 +36,10 @@ import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 
+import kr.ac.kpu.diyequipmentapplication.MainActivity;
+import kr.ac.kpu.diyequipmentapplication.R;
 import kr.ac.kpu.diyequipmentapplication.chat.ChatStartActivity;
+import kr.ac.kpu.diyequipmentapplication.login.LoginActivity;
 
 //공급자가 입력한 데이터를 RecyclerView를 이용해 DIY-목록으로 보여주는 액티비티 클래스 구현
 public class RegistrationRecyclerview extends AppCompatActivity {
@@ -49,7 +53,7 @@ public class RegistrationRecyclerview extends AppCompatActivity {
 
     // 장비등록 페이지로 이동하는 버튼
     FloatingActionButton btnModelEnroll;
-    ImageButton btnModelMap;
+    Button btnModelMap;
     EditText etSearch; //  검색필터링
 
     private ImageButton imgBtn_back = null;
@@ -298,9 +302,6 @@ public class RegistrationRecyclerview extends AppCompatActivity {
                 }
                 else if(id == R.id.communitylist){
                     Toast.makeText(context, title + ": 커뮤니티 목록", Toast.LENGTH_SHORT).show();
-                }
-                else if(id == R.id.locationset){
-                    Toast.makeText(context, title + ": 위치설정", Toast.LENGTH_SHORT).show();
                 }
                 else if(id == R.id.logout){
                     //Toast.makeText(context, title + ": 로그아웃", Toast.LENGTH_SHORT).show();
