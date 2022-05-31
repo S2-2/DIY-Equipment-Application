@@ -1,7 +1,7 @@
 package kr.ac.kpu.diyequipmentapplication.equipment;
 
+import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
@@ -9,12 +9,14 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -30,6 +32,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -50,7 +53,7 @@ public class RentalGoogleMap extends AppCompatActivity implements OnMapReadyCall
     private FirebaseAuth mainFirebaseAuth;     //FirebaseAuth 참조 변수 선언
     private String tempAddress;
 
-    //Dialog dialog01;
+    Dialog rentalGoogleMapDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,24 +68,104 @@ public class RentalGoogleMap extends AppCompatActivity implements OnMapReadyCall
         mapFrag.getMapAsync(this);
 
 
-        //dialog01 = new Dialog(RentalGoogleMap.this);
-        //dialog01.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //dialog01.setContentView(R.layout.activity_equipment_registration);
+        rentalGoogleMapDialog = new Dialog(RentalGoogleMap.this);
+        rentalGoogleMapDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        rentalGoogleMapDialog.setContentView(R.layout.rental_google_map_window_item);
     }
 
-    /*
-    public void showDialog() {
-        dialog01.show();
+    public void showRentalGoogleMapDialog(String tempAdd) {
+        final String[] getImgaeUrl = new String[1];
+        final String[] getEmail = new String[1];
+        ImageView imgView = rentalGoogleMapDialog.findViewById(R.id.rentalGoogleMapWindow_imgView);
+        TextView tvCatecory = rentalGoogleMapDialog.findViewById(R.id.rentalGoogleMapWindow_tv_category);
+        TextView tvModelName = rentalGoogleMapDialog.findViewById(R.id.rentalGoogleMapWindow_tv_modelName);
+        TextView tvUserName = rentalGoogleMapDialog.findViewById(R.id.rentalGoogleMapWindow_tv_userName);
+        TextView tvRentalType = rentalGoogleMapDialog.findViewById(R.id.rentalGoogleMapWindow_tv_rentalType);
+        TextView tvRentalDate = rentalGoogleMapDialog.findViewById(R.id.rentalGoogleMapWindow_tv_rentalDate);
+        TextView tvRentalCost = rentalGoogleMapDialog.findViewById(R.id.rentalGoogleMapWindow_tv_rentalCost);
 
-        ImageButton btnClick = dialog01.findViewById(R.id.signup_btn_back);
-        btnClick.setOnClickListener(new View.OnClickListener() {
+
+        rentalMapFirebaseFirestore.collection("DIY_Equipment_Rental")
+                .whereEqualTo("rentalAddress",tempAdd)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                                getImgaeUrl[0] = queryDocumentSnapshot.get("rentalImage").toString().trim();
+                                Picasso.get().load(getImgaeUrl[0]).into(imgView);
+                                getEmail[0] = queryDocumentSnapshot.get("userEmail").toString().trim();
+                                tvCatecory.setText(queryDocumentSnapshot.get("modelCategory1").toString().trim()+",\n"+
+                                        queryDocumentSnapshot.get("modelCategory2").toString().trim());
+                                tvModelName.setText(queryDocumentSnapshot.get("modelName").toString().trim());
+                                tvRentalType.setText(queryDocumentSnapshot.get("rentalType").toString().trim());
+                                tvRentalDate.setText(queryDocumentSnapshot.get("rentalDate").toString().trim());
+                                tvRentalCost.setText(queryDocumentSnapshot.get("rentalCost").toString().trim());
+                                //tvUserName.setText(queryDocumentSnapshot.get("userEmail").toString().trim());
+
+                                rentalMapFirebaseFirestore.collection("DIY_Signup")
+                                        .whereEqualTo("userEmail",getEmail[0])
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                                                        tvUserName.setText(queryDocumentSnapshot.get("userName").toString().trim());
+                                                    }
+                                                }
+                                            }
+                                        });
+                            }
+                        }
+                    }
+                });
+
+
+
+        rentalGoogleMapDialog.getWindow().setGravity(Gravity.BOTTOM);
+        rentalGoogleMapDialog.show();
+
+        ImageButton imgBtnCancel = rentalGoogleMapDialog.findViewById(R.id.rentalGoogleMapWindow_imgBtn_cancel);
+        imgBtnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog01.dismiss();
+                rentalGoogleMapDialog.dismiss();
+            }
+        });
+
+        Button btnRentalDetail = rentalGoogleMapDialog.findViewById(R.id.rentalGoogleMapWindow_btn_rentalDetail);
+        btnRentalDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                rentalMapFirebaseFirestore.collection("DIY_Equipment_Rental")
+                        .whereEqualTo("rentalAddress",tempAdd)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                                        Intent intent = new Intent(RentalGoogleMap.this, EquipmentDetailActivity.class);
+                                        intent.putExtra("ModelName", queryDocumentSnapshot.get("modelName").toString().trim());
+                                        intent.putExtra("ModelInform", queryDocumentSnapshot.get("modelInform").toString().trim());
+                                        intent.putExtra("RentalImage",queryDocumentSnapshot.get("rentalImage").toString().trim());
+                                        intent.putExtra("RentalType", queryDocumentSnapshot.get("rentalType").toString().trim());
+                                        intent.putExtra("RentalCost", queryDocumentSnapshot.get("rentalCost").toString().trim());
+                                        intent.putExtra("RentalAddress", queryDocumentSnapshot.get("rentalAddress").toString().trim());
+                                        intent.putExtra("UserEmail", queryDocumentSnapshot.get("userEmail").toString().trim());
+                                        intent.putExtra("RentalDate", queryDocumentSnapshot.get("rentalDate").toString().trim());
+                                        intent.putExtra("ModelCategory1",queryDocumentSnapshot.get("modelCategory1").toString().trim());
+                                        intent.putExtra("ModelCategory2",queryDocumentSnapshot.get("modelCategory1").toString().trim());
+                                        startActivity(intent);
+                                    }
+                                }
+                            }
+                        });
             }
         });
     }
-     */
 
     //버튼 클릭시 처음 나오는 GoogleMap 화면
     @Override
@@ -102,19 +185,9 @@ public class RentalGoogleMap extends AppCompatActivity implements OnMapReadyCall
                                 rentalLatlng = new LatLng(rentalLocation.getLatitude(), rentalLocation.getLongitude());
                                 MarkerOptions markerOptions = new MarkerOptions();
                                 markerOptions.position(rentalLatlng);
-                                /*
-                                markerOptions.title("사용자 메일 : " + queryDocumentSnapshot.get("userEmail").toString().trim() + "\n"
-                                        + "장비 모델명 : " + queryDocumentSnapshot.get("modelName").toString().trim() + "\n"
-                                        + "장비 정보  : " + queryDocumentSnapshot.get("modelInform").toString().trim() + "\n"
-                                        + "대여 주소  : " + queryDocumentSnapshot.get("rentalAddress").toString().trim());
-
-                                 */
-
                                 markerOptions.title(queryDocumentSnapshot.get("rentalAddress").toString().trim());
-
+                                Log.d("getID->", queryDocumentSnapshot.getId().toString().trim());
                                 gMap.addMarker(markerOptions);
-
-
                                 i++;
                             }
                         }
@@ -156,94 +229,12 @@ public class RentalGoogleMap extends AppCompatActivity implements OnMapReadyCall
         return location;
     }
 
-    //구글맵 옵션 메뉴 기능 구현
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-
-        menu.add(0, 1, 0, "위성 지도");
-        menu.add(0, 2, 0, "일반 지도");
-        menu.add(0, 3, 0, "Rental Detail");
-        //menu.add(0,3,0,"월드컵경기장 바로가기");
-        //menu.add(0,4,0,"대여 장비 지도");
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case 1:     //위성 지도인 경우
-                gMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-                return true;
-            case 2:     //일반 지도인 경우
-                gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                return true;
-            case 3:     //구글맵 페이지에서 상세 페이지로 이동
-                finish();
-                return true;
-        }
-        return false;
-    }
-
     @Override
     public boolean onMarkerClick(Marker marker) {
-        //Toast.makeText(RentalGoogleMap.this, marker.getTitle(), Toast.LENGTH_SHORT).show();
+        tempAddress = marker.getTitle().toString().trim();
+        Log.d("click", tempAddress);
 
-        AlertDialog.Builder dlg = new AlertDialog.Builder(RentalGoogleMap.this);
-        dlg.setTitle("장비대여 상세페이지");
-        dlg.setMessage("장비대여 상세페이지로 이동하시겠습니까?");
-        dlg.setIcon(R.mipmap.ic_launcher);
-
-        dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(RentalGoogleMap.this, "장비대여 상세페이지로 이동되었습니다!", Toast.LENGTH_SHORT).show();
-
-                tempAddress = marker.getTitle().toString().trim();
-                Log.d("click", tempAddress);
-
-                rentalMapFirebaseFirestore.collection("DIY_Equipment_Rental")
-                        .whereEqualTo("rentalAddress",tempAddress)
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
-                                        Intent intent = new Intent(RentalGoogleMap.this, EquipmentDetailActivity.class);
-                                        intent.putExtra("ModelName", queryDocumentSnapshot.get("modelName").toString().trim());
-                                        intent.putExtra("ModelInform", queryDocumentSnapshot.get("modelInform").toString().trim());
-                                        intent.putExtra("RentalImage",queryDocumentSnapshot.get("rentalImage").toString().trim());
-                                        intent.putExtra("RentalType", queryDocumentSnapshot.get("rentalType").toString().trim());
-                                        intent.putExtra("RentalCost", queryDocumentSnapshot.get("rentalCost").toString().trim());
-                                        intent.putExtra("RentalAddress", queryDocumentSnapshot.get("rentalAddress").toString().trim());
-                                        intent.putExtra("UserEmail", queryDocumentSnapshot.get("userEmail").toString().trim());
-                                        intent.putExtra("RentalDate", queryDocumentSnapshot.get("rentalDate").toString().trim());
-                                        intent.putExtra("ModelCategory1",queryDocumentSnapshot.get("modelCategory1").toString().trim());
-                                        intent.putExtra("ModelCategory2",queryDocumentSnapshot.get("modelCategory1").toString().trim());
-                                        startActivity(intent);
-                                    }
-                                }
-                            }
-                        });
-                finish();
-            }
-        });
-
-        dlg.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(RentalGoogleMap.this, "장비대여 상세페이지 이동 취소되었습니다!", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        AlertDialog alterMove = dlg.create();
-        alterMove.getWindow().setGravity(Gravity.BOTTOM);
-        alterMove.show();
-        //dlg.show();
-
-
-        //showDialog();
+        showRentalGoogleMapDialog(tempAddress);
         return true;
     }
 }

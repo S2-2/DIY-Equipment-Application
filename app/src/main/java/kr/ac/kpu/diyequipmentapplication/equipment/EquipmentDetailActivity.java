@@ -195,88 +195,26 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                 String title = menuItem.getTitle().toString();
 
                 if(id == R.id.tradedetail){
-                    Toast.makeText(context, title + ": 거래내역.", Toast.LENGTH_SHORT).show();
-                }
-                else if(id == R.id.startchatting){
-                    //Toast.makeText(context, title + ": 채팅.", Toast.LENGTH_SHORT).show();
-
-                    AlertDialog.Builder dlg = new AlertDialog.Builder(EquipmentDetailActivity.this);
-                    dlg.setTitle("DIY_채팅");
-                    dlg.setMessage("채팅창으로 접속하시겠습니까?");
-                    dlg.setIcon(R.mipmap.ic_launcher);
-
-                    dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(EquipmentDetailActivity.this, "채팅창으로 접속되었습니다!", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(EquipmentDetailActivity.this, ChatStartActivity.class);
-                            startActivity(intent);
-                            finish();
-                        }
-                    });
-
-                    dlg.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(EquipmentDetailActivity.this, "채팅창 접속이 취소되었습니다!", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    dlg.show();
+                    Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
+                } else if(id == R.id.startchatting){
+                    Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(EquipmentDetailActivity.this, ChatStartActivity.class);
+                    startActivity(intent);
                 } else if (id == R.id.diymap) {
-                    AlertDialog.Builder dlg = new AlertDialog.Builder(EquipmentDetailActivity.this);
-                    dlg.setTitle("DIY_장비대여맵");
-                    dlg.setMessage("장비대여맵으로 접속하시겠습니까?");
-                    dlg.setIcon(R.mipmap.ic_launcher);
-
-                    dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(EquipmentDetailActivity.this, "장비대여맵으로 접속되었습니다!", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(EquipmentDetailActivity.this, RentalGoogleMap.class);
-                            startActivity(intent);
-                            finish();
-                        }
-                    });
-
-                    dlg.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(EquipmentDetailActivity.this, "장비대여맵 접속이 취소되었습니다!", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    dlg.show();
-                }
-                else if(id == R.id.mycommunity){
-                    Toast.makeText(context, title + ": 내가 쓴 커뮤니티", Toast.LENGTH_SHORT).show();
-                }
-                else if(id == R.id.tradelist){
-                    Toast.makeText(context, title + ": 거래 목록", Toast.LENGTH_SHORT).show();
-                }
-                else if(id == R.id.communitylist){
-                    AlertDialog.Builder dlg = new AlertDialog.Builder(EquipmentDetailActivity.this);
-                    dlg.setTitle("DIY_커뮤니티 목록");
-                    dlg.setMessage("커뮤니티 목록으로 접속하시겠습니까?");
-                    dlg.setIcon(R.mipmap.ic_launcher);
-
-                    dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(EquipmentDetailActivity.this, "커뮤니티 목록으로 접속되었습니다!", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(EquipmentDetailActivity.this, CommunityRecyclerview.class);
-                            startActivity(intent);
-                            finish();
-                        }
-                    });
-
-                    dlg.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(EquipmentDetailActivity.this, "커뮤니티 목록 접속이 취소되었습니다!", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    dlg.show();
-                }
-                else if(id == R.id.logout){
+                    Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(EquipmentDetailActivity.this, RentalGoogleMap.class);
+                    startActivity(intent);
+                } else if(id == R.id.mycommunity){
+                    Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
+                } else if(id == R.id.tradelist){
+                    Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(EquipmentDetailActivity.this, RegistrationRecyclerview.class);
+                    startActivity(intent);
+                } else if(id == R.id.communitylist) {
+                    Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(EquipmentDetailActivity.this, CommunityRecyclerview.class);
+                    startActivity(intent);
+                } else if(id == R.id.logout){
                     //Toast.makeText(context, title + ": 로그아웃", Toast.LENGTH_SHORT).show();
                     AlertDialog.Builder dlg = new AlertDialog.Builder(EquipmentDetailActivity.this);
                     dlg.setTitle("로그아웃");
