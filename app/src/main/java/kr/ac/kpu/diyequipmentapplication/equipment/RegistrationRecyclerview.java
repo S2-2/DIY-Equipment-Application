@@ -9,7 +9,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -39,6 +38,7 @@ import java.util.ArrayList;
 import kr.ac.kpu.diyequipmentapplication.MainActivity;
 import kr.ac.kpu.diyequipmentapplication.R;
 import kr.ac.kpu.diyequipmentapplication.chat.ChatStartActivity;
+import kr.ac.kpu.diyequipmentapplication.community.CommunityRecyclerview;
 import kr.ac.kpu.diyequipmentapplication.login.LoginActivity;
 
 //공급자가 입력한 데이터를 RecyclerView를 이용해 DIY-목록으로 보여주는 액티비티 클래스 구현
@@ -53,8 +53,7 @@ public class RegistrationRecyclerview extends AppCompatActivity {
 
     // 장비등록 페이지로 이동하는 버튼
     FloatingActionButton btnModelEnroll;
-    Button btnModelMap;
-    EditText etSearch; //  검색필터링
+    protected EditText etSearch; //  검색필터링
 
     private ImageButton imgBtn_back = null;
     private ImageButton imgBtn_home = null;
@@ -68,12 +67,12 @@ public class RegistrationRecyclerview extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registration_recyclerview);
+        setContentView(R.layout.activity_community_recyclerview);
 
         //RecyclerView 필드 참조
         rRfirebaseFirestoreDB = FirebaseFirestore.getInstance();
         mStorage = FirebaseStorage.getInstance();
-        recyclerView = findViewById(R.id.registrationRecyclerview_recyclerview);
+        recyclerView = findViewById(R.id.communityRecyclerview_recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));   //리사이클러뷰 세로 화면
         //recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)); //리사이클러뷰 가로 화면
@@ -87,7 +86,6 @@ public class RegistrationRecyclerview extends AppCompatActivity {
 
         recyclerView.setAdapter(registrationAdapter);
         btnModelEnroll = findViewById(R.id.registrationRecyclerview_fab);      // 장비등록 버튼
-        //btnModelMap = findViewById(R.id.registrationRecyclerview_btn_map);   // 구글맵으로 이동
         etSearch = findViewById(R.id.registrationRecyclerview_et_search);
 
         imgBtn_back = (ImageButton)findViewById(R.id.registrationRecyclerview_btn_back);
@@ -197,14 +195,6 @@ public class RegistrationRecyclerview extends AppCompatActivity {
             }
         });
 
-        btnModelMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(RegistrationRecyclerview.this, RentalGoogleMap.class);
-                startActivity(intent);
-            }
-        });
-
         //뒤로가기 버튼 클릭시 장비 목록 페이지에서 장비 메인 페이지 이동
         imgBtn_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -221,8 +211,6 @@ public class RegistrationRecyclerview extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
 
         //네비게이션 드로어 기능 구현
         androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
@@ -301,7 +289,28 @@ public class RegistrationRecyclerview extends AppCompatActivity {
                     Toast.makeText(context, title + ": 거래 목록", Toast.LENGTH_SHORT).show();
                 }
                 else if(id == R.id.communitylist){
-                    Toast.makeText(context, title + ": 커뮤니티 목록", Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder dlg = new AlertDialog.Builder(RegistrationRecyclerview.this);
+                    dlg.setTitle("DIY_커뮤니티 목록");
+                    dlg.setMessage("커뮤니티 목록으로 접속하시겠습니까?");
+                    dlg.setIcon(R.mipmap.ic_launcher);
+
+                    dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Toast.makeText(RegistrationRecyclerview.this, "커뮤니티 목록으로 접속되었습니다!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(RegistrationRecyclerview.this, CommunityRecyclerview.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+
+                    dlg.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Toast.makeText(RegistrationRecyclerview.this, "커뮤니티 목록 접속이 취소되었습니다!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    dlg.show();
                 }
                 else if(id == R.id.logout){
                     //Toast.makeText(context, title + ": 로그아웃", Toast.LENGTH_SHORT).show();

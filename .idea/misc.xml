@@ -62,20 +62,25 @@
         <entry key="..\:/DIY_test00/app/src/main/res/drawable/ic_baseline_arrow_back_ios_new_24.xml" value="0.14947916666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/drawable/red_etittext.xml" value="0.275" />
         <entry key="..\:/DIY_test00/app/src/main/res/drawable/white_edittext.xml" value="0.275" />
+        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_all_rental_google_map.xml" value="0.25885416666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_chat_myform.xml" value="0.171875" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_chat_otherform.xml" value="0.13333333333333333" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_community.xml" value="0.25885416666666666" />
+        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_community_recyclerview.xml" value="0.25885416666666666" />
+        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_community_registration.xml" value="0.25885416666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_diy_main.xml" value="0.16799999999999998" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_equipment_detail.xml" value="0.264" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_equipment_registration.xml" value="0.25885416666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_menu.xml" value="0.25885416666666666" />
+        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_menu_setting.xml" value="0.10729166666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_navi_header.xml" value="0.25885416666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_navigation_drawer.xml" value="0.25885416666666666" />
-        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_registration_recyclerview.xml" value="0.2" />
+        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_registration_recyclerview.xml" value="0.264" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_rental_google_map.xml" value="0.134375" />
-        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_signup.xml" value="0.264" />
+        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_signup.xml" value="0.16799999999999998" />
+        <entry key="..\:/DIY_test00/app/src/main/res/layout/community_recyclerview_item.xml" value="0.22314814814814815" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/menu_appbar.xml" value="0.176" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/menu_header.xml" value="0.13645833333333332" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/menudialog.xml" value="0.25885416666666666" />
@@ -84,7 +89,6 @@
         <entry key="..\:/DIY_test00/app/src/main/res/layout/registration_recyclerview_item.xml" value="0.13802083333333334" />
         <entry key="..\:/DIY_test00/app/src/main/res/menu/menu_drawerlayout.xml" value="0.13645833333333332" />
         <entry key="..\:/DIY_test00/app/src/main/res/menu/navi_menu.xml" value="0.13645833333333332" />
-        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_signup.xml" value="0.16799999999999998" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/drawable/chat_et_chatbox.xml" value="0.2225" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/drawable/et_back_chatbox.xml" value="0.2225" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/drawable/et_back_otherchatbox.xml" value="0.2225" />

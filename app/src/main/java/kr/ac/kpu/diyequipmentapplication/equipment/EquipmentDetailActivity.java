@@ -31,11 +31,12 @@ import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 
-import kr.ac.kpu.diyequipmentapplication.login.LoginActivity;
 import kr.ac.kpu.diyequipmentapplication.MainActivity;
 import kr.ac.kpu.diyequipmentapplication.R;
 import kr.ac.kpu.diyequipmentapplication.chat.ChatActivity;
 import kr.ac.kpu.diyequipmentapplication.chat.ChatStartActivity;
+import kr.ac.kpu.diyequipmentapplication.community.CommunityRecyclerview;
+import kr.ac.kpu.diyequipmentapplication.login.LoginActivity;
 
 
 //미완성 장비
@@ -252,7 +253,28 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                     Toast.makeText(context, title + ": 거래 목록", Toast.LENGTH_SHORT).show();
                 }
                 else if(id == R.id.communitylist){
-                    Toast.makeText(context, title + ": 커뮤니티 목록", Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder dlg = new AlertDialog.Builder(EquipmentDetailActivity.this);
+                    dlg.setTitle("DIY_커뮤니티 목록");
+                    dlg.setMessage("커뮤니티 목록으로 접속하시겠습니까?");
+                    dlg.setIcon(R.mipmap.ic_launcher);
+
+                    dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Toast.makeText(EquipmentDetailActivity.this, "커뮤니티 목록으로 접속되었습니다!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(EquipmentDetailActivity.this, CommunityRecyclerview.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+
+                    dlg.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Toast.makeText(EquipmentDetailActivity.this, "커뮤니티 목록 접속이 취소되었습니다!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    dlg.show();
                 }
                 else if(id == R.id.logout){
                     //Toast.makeText(context, title + ": 로그아웃", Toast.LENGTH_SHORT).show();

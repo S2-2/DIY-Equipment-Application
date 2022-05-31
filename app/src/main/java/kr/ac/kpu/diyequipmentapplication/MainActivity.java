@@ -35,7 +35,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import java.util.ArrayList;
 
 import kr.ac.kpu.diyequipmentapplication.chat.ChatStartActivity;
+import kr.ac.kpu.diyequipmentapplication.community.CommunityAdapter;
 import kr.ac.kpu.diyequipmentapplication.community.CommunityRecyclerview;
+import kr.ac.kpu.diyequipmentapplication.community.CommunityRegistration;
 import kr.ac.kpu.diyequipmentapplication.equipment.EquipmentRegistration;
 import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationAdapter;
 import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationRecyclerview;
@@ -55,6 +57,14 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<EquipmentRegistration> equipmentRegistrationList;
     ArrayList<EquipmentRegistration> filteredEquipementList;
     private FirebaseFirestore mainFirebaseFirestoreDB;
+
+    //커뮤니티 목록 리사이클러뷰에 사용할 참조 변수 추가
+    FirebaseStorage communityFirebaseStorage;
+    RecyclerView communityRecyclerView;
+    CommunityAdapter communityAdapter;
+    ArrayList<CommunityRegistration> communityRegistrationArrayList;
+    ArrayList<CommunityRegistration> filteredCommunityRegistrationArrayList;
+    private FirebaseFirestore communityFirebaseFirestore;
 
     //네비게이션 드로어 참조 변수
     private DrawerLayout mDrawerLayout;
@@ -131,18 +141,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*
-        // 환경 설정으로 이동
-        ImageButton btn_setting = findViewById(R.id.navi_header_btn_setting);
-        btn_setting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, MenuSettingActivity.class);
-                startActivity(intent);
-            }
-        });
-*/
-
         //장비 목록 RecyclerView 필드 참조
         mainFirebaseFirestoreDB = FirebaseFirestore.getInstance();
         mStorage = FirebaseStorage.getInstance();
@@ -183,6 +181,46 @@ public class MainActivity extends AppCompatActivity {
                                 equipmentRegistrationList.add(equipmentRegistration);
                                 filteredEquipementList.add(equipmentRegistration);
                                 registrationAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
+                });
+
+        //커뮤니티 목록 RecyclerView 필드 참조
+        communityFirebaseFirestore = FirebaseFirestore.getInstance();
+        communityFirebaseStorage = FirebaseStorage.getInstance();
+        communityRecyclerView = findViewById(R.id.main_community_recyclerview);
+        communityRecyclerView.setHasFixedSize(true);
+        communityRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)); //리사이클러뷰 가로 화면모드
+
+        //RecyclerView에 CommunityAdapter 클래스 등록 구현
+        communityRegistrationArrayList = new ArrayList<CommunityRegistration>();
+        communityAdapter = new CommunityAdapter(MainActivity.this,communityRegistrationArrayList);
+
+        //검색에 의해 필터링 될 CommunityRegistration 리스트
+        filteredCommunityRegistrationArrayList = new ArrayList<CommunityRegistration>();
+
+        communityRecyclerView.setAdapter(communityAdapter);
+
+        //Firestore DB 변경
+        //Firestore DB에 등록된 장비 등록 정보 읽기 기능 구현
+        communityFirebaseFirestore.collection("DIY_Equipment_Community")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                                CommunityRegistration communityRegistration = new CommunityRegistration(
+                                        queryDocumentSnapshot.get("communityTitle").toString().trim(),
+                                        queryDocumentSnapshot.get("communityContent").toString().trim(),
+                                        queryDocumentSnapshot.get("communityImage").toString().trim(),
+                                        queryDocumentSnapshot.get("communityCategory").toString().trim(),
+                                        queryDocumentSnapshot.get("communityNickname").toString().trim(),
+                                        queryDocumentSnapshot.get("communityDateAndTime").toString().trim());
+                                communityRegistrationArrayList.add(communityRegistration);
+                                filteredCommunityRegistrationArrayList.add(communityRegistration);
+                                communityAdapter.notifyDataSetChanged();
                             }
                         }
                     }
@@ -265,7 +303,28 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(context, title + ": 거래 목록", Toast.LENGTH_SHORT).show();
                 }
                 else if(id == R.id.communitylist){
-                    Toast.makeText(context, title + ": 커뮤니티 목록", Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
+                    dlg.setTitle("DIY_커뮤니티 목록");
+                    dlg.setMessage("커뮤니티 목록으로 접속하시겠습니까?");
+                    dlg.setIcon(R.mipmap.ic_launcher);
+
+                    dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Toast.makeText(MainActivity.this, "커뮤니티 목록으로 접속되었습니다!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(MainActivity.this, CommunityRecyclerview.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+
+                    dlg.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Toast.makeText(MainActivity.this, "커뮤니티 목록 접속이 취소되었습니다!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    dlg.show();
                 }
                 else if(id == R.id.logout){
                     //Toast.makeText(context, title + ": 로그아웃", Toast.LENGTH_SHORT).show();

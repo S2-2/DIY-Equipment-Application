@@ -1,18 +1,20 @@
 package kr.ac.kpu.diyequipmentapplication.equipment;
 
-import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
-import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -48,7 +50,7 @@ public class RentalGoogleMap extends AppCompatActivity implements OnMapReadyCall
     private FirebaseAuth mainFirebaseAuth;     //FirebaseAuth 참조 변수 선언
     private String tempAddress;
 
-    Dialog dialog01;
+    //Dialog dialog01;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,11 +65,12 @@ public class RentalGoogleMap extends AppCompatActivity implements OnMapReadyCall
         mapFrag.getMapAsync(this);
 
 
-        dialog01 = new Dialog(RentalGoogleMap.this);
-        dialog01.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog01.setContentView(R.layout.activity_equipment_registration);
+        //dialog01 = new Dialog(RentalGoogleMap.this);
+        //dialog01.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //dialog01.setContentView(R.layout.activity_equipment_registration);
     }
 
+    /*
     public void showDialog() {
         dialog01.show();
 
@@ -79,6 +82,8 @@ public class RentalGoogleMap extends AppCompatActivity implements OnMapReadyCall
             }
         });
     }
+     */
+
     //버튼 클릭시 처음 나오는 GoogleMap 화면
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -106,7 +111,10 @@ public class RentalGoogleMap extends AppCompatActivity implements OnMapReadyCall
                                  */
 
                                 markerOptions.title(queryDocumentSnapshot.get("rentalAddress").toString().trim());
+
                                 gMap.addMarker(markerOptions);
+
+
                                 i++;
                             }
                         }
@@ -181,7 +189,6 @@ public class RentalGoogleMap extends AppCompatActivity implements OnMapReadyCall
     public boolean onMarkerClick(Marker marker) {
         //Toast.makeText(RentalGoogleMap.this, marker.getTitle(), Toast.LENGTH_SHORT).show();
 
-        /*
         AlertDialog.Builder dlg = new AlertDialog.Builder(RentalGoogleMap.this);
         dlg.setTitle("장비대여 상세페이지");
         dlg.setMessage("장비대여 상세페이지로 이동하시겠습니까?");
@@ -229,10 +236,14 @@ public class RentalGoogleMap extends AppCompatActivity implements OnMapReadyCall
                 Toast.makeText(RentalGoogleMap.this, "장비대여 상세페이지 이동 취소되었습니다!", Toast.LENGTH_SHORT).show();
             }
         });
-        dlg.show();
-         */
 
-        showDialog();
+        AlertDialog alterMove = dlg.create();
+        alterMove.getWindow().setGravity(Gravity.BOTTOM);
+        alterMove.show();
+        //dlg.show();
+
+
+        //showDialog();
         return true;
     }
 }

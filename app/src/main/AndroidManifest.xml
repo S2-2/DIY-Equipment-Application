@@ -39,12 +39,6 @@
             android:name=".menu.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".community.CommunityRegistrationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".community.CommunityActivity"
-            android:exported="false" />
-        <activity
             android:name=".login.CheckIdActivity"
             android:exported="false" />
         <activity
@@ -55,6 +49,12 @@
             android:exported="false" />
         <activity
             android:name=".login.FindIdActivity"
+            android:exported="false" />
+        <activity
+            android:name=".community.CommunityRegistrationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".community.CommunityRecyclerview"
             android:exported="false" />
         <activity
             android:name=".login.LoginActivity"
@@ -81,12 +81,7 @@
             android:name=".equipment.EquipmentDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".equipment.AllRentalGoogleMapActivity"
-            android:exported="false" />
-        <activity
-            android:name=".RentalGoogleMap"
             android:name=".equipment.RentalGoogleMap"
-            android:exported="false" />
             android:exported="false"/>
         <activity
             android:name=".chat.ChatActivity"
@@ -94,10 +89,6 @@
         <activity
             android:name=".chat.ChatStartActivity"
             android:exported="false" />
-            android:exported="false"/>
-        <activity android:name=".chat.ChatStartActivity"
-            android:exported="false"/>
-
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyDm3HS5Prg2QJvNPWaQNKrkVqacLHgs77s" />
