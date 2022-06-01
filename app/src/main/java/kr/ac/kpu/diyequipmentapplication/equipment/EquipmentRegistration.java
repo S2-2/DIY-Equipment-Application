@@ -1,4 +1,4 @@
-package kr.ac.kpu.diyequipmentapplication;
+package kr.ac.kpu.diyequipmentapplication.equipment;
 
 import java.io.Serializable;
 

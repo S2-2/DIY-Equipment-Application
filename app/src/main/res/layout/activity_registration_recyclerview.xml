@@ -18,95 +18,97 @@
         android:layout_margin="10dp"
         android:orientation="vertical">
 
-        <!-- 메뉴 네비게이션드로어 기능 -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <View
-                android:id="@+id/view_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@android:color/black"
-                android:layout_below="@+id/toolbar"/>
-
-            <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/toolbar"
+            <!-- 메뉴 네비게이션드로어 기능 -->
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <TextView
+                <View
+                    android:id="@+id/view_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@android:color/black"
+                    android:layout_below="@+id/toolbar"/>
+
+                <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="DIY Equipment Rental"
+                        android:textSize="30dp"
+                        android:textStyle="bold|italic" />
+
+                    <ImageButton
+                        android:id="@+id/registrationRecyclerview_btn_search"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:background="@android:color/transparent"
+                        app:srcCompat="@drawable/ic_baseline_search_24" />
+                </androidx.appcompat.widget.Toolbar>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical">
+
+                <ImageButton
+                    android:background="@android:color/transparent"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/registrationRecyclerview_btn_back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:text="DIY Equipment Rental"
-                    android:textSize="30dp"
-                    android:textStyle="bold|italic" />
+                    app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24"
+                    tools:layout_editor_absoluteX="28dp"
+                    tools:layout_editor_absoluteY="43dp" />
 
-            </androidx.appcompat.widget.Toolbar>
-        </RelativeLayout>
+                <ImageButton
+                    android:background="@android:color/transparent"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/registrationRecyclerview_btn_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_baseline_home_24" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical">
+                <EditText
+                    android:id="@+id/registrationRecyclerview_et_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="18dp"
+                    android:layout_marginRight="5dp"
+                    android:hint="검색어를 입력하세요."/>
+            </LinearLayout>
 
-            <ImageButton
-                android:background="@android:color/transparent"
-                android:layout_gravity="center_vertical"
-                android:id="@+id/registrationRecyclerview_btn_back"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/registrationRecyclerview_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:scrollbars="vertical"
+                android:scrollbarFadeDuration="0"/>
 
-            <ImageButton
-                android:background="@android:color/transparent"
-                android:layout_gravity="center_vertical"
-                android:id="@+id/registrationRecyclerview_btn_home"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                app:srcCompat="@drawable/ic_baseline_home_24" />
-
-            <EditText
-                android:id="@+id/registrationRecyclerview_et_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18dp"
-                android:layout_weight="1"
-                android:hint="검색어를 입력하세요."/>
-
-            <Button
-                android:id="@+id/registrationRecyclerview_btn_map"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:text="지도로 보기" />
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/registrationRecyclerview_recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:scrollbars="vertical"
-            android:scrollbarFadeDuration="0"/>
-
-    </LinearLayout>
-
-    <!-- 'activity_equipment_registration'로 연결 -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/registrationRecyclerview_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
-        android:backgroundTint="#009688"
-        android:src="@drawable/ic_baseline_add_24"
-        app:fabSize="normal" />
-</RelativeLayout>
+        <!-- 'activity_equipment_registration'로 연결 -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/registrationRecyclerview_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="#009688"
+            android:src="@drawable/ic_baseline_add_24"
+            app:fabSize="normal" />
+    </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"

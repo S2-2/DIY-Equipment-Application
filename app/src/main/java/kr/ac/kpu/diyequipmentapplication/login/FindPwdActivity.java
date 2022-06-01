@@ -1,7 +1,9 @@
-package kr.ac.kpu.diyequipmentapplication;
+package kr.ac.kpu.diyequipmentapplication.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+
+import kr.ac.kpu.diyequipmentapplication.R;
 
 public class FindPwdActivity extends AppCompatActivity {
 

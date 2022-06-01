@@ -23,34 +23,41 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher_test"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_test_round"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DIYEquipmentApplication">
         <activity
-            android:name=".ProfileActivity"
+            android:name=".menu.LocationActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".menu.MenuSettingActivity"
             android:exported="false" />
         <activity
-            android:name=".CommunityRegistrationActivity"
+            android:name=".menu.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".CommunityActivity"
+            android:name=".login.CheckIdActivity"
             android:exported="false" />
         <activity
-            android:name=".CheckIdActivity"
+            android:name=".community.CommunityDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".ChangePwdActivity"
+            android:name=".login.FindPwdActivity"
             android:exported="false" />
         <activity
-            android:name=".FindPwdActivity"
+            android:name=".login.FindIdActivity"
             android:exported="false" />
         <activity
-            android:name=".FindIdActivity"
+            android:name=".community.CommunityRegistrationActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".community.CommunityRecyclerview"
+            android:exported="false" />
+        <activity
+            android:name=".login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -59,26 +66,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RegistrationRecyclerview"
+            android:name=".equipment.RegistrationRecyclerview"
             android:exported="false" />
         <activity
-            android:name=".EquipmentRegistrationActivity"
+            android:name=".equipment.EquipmentRegistrationActivity"
             android:exported="false" />
         <activity
-            android:name=".SignupActivity"
+            android:name=".login.SignupActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".EquipmentDetailActivity"
+            android:name=".equipment.EquipmentDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".AllRentalGoogleMapActivity"
-            android:exported="false" />
-        <activity
-            android:name=".RentalGoogleMap"
-            android:exported="false" />
+            android:name=".equipment.RentalGoogleMap"
+            android:exported="false"/>
         <activity
             android:name=".chat.ChatActivity"
             android:exported="false" />
@@ -89,6 +93,8 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyDm3HS5Prg2QJvNPWaQNKrkVqacLHgs77s" />
+        <meta-data android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyDm3HS5Prg2QJvNPWaQNKrkVqacLHgs77s"/>
     </application>
 
 </manifest>

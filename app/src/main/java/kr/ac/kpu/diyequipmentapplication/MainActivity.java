@@ -35,6 +35,15 @@ import com.google.firebase.storage.FirebaseStorage;
 import java.util.ArrayList;
 
 import kr.ac.kpu.diyequipmentapplication.chat.ChatStartActivity;
+import kr.ac.kpu.diyequipmentapplication.community.CommunityAdapter;
+import kr.ac.kpu.diyequipmentapplication.community.CommunityRecyclerview;
+import kr.ac.kpu.diyequipmentapplication.community.CommunityRegistration;
+import kr.ac.kpu.diyequipmentapplication.equipment.EquipmentRegistration;
+import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationAdapter;
+import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationRecyclerview;
+import kr.ac.kpu.diyequipmentapplication.equipment.RentalGoogleMap;
+import kr.ac.kpu.diyequipmentapplication.login.LoginActivity;
+import kr.ac.kpu.diyequipmentapplication.menu.MenuSettingActivity;
 
 //Firebase 인증을 통해 접근 가능한 메인 액티비티 클래스
 public class MainActivity extends AppCompatActivity {
@@ -49,6 +58,14 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<EquipmentRegistration> equipmentRegistrationList;
     ArrayList<EquipmentRegistration> filteredEquipementList;
     private FirebaseFirestore mainFirebaseFirestoreDB;
+
+    //커뮤니티 목록 리사이클러뷰에 사용할 참조 변수 추가
+    FirebaseStorage communityFirebaseStorage;
+    RecyclerView communityRecyclerView;
+    CommunityAdapter communityAdapter;
+    ArrayList<CommunityRegistration> communityRegistrationArrayList;
+    ArrayList<CommunityRegistration> filteredCommunityRegistrationArrayList;
+    private FirebaseFirestore communityFirebaseFirestore;
 
     //네비게이션 드로어 참조 변수
     private DrawerLayout mDrawerLayout;
@@ -70,6 +87,15 @@ public class MainActivity extends AppCompatActivity {
         View nav_header_view = navigationView.getHeaderView(0);
         TextView nav_header_nickname = (TextView) nav_header_view.findViewById(R.id.navi_header_tv_nickname);
         TextView nav_header_address = (TextView) nav_header_view.findViewById(R.id.navi_header_tv_userlocation);
+        ImageButton nav_header_setting = (ImageButton) nav_header_view.findViewById(R.id.navi_header_btn_setting);
+
+        nav_header_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, MenuSettingActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //DIY_Signup DB에서 사용자 계정에 맞는 닉네임 가져오는 기능 구현.
         //사용자 이메일 정보와 일치하는 데이터를 DIY_Signup DB에서 찾아서 etNickname 참조 변수에 닉네임 값 참조.
@@ -119,11 +145,10 @@ public class MainActivity extends AppCompatActivity {
         btn_community.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, CommunityActivity.class);
+                Intent intent = new Intent(MainActivity.this, CommunityRecyclerview.class);
                 startActivity(intent);
             }
         });
-
 
         //장비 목록 RecyclerView 필드 참조
         mainFirebaseFirestoreDB = FirebaseFirestore.getInstance();
@@ -170,6 +195,45 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+        //커뮤니티 목록 RecyclerView 필드 참조
+        communityFirebaseFirestore = FirebaseFirestore.getInstance();
+        communityFirebaseStorage = FirebaseStorage.getInstance();
+        communityRecyclerView = findViewById(R.id.main_community_recyclerview);
+        communityRecyclerView.setHasFixedSize(true);
+        communityRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)); //리사이클러뷰 가로 화면모드
+
+        //RecyclerView에 CommunityAdapter 클래스 등록 구현
+        communityRegistrationArrayList = new ArrayList<CommunityRegistration>();
+        communityAdapter = new CommunityAdapter(MainActivity.this,communityRegistrationArrayList);
+
+        //검색에 의해 필터링 될 CommunityRegistration 리스트
+        filteredCommunityRegistrationArrayList = new ArrayList<CommunityRegistration>();
+
+        communityRecyclerView.setAdapter(communityAdapter);
+
+        //Firestore DB 변경
+        //Firestore DB에 등록된 장비 등록 정보 읽기 기능 구현
+        communityFirebaseFirestore.collection("DIY_Equipment_Community")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                                CommunityRegistration communityRegistration = new CommunityRegistration(
+                                        queryDocumentSnapshot.get("communityTitle").toString().trim(),
+                                        queryDocumentSnapshot.get("communityContent").toString().trim(),
+                                        queryDocumentSnapshot.get("communityImage").toString().trim(),
+                                        queryDocumentSnapshot.get("communityNickname").toString().trim(),
+                                        queryDocumentSnapshot.get("communityDateAndTime").toString().trim());
+                                communityRegistrationArrayList.add(communityRegistration);
+                                filteredCommunityRegistrationArrayList.add(communityRegistration);
+                                communityAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
+                });
+
         //네비게이션 드로어 기능 구현
         androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -189,70 +253,26 @@ public class MainActivity extends AppCompatActivity {
                 String title = menuItem.getTitle().toString();
 
                 if(id == R.id.tradedetail){
-                    Toast.makeText(context, title + ": 거래내역.", Toast.LENGTH_SHORT).show();
-                }
-                else if(id == R.id.startchatting){
-                    //Toast.makeText(context, title + ": 채팅.", Toast.LENGTH_SHORT).show();
-
-                    AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
-                    dlg.setTitle("DIY_채팅");
-                    dlg.setMessage("채팅창으로 접속하시겠습니까?");
-                    dlg.setIcon(R.mipmap.ic_launcher);
-
-                    dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(MainActivity.this, "채팅창으로 접속되었습니다!", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(MainActivity.this, ChatStartActivity.class);
-                            startActivity(intent);
-                            finish();
-                        }
-                    });
-
-                    dlg.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(MainActivity.this, "채팅창 접속이 취소되었습니다!", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    dlg.show();
+                    Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
+                } else if(id == R.id.startchatting){
+                    Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MainActivity.this, ChatStartActivity.class);
+                    startActivity(intent);
                 } else if (id == R.id.diymap) {
-                    AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
-                    dlg.setTitle("DIY_장비대여맵");
-                    dlg.setMessage("장비대여맵으로 접속하시겠습니까?");
-                    dlg.setIcon(R.mipmap.ic_launcher);
-
-                    dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(MainActivity.this, "장비대여맵으로 접속되었습니다!", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(MainActivity.this, RentalGoogleMap.class);
-                            startActivity(intent);
-                            finish();
-                        }
-                    });
-
-                    dlg.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(MainActivity.this, "장비대여맵 접속이 취소되었습니다!", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    dlg.show();
-                }
-                else if(id == R.id.mycommunity){
-                    Toast.makeText(context, title + ": 내가 쓴 커뮤니티", Toast.LENGTH_SHORT).show();
-                }
-                else if(id == R.id.tradelist){
-                    Toast.makeText(context, title + ": 거래 목록", Toast.LENGTH_SHORT).show();
-                }
-                else if(id == R.id.communitylist){
-                    Toast.makeText(context, title + ": 커뮤니티 목록", Toast.LENGTH_SHORT).show();
-                }
-                else if(id == R.id.locationset){
-                    Toast.makeText(context, title + ": 위치설정", Toast.LENGTH_SHORT).show();
-                }
-                else if(id == R.id.logout){
+                    Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MainActivity.this, RentalGoogleMap.class);
+                    startActivity(intent);
+                } else if(id == R.id.mycommunity){
+                    Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
+                } else if(id == R.id.tradelist){
+                    Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MainActivity.this, RegistrationRecyclerview.class);
+                    startActivity(intent);
+                } else if(id == R.id.communitylist) {
+                    Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MainActivity.this, CommunityRecyclerview.class);
+                    startActivity(intent);
+                } else if(id == R.id.logout){
                     //Toast.makeText(context, title + ": 로그아웃", Toast.LENGTH_SHORT).show();
                     AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
                     dlg.setTitle("로그아웃");
@@ -305,7 +325,6 @@ public class MainActivity extends AppCompatActivity {
                     });
                     dlg.show();
                 }
-
                 return true;
             }
         });

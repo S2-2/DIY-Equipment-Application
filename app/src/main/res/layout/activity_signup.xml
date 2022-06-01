@@ -57,9 +57,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
-            android:hint="아이디 입력하세요."
-            android:textSize="20dp" />
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            android:hint="아이디 입력하세요."/>
+
         <TextView
             android:id="@+id/signup_tv_checkId"
             android:layout_width="match_parent"
@@ -92,6 +92,7 @@
             android:layout_marginBottom="20dp"
             android:inputType="textPassword"
             android:textSize="18dp" />
+
         <TextView
             android:id="@+id/signup_tv_checkPwd"
             android:layout_width="match_parent"
@@ -108,7 +109,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:hint="이름 입력하세요."
             android:inputType="text"
             android:textSize="18dp" />
 
@@ -123,7 +123,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:hint="별명 입력하세요."
             android:inputType="text"
             android:textSize="18dp" />
 
@@ -153,8 +152,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
         android:text="가입하기"
         android:textSize="18dp" />
 

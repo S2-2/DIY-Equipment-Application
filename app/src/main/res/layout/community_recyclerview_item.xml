@@ -10,51 +10,19 @@
     <!--작성자(별명)-->
     <TextView
         android:id="@+id/communityRecyclerviewItem_tv_nickname"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20dp" />
-
- <LinearLayout
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:orientation="horizontal">
-    <!--게시물 종류-->
-    <TextView
-        android:id="@+id/communityRecyclerviewItem_tv_category"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="24dp" />
     <!--게시일시-->
     <TextView
         android:id="@+id/communityRecyclerviewItem_dateAndTime"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="24dp" />
-
- </LinearLayout>
-
+        android:textSize="20dp" />
     <!--내용-->
     <TextView
         android:id="@+id/communityRecyclerviewItem_tv_contents"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:textSize="24dp" />
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <Button
-        android:id="@+id/communityRecyclerviewItem_btn_comments"
-        android:text="댓글달기"
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"/>
-    <ImageButton
-        android:id="@+id/communityRecyclerviewItem_btn_like"
-        android:layout_width="wrap_content"
-        app:srcCompat="@drawable/ic_baseline_favorite_border_24"
-        android:layout_height="wrap_content"/>
-
-</LinearLayout>
-
+        android:textSize="20dp" />
 </LinearLayout>

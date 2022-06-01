@@ -1,4 +1,4 @@
-package kr.ac.kpu.diyequipmentapplication;
+package kr.ac.kpu.diyequipmentapplication.login;
 
 public class SignupAccountDB {
     private String userID;
