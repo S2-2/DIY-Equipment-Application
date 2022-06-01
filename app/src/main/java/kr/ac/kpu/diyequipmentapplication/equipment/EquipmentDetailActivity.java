@@ -37,6 +37,7 @@ import kr.ac.kpu.diyequipmentapplication.chat.ChatActivity;
 import kr.ac.kpu.diyequipmentapplication.chat.ChatStartActivity;
 import kr.ac.kpu.diyequipmentapplication.community.CommunityRecyclerview;
 import kr.ac.kpu.diyequipmentapplication.login.LoginActivity;
+import kr.ac.kpu.diyequipmentapplication.menu.MenuSettingActivity;
 
 
 //미완성 장비
@@ -118,6 +119,17 @@ public class EquipmentDetailActivity extends AppCompatActivity {
         View nav_header_view = navigationView.getHeaderView(0);
         TextView nav_header_nickname = (TextView) nav_header_view.findViewById(R.id.navi_header_tv_nickname);
         TextView nav_header_address = (TextView) nav_header_view.findViewById(R.id.navi_header_tv_userlocation);
+        ImageButton nav_header_setting = (ImageButton) nav_header_view.findViewById(R.id.navi_header_btn_setting);
+
+        nav_header_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(EquipmentDetailActivity.this, MenuSettingActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
         equipmentDetailFirebaseAuth = FirebaseAuth.getInstance();                  //FirebaseAuth 초기화 및 객체 참조
         equipmentDetailFirebaseFirestore = FirebaseFirestore.getInstance();        //파이어스토어 초기화 및 객체 참조
 

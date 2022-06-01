@@ -43,7 +43,6 @@
             android:exported="false" />
         <activity
             android:name=".community.CommunityDetailActivity"
-            android:name=".login.ChangePwdActivity"
             android:exported="false" />
         <activity
             android:name=".login.FindPwdActivity"

@@ -43,6 +43,7 @@ import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationAdapter;
 import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationRecyclerview;
 import kr.ac.kpu.diyequipmentapplication.equipment.RentalGoogleMap;
 import kr.ac.kpu.diyequipmentapplication.login.LoginActivity;
+import kr.ac.kpu.diyequipmentapplication.menu.MenuSettingActivity;
 
 //Firebase 인증을 통해 접근 가능한 메인 액티비티 클래스
 public class MainActivity extends AppCompatActivity {
@@ -86,7 +87,15 @@ public class MainActivity extends AppCompatActivity {
         View nav_header_view = navigationView.getHeaderView(0);
         TextView nav_header_nickname = (TextView) nav_header_view.findViewById(R.id.navi_header_tv_nickname);
         TextView nav_header_address = (TextView) nav_header_view.findViewById(R.id.navi_header_tv_userlocation);
-//        ImageButton nav_header_setting = (ImageButton) nav_header_view.findViewById(R.id.navi_header_btn_setting);
+        ImageButton nav_header_setting = (ImageButton) nav_header_view.findViewById(R.id.navi_header_btn_setting);
+
+        nav_header_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, MenuSettingActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //DIY_Signup DB에서 사용자 계정에 맞는 닉네임 가져오는 기능 구현.
         //사용자 이메일 정보와 일치하는 데이터를 DIY_Signup DB에서 찾아서 etNickname 참조 변수에 닉네임 값 참조.
@@ -215,7 +224,6 @@ public class MainActivity extends AppCompatActivity {
                                         queryDocumentSnapshot.get("communityTitle").toString().trim(),
                                         queryDocumentSnapshot.get("communityContent").toString().trim(),
                                         queryDocumentSnapshot.get("communityImage").toString().trim(),
-                                        queryDocumentSnapshot.get("communityCategory").toString().trim(),
                                         queryDocumentSnapshot.get("communityNickname").toString().trim(),
                                         queryDocumentSnapshot.get("communityDateAndTime").toString().trim());
                                 communityRegistrationArrayList.add(communityRegistration);
