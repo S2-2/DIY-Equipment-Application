@@ -42,7 +42,7 @@
             android:name=".community.CommunityRegistrationActivity"
             android:exported="false" />
         <activity
-            android:name=".community.CommunityActivity"
+            android:name=".community.CommunityDetailActivity"
             android:exported="false" />
         <activity
             android:name=".login.CheckIdActivity"

@@ -19,10 +19,12 @@
         android:layout_height="27dp"
         android:orientation="horizontal">
 
+        <!--
         <Spinner
             android:id="@+id/communityRegistration_spr_category"
             android:layout_width="188dp"
             android:layout_height="wrap_content"/>
+        -->
 
     </LinearLayout>
 
@@ -51,7 +53,6 @@
         android:gravity="left"
         android:inputType="textImeMultiLine"
         android:textSize="20dp" />
-
 
     <Button
         android:id="@+id/communityRegistration_btn_registration"
