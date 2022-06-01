@@ -3,18 +3,18 @@ package kr.ac.kpu.diyequipmentapplication.chat;
 public class ChatModel
 {
     String chatNum;
-    String userEmail;
     String userNickname;
+    String userEmail;
     String userMsg;
     String timestamp;
     Boolean userReceived;
 
     public ChatModel(){};
 
-    public ChatModel(String chatNum, String userEmail, String userNickname, String userMsg, String timestamp) {
+    public ChatModel(String chatNum, String userNickname, String userEmail, String userMsg, String timestamp) {
         this.chatNum = chatNum;
-        this.userEmail = userEmail;
         this.userNickname = userNickname;
+        this.userEmail = userEmail;
         this.userMsg = userMsg;
         this.timestamp = timestamp;
         this.userReceived = false;
@@ -28,20 +28,20 @@ public class ChatModel
         this.chatNum = chatNum;
     }
 
-    public String getUserEmail() {
-        return userEmail;
-    }
-
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
-    }
-
     public String getUserNickname() {
         return userNickname;
     }
 
     public void setUserNickname(String userNickname) {
         this.userNickname = userNickname;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public String getUserMsg() {
@@ -67,5 +67,6 @@ public class ChatModel
     public void setUserReceived(Boolean userReceived) {
         this.userReceived = userReceived;
     }
+
 // firebaseDB에 객체로 값 읽어오기기
 }
