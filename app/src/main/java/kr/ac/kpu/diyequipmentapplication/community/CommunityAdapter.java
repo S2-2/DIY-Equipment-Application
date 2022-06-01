@@ -1,11 +1,10 @@
 package kr.ac.kpu.diyequipmentapplication.community;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -49,8 +48,6 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
     //ViewHolder 클래스 구현
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvNickname, tvDateAndTime, tvContent;
-        Button btnComments;
-        ImageButton imgBtnLike;
 
         //ViewHolder 클래스 생성자
         public ViewHolder(@NonNull View itemView) {
@@ -60,8 +57,22 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
             tvNickname = itemView.findViewById(R.id.communityRecyclerviewItem_tv_nickname);
             tvDateAndTime = itemView.findViewById(R.id.communityRecyclerviewItem_dateAndTime);
             tvContent = itemView.findViewById(R.id.communityRecyclerviewItem_tv_contents);
-            btnComments = itemView.findViewById(R.id.communityRecyclerviewItem_btn_comments);
-            imgBtnLike = itemView.findViewById(R.id.communityRecyclerviewItem_btn_like);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int pos = getBindingAdapterPosition();
+                    if (pos != RecyclerView.NO_POSITION) {
+                        CommunityRegistration communityRegistration = communityRegistrationList.get(pos);
+                        Intent intent = new Intent(context, CommunityDetailActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("CommunityContents", communityRegistration.getCommunityContent());
+                        intent.putExtra("CommunityImage", communityRegistration.getCommunityImage());
+                        intent.putExtra("CommunityNickname",communityRegistration.getCommunityNickname());
+                        intent.putExtra("CommunityDateAndTime", communityRegistration.getCommunityDateAndTime());
+                        context.startActivity(intent);
+                    }
+                }
+            });
         }
     }
 }

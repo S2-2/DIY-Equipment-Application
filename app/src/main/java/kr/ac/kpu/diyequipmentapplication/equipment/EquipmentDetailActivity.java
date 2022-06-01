@@ -40,7 +40,6 @@ import kr.ac.kpu.diyequipmentapplication.login.LoginActivity;
 import kr.ac.kpu.diyequipmentapplication.menu.MenuSettingActivity;
 
 
-//미완성 장비
 // 목록 클릭시 상세화면으로 전환되는 액티비티클래스
 public class EquipmentDetailActivity extends AppCompatActivity {
     private ImageView ivRentalImage;

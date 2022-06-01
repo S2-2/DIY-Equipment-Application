@@ -274,7 +274,6 @@ public class CommunityRecyclerview extends AppCompatActivity {
                     });
                     dlg.show();
                 }
-
                 return true;
             }
         });

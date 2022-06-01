@@ -31,12 +31,6 @@ import java.util.Date;
 import kr.ac.kpu.diyequipmentapplication.R;
 
 public class CommunityRegistrationActivity extends AppCompatActivity {
-    // Spinner 관련 변수 모음
-    //private Spinner sprModelCat1;   // 장비 카테고리1 참조 변수
-    //private List<String> cat1Subjects;
-    //private ArrayAdapter<String> cat1Adapter;
-    //private DocumentReference registrationDocRef;
-
     //커뮤니티 등록 참조 변수 선언
     private ImageButton imgBtnBack;       //뒤로가기 버튼
     private ImageButton imgBtnImage;      //커뮤니티 이미지
@@ -69,25 +63,13 @@ public class CommunityRegistrationActivity extends AppCompatActivity {
         imgBtnImage = (ImageButton)findViewById(R.id.communityRegistration_btn_image);
         etContent = (EditText)findViewById(R.id.communityRegistration_et_contents);
         btnCommunityReg = (Button)findViewById(R.id.communityRegistration_btn_registration);
+        communityRegFirebaseFirestoreDB = FirebaseFirestore.getInstance();
         communityRegFirebaseStorage = FirebaseStorage.getInstance();
         communityRegFirebaseAuth = FirebaseAuth.getInstance();
         registrationProgressDialog = new ProgressDialog(this);
         communityDateFormat = new SimpleDateFormat("yyyy-MM-dd E, HH:mm:ss a");    //날짜 형식 설정 객체 생성 및 초기화
         communityDate = new Date();  //날짜 객체 생성 및 초기화
         communityGetDate = communityDateFormat.format(communityDate);  //장비 등록일 참조
-
-/*
-        // Firestore에 있는 항목을 Spinner에 가져오기
-        communityRegFirebaseFirestoreDB = FirebaseFirestore.getInstance();
-        registrationDocRef = communityRegFirebaseFirestoreDB.document("DIY_Equipment_Category/Category1");
-        sprModelCat1 = findViewById(R.id.communityRegistration_spr_category);
-
-        cat1Subjects = new ArrayList<>();
-        cat1Adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item,cat1Subjects);
-        cat1Adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sprModelCat1.setAdapter(cat1Adapter);
-
- */
 
         //사용자 이메일 정보와 일치하는 데이터를 DIY_Signup DB에서 찾아서 etNickname 참조 변수에 닉네임 값 참조.
         communityRegFirebaseFirestoreDB.collection("DIY_Signup")
@@ -112,25 +94,6 @@ public class CommunityRegistrationActivity extends AppCompatActivity {
             }
         });
 
-        /*
-        registrationDocRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    List list = (List) document.getData().get("list");
-                    for(int i=0; i<list.size();i++){
-                        String cat1Subject = list.get(i).toString();
-                        Log.i("Test","cat1Subject["+i+"] >" + cat1Subject);
-                        cat1Subjects.add(cat1Subject);
-                    }
-                    cat1Adapter.notifyDataSetChanged();
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
-                }
-            }
-        });
-         */
         //Image 버튼 클릭 이벤트 구현
         imgBtnImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,7 +125,6 @@ public class CommunityRegistrationActivity extends AppCompatActivity {
                 //공급자가 입력한 모델명 및 공구 설명
                 final String title = etTitle.getText().toString().trim();
                 final String content = etContent.getText().toString().trim();
-                //final String mc = sprModelCat1.getSelectedItem().toString().trim();
                 final String nickname = communityNickname;
                 final String dateAndTime = communityGetDate;
 
