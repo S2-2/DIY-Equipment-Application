@@ -39,11 +39,14 @@ import java.util.ArrayList;
 
 import kr.ac.kpu.diyequipmentapplication.chat.ChatStartActivity;
 import kr.ac.kpu.diyequipmentapplication.chat.FcmDataModel;
+import kr.ac.kpu.diyequipmentapplication.community.CommunityAdapter;
+import kr.ac.kpu.diyequipmentapplication.community.CommunityRegistration;
 import kr.ac.kpu.diyequipmentapplication.equipment.EquipmentRegistration;
 import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationAdapter;
 import kr.ac.kpu.diyequipmentapplication.equipment.RentalGoogleMap;
 import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationRecyclerview;
 import kr.ac.kpu.diyequipmentapplication.login.LoginActivity;
+import kr.ac.kpu.diyequipmentapplication.community.CommunityRecyclerview;
 
 //Firebase 인증을 통해 접근 가능한 메인 액티비티 클래스
 public class MainActivity extends AppCompatActivity {
@@ -61,6 +64,12 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<EquipmentRegistration> equipmentRegistrationList;
     ArrayList<EquipmentRegistration> filteredEquipementList;
     private FirebaseFirestore mainFirebaseFirestoreDB;
+    private FirebaseFirestore mainFirebaseFirestoreDB2;
+
+    // 커뮤니티 리사이클러뷰에 사용할 참조 변수 추가
+    RecyclerView recyclerView2;
+    CommunityAdapter communityAdapter;
+    ArrayList<CommunityRegistration> communityRegistrationList;
 
     //네비게이션 드로어 참조 변수
     private DrawerLayout mDrawerLayout;
@@ -131,17 +140,17 @@ public class MainActivity extends AppCompatActivity {
 
         // 커뮤니티로 이동
         ImageButton btn_community = findViewById(R.id.main_btn_community);
-//        btn_community.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(MainActivity.this, CommunityActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
+        btn_community.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, CommunityRecyclerview.class);
+                startActivity(intent);
+            }
+        });
 
         //장비 목록 RecyclerView 필드 참조
         mainFirebaseFirestoreDB = FirebaseFirestore.getInstance();
+        mainFirebaseFirestoreDB2 = FirebaseFirestore.getInstance();
         mStorage = FirebaseStorage.getInstance();
         recyclerView = findViewById(R.id.main_recyclerview);
         recyclerView.setHasFixedSize(true);
@@ -183,6 +192,40 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+
+        // 커뮤니티 목록 RecyclerView 필드 참조
+        recyclerView2 = findViewById(R.id.main_community_recyclerview);
+        recyclerView2.setHasFixedSize(true);
+
+        recyclerView2.setLayoutManager(new LinearLayoutManager(this));   //리사이클러뷰 세로 화면모드
+
+        //RecyclerView2에 CommunityAdapter 클래스 등록 구현
+        communityRegistrationList = new ArrayList<CommunityRegistration>();
+        communityAdapter = new CommunityAdapter(MainActivity.this,communityRegistrationList);
+        recyclerView2.setAdapter(communityAdapter);
+
+        //Firestore DB에 등록된 장비 등록 정보 읽기 기능 구현
+        mainFirebaseFirestoreDB2.collection("DIY_Equipment_Community")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                                CommunityRegistration communityRegistration = new CommunityRegistration(
+                                        queryDocumentSnapshot.get("communityTitle").toString().trim(),
+                                        queryDocumentSnapshot.get("communityContent").toString().trim(),
+                                        queryDocumentSnapshot.get("communityImage").toString().trim(),
+                                        queryDocumentSnapshot.get("communityNickname").toString().trim(),
+                                        queryDocumentSnapshot.get("communityDateAndTime").toString().trim());
+                                communityRegistrationList.add(communityRegistration);
+                                communityAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
+                });
+
 
         //네비게이션 드로어 기능 구현
         androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);

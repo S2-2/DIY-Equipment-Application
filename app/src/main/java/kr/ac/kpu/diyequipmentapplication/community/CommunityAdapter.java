@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import kr.ac.kpu.diyequipmentapplication.R;
@@ -35,9 +37,10 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
     public void onBindViewHolder(@NonNull CommunityAdapter.ViewHolder holder, int position) {
 
         CommunityRegistration communityRegistration = communityRegistrationList.get(position);
-        holder.tvNickname.setText("NickName : "+ communityRegistration.getCommunityNickname());
-        holder.tvDateAndTime.setText("Date : "+ communityRegistration.getCommunityDateAndTime());
-        holder.tvContent.setText("Contents : "+ communityRegistration.getCommunityContent());
+        holder.tvNickname.setText(communityRegistration.getCommunityNickname());
+        holder.tvDateAndTime.setText(communityRegistration.getCommunityDateAndTime());
+        holder.tvContent.setText(communityRegistration.getCommunityContent());
+
     }
 
     @Override
@@ -56,7 +59,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
             //list_equipmentitem.xml파일에 있는 뷰 객체 참조
             tvNickname = itemView.findViewById(R.id.communityRecyclerviewItem_tv_nickname);
             tvDateAndTime = itemView.findViewById(R.id.communityRecyclerviewItem_dateAndTime);
-            tvContent = itemView.findViewById(R.id.communityRecyclerviewItem_tv_contents);
+            tvContent = itemView.findViewById(R.id.communityRecyclerviewItem_tv_title);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
