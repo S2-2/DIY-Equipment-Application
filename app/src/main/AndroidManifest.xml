@@ -29,9 +29,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DIYEquipmentApplication">
         <activity
+            android:name=".community.CommunityCommentRecyclerview"
+            android:exported="false" />
+        <activity
             android:name=".menu.LocationActivity"
             android:exported="false" />
-
         <activity
             android:name=".menu.MenuSettingActivity"
             android:exported="false" />
@@ -82,7 +84,7 @@
             android:exported="false" />
         <activity
             android:name=".equipment.RentalGoogleMap"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".chat.ChatActivity"
             android:exported="false" />
@@ -93,8 +95,9 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyDm3HS5Prg2QJvNPWaQNKrkVqacLHgs77s" />
-        <meta-data android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyDm3HS5Prg2QJvNPWaQNKrkVqacLHgs77s"/>
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyDm3HS5Prg2QJvNPWaQNKrkVqacLHgs77s" />
     </application>
 
 </manifest>

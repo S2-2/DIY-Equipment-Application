@@ -7,10 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +17,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -28,10 +27,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.squareup.picasso.Picasso;
+import com.google.firebase.storage.FirebaseStorage;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 
 import kr.ac.kpu.diyequipmentapplication.MainActivity;
 import kr.ac.kpu.diyequipmentapplication.R;
@@ -41,70 +39,42 @@ import kr.ac.kpu.diyequipmentapplication.equipment.RentalGoogleMap;
 import kr.ac.kpu.diyequipmentapplication.login.LoginActivity;
 import kr.ac.kpu.diyequipmentapplication.menu.MenuSettingActivity;
 
-public class CommunityDetailActivity extends AppCompatActivity {
-    //커뮤니티 상세페이지 참조변수 선언
-    private ImageView ivUserProfilePhoto, ivEquipmentImage;
-    private TextView tvNickname, tvLocation, tvTime, tvContents;
-    private String getUserProfileImageUrl;
-    private String getEquipmentImageUrl;
-    private String getUserEmail;
-    private String tempNickname;
+public class CommunityCommentRecyclerview extends AppCompatActivity {
+    FirebaseStorage communityCommentFirebaseStorage;
+    RecyclerView communityCommentRecyclerView;
+    CommunityCommentAdapter communityCommentAdapter;
+    ArrayList<CommunityComment> communityCommentArrayList;
+    FirebaseFirestore communityCommentFirebaseFirestore;
 
-    private ImageButton imgBtn_back;
-    private ImageButton imgBtn_home;
-
-    //커뮤니티 댓글 참조 변수
-    private ImageButton imgBtnCommentLike;
-    private EditText etComment;
-    private Button btnComment;
-    private Boolean likeFlag;
-    private SimpleDateFormat commentDateFormat;   //등록 날짜 형식 참조할 변수
-    private Date commentDate;   //등록 날짜 참조할 변수
-    private String commentGetDate;      //장비 등록 날짜 참조 변수
-    private Button btnCommentList;
+    private ImageButton imgBtn_back = null;
+    private ImageButton imgBtn_home = null;
 
     //네비게이션 드로어 참조 변수
     private DrawerLayout mDrawerLayout;
     private Context context = this;
-    private FirebaseAuth communityDetailFirebaseAuth;     //FirebaseAuth 참조 변수 선언
-    private FirebaseFirestore communityDetailFirebaseFirestore;
+    private FirebaseAuth registrationListFirebaseAuth;     //FirebaseAuth 참조 변수 선언
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_community_detail);
+        setContentView(R.layout.activity_community_comment_recyclerview);
 
-        ivUserProfilePhoto = (ImageView) findViewById(R.id.iv_UserProfilePhoto);
-        ivEquipmentImage = (ImageView) findViewById(R.id.iv_EquipmentImage);
-        tvNickname = (TextView) findViewById(R.id.communityDetail_tv_nickname);
-        tvLocation = (TextView) findViewById(R.id.communityDetail_tv_location);
-        tvTime = (TextView) findViewById(R.id.communityDetail_tv_time);
-        tvContents = (TextView) findViewById(R.id.communityDetail_tv_contents);
-        imgBtn_back = (ImageButton) findViewById(R.id.signup_btn_back);
-        imgBtn_home = (ImageButton) findViewById(R.id.registrationRecyclerview_btn_home);
+        //RecyclerView 필드 참조
+        communityCommentFirebaseFirestore = FirebaseFirestore.getInstance();
+        communityCommentFirebaseStorage = FirebaseStorage.getInstance();
+        communityCommentRecyclerView = findViewById(R.id.communityCommentRecyclerview_recyclerview);
+        communityCommentRecyclerView.setHasFixedSize(true);
+        communityCommentRecyclerView.setLayoutManager(new LinearLayoutManager(this));   //리사이클러뷰 세로 화면
+        //recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)); //리사이클러뷰 가로 화면
 
-        btnCommentList = (Button) findViewById(R.id.communityDetail_btn_commentList);
-        imgBtnCommentLike = (ImageButton) findViewById(R.id.communityDetail_imgBtn_like);
-        etComment = (EditText) findViewById(R.id.communityDetail_et_comment);
-        btnComment = (Button) findViewById(R.id.communityDetail_btn_commentAdd);
-        likeFlag = false;
-        commentDateFormat = new SimpleDateFormat("yyyy-MM-dd E, hh:mm:ss");    //날짜 형식 설정 객체 생성 및 초기화
-        commentDate = new Date();  //날짜 객체 생성 및 초기화
-        commentGetDate = commentDateFormat.format(commentDate);  //장비 등록일 참조
+        //RecyclerView에 RegistrationAdapter 클래스 등록 구현
+        communityCommentArrayList = new ArrayList<CommunityComment>();
+        communityCommentAdapter = new CommunityCommentAdapter(CommunityCommentRecyclerview.this, communityCommentArrayList);
 
-        communityDetailFirebaseAuth = FirebaseAuth.getInstance();                  //FirebaseAuth 초기화 및 객체 참조
-        communityDetailFirebaseFirestore = FirebaseFirestore.getInstance();        //파이어스토어 초기화 및 객체 참조
+        communityCommentRecyclerView.setAdapter(communityCommentAdapter);
 
-        Intent intent = getIntent();
-        getUserProfileImageUrl = intent.getStringExtra("CommunityImage");
-        Picasso.get().load(getUserProfileImageUrl).into(ivUserProfilePhoto);
-        getEquipmentImageUrl = getUserProfileImageUrl;
-        Picasso.get().load(getEquipmentImageUrl).into(ivEquipmentImage);
-        tempNickname = intent.getStringExtra("CommunityNickname");
-        tvNickname.setText("작성자: " + tempNickname);
-        //tvLocation.setText("작성자 위치: ");
-        tvTime.setText("작성 시간: " + intent.getStringExtra("CommunityDateAndTime"));
-        tvContents.setText(intent.getStringExtra("CommunityContents"));
+        imgBtn_back = (ImageButton)findViewById(R.id.registrationRecyclerview_btn_back);
+        imgBtn_home = (ImageButton)findViewById(R.id.registrationRecyclerview_btn_home);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View nav_header_view = navigationView.getHeaderView(0);
@@ -115,59 +85,17 @@ public class CommunityDetailActivity extends AppCompatActivity {
         nav_header_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CommunityDetailActivity.this, MenuSettingActivity.class);
+                Intent intent = new Intent(CommunityCommentRecyclerview.this, MenuSettingActivity.class);
                 startActivity(intent);
             }
         });
 
-        //커뮤니티 댓글 좋아요 이미지 버튼 클릭 이벤트 기능 구현
-        imgBtnCommentLike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (likeFlag != true) {
-                    imgBtnCommentLike.setImageResource(R.drawable.ic_baseline_favorite_border_red_24);
-                    likeFlag = true;
-                } else {
-                    imgBtnCommentLike.setImageResource(R.drawable.ic_baseline_favorite_border_dark_24);
-                    likeFlag = false;
-                }
-            }
-        });
-
-        btnComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //공급자가 입력한 모델명 및 공구 설명
-                final Boolean getLike = likeFlag;
-                final String getComment = etComment.getText().toString();
-                final String getNickname = nav_header_nickname.getText().toString();
-                final String getDate = commentGetDate;
-
-                //공급자가 입력한 데이터 등록 성공
-                if (!(getComment.isEmpty()))
-                {
-                    CommunityComment communityComment = new CommunityComment(getLike, getComment, getNickname, getDate);
-                    communityDetailFirebaseFirestore.collection("DIY_Equipment_CommunityComment").document().set(communityComment);
-                    Toast.makeText(getApplicationContext(), "댓글 추가했습니다!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "댓글 입력하세요!", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        btnCommentList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(CommunityDetailActivity.this, CommunityCommentRecyclerview.class);
-                startActivity(intent);
-            }
-        });
+        registrationListFirebaseAuth = FirebaseAuth.getInstance();                  //FirebaseAuth 초기화 및 객체 참조
 
         //DIY_Signup DB에서 사용자 계정에 맞는 닉네임 가져오는 기능 구현.
         //사용자 이메일 정보와 일치하는 데이터를 DIY_Signup DB에서 찾아서 etNickname 참조 변수에 닉네임 값 참조.
-        communityDetailFirebaseFirestore.collection("DIY_Signup")
-                .whereEqualTo("userEmail", communityDetailFirebaseAuth.getCurrentUser().getEmail().toString().trim())
+        communityCommentFirebaseFirestore.collection("DIY_Signup")
+                .whereEqualTo("userEmail", registrationListFirebaseAuth.getCurrentUser().getEmail().toString().trim())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -181,8 +109,8 @@ public class CommunityDetailActivity extends AppCompatActivity {
                     }
                 });
 
-        communityDetailFirebaseFirestore.collection("DIY_Equipment_Rental")
-                .whereEqualTo("userEmail", communityDetailFirebaseAuth.getCurrentUser().getEmail().toString().trim())
+        communityCommentFirebaseFirestore.collection("DIY_Equipment_Rental")
+                .whereEqualTo("userEmail", registrationListFirebaseAuth.getCurrentUser().getEmail().toString().trim())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -195,30 +123,22 @@ public class CommunityDetailActivity extends AppCompatActivity {
                     }
                 });
 
-        communityDetailFirebaseFirestore.collection("DIY_Signup")
-                .whereEqualTo("userNickname",tempNickname )
+        //Firestore DB 변경
+        //Firestore DB에 등록된 장비 등록 정보 읽기 기능 구현
+        communityCommentFirebaseFirestore.collection("DIY_Equipment_CommunityComment")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
-                                Log.d("main SignupDB", queryDocumentSnapshot.get("userEmail").toString().trim());
-                                getUserEmail = queryDocumentSnapshot.get("userEmail").toString().trim();
-
-                                communityDetailFirebaseFirestore.collection("DIY_Equipment_Rental")
-                                        .whereEqualTo("userEmail", getUserEmail)
-                                        .get()
-                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                if (task.isSuccessful()) {
-                                                    for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
-                                                        tvLocation.setText("작성자 위치: "+queryDocumentSnapshot.get("rentalAddress").toString().trim());
-                                                    }
-                                                }
-                                            }
-                                        });
+                                CommunityComment communityComment = new CommunityComment(
+                                        (Boolean) queryDocumentSnapshot.get("commentLike"),
+                                        queryDocumentSnapshot.get("comment").toString().trim(),
+                                        queryDocumentSnapshot.get("commentNickname").toString().trim(),
+                                        queryDocumentSnapshot.get("commentDate").toString().trim());
+                                communityCommentArrayList.add(communityComment);
+                                communityCommentAdapter.notifyDataSetChanged();
                             }
                         }
                     }
@@ -236,10 +156,12 @@ public class CommunityDetailActivity extends AppCompatActivity {
         imgBtn_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CommunityDetailActivity.this, MainActivity.class);
+                Intent intent = new Intent(CommunityCommentRecyclerview.this, MainActivity.class);
                 startActivity(intent);
             }
         });
+
+
 
         //네비게이션 드로어 기능 구현
         androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
@@ -263,25 +185,25 @@ public class CommunityDetailActivity extends AppCompatActivity {
                     Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
                 } else if(id == R.id.startchatting){
                     Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(CommunityDetailActivity.this, ChatStartActivity.class);
+                    Intent intent = new Intent(CommunityCommentRecyclerview.this, ChatStartActivity.class);
                     startActivity(intent);
                 } else if (id == R.id.diymap) {
                     Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(CommunityDetailActivity.this, RentalGoogleMap.class);
+                    Intent intent = new Intent(CommunityCommentRecyclerview.this, RentalGoogleMap.class);
                     startActivity(intent);
                 } else if(id == R.id.mycommunity){
                     Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
                 } else if(id == R.id.tradelist){
                     Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(CommunityDetailActivity.this, RegistrationRecyclerview.class);
+                    Intent intent = new Intent(CommunityCommentRecyclerview.this, RegistrationRecyclerview.class);
                     startActivity(intent);
                 } else if(id == R.id.communitylist) {
                     Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(CommunityDetailActivity.this, CommunityRecyclerview.class);
+                    Intent intent = new Intent(CommunityCommentRecyclerview.this, CommunityRecyclerview.class);
                     startActivity(intent);
                 } else if(id == R.id.logout){
                     //Toast.makeText(context, title + ": 로그아웃", Toast.LENGTH_SHORT).show();
-                    AlertDialog.Builder dlg = new AlertDialog.Builder(CommunityDetailActivity.this);
+                    AlertDialog.Builder dlg = new AlertDialog.Builder(CommunityCommentRecyclerview.this);
                     dlg.setTitle("로그아웃");
                     dlg.setMessage("로그아웃 하시겠습니까?");
                     dlg.setIcon(R.mipmap.ic_launcher);
@@ -289,9 +211,9 @@ public class CommunityDetailActivity extends AppCompatActivity {
                     dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            communityDetailFirebaseAuth.signOut();
-                            Toast.makeText(CommunityDetailActivity.this, "로그아웃 되었습니다!", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(CommunityDetailActivity.this, LoginActivity.class);
+                            registrationListFirebaseAuth.signOut();
+                            Toast.makeText(CommunityCommentRecyclerview.this, "로그아웃 되었습니다!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(CommunityCommentRecyclerview.this, LoginActivity.class);
                             startActivity(intent);
                             finish();
                         }
@@ -300,7 +222,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
                     dlg.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(CommunityDetailActivity.this, "로그아웃 취소되었습니다!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CommunityCommentRecyclerview.this, "로그아웃 취소되었습니다!", Toast.LENGTH_SHORT).show();
                         }
                     });
                     dlg.show();
@@ -308,7 +230,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
                 else if(id == R.id.withdraw){
                     //Toast.makeText(context, title + ": 회원탈퇴", Toast.LENGTH_SHORT).show();
 
-                    AlertDialog.Builder dlg = new AlertDialog.Builder(CommunityDetailActivity.this);
+                    AlertDialog.Builder dlg = new AlertDialog.Builder(CommunityCommentRecyclerview.this);
                     dlg.setTitle("회원 탈퇴");
                     dlg.setMessage("회원 탈퇴하시겠습니까?");
                     dlg.setIcon(R.mipmap.ic_launcher);
@@ -316,9 +238,9 @@ public class CommunityDetailActivity extends AppCompatActivity {
                     dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            communityDetailFirebaseAuth.getCurrentUser().delete();
-                            Toast.makeText(CommunityDetailActivity.this, "회원 탈퇴되었습니다!", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(CommunityDetailActivity.this, LoginActivity.class);
+                            registrationListFirebaseAuth.getCurrentUser().delete();
+                            Toast.makeText(CommunityCommentRecyclerview.this, "회원 탈퇴되었습니다!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(CommunityCommentRecyclerview.this, LoginActivity.class);
                             startActivity(intent);
                             finish();
                         }
@@ -327,7 +249,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
                     dlg.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(CommunityDetailActivity.this, "회원 탈퇴 취소되었습니다!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CommunityCommentRecyclerview.this, "회원 탈퇴 취소되었습니다!", Toast.LENGTH_SHORT).show();
                         }
                     });
                     dlg.show();

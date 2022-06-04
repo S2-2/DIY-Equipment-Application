@@ -152,15 +152,15 @@
                         android:layout_height="wrap_content">
 
                         <ImageButton
-                            android:id="@+id/communityRecyclerviewItem_btn_like"
+                            android:id="@+id/communityDetail_imgBtn_like"
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_gravity="center_vertical"
                             android:background="@android:color/transparent"
-                            app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
+                            app:srcCompat="@drawable/ic_baseline_favorite_border_dark_24" />
 
                         <EditText
-                            android:id="@+id/equipmentDetail_et_explanation"
+                            android:id="@+id/communityDetail_et_comment"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -169,19 +169,21 @@
                             android:textSize="16dp" />
 
                         <Button
-                            android:id="@+id/communityRecyclerviewItem_btn_comments"
+                            android:id="@+id/communityDetail_btn_commentAdd"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
+                            android:layout_height="45dp"
                             android:text="댓글달기" />
-
                     </LinearLayout>
-
+                    <Button
+                        android:id="@+id/communityDetail_btn_commentList"
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:layout_gravity="right"
+                        android:text="댓글목록" />
                 </LinearLayout>
-
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
-
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"

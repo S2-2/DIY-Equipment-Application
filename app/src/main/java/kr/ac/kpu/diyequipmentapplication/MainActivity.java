@@ -40,13 +40,14 @@ import java.util.ArrayList;
 import kr.ac.kpu.diyequipmentapplication.chat.ChatStartActivity;
 import kr.ac.kpu.diyequipmentapplication.chat.FcmDataModel;
 import kr.ac.kpu.diyequipmentapplication.community.CommunityAdapter;
+import kr.ac.kpu.diyequipmentapplication.community.CommunityRecyclerview;
 import kr.ac.kpu.diyequipmentapplication.community.CommunityRegistration;
 import kr.ac.kpu.diyequipmentapplication.equipment.EquipmentRegistration;
 import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationAdapter;
-import kr.ac.kpu.diyequipmentapplication.equipment.RentalGoogleMap;
 import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationRecyclerview;
+import kr.ac.kpu.diyequipmentapplication.equipment.RentalGoogleMap;
 import kr.ac.kpu.diyequipmentapplication.login.LoginActivity;
-import kr.ac.kpu.diyequipmentapplication.community.CommunityRecyclerview;
+import kr.ac.kpu.diyequipmentapplication.menu.MenuSettingActivity;
 
 //Firebase 인증을 통해 접근 가능한 메인 액티비티 클래스
 public class MainActivity extends AppCompatActivity {
@@ -91,6 +92,15 @@ public class MainActivity extends AppCompatActivity {
         View nav_header_view = navigationView.getHeaderView(0);
         TextView nav_header_nickname = (TextView) nav_header_view.findViewById(R.id.navi_header_tv_nickname);
         TextView nav_header_address = (TextView) nav_header_view.findViewById(R.id.navi_header_tv_userlocation);
+        ImageButton nav_header_setting = (ImageButton) nav_header_view.findViewById(R.id.navi_header_btn_setting);
+
+        nav_header_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, MenuSettingActivity.class);
+                startActivity(intent);
+            }
+        });
 
         // 사용자 토큰 및 정보 업데이트
         updateUserProfile();
