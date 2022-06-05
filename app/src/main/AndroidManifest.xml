@@ -29,6 +29,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DIYEquipmentApplication">
         <activity
+            android:name=".community.CommunityCommentRecyclerview"
+            android:exported="false" />
+        <activity
             android:name=".menu.LocationActivity"
             android:exported="false" />
 
@@ -93,7 +96,9 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyBvUrmKbM3-AjxATu6LlIj1-mYq4RWuklM" />
-
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyDm3HS5Prg2QJvNPWaQNKrkVqacLHgs77s" />
     </application>
 
 </manifest>

@@ -251,7 +251,6 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
                 final String mc1 = sprModelCat1.getSelectedItem().toString().trim();
                 final String mc2 = sprModelCat2.getSelectedItem().toString().trim();
 
-
                 //공급자가 입력한 데이터 등록 성공
                 if (!(mn.isEmpty() && mt.isEmpty() && rt.isEmpty() && ra.isEmpty() && rc.isEmpty() && mc1.isEmpty() && mc2.isEmpty() && registrationImageUrl != null))
                 {

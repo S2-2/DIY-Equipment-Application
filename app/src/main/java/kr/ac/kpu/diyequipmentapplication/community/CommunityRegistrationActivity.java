@@ -67,7 +67,7 @@ public class CommunityRegistrationActivity extends AppCompatActivity {
         communityRegFirebaseStorage = FirebaseStorage.getInstance();
         communityRegFirebaseAuth = FirebaseAuth.getInstance();
         registrationProgressDialog = new ProgressDialog(this);
-        communityDateFormat = new SimpleDateFormat("yyyy-MM-dd E, HH:mm:ss a");    //날짜 형식 설정 객체 생성 및 초기화
+        communityDateFormat = new SimpleDateFormat("yyyy-MM-dd E, hh:mm:ss");    //날짜 형식 설정 객체 생성 및 초기화
         communityDate = new Date();  //날짜 객체 생성 및 초기화
         communityGetDate = communityDateFormat.format(communityDate);  //장비 등록일 참조
 
