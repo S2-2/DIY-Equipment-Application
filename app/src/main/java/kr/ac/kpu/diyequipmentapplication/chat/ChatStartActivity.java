@@ -71,25 +71,17 @@ public class ChatStartActivity extends AppCompatActivity  {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 chatStartLists.clear();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Log.e(TAG, "C - snapshot.getKey(): " + snapshot.getKey());
                     for(DataSnapshot ds : snapshot.getChildren() ){
                         chatModel = ds.getValue(ChatModel.class);
 
-                        if(chatStartLists.indexOf(chatModel.getChatNum()) > -1){
-                            chatStartLists.remove(1);
-                        }
-
                         chatStartLists.add(chatModel);
-                        Log.e(TAG, "getUserNickname()" + chatStartLists.get(0).getUserNickname());
                     }
                 }
                 chatStartAdapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError error) { }
         });
     }
 }

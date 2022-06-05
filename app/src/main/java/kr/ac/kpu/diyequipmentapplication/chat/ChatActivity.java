@@ -123,7 +123,7 @@ public class ChatActivity extends AppCompatActivity {
         }
 
         // 채팅방번호 입장
-        tvChatNum.setText(CHAT_USER_NICKNAME + "-" + CHAT_NUM);
+        tvChatNum.setText("ROOM" + "-" + CHAT_NUM);
         Log.e("LOG", "chatnum:"+CHAT_NUM);
         chatWithUser(CHAT_NUM);
         
@@ -169,24 +169,16 @@ public class ChatActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) { }
 
             @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) { }
 
             @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) { }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError error) { }
         });
     }
 
