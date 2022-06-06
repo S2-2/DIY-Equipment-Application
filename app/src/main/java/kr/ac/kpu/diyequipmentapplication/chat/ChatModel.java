@@ -68,5 +68,4 @@ public class ChatModel
         this.userReceived = userReceived;
     }
 
-// firebaseDB에 객체로 값 읽어오기기
 }
