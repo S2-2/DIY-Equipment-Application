@@ -30,7 +30,7 @@
                 android:id="@+id/menuSetting_btn_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="프로필 수정" />
+                android:text="프로필 설정" />
 
             <Button
                 android:id="@+id/menuSetting_btn_location"
