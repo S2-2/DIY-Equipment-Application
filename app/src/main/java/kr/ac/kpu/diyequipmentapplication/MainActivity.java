@@ -46,6 +46,7 @@ import kr.ac.kpu.diyequipmentapplication.equipment.EquipmentRegistration;
 import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationAdapter;
 import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationRecyclerview;
 import kr.ac.kpu.diyequipmentapplication.equipment.RentalGoogleMap;
+import kr.ac.kpu.diyequipmentapplication.equipment.ScheduleActivity;
 import kr.ac.kpu.diyequipmentapplication.login.LoginActivity;
 import kr.ac.kpu.diyequipmentapplication.menu.MenuSettingActivity;
 
@@ -311,7 +312,30 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(context, title + ": 내가 쓴 커뮤니티", Toast.LENGTH_SHORT).show();
                 }
                 else if(id == R.id.tradelist){
-                    Toast.makeText(context, title + ": 거래 목록", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, title + ": 거래 목록", Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
+                    dlg.setTitle("DIY_거래목록");
+                    dlg.setMessage("거래목록 접속 하시겠습니까?");
+                    dlg.setIcon(R.mipmap.ic_launcher);
+
+                    dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Toast.makeText(MainActivity.this, "거래목록으로 접속되었습니다!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(MainActivity.this, ScheduleActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+
+                    dlg.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            Toast.makeText(MainActivity.this, "거래목록 접속이 취소되었습니다!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    dlg.show();
+
+
                 }
                 else if(id == R.id.communitylist){
                     Toast.makeText(context, title + ": 커뮤니티 목록", Toast.LENGTH_SHORT).show();

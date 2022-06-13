@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -37,6 +38,7 @@ public class LocationActivity extends AppCompatActivity {
     private Button btnLocationUpdate;
     private ImageButton imgBtnBack;
     private ImageButton imgBtnHome;
+    private TextView tvMyAddress;
 
     private FirebaseAuth locationFirebaseAuth;               //FirebaseAuth 참조 변수 선언
     private FirebaseFirestore locationFirebaseFirestore;     //파이어스토어 참조 변수 선언
@@ -58,6 +60,7 @@ public class LocationActivity extends AppCompatActivity {
         imgBtnHome = (ImageButton) findViewById(R.id.location_btn_home);
         btnLocationUpdate = (Button) findViewById(R.id.location_btn_update);
         etAddress = (EditText) findViewById(R.id.location_et_address);
+        tvMyAddress = (TextView) findViewById(R.id.location_et_myLocation);
 
         //DIY_Location DB에서 locationEmail 가져오는 기능!
         locationFirebaseFirestore.collection("DIY_Location")
@@ -68,10 +71,14 @@ public class LocationActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                                if (queryDocumentSnapshot.get("location").toString().trim() != null || !(queryDocumentSnapshot.get("location").toString().trim().isEmpty())) {
+                                    getLocation = queryDocumentSnapshot.get("location").toString().trim();
+                                    tvMyAddress.setText(getLocation);
+                                } else
+                                    tvMyAddress.setText("등록된 주소가 없습니다!");
                                 getLocationEmail = queryDocumentSnapshot.get("locationEmail").toString().trim();
-                                getLocation = queryDocumentSnapshot.get("location").toString().trim();
                                 getLocationID = queryDocumentSnapshot.getId().toString().trim();
-                                etAddress.setText(getLocation);
+
                             }
                         }
                     }
@@ -124,7 +131,7 @@ public class LocationActivity extends AppCompatActivity {
                         final String location = myLocation;
 
                         //DIY_Location DB에 locationEmail이 있는 경우 위치 변경
-                        if (locationEmail != null) {
+                        if (locationEmail != null && getLocation != null) {
                             locationProgressDialog.setTitle("DIY Location Uploading...");
                             locationProgressDialog.show();
 
