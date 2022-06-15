@@ -38,6 +38,7 @@ import java.util.Calendar;
 import java.util.Random;
 
 import kr.ac.kpu.diyequipmentapplication.R;
+import kr.ac.kpu.diyequipmentapplication.equipment.ScheduleActivity;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -49,8 +50,8 @@ public class ChatActivity extends AppCompatActivity {
     private String CHAT_USER_NICKNAME = null;
     private String CHAT_USER_TEXT = null;
 
-    private ArrayList<ChatDTO> chatDTOS;
-    private ChatDTO chatDTO;
+    private ArrayList<ChatModel> chatModels;
+    private ChatModel chatModel;
     private ChatAdapter chatAdapter;
 
     private ListView lvChatList;
@@ -63,6 +64,8 @@ public class ChatActivity extends AppCompatActivity {
     private DatabaseReference chatRef = null;
     private DatabaseReference fcmRef = null;
     private FirebaseFirestore userFS = null;
+
+    private Button btnTransactionSchedule;      //거래일정 버튼튼
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,8 +84,8 @@ public class ChatActivity extends AppCompatActivity {
         etChatMsg = (EditText) findViewById(R.id.chat_et_msg_box);
         btnChatSend = (Button) findViewById(R.id.chat_btn_msg_send);
         tvChatNum = (TextView) findViewById(R.id.chat_tv_room_num);
-        chatDTOS = new ArrayList<ChatDTO>();
-        chatAdapter = new ChatAdapter(chatDTOS, getLayoutInflater());
+        chatModels = new ArrayList<ChatModel>();
+        chatAdapter = new ChatAdapter(chatModels, getLayoutInflater());
         lvChatList.setAdapter(chatAdapter);
 
         // 사용자 이메일 및 닉네임 가져오기
@@ -135,8 +138,8 @@ public class ChatActivity extends AppCompatActivity {
             String timestamp = calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE);
 
             // firebaseDB에 데이터 저장
-            chatDTO = new ChatDTO(CHAT_NUM, CHAT_USER_NICKNAME, CHAT_USER_EMAIL ,CHAT_USER_TEXT,timestamp);
-            chatRef.child(CHAT_NUM).push().setValue(chatDTO);
+            chatModel = new ChatModel(CHAT_NUM, CHAT_USER_NICKNAME, CHAT_USER_EMAIL ,CHAT_USER_TEXT,timestamp);
+            chatRef.child(CHAT_NUM).push().setValue(chatModel);
 
             // 채팅알림 보내기
                 sendNotification(CHAT_USER_NICKNAME, CHAT_USER_EMAIL ,CHAT_USER_TEXT);
@@ -145,9 +148,19 @@ public class ChatActivity extends AppCompatActivity {
             etChatMsg.setText("");
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
+            }
+        });
 
-        }
-    });
+        //거래일정 버튼 클릭 이벤트
+        btnTransactionSchedule = (Button) findViewById(R.id.chatting_btn_transactionSchedule);
+        btnTransactionSchedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //채팅 액티비티에서 거래설정 페이지로 이동!
+                Intent transactionScheduleIntent = new Intent(ChatActivity.this, ScheduleActivity.class);
+                startActivity(transactionScheduleIntent);
+            }
+        });
     }
 
     private void chatWithUser(String chat_num) {
@@ -155,10 +168,10 @@ public class ChatActivity extends AppCompatActivity {
         chatRef.child(chat_num).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                ChatDTO item = snapshot.getValue(ChatDTO.class);
-                chatDTOS.add(item);
+                ChatModel item = snapshot.getValue(ChatModel.class);
+                chatModels.add(item);
                 chatAdapter.notifyDataSetChanged();;
-                lvChatList.setSelection(chatDTOS.size()-1);
+                lvChatList.setSelection(chatModels.size()-1);
             }
 
             @Override
@@ -180,7 +193,7 @@ public class ChatActivity extends AppCompatActivity {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        final FcmDTO userData = dataSnapshot.getValue(FcmDTO.class);
+                        final FcmDataModel userData = dataSnapshot.getValue(FcmDataModel.class);
                         new Thread(new Runnable() {
                             @Override
                             public void run() {

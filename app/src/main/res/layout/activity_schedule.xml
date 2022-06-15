@@ -14,14 +14,14 @@
         android:paddingTop="20dp">
 
         <ImageButton
-            android:background="@android:color/transparent"
-            android:layout_gravity="center_vertical"
             android:id="@+id/schedule_btn_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/transparent"
             app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24" />
 
-            <TextView
+        <TextView
                 android:layout_width="match_parent"
                 android:gravity="center"
                 android:layout_height="wrap_content"
@@ -49,7 +49,6 @@
                 android:orientation="vertical" >
 
                 <TextView
-                    android:id="@+id/textView4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -60,7 +59,6 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="18dp"
@@ -73,21 +71,20 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textView8"
+                        android:id="@+id/schedule_tv_lendingPeriod"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="대여 기간을 설정해주세요 ▶" />
 
                     <Button
-                        android:id="@+id/button"
+                        android:id="@+id/schedule_btn_lendingPeriod"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="대여 기간 설정" />
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/textView4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="18dp"
@@ -100,14 +97,14 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textView8"
+                        android:id="@+id/schedule_tv_rental"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="대여비를 확인해보세요 ▶" />
 
                     <Button
-                        android:id="@+id/button"
+                        android:id="@+id/schedule_btn_rental"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="대여비 계산" />
@@ -120,7 +117,6 @@
                     android:background="@color/black" />
 
                 <TextView
-                    android:id="@+id/textView4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
@@ -131,7 +127,6 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="18dp"
@@ -144,21 +139,20 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textView8"
+                        android:id="@+id/schedule_tv_transactionDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="거래 날짜를 설정해주세요 ▶" />
 
                     <Button
-                        android:id="@+id/button"
+                        android:id="@+id/schedule_btn_transactionDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="거래 날짜 설정" />
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/textView4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="18dp"
@@ -171,21 +165,20 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textView8"
+                        android:id="@+id/schedule_tv_transactionTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="거래 시간을 설정해주세요 ▶" />
 
                     <Button
-                        android:id="@+id/button"
+                        android:id="@+id/schedule_btn_transactionTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="거래 시간 설정" />
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/textView4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="18dp"
@@ -198,14 +191,14 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textView8"
+                        android:id="@+id/schedule_tv_transactionLocation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="거래 장소를 설정해주세요 ▶" />
 
                     <Button
-                        android:id="@+id/button"
+                        android:id="@+id/schedule_btn_transactionLocation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="거래 장소 설정" />
@@ -222,13 +215,13 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
                     <Button
-                        android:id="@+id/button"
+                        android:id="@+id/schedule_btn_update"
                         android:layout_margin="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="수정" />
                     <Button
-                        android:id="@+id/button"
+                        android:id="@+id/schedule_btn_setup"
                         android:layout_margin="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
