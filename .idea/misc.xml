@@ -66,19 +66,35 @@
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/xml/xml.xml" value="0.20652173913043478" />
         <entry key="..\:/DIY_test00/app/src/main/res/drawable/ic_baseline_arrow_back_ios_new_24.xml" value="0.14947916666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/drawable/ic_baseline_arrow_forward_ios_24.xml" value="0.27076923076923076" />
+        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_chatstart_form.xml" value="0.25885416666666666" />
+        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_chatting.xml" value="0.25885416666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_community_comment_recyclerview.xml" value="0.25885416666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_community_detail.xml" value="0.2" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_community_recyclerview.xml" value="0.25092592592592594" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_equipment_detail.xml" value="0.25885416666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_equipment_registration.xml" value="0.25885416666666666" />
+        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_location.xml" value="0.25885416666666666" />
+        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_location_search.xml" value="0.25885416666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_menu.xml" value="0.25885416666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_profile.xml" value="0.2548717948717949" />
+        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_registration_recyclerview.xml" value="0.13958333333333334" />
+        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_rental_google_map.xml" value="0.13802083333333334" />
+        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_rental_history_recyclerview.xml" value="0.13177083333333334" />
+        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_schedule.xml" value="0.264" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_signup.xml" value="0.16799999999999998" />
+        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_start_chat.xml" value="0.25885416666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/community_recyclerview_comment_item.xml" value="0.25885416666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/community_recyclerview_item.xml" value="0.25885416666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/rental_google_map_window_item.xml" value="0.25092592592592594" />
+        <entry key="..\:/DIY_test00/app/src/main/res/layout/rental_history_recyclerview_item.xml" value="0.4" />
+        <entry key="..\:/DIY_test00/app/src/main/res/layout/schedule_lendingperiod_window_item.xml" value="0.4" />
+        <entry key="..\:/DIY_test00/app/src/main/res/layout/schedule_rent_window_item.xml" value="0.25885416666666666" />
+        <entry key="..\:/DIY_test00/app/src/main/res/layout/schedule_rental_window_item.xml" value="0.25885416666666666" />
+        <entry key="..\:/DIY_test00/app/src/main/res/layout/schedule_transactiondate_window_item.xml" value="0.25885416666666666" />
+        <entry key="..\:/DIY_test00/app/src/main/res/layout/schedule_transactionlocation_window_item.xml" value="0.13802083333333334" />
+        <entry key="..\:/DIY_test00/app/src/main/res/layout/schedule_transactiontime_window_item.xml" value="0.264" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/drawable/blue_etittext.xml" value="0.1635" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/drawable/chat_et_chatbox.xml" value="0.2225" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/drawable/et_back_chatbox.xml" value="0.2225" />

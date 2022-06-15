@@ -1,11 +1,14 @@
 package kr.ac.kpu.diyequipmentapplication.chat;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -13,7 +16,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -38,6 +43,7 @@ import java.util.Calendar;
 import java.util.Random;
 
 import kr.ac.kpu.diyequipmentapplication.R;
+import kr.ac.kpu.diyequipmentapplication.equipment.ScheduleActivity;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -63,6 +69,8 @@ public class ChatActivity extends AppCompatActivity {
     private DatabaseReference chatRef = null;
     private DatabaseReference fcmRef = null;
     private FirebaseFirestore userFS = null;
+
+    private Button btnTransactionSchedule;      //거래일정 버튼튼
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -145,9 +153,19 @@ public class ChatActivity extends AppCompatActivity {
             etChatMsg.setText("");
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
+            }
+        });
 
-        }
-    });
+        //거래일정 버튼 클릭 이벤트
+        btnTransactionSchedule = (Button) findViewById(R.id.chatting_btn_transactionSchedule);
+        btnTransactionSchedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //채팅 액티비티에서 거래설정 페이지로 이동!
+                Intent transactionScheduleIntent = new Intent(ChatActivity.this, ScheduleActivity.class);
+                startActivity(transactionScheduleIntent);
+            }
+        });
     }
 
     private void chatWithUser(String chat_num) {

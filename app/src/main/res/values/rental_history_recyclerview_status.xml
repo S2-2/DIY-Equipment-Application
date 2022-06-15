@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="rental_status">
+        <item>대여중</item>
+        <item>거래완료</item>
+        <item>거래취소</item>
+    </string-array>
+</resources>
