@@ -61,11 +61,21 @@
 
         <!-- 버튼 클릭 시 'activity_menu'로 이동하면서 새로 입력한 프로필 사진과 별명으로 수정됨. -->
         <Button
+            android:id="@+id/profile_btn_update"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:text="프로필 수정"
+            android:textSize="16dp" />
+
+        <Button
+            android:id="@+id/profile_btn_delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="프로필 삭제"
             android:textSize="16dp" />
 
     </LinearLayout>

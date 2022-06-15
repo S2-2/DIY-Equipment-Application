@@ -38,7 +38,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import java.util.ArrayList;
 
 import kr.ac.kpu.diyequipmentapplication.chat.ChatStartActivity;
-import kr.ac.kpu.diyequipmentapplication.chat.FcmDataModel;
+import kr.ac.kpu.diyequipmentapplication.chat.FcmDTO;
 import kr.ac.kpu.diyequipmentapplication.community.CommunityAdapter;
 import kr.ac.kpu.diyequipmentapplication.community.CommunityRecyclerview;
 import kr.ac.kpu.diyequipmentapplication.community.CommunityRegistration;
@@ -386,7 +386,7 @@ public class MainActivity extends AppCompatActivity {
         if(mainFirebaseUser == null){
 
         }else{
-            FcmDataModel fcmData = new FcmDataModel();
+            FcmDTO fcmData = new FcmDTO();
             fcmData.setUserEmail(mainFirebaseUser.getEmail().toString());
             email = fcmData.getUserEmail();
             fcmData.setFcmToken(FirebaseMessaging.getInstance().getToken().toString());

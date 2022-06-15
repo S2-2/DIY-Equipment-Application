@@ -51,6 +51,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
     private int temNum;
     private ImageButton imgBtn_back = null;
     private ImageButton imgBtn_home = null;
+    private ImageButton imgBtnCart = null;
 
 
     //네비게이션 드로어 참조 변수
@@ -74,6 +75,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
         etUserLocation = findViewById(R.id.equipmentDetail_et_location);
         etRentalPeriod = findViewById(R.id.equipmentDetail_et_rentalPeriod);
         btnChat =findViewById(R.id.equipmentDetail_btn_chatting);
+        imgBtnCart = findViewById(R.id.equipmentDetail_btn_like);
 
         decimalFormat = new DecimalFormat("###,###");
 
@@ -163,6 +165,18 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                     }
                 });
 
+        equipmentDetailFirebaseFirestore.collection("DIY_Equipment_Cart")
+                .whereEqualTo("userEmail", equipmentDetailFirebaseAuth.getCurrentUser().getEmail().toString().trim())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+
+                            }
+                        }
+                });
+
         btnChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -184,6 +198,13 @@ public class EquipmentDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(EquipmentDetailActivity.this, MainActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        imgBtnCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
 

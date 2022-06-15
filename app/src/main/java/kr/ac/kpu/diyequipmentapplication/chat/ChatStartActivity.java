@@ -1,11 +1,6 @@
 package kr.ac.kpu.diyequipmentapplication.chat;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -14,9 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.firebase.ui.auth.data.model.User;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,8 +36,8 @@ public class ChatStartActivity extends AppCompatActivity  {
     private String CHAT_USER_EMAIL = null;
     private String CHAT_NUM = null;
 
-    private ArrayList<ChatModel> chatStartLists;
-    private ChatModel chatModel;
+    private ArrayList<ChatDTO> chatStartLists;
+    private ChatDTO chatDTO;
     private ChatStartAdapter chatStartAdapter;
 
     @Override
@@ -62,7 +55,7 @@ public class ChatStartActivity extends AppCompatActivity  {
 
     private void showChatList(String email){
         // 리스트 어댑터 생성
-        chatStartLists = new ArrayList<ChatModel>();
+        chatStartLists = new ArrayList<ChatDTO>();
         chatStartAdapter = new ChatStartAdapter(ChatStartActivity.this,chatStartLists, getLayoutInflater());
         lvChatList.setAdapter(chatStartAdapter);
 
@@ -71,25 +64,17 @@ public class ChatStartActivity extends AppCompatActivity  {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 chatStartLists.clear();
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Log.e(TAG, "C - snapshot.getKey(): " + snapshot.getKey());
                     for(DataSnapshot ds : snapshot.getChildren() ){
-                        chatModel = ds.getValue(ChatModel.class);
+                        chatDTO = ds.getValue(ChatDTO.class);
 
-                        if(chatStartLists.indexOf(chatModel.getChatNum()) > -1){
-                            chatStartLists.remove(1);
-                        }
-
-                        chatStartLists.add(chatModel);
-                        Log.e(TAG, "getUserNickname()" + chatStartLists.get(0).getUserNickname());
+                        chatStartLists.add(chatDTO);
                     }
                 }
                 chatStartAdapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError error) { }
         });
     }
 }
