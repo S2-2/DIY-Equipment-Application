@@ -1,13 +1,13 @@
 package kr.ac.kpu.diyequipmentapplication.chat;
 
-public class FcmDataModel {
+public class FcmDTO {
     String fcmToken;
     String userEmail;
 
-    public FcmDataModel(){
+    public FcmDTO(){
     }
 
-    public FcmDataModel(String fcmToken, String userEmail) {
+    public FcmDTO(String fcmToken, String userEmail) {
         this.fcmToken = fcmToken;
         this.userEmail = userEmail;
     }

@@ -74,10 +74,7 @@
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_menu.xml" value="0.25885416666666666" />
-        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_menu_setting.xml" value="0.4" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_profile.xml" value="0.2548717948717949" />
-        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_registration_recyclerview.xml" value="0.13958333333333334" />
-        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_schedule.xml" value="0.264" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_signup.xml" value="0.16799999999999998" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/community_recyclerview_comment_item.xml" value="0.25885416666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/community_recyclerview_item.xml" value="0.25885416666666666" />
@@ -88,6 +85,7 @@
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/drawable/et_back_otherchatbox.xml" value="0.2225" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.1635" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.271" />
+        <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/drawable/ic_baseline_favorite_border_red_24.xml" value="0.2115" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.1635" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/drawable/red_etittext.xml" value="0.1635" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/drawable/white_edittext.xml" value="0.1635" />

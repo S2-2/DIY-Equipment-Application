@@ -2,25 +2,22 @@ package kr.ac.kpu.diyequipmentapplication.chat;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-
 import java.util.ArrayList;
 
 import kr.ac.kpu.diyequipmentapplication.R;
 
 public class ChatStartAdapter extends BaseAdapter {
-    ArrayList<ChatModel> chattingStartList;
+    ArrayList<ChatDTO> chattingStartList;
     LayoutInflater inflater;
     Context context;
 
-    public ChatStartAdapter(Context context, ArrayList<ChatModel> chattingStartList, LayoutInflater inflater) {
+    public ChatStartAdapter(Context context, ArrayList<ChatDTO> chattingStartList, LayoutInflater inflater) {
         this.context = context;
         this.chattingStartList = chattingStartList;
         this.inflater = inflater;
@@ -43,7 +40,7 @@ public class ChatStartAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
-        ChatModel chat = chattingStartList.get(position);
+        ChatDTO chat = chattingStartList.get(position);
         View itemView = null;
 
         itemView = inflater.inflate(R.layout.activity_chatstart_form,viewGroup,false);

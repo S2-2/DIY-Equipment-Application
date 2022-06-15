@@ -14,11 +14,11 @@ import kr.ac.kpu.diyequipmentapplication.R;
 
 public class ChatAdapter extends BaseAdapter {
 
-    ArrayList<ChatModel> chattingModelList;
+    ArrayList<ChatDTO> chattingModelList;
     LayoutInflater inflater;
     FirebaseAuth userAuth;
 
-    public ChatAdapter(ArrayList<ChatModel> chattingModelList, LayoutInflater inflater) {
+    public ChatAdapter(ArrayList<ChatDTO> chattingModelList, LayoutInflater inflater) {
         this.chattingModelList = chattingModelList;
         this.inflater = inflater;
         userAuth = FirebaseAuth.getInstance();
@@ -42,7 +42,7 @@ public class ChatAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
         // 현재 보여줄 n번째 데이터로 뷰 생성
-        ChatModel chat = chattingModelList.get(position);
+        ChatDTO chat = chattingModelList.get(position);
         // 사용자에게 보여줄 채팅 뷰
         View itemView = null;
 
