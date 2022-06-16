@@ -37,6 +37,7 @@ import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 
+import kr.ac.kpu.diyequipmentapplication.cart.CartRecyclerview;
 import kr.ac.kpu.diyequipmentapplication.chat.ChatStartActivity;
 import kr.ac.kpu.diyequipmentapplication.chat.FcmDTO;
 import kr.ac.kpu.diyequipmentapplication.community.CommunityAdapter;
@@ -339,6 +340,11 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else if(id == R.id.communitylist){
                     Toast.makeText(context, title + ": 커뮤니티 목록", Toast.LENGTH_SHORT).show();
+                }
+                else  if(id == R.id.mycart){
+                    Intent intent = new Intent(MainActivity.this, CartRecyclerview.class);
+                    startActivity(intent);
+                    finish();
                 }
 //                else if(id == R.id.locationset){
 //                    Toast.makeText(context, title + ": 위치설정", Toast.LENGTH_SHORT).show();
