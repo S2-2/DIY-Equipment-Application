@@ -167,7 +167,9 @@ public class EquipmentDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(EquipmentDetailActivity.this, ChatActivity.class);
-                startActivity(intent); }
+                intent.putExtra("RentalCost", temp);
+                startActivity(intent);
+            }
         });
 
         //뒤로가기 버튼 클릭시 장비 목록 페이지에서 장비 메인 페이지 이동

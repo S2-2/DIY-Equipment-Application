@@ -51,6 +51,7 @@ public class ScheduleActivity extends AppCompatActivity {
     private Button btnTransactionLocation;  //거래장소
     private Button btnSetup;                //거래정보 설정
     private Button btnUpdate;               //거래정보 수정
+    private Button btnDelete;               //거래정보 삭제
     private Boolean controlFlag;            //대여기간 시작일(true), 종료일(false) 제어변수
     private Boolean controlDateFlag;        //대여기간(true), 거래날짜(false) 제어변수
     private Long startDate;                 //대여기간 시작일
@@ -91,8 +92,6 @@ public class ScheduleActivity extends AppCompatActivity {
         }
     };
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +106,7 @@ public class ScheduleActivity extends AppCompatActivity {
         btnTransactionLocation = (Button) findViewById(R.id.schedule_btn_transactionLocation);
         btnSetup = (Button) findViewById(R.id.schedule_btn_setup);
         btnUpdate = (Button) findViewById(R.id.schedule_btn_update);
+        btnDelete = (Button) findViewById(R.id.schedule_btn_delete);
 
         //firebase 참조
         scheduleFirebaseAuth = FirebaseAuth.getInstance();
@@ -338,6 +338,50 @@ public class ScheduleActivity extends AppCompatActivity {
                 dlg.show();
             }
         });
+
+        //거래정보 삭제 버튼 클릭 이벤트
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder dlg = new AlertDialog.Builder(ScheduleActivity.this);
+                dlg.setTitle("DIY_거래정보");
+                dlg.setMessage("거래정보 삭제 하시겠습니까?");
+                dlg.setIcon(R.mipmap.ic_launcher);
+
+                dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        scheduleFirebaseFirestore.collection("DIY_Schedule")
+                                .document(getScheduleDBID)
+                                .delete()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d("거래정보 삭제 성공!", "DocumentSnapshot successfully deleted!");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w("거래정보 삭제 실패", "Error deleting document", e);
+                                    }
+                                });
+                        Toast.makeText(ScheduleActivity.this, "거래정보 삭제되었습니다!", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                });
+
+                dlg.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(ScheduleActivity.this, "거래정보 삭제 취소되었습니다!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                dlg.show();
+
+            }
+        });
     }
 
     //대여기간 커스텀 다이얼로그 기능 메소드
@@ -421,18 +465,26 @@ public class ScheduleActivity extends AppCompatActivity {
 
     //대여비 커스텀 다이얼로그 기능 메소드
     public void showRentalDialog() {
-        int dailyRental = 5000;
+        Intent getIntent = getIntent();
+        String getRentalCost = getIntent.getStringExtra("RentalCost");
+        int dailyRental;
         int totalRental;
 
         if (scheduleDB.getsTotalLendingPeriod() != null) {
-            totalRental = dailyRental * Integer.parseInt(scheduleDB.getsTotalLendingPeriod());
-            scheduleDB.setsDailyRental(Integer.toString(dailyRental));  //일일 대여비
-            scheduleDB.setsTotalRental(Integer.toString(totalRental));  //총 대여비
-
+            if (getRentalCost.equals("무료")) {   //일일대여비가 무료인 경우
+                tvDailyRental.setText(getRentalCost);
+                tvTotalRental.setText(getRentalCost);
+                scheduleDB.setsDailyRental(getRentalCost);  //일일 대여비
+                scheduleDB.setsTotalRental(getRentalCost);  //총 대여비
+            } else {    //일일대여비가 유료인 경우
+                dailyRental = Integer.parseInt(getRentalCost);
+                totalRental = dailyRental * Integer.parseInt(scheduleDB.getsTotalLendingPeriod());
+                scheduleDB.setsDailyRental(Integer.toString(dailyRental));  //일일 대여비
+                scheduleDB.setsTotalRental(Integer.toString(totalRental));  //총 대여비
+                tvDailyRental.setText(dailyRental+"원");
+                tvTotalRental.setText(totalRental+"원");
+            }
             tvtTotalLendingPeriod.setText(scheduleDB.getsTotalLendingPeriod()+"일");
-            tvDailyRental.setText(dailyRental+"원");
-            tvTotalRental.setText(totalRental+"원");
-
             rentalDialog.getWindow().setGravity(Gravity.BOTTOM);
             rentalDialog.show();
         } else {

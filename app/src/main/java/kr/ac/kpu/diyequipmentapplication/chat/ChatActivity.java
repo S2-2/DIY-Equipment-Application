@@ -157,7 +157,9 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //채팅 액티비티에서 거래설정 페이지로 이동!
+                Intent getIntent = getIntent();
                 Intent transactionScheduleIntent = new Intent(ChatActivity.this, ScheduleActivity.class);
+                transactionScheduleIntent.putExtra("RentalCost", getIntent.getStringExtra("RentalCost"));
                 startActivity(transactionScheduleIntent);
             }
         });

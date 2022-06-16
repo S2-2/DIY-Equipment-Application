@@ -226,6 +226,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="설정" />
+                    <Button
+                        android:id="@+id/schedule_btn_delete"
+                        android:layout_margin="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="삭제" />
                 </LinearLayout>
 
                 <!---->
