@@ -37,9 +37,8 @@ import kr.ac.kpu.diyequipmentapplication.MainActivity;
 import kr.ac.kpu.diyequipmentapplication.R;
 import kr.ac.kpu.diyequipmentapplication.chat.ChatStartActivity;
 import kr.ac.kpu.diyequipmentapplication.community.CommunityRecyclerview;
-import kr.ac.kpu.diyequipmentapplication.equipment.EquipmentRegistration;
-import kr.ac.kpu.diyequipmentapplication.equipment.EquipmentRegistrationActivity;
 import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationAdapter;
+import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationDTO;
 import kr.ac.kpu.diyequipmentapplication.equipment.RentalGoogleMap;
 import kr.ac.kpu.diyequipmentapplication.login.LoginActivity;
 import kr.ac.kpu.diyequipmentapplication.menu.MenuSettingActivity;
@@ -49,8 +48,8 @@ public class CartRecyclerview extends AppCompatActivity {
     FirebaseStorage mStorage;
     RecyclerView recyclerView;
     RegistrationAdapter registrationAdapter;
-    ArrayList<EquipmentRegistration> equipmentRegistrationList;
-    ArrayList<EquipmentRegistration> filteredEquipementList;
+    ArrayList<RegistrationDTO> equipmentRegistrationList;
+    ArrayList<RegistrationDTO> filteredEquipementList;
     ArrayList<String> equipList;
 
     private FirebaseFirestore rRfirebaseFirestoreDB = null;
@@ -83,14 +82,14 @@ public class CartRecyclerview extends AppCompatActivity {
         //recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)); //리사이클러뷰 가로 화면
 
         //RecyclerView에 RegistrationAdapter 클래스 등록 구현
-        equipmentRegistrationList = new ArrayList<EquipmentRegistration>();
+        equipmentRegistrationList = new ArrayList<RegistrationDTO>();
         registrationAdapter = new RegistrationAdapter(CartRecyclerview.this,equipmentRegistrationList);
 
 
         // 필터링 기준이 될 배열 리스트
         equipList = new ArrayList<String>();
         //검색에 의해 필터링 될 EquipmentRegistration 리스트
-        filteredEquipementList = new ArrayList<EquipmentRegistration>();
+        filteredEquipementList = new ArrayList<RegistrationDTO>();
 
         recyclerView.setAdapter(registrationAdapter);
         btnModelEnroll = findViewById(R.id.registrationRecyclerview_fab);      // 장비등록 버튼
@@ -170,7 +169,7 @@ public class CartRecyclerview extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
-                                EquipmentRegistration equipmentRegistration = new EquipmentRegistration(
+                                RegistrationDTO registrationDTO = new RegistrationDTO(
                                         queryDocumentSnapshot.get("modelName").toString().trim(),
                                         queryDocumentSnapshot.get("modelInform").toString().trim(),
                                         queryDocumentSnapshot.get("rentalImage").toString().trim(),
@@ -180,9 +179,10 @@ public class CartRecyclerview extends AppCompatActivity {
                                         queryDocumentSnapshot.get("userEmail").toString().trim(),
                                         queryDocumentSnapshot.get("rentalDate").toString().trim(),
                                         queryDocumentSnapshot.get("modelCategory1").toString().trim(),
-                                        queryDocumentSnapshot.get("modelCategory2").toString().trim());
-                                equipmentRegistrationList.add(equipmentRegistration);
-                                filteredEquipementList.add(equipmentRegistration);
+                                        queryDocumentSnapshot.get("modelCategory2").toString().trim(),
+                                        queryDocumentSnapshot.getId());
+                                equipmentRegistrationList.add(registrationDTO);
+                                filteredEquipementList.add(registrationDTO);
                                 registrationAdapter.notifyDataSetChanged();
                             }
                         }

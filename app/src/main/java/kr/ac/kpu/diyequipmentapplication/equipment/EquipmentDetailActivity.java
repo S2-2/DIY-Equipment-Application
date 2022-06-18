@@ -55,6 +55,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
     private ImageButton imgBtnCart = null;
     private Boolean Ok = true;
     private CartActivty cartActivty = null;
+    private String getModelCollectionId;
 
     //네비게이션 드로어 참조 변수
     private DrawerLayout mDrawerLayout;
@@ -95,6 +96,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
         temp = intent.getStringExtra("RentalCost");
         getRentalAddress = intent.getStringExtra("RentalAddress");
         etUserLocation.setText(getRentalAddress);
+        getModelCollectionId = intent.getStringExtra("ModelCollectionId");
 
         if (temp.equals("무료"))
             etRentalCost.setText("RentalCost : "+temp);
@@ -183,7 +185,8 @@ public class EquipmentDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(EquipmentDetailActivity.this, ChatActivity.class);
-                intent.putExtra("RentalCost", temp);
+                //intent.putExtra("RentalCost", temp);
+                intent.putExtra("ModelCollectionId", getModelCollectionId);
                 startActivity(intent);
             }
         });

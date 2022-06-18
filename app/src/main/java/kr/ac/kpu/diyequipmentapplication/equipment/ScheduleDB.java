@@ -25,11 +25,15 @@ public class ScheduleDB implements Serializable {
     //<거래장소>
     private String sTransactionLocation;    //거래장소
 
+    private String sCollectionId;
+    private String sChatNum;
+
     public ScheduleDB() {
     }
 
-    public ScheduleDB(String sUserEmail, String sStartDate, String sExpirationDate, String sTotalLendingPeriod, String startDate, String finishDate, String sDailyRental,
-                      String sTotalRental, String sTransactionDate, String sTransactionTime, String sTransactionLocation) {
+    public ScheduleDB(String sUserEmail, String sStartDate, String sExpirationDate, String sTotalLendingPeriod, String startDate,
+                      String finishDate, String sDailyRental, String sTotalRental, String sTransactionDate, String sTransactionTime,
+                      String sTransactionLocation, String sCollectionId, String sChatNum) {
         this.sUserEmail = sUserEmail;
         this.sStartDate = sStartDate;
         this.sExpirationDate = sExpirationDate;
@@ -41,6 +45,8 @@ public class ScheduleDB implements Serializable {
         this.sTransactionDate = sTransactionDate;
         this.sTransactionTime = sTransactionTime;
         this.sTransactionLocation = sTransactionLocation;
+        this.sCollectionId = sCollectionId;
+        this.sChatNum = sChatNum;
     }
 
     public String getsUserEmail() {
@@ -129,5 +135,21 @@ public class ScheduleDB implements Serializable {
 
     public void setsTransactionLocation(String sTransactionLocation) {
         this.sTransactionLocation = sTransactionLocation;
+    }
+
+    public String getsCollectionId() {
+        return sCollectionId;
+    }
+
+    public void setsCollectionId(String sCollectionId) {
+        this.sCollectionId = sCollectionId;
+    }
+
+    public String getsChatNum() {
+        return sChatNum;
+    }
+
+    public void setsChatNum(String sChatNum) {
+        this.sChatNum = sChatNum;
     }
 }
