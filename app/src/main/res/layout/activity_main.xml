@@ -186,27 +186,27 @@
                     android:scrollbarFadeDuration="0"/>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_marginTop="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
+<!--            <LinearLayout-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:gravity="center"-->
+<!--                android:orientation="horizontal">-->
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="거래 채팅" />
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="거래 채팅" />-->
 
-                <ImageButton
-                    android:background="@android:color/transparent"
-                    android:layout_gravity="center_vertical"
-                    android:id="@+id/main_btn_chat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_baseline_arrow_forward_ios_24" />
+<!--                <ImageButton-->
+<!--                    android:background="@android:color/transparent"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    android:id="@+id/main_btn_chat"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:src="@drawable/ic_baseline_arrow_forward_ios_24" />-->
 
-            </LinearLayout>
+<!--            </LinearLayout>-->
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

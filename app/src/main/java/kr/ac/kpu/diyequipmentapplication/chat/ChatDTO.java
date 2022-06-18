@@ -1,6 +1,6 @@
 package kr.ac.kpu.diyequipmentapplication.chat;
 
-public class ChatModel
+public class ChatDTO
 {
     String chatNum;
     String userNickname;
@@ -9,9 +9,9 @@ public class ChatModel
     String timestamp;
     Boolean userReceived;
 
-    public ChatModel(){};
+    public ChatDTO(){};
 
-    public ChatModel(String chatNum, String userNickname, String userEmail, String userMsg, String timestamp) {
+    public ChatDTO(String chatNum, String userNickname, String userEmail, String userMsg, String timestamp) {
         this.chatNum = chatNum;
         this.userNickname = userNickname;
         this.userEmail = userEmail;

@@ -33,6 +33,7 @@ import java.text.DecimalFormat;
 
 import kr.ac.kpu.diyequipmentapplication.MainActivity;
 import kr.ac.kpu.diyequipmentapplication.R;
+import kr.ac.kpu.diyequipmentapplication.cart.CartActivty;
 import kr.ac.kpu.diyequipmentapplication.chat.ChatActivity;
 import kr.ac.kpu.diyequipmentapplication.chat.ChatStartActivity;
 import kr.ac.kpu.diyequipmentapplication.community.CommunityRecyclerview;
@@ -45,13 +46,15 @@ public class EquipmentDetailActivity extends AppCompatActivity {
     private ImageView ivRentalImage;
     private TextView etUserNickname, etTitle, etExplanation, etRentalType, etRentalCost, etUserLocation, etRentalPeriod, etCategory;
     private Button btnChat;
-    private String getImageUrl;
+    private String getImageUrl, userEmail, getTitle = null;
     private DecimalFormat decimalFormat;
     private String getRentalFeeCost, temp, getRentalAddress;
     private int temNum;
     private ImageButton imgBtn_back = null;
     private ImageButton imgBtn_home = null;
-
+    private ImageButton imgBtnCart = null;
+    private Boolean Ok = true;
+    private CartActivty cartActivty = null;
 
     //네비게이션 드로어 참조 변수
     private DrawerLayout mDrawerLayout;
@@ -74,6 +77,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
         etUserLocation = findViewById(R.id.equipmentDetail_et_location);
         etRentalPeriod = findViewById(R.id.equipmentDetail_et_rentalPeriod);
         btnChat =findViewById(R.id.equipmentDetail_btn_chatting);
+        imgBtnCart = findViewById(R.id.equipmentDetail_btn_like);
 
         decimalFormat = new DecimalFormat("###,###");
 
@@ -163,6 +167,18 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                     }
                 });
 
+//        equipmentDetailFirebaseFirestore.collection("DIY_Equipment_Cart")
+//                .whereEqualTo("userEmail", equipmentDetailFirebaseAuth.getCurrentUser().getEmail().toString().trim())
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if (task.isSuccessful()) {
+//
+//                            }
+//                        }
+//                });
+
         btnChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -186,6 +202,29 @@ public class EquipmentDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(EquipmentDetailActivity.this, MainActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        imgBtnCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cartActivty = new CartActivty();
+                userEmail = equipmentDetailFirebaseAuth.getCurrentUser().getEmail().toString().trim();
+                getTitle =  intent.getStringExtra("ModelName");
+                if(Ok== true){
+                    imgBtnCart.setImageResource(R.drawable.ic_baseline_favorite_border_red_24);
+                    Ok = false;
+                    Toast.makeText(view.getContext(), "찜 목록에 추가!", Toast.LENGTH_SHORT).show();
+                    Log.e("Click","ImageButton is Clicked");
+                    cartActivty.addCart(userEmail.substring(0, userEmail.indexOf('@')),getTitle);
+                }
+                else{
+                    imgBtnCart.setImageResource(R.drawable.ic_baseline_favorite_border_dark_24);
+                    Ok = true;
+                    Toast.makeText(view.getContext(), "찜 목록에서 삭제!", Toast.LENGTH_SHORT).show();
+                    Log.e("Click","ImageButton is Clicked2");
+                    cartActivty.removeCart(userEmail.substring(0, userEmail.indexOf('@')),getTitle);
+                }
             }
         });
 
