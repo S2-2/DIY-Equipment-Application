@@ -49,12 +49,11 @@ public class CartRecyclerview extends AppCompatActivity {
     FirebaseStorage mStorage;
     RecyclerView recyclerView;
     RegistrationAdapter registrationAdapter;
-    ArrayList<EquipmentRegistration> equipmentRegistrationList;
-    ArrayList<EquipmentRegistration> filteredEquipementList;
+    ArrayList<EquipmentRegistration> cartRegistrationList;
+    ArrayList<EquipmentRegistration> filteredCartList;
     ArrayList<String> equipList;
 
-    private FirebaseFirestore rRfirebaseFirestoreDB = null;
-    private FirebaseFirestore cartFirebaseFirestore = null;
+    private FirebaseFirestore cartFirebaseFirestoreDB = null;
 
     // 장비등록 페이지로 이동하는 버튼
     FloatingActionButton btnModelEnroll;
@@ -67,6 +66,7 @@ public class CartRecyclerview extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private Context context = this;
     private FirebaseAuth registrationListFirebaseAuth;     //FirebaseAuth 참조 변수 선언
+    private String userEmail;
 
 
     @Override
@@ -75,7 +75,7 @@ public class CartRecyclerview extends AppCompatActivity {
         setContentView(R.layout.activity_mycart_recyclerview);
 
         //RecyclerView 필드 참조
-        rRfirebaseFirestoreDB = FirebaseFirestore.getInstance();
+        cartFirebaseFirestoreDB = FirebaseFirestore.getInstance();
         mStorage = FirebaseStorage.getInstance();
         recyclerView = findViewById(R.id.communityRecyclerview_recyclerview);
         recyclerView.setHasFixedSize(true);
@@ -83,14 +83,12 @@ public class CartRecyclerview extends AppCompatActivity {
         //recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)); //리사이클러뷰 가로 화면
 
         //RecyclerView에 RegistrationAdapter 클래스 등록 구현
-        equipmentRegistrationList = new ArrayList<EquipmentRegistration>();
-        registrationAdapter = new RegistrationAdapter(CartRecyclerview.this,equipmentRegistrationList);
+        cartRegistrationList = new ArrayList<EquipmentRegistration>();
+        registrationAdapter = new RegistrationAdapter(CartRecyclerview.this,cartRegistrationList);
 
-
-        // 필터링 기준이 될 배열 리스트
+        //찜에 의해 필터링 될 EquipmentRegistration 리스트
+        filteredCartList = new ArrayList<EquipmentRegistration>();
         equipList = new ArrayList<String>();
-        //검색에 의해 필터링 될 EquipmentRegistration 리스트
-        filteredEquipementList = new ArrayList<EquipmentRegistration>();
 
         recyclerView.setAdapter(registrationAdapter);
         btnModelEnroll = findViewById(R.id.registrationRecyclerview_fab);      // 장비등록 버튼
@@ -114,11 +112,12 @@ public class CartRecyclerview extends AppCompatActivity {
         });
 
         registrationListFirebaseAuth = FirebaseAuth.getInstance();                  //FirebaseAuth 초기화 및 객체 참조
+        userEmail = registrationListFirebaseAuth.getCurrentUser().getEmail().toString().trim();
 
         //DIY_Signup DB에서 사용자 계정에 맞는 닉네임 가져오는 기능 구현.
         //사용자 이메일 정보와 일치하는 데이터를 DIY_Signup DB에서 찾아서 etNickname 참조 변수에 닉네임 값 참조.
-        rRfirebaseFirestoreDB.collection("DIY_Signup")
-                .whereEqualTo("userEmail", registrationListFirebaseAuth.getCurrentUser().getEmail().toString().trim())
+        cartFirebaseFirestoreDB.collection("DIY_Signup")
+                .whereEqualTo("userEmail", userEmail)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -132,8 +131,8 @@ public class CartRecyclerview extends AppCompatActivity {
                     }
                 });
 
-        rRfirebaseFirestoreDB.collection("DIY_Equipment_Rental")
-                .whereEqualTo("userEmail", registrationListFirebaseAuth.getCurrentUser().getEmail().toString().trim())
+        cartFirebaseFirestoreDB.collection("DIY_Equipment_Rental")
+                .whereEqualTo("userEmail", userEmail)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -147,43 +146,49 @@ public class CartRecyclerview extends AppCompatActivity {
                 });
 
         //Firestore DB 변경
-        rRfirebaseFirestoreDB.collection("DIY_MyCart")
+        cartFirebaseFirestoreDB.collection("DIY_MyCart")
+                .whereEqualTo("userEmail", userEmail.substring(0,userEmail.indexOf('@')))
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
-                        if(queryDocumentSnapshot.get("equipTitle").toString().trim() != null){
-                            equipList.add(queryDocumentSnapshot.get("equipTitle").toString());
-                            Log.e("DB","Is this work?"+equipList);
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
+                                if(queryDocumentSnapshot.get("equipTitle") != null){
+                                    equipList.add(queryDocumentSnapshot.get("equipTitle").toString().trim());
+                                    Log.e("DB","Is this work?"+equipList);
+                                }else{
+                                    Log.e("DB","It is empty");
+                                }
+                            }
                         }
                     }
-                }
-            });
-
+                });
 
         //Firestore DB에 등록된 장비 등록 정보 읽기 기능 구현
-        rRfirebaseFirestoreDB.collection("DIY_Equipment_Rental")
+        cartFirebaseFirestoreDB.collection("DIY_Equipment_Rental")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
-                                EquipmentRegistration equipmentRegistration = new EquipmentRegistration(
-                                        queryDocumentSnapshot.get("modelName").toString().trim(),
-                                        queryDocumentSnapshot.get("modelInform").toString().trim(),
-                                        queryDocumentSnapshot.get("rentalImage").toString().trim(),
-                                        queryDocumentSnapshot.get("rentalType").toString().trim(),
-                                        queryDocumentSnapshot.get("rentalCost").toString().trim(),
-                                        queryDocumentSnapshot.get("rentalAddress").toString().trim(),
-                                        queryDocumentSnapshot.get("userEmail").toString().trim(),
-                                        queryDocumentSnapshot.get("rentalDate").toString().trim(),
-                                        queryDocumentSnapshot.get("modelCategory1").toString().trim(),
-                                        queryDocumentSnapshot.get("modelCategory2").toString().trim());
-                                equipmentRegistrationList.add(equipmentRegistration);
-                                filteredEquipementList.add(equipmentRegistration);
-                                registrationAdapter.notifyDataSetChanged();
+                                if(equipList.contains(queryDocumentSnapshot.get("modelName").toString())){
+                                    EquipmentRegistration equipmentRegistration = new EquipmentRegistration(
+                                            queryDocumentSnapshot.get("modelName").toString().trim(),
+                                            queryDocumentSnapshot.get("modelInform").toString().trim(),
+                                            queryDocumentSnapshot.get("rentalImage").toString().trim(),
+                                            queryDocumentSnapshot.get("rentalType").toString().trim(),
+                                            queryDocumentSnapshot.get("rentalCost").toString().trim(),
+                                            queryDocumentSnapshot.get("rentalAddress").toString().trim(),
+                                            queryDocumentSnapshot.get("userEmail").toString().trim(),
+                                            queryDocumentSnapshot.get("rentalDate").toString().trim(),
+                                            queryDocumentSnapshot.get("modelCategory1").toString().trim(),
+                                            queryDocumentSnapshot.get("modelCategory2").toString().trim());
+                                    cartRegistrationList.add(equipmentRegistration);
+                                    filteredCartList.add(equipmentRegistration);
+                                    registrationAdapter.notifyDataSetChanged();
+                                }
                             }
                         }
                     }
@@ -341,6 +346,24 @@ public class CartRecyclerview extends AppCompatActivity {
             }
         });
     }
+
+    public void readCart(){
+//        //Firestore DB 변경
+//        rRfirebaseFirestoreDB.collection("DIY_MyCart")
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
+//                            if(queryDocumentSnapshot.get("equipTitle").toString().trim() != null){
+//                                equipList.add(queryDocumentSnapshot.get("equipTitle").toString());
+//                                Log.e("DB","Is this work?"+equipList);
+//                            }
+//                        }
+//                    }
+//                });
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){

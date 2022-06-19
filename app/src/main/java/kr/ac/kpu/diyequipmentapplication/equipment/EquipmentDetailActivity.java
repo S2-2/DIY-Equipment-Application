@@ -30,6 +30,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 import kr.ac.kpu.diyequipmentapplication.MainActivity;
 import kr.ac.kpu.diyequipmentapplication.R;
@@ -53,7 +54,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
     private ImageButton imgBtn_back = null;
     private ImageButton imgBtn_home = null;
     private ImageButton imgBtnCart = null;
-    private Boolean Ok = true;
+    private Boolean Ok = true;                  // 찜여부 확인
     private CartActivty cartActivty = null;
 
     //네비게이션 드로어 참조 변수
@@ -61,6 +62,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
     private Context context = this;
     private FirebaseAuth equipmentDetailFirebaseAuth;     //FirebaseAuth 참조 변수 선언
     private FirebaseFirestore equipmentDetailFirebaseFirestore;
+    private FirebaseFirestore cartFirebaseFirestoreDB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,11 +79,11 @@ public class EquipmentDetailActivity extends AppCompatActivity {
         etUserLocation = findViewById(R.id.equipmentDetail_et_location);
         etRentalPeriod = findViewById(R.id.equipmentDetail_et_rentalPeriod);
         btnChat =findViewById(R.id.equipmentDetail_btn_chatting);
-        imgBtnCart = findViewById(R.id.equipmentDetail_btn_like);
-
+        imgBtnCart = findViewById(R.id.equipmentDetail_btn_like);   //찜 아이콘
         decimalFormat = new DecimalFormat("###,###");
 
         Intent intent = getIntent();
+        getTitle = intent.getStringExtra("ModelName");
         getImageUrl = intent.getStringExtra("RentalImage");
         Picasso.get().load(getImageUrl).into(ivRentalImage);
         etTitle.setText("장비명: " + intent.getStringExtra("ModelName"));
@@ -135,11 +137,13 @@ public class EquipmentDetailActivity extends AppCompatActivity {
 
         equipmentDetailFirebaseAuth = FirebaseAuth.getInstance();                  //FirebaseAuth 초기화 및 객체 참조
         equipmentDetailFirebaseFirestore = FirebaseFirestore.getInstance();        //파이어스토어 초기화 및 객체 참조
+        cartFirebaseFirestoreDB = FirebaseFirestore.getInstance();
+        userEmail = equipmentDetailFirebaseAuth.getCurrentUser().getEmail().toString().trim();
 
         //DIY_Signup DB에서 사용자 계정에 맞는 닉네임 가져오는 기능 구현.
         //사용자 이메일 정보와 일치하는 데이터를 DIY_Signup DB에서 찾아서 etNickname 참조 변수에 닉네임 값 참조.
         equipmentDetailFirebaseFirestore.collection("DIY_Signup")
-                .whereEqualTo("userEmail", equipmentDetailFirebaseAuth.getCurrentUser().getEmail().toString().trim())
+                .whereEqualTo("userEmail", userEmail)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -154,7 +158,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                 });
 
         equipmentDetailFirebaseFirestore.collection("DIY_Equipment_Rental")
-                .whereEqualTo("userEmail", equipmentDetailFirebaseAuth.getCurrentUser().getEmail().toString().trim())
+                .whereEqualTo("userEmail", userEmail)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -203,12 +207,29 @@ public class EquipmentDetailActivity extends AppCompatActivity {
             }
         });
 
+        cartFirebaseFirestoreDB.collection("DIY_MyCart")
+                .whereEqualTo("userEmail", userEmail.substring(0,userEmail.indexOf('@')))
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
+                                if(queryDocumentSnapshot.get("equipTitle") != null && queryDocumentSnapshot.get("equipTitle").equals(getTitle)){
+                                    imgBtnCart.setImageResource(R.drawable.ic_baseline_favorite_border_red_24);
+                                    Ok = false;
+                                }else{
+                                    Log.e("DB","It is empty");
+                                }
+                            }
+                        }
+                    }
+                });
+
         imgBtnCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 cartActivty = new CartActivty();
-                userEmail = equipmentDetailFirebaseAuth.getCurrentUser().getEmail().toString().trim();
-                getTitle =  intent.getStringExtra("ModelName");
                 if(Ok== true){
                     imgBtnCart.setImageResource(R.drawable.ic_baseline_favorite_border_red_24);
                     Ok = false;
