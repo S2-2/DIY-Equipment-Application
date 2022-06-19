@@ -2,7 +2,7 @@ package kr.ac.kpu.diyequipmentapplication.cart;
 
 public class CartDTO {
     String userEmail;
-    String equipList;
+    String equipTitle;
 
     public String getUserEmail() {
         return userEmail;
@@ -12,11 +12,7 @@ public class CartDTO {
         this.userEmail = userEmail;
     }
 
-    public String getEquipList() {
-        return equipList;
-    }
+    public String getEquipTitle() { return equipTitle; }
 
-    public void setEquipList(String equpList) {
-        this.equipList = equpList;
-    }
+    public void setEquipTitle(String equipTitle) { this.equipTitle = equipTitle; }
 }

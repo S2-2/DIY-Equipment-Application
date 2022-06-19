@@ -37,13 +37,14 @@ import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 
+import kr.ac.kpu.diyequipmentapplication.cart.CartRecyclerview;
 import kr.ac.kpu.diyequipmentapplication.chat.ChatStartActivity;
 import kr.ac.kpu.diyequipmentapplication.chat.FcmDTO;
 import kr.ac.kpu.diyequipmentapplication.community.CommunityAdapter;
 import kr.ac.kpu.diyequipmentapplication.community.CommunityRecyclerview;
 import kr.ac.kpu.diyequipmentapplication.community.CommunityRegistration;
-import kr.ac.kpu.diyequipmentapplication.equipment.EquipmentRegistration;
 import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationAdapter;
+import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationDTO;
 import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationRecyclerview;
 import kr.ac.kpu.diyequipmentapplication.equipment.RentalGoogleMap;
 import kr.ac.kpu.diyequipmentapplication.equipment.ScheduleActivity;
@@ -63,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
     FirebaseStorage mStorage;
     RecyclerView recyclerView;
     RegistrationAdapter registrationAdapter;
-    ArrayList<EquipmentRegistration> equipmentRegistrationList;
-    ArrayList<EquipmentRegistration> filteredEquipementList;
+    ArrayList<RegistrationDTO> equipmentRegistrationList;
+    ArrayList<RegistrationDTO> filteredEquipementList;
     private FirebaseFirestore mainFirebaseFirestoreDB;
     private FirebaseFirestore mainFirebaseFirestoreDB2;
 
@@ -170,11 +171,11 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)); //리사이클러뷰 가로 화면모드
 
         //RecyclerView에 RegistrationAdapter 클래스 등록 구현
-        equipmentRegistrationList = new ArrayList<EquipmentRegistration>();
+        equipmentRegistrationList = new ArrayList<RegistrationDTO>();
         registrationAdapter = new RegistrationAdapter(MainActivity.this,equipmentRegistrationList);
 
         //검색에 의해 필터링 될 EquipmentRegistration 리스트
-        filteredEquipementList = new ArrayList<EquipmentRegistration>();
+        filteredEquipementList = new ArrayList<RegistrationDTO>();
         recyclerView.setAdapter(registrationAdapter);
 
         //Firestore DB에 등록된 장비 등록 정보 읽기 기능 구현
@@ -185,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
-                                EquipmentRegistration equipmentRegistration = new EquipmentRegistration(
+                                RegistrationDTO registrationDTO = new RegistrationDTO(
                                         queryDocumentSnapshot.get("modelName").toString().trim(),
                                         queryDocumentSnapshot.get("modelInform").toString().trim(),
                                         queryDocumentSnapshot.get("rentalImage").toString().trim(),
@@ -195,9 +196,10 @@ public class MainActivity extends AppCompatActivity {
                                         queryDocumentSnapshot.get("userEmail").toString().trim(),
                                         queryDocumentSnapshot.get("rentalDate").toString().trim(),
                                         queryDocumentSnapshot.get("modelCategory1").toString().trim(),
-                                        queryDocumentSnapshot.get("modelCategory2").toString().trim());
-                                equipmentRegistrationList.add(equipmentRegistration);
-                                filteredEquipementList.add(equipmentRegistration);
+                                        queryDocumentSnapshot.get("modelCategory2").toString().trim(),
+                                        queryDocumentSnapshot.getId());
+                                equipmentRegistrationList.add(registrationDTO);
+                                filteredEquipementList.add(registrationDTO);
                                 registrationAdapter.notifyDataSetChanged();
                             }
                         }
@@ -339,6 +341,11 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else if(id == R.id.communitylist){
                     Toast.makeText(context, title + ": 커뮤니티 목록", Toast.LENGTH_SHORT).show();
+                }
+                else  if(id == R.id.mycart){
+                    Intent intent = new Intent(MainActivity.this, CartRecyclerview.class);
+                    startActivity(intent);
+                    finish();
                 }
 //                else if(id == R.id.locationset){
 //                    Toast.makeText(context, title + ": 위치설정", Toast.LENGTH_SHORT).show();

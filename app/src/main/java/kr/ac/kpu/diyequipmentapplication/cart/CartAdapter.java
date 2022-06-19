@@ -1,11 +1,10 @@
-package kr.ac.kpu.diyequipmentapplication.equipment;
+package kr.ac.kpu.diyequipmentapplication.cart;
 
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,34 +16,36 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import kr.ac.kpu.diyequipmentapplication.R;
+import kr.ac.kpu.diyequipmentapplication.equipment.EquipmentDetailActivity;
+import kr.ac.kpu.diyequipmentapplication.equipment.EquipmentRegistration;
 
 //공급자가 입력한 데이터를 list_equipmentitem.xml파일에 등록하는 Adapter Class 구현
-public class RegistrationAdapter extends RecyclerView.Adapter<RegistrationAdapter.ViewHolder> {
+public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     Context context;
-    List<RegistrationDTO> equipmentRegistrationList;
+    List<EquipmentRegistration> equipmentRegistrationList;
 
-    public RegistrationAdapter(Context context, List<RegistrationDTO> equipmentRegistrationList) {
+    public CartAdapter(Context context, List<EquipmentRegistration> equipmentRegistrationList) {
         this.context = context;
         this.equipmentRegistrationList = equipmentRegistrationList;
     }
 
     @NonNull
     @Override
-    public RegistrationAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CartAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.registration_recyclerview_item,parent,false);
         return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RegistrationAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CartAdapter.ViewHolder holder, int position) {
 
-        RegistrationDTO registrationDTO = equipmentRegistrationList.get(position);
-        holder.tvModelText.setText("Model Inform \n"+registrationDTO.getModelInform()+"\n");
-        holder.tvModelName.setText("Model Name \n"+registrationDTO.getModelName());
+        EquipmentRegistration equipmentRegistration = equipmentRegistrationList.get(position);
+        holder.tvModelText.setText("Model Inform \n"+equipmentRegistration.getModelInform()+"\n");
+        holder.tvModelName.setText("Model Name \n"+equipmentRegistration.getModelName());
 
         String imageUri = null;
-        imageUri=registrationDTO.getRentalImage();
+        imageUri=equipmentRegistration.getRentalImage();
         Picasso.get().load(imageUri).into(holder.imageView);
 
     }
@@ -73,19 +74,18 @@ public class RegistrationAdapter extends RecyclerView.Adapter<RegistrationAdapte
                 public void onClick(View view) {
                     int pos = getBindingAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION) {
-                        RegistrationDTO registrationDTO = equipmentRegistrationList.get(pos);
+                        EquipmentRegistration equipmentRegistration = equipmentRegistrationList.get(pos);
                         Intent intent = new Intent(context, EquipmentDetailActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.putExtra("ModelName", registrationDTO.getModelName());
-                        intent.putExtra("ModelInform", registrationDTO.getModelInform());
-                        intent.putExtra("RentalImage",registrationDTO.getRentalImage());
-                        intent.putExtra("RentalType", registrationDTO.getRentalType());
-                        intent.putExtra("RentalCost", registrationDTO.getRentalCost());
-                        intent.putExtra("RentalAddress", registrationDTO.getRentalAddress());
-                        intent.putExtra("UserEmail", registrationDTO.getUserEmail());
-                        intent.putExtra("RentalDate", registrationDTO.getRentalDate());
-                        intent.putExtra("ModelCategory1",registrationDTO.getModelCategory1());
-                        intent.putExtra("ModelCategory2",registrationDTO.getModelCategory2());
-                        intent.putExtra("ModelCollectionId",registrationDTO.getModelCollectionId());
+                        intent.putExtra("ModelName", equipmentRegistration.getModelName());
+                        intent.putExtra("ModelInform", equipmentRegistration.getModelInform());
+                        intent.putExtra("RentalImage",equipmentRegistration.getRentalImage());
+                        intent.putExtra("RentalType", equipmentRegistration.getRentalType());
+                        intent.putExtra("RentalCost", equipmentRegistration.getRentalCost());
+                        intent.putExtra("RentalAddress", equipmentRegistration.getRentalAddress());
+                        intent.putExtra("UserEmail", equipmentRegistration.getUserEmail());
+                        intent.putExtra("RentalDate", equipmentRegistration.getRentalDate());
+                        intent.putExtra("ModelCategory1",equipmentRegistration.getModelCategory1());
+                        intent.putExtra("ModelCategory2",equipmentRegistration.getModelCategory2());
                         context.startActivity(intent);
                     }
                 }

@@ -1,4 +1,4 @@
-package kr.ac.kpu.diyequipmentapplication.equipment;
+package kr.ac.kpu.diyequipmentapplication.cart;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -37,18 +37,23 @@ import kr.ac.kpu.diyequipmentapplication.MainActivity;
 import kr.ac.kpu.diyequipmentapplication.R;
 import kr.ac.kpu.diyequipmentapplication.chat.ChatStartActivity;
 import kr.ac.kpu.diyequipmentapplication.community.CommunityRecyclerview;
+import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationAdapter;
+import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationDTO;
+import kr.ac.kpu.diyequipmentapplication.equipment.RentalGoogleMap;
 import kr.ac.kpu.diyequipmentapplication.login.LoginActivity;
 import kr.ac.kpu.diyequipmentapplication.menu.MenuSettingActivity;
 
 //공급자가 입력한 데이터를 RecyclerView를 이용해 DIY-목록으로 보여주는 액티비티 클래스 구현
-public class RegistrationRecyclerview extends AppCompatActivity {
+public class CartRecyclerview extends AppCompatActivity {
     FirebaseStorage mStorage;
     RecyclerView recyclerView;
     RegistrationAdapter registrationAdapter;
     ArrayList<RegistrationDTO> equipmentRegistrationList;
     ArrayList<RegistrationDTO> filteredEquipementList;
+    ArrayList<String> equipList;
 
     private FirebaseFirestore rRfirebaseFirestoreDB = null;
+    private FirebaseFirestore cartFirebaseFirestore = null;
 
     // 장비등록 페이지로 이동하는 버튼
     FloatingActionButton btnModelEnroll;
@@ -66,7 +71,7 @@ public class RegistrationRecyclerview extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_community_recyclerview);
+        setContentView(R.layout.activity_mycart_recyclerview);
 
         //RecyclerView 필드 참조
         rRfirebaseFirestoreDB = FirebaseFirestore.getInstance();
@@ -78,8 +83,11 @@ public class RegistrationRecyclerview extends AppCompatActivity {
 
         //RecyclerView에 RegistrationAdapter 클래스 등록 구현
         equipmentRegistrationList = new ArrayList<RegistrationDTO>();
-        registrationAdapter = new RegistrationAdapter(RegistrationRecyclerview.this,equipmentRegistrationList);
+        registrationAdapter = new RegistrationAdapter(CartRecyclerview.this,equipmentRegistrationList);
 
+
+        // 필터링 기준이 될 배열 리스트
+        equipList = new ArrayList<String>();
         //검색에 의해 필터링 될 EquipmentRegistration 리스트
         filteredEquipementList = new ArrayList<RegistrationDTO>();
 
@@ -99,7 +107,7 @@ public class RegistrationRecyclerview extends AppCompatActivity {
         nav_header_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RegistrationRecyclerview.this, MenuSettingActivity.class);
+                Intent intent = new Intent(CartRecyclerview.this, MenuSettingActivity.class);
                 startActivity(intent);
             }
         });
@@ -138,6 +146,21 @@ public class RegistrationRecyclerview extends AppCompatActivity {
                 });
 
         //Firestore DB 변경
+        rRfirebaseFirestoreDB.collection("DIY_MyCart")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
+                        if(queryDocumentSnapshot.get("equipTitle").toString().trim() != null){
+                            equipList.add(queryDocumentSnapshot.get("equipTitle").toString());
+                            Log.e("DB","Is this work?"+equipList);
+                        }
+                    }
+                }
+            });
+
+
         //Firestore DB에 등록된 장비 등록 정보 읽기 기능 구현
         rRfirebaseFirestoreDB.collection("DIY_Equipment_Rental")
                 .get()
@@ -198,13 +221,13 @@ public class RegistrationRecyclerview extends AppCompatActivity {
         });
          */
 
-        btnModelEnroll.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(RegistrationRecyclerview.this, EquipmentRegistrationActivity.class); // 장비등록 페이지로 이동
-                startActivity(intent);  //MainActivity 이동
-            }
-        });
+//        btnModelEnroll.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(CartRecyclerview.this, EquipmentRegistrationActivity.class); // 장비등록 페이지로 이동
+//                startActivity(intent);  //MainActivity 이동
+//            }
+//        });
 
         //뒤로가기 버튼 클릭시 장비 목록 페이지에서 장비 메인 페이지 이동
         imgBtn_back.setOnClickListener(new View.OnClickListener() {
@@ -218,7 +241,7 @@ public class RegistrationRecyclerview extends AppCompatActivity {
         imgBtn_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RegistrationRecyclerview.this, MainActivity.class);
+                Intent intent = new Intent(CartRecyclerview.this, MainActivity.class);
                 startActivity(intent);
             }
         });
@@ -245,25 +268,25 @@ public class RegistrationRecyclerview extends AppCompatActivity {
                     Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
                 } else if(id == R.id.startchatting){
                     Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(RegistrationRecyclerview.this, ChatStartActivity.class);
+                    Intent intent = new Intent(CartRecyclerview.this, ChatStartActivity.class);
                     startActivity(intent);
                 } else if (id == R.id.diymap) {
                     Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(RegistrationRecyclerview.this, RentalGoogleMap.class);
+                    Intent intent = new Intent(CartRecyclerview.this, RentalGoogleMap.class);
                     startActivity(intent);
                 } else if(id == R.id.mycommunity){
                     Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
                 } else if(id == R.id.tradelist){
                     Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(RegistrationRecyclerview.this, RegistrationRecyclerview.class);
+                    Intent intent = new Intent(CartRecyclerview.this, CartRecyclerview.class);
                     startActivity(intent);
                 } else if(id == R.id.communitylist) {
                     Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(RegistrationRecyclerview.this, CommunityRecyclerview.class);
+                    Intent intent = new Intent(CartRecyclerview.this, CommunityRecyclerview.class);
                     startActivity(intent);
                 } else if(id == R.id.logout){
                     //Toast.makeText(context, title + ": 로그아웃", Toast.LENGTH_SHORT).show();
-                    AlertDialog.Builder dlg = new AlertDialog.Builder(RegistrationRecyclerview.this);
+                    AlertDialog.Builder dlg = new AlertDialog.Builder(CartRecyclerview.this);
                     dlg.setTitle("로그아웃");
                     dlg.setMessage("로그아웃 하시겠습니까?");
                     dlg.setIcon(R.mipmap.ic_launcher);
@@ -272,8 +295,8 @@ public class RegistrationRecyclerview extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             registrationListFirebaseAuth.signOut();
-                            Toast.makeText(RegistrationRecyclerview.this, "로그아웃 되었습니다!", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(RegistrationRecyclerview.this, LoginActivity.class);
+                            Toast.makeText(CartRecyclerview.this, "로그아웃 되었습니다!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(CartRecyclerview.this, LoginActivity.class);
                             startActivity(intent);
                             finish();
                         }
@@ -282,7 +305,7 @@ public class RegistrationRecyclerview extends AppCompatActivity {
                     dlg.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(RegistrationRecyclerview.this, "로그아웃 취소되었습니다!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CartRecyclerview.this, "로그아웃 취소되었습니다!", Toast.LENGTH_SHORT).show();
                         }
                     });
                     dlg.show();
@@ -290,7 +313,7 @@ public class RegistrationRecyclerview extends AppCompatActivity {
                 else if(id == R.id.withdraw){
                     //Toast.makeText(context, title + ": 회원탈퇴", Toast.LENGTH_SHORT).show();
 
-                    AlertDialog.Builder dlg = new AlertDialog.Builder(RegistrationRecyclerview.this);
+                    AlertDialog.Builder dlg = new AlertDialog.Builder(CartRecyclerview.this);
                     dlg.setTitle("회원 탈퇴");
                     dlg.setMessage("회원 탈퇴하시겠습니까?");
                     dlg.setIcon(R.mipmap.ic_launcher);
@@ -299,8 +322,8 @@ public class RegistrationRecyclerview extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             registrationListFirebaseAuth.getCurrentUser().delete();
-                            Toast.makeText(RegistrationRecyclerview.this, "회원 탈퇴되었습니다!", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(RegistrationRecyclerview.this, LoginActivity.class);
+                            Toast.makeText(CartRecyclerview.this, "회원 탈퇴되었습니다!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(CartRecyclerview.this, LoginActivity.class);
                             startActivity(intent);
                             finish();
                         }
@@ -309,7 +332,7 @@ public class RegistrationRecyclerview extends AppCompatActivity {
                     dlg.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(RegistrationRecyclerview.this, "회원 탈퇴 취소되었습니다!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CartRecyclerview.this, "회원 탈퇴 취소되었습니다!", Toast.LENGTH_SHORT).show();
                         }
                     });
                     dlg.show();
