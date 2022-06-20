@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,7 +29,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -87,12 +94,13 @@ public class CartRecyclerview extends AppCompatActivity {
         registrationAdapter = new RegistrationAdapter(CartRecyclerview.this,cartRegistrationList);
 
         //찜에 의해 필터링 될 EquipmentRegistration 리스트
-        filteredCartList = new ArrayList<EquipmentRegistration>();
         equipList = new ArrayList<String>();
+        //검색에 의해 필터링 될 EquipmentRegistration 리스트
+        filteredCartList = new ArrayList<EquipmentRegistration>();
 
         recyclerView.setAdapter(registrationAdapter);
         btnModelEnroll = findViewById(R.id.registrationRecyclerview_fab);      // 장비등록 버튼
-        etSearch = findViewById(R.id.registrationRecyclerview_et_search);
+        etSearch = findViewById(R.id.cartRecyclerview_et_search);
 
         imgBtn_back = (ImageButton)findViewById(R.id.registrationRecyclerview_btn_back);
         imgBtn_home = (ImageButton)findViewById(R.id.registrationRecyclerview_btn_home);
@@ -163,6 +171,7 @@ public class CartRecyclerview extends AppCompatActivity {
                             }
                         }
                     }
+
                 });
 
         //Firestore DB에 등록된 장비 등록 정보 읽기 기능 구현
@@ -193,7 +202,75 @@ public class CartRecyclerview extends AppCompatActivity {
                         }
                     }
                 });
-        /*
+
+        cartFirebaseFirestoreDB.collection("DIY_MyCart")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException error) {
+                        if(error != null){
+                            Log.e("Event",error.toString());
+                        }
+
+                        for (DocumentChange dc : snapshots.getDocumentChanges()) {
+                            switch (dc.getType()) {
+                                case ADDED:
+                                    if(dc.getDocument().get("modelName") == null){
+                                        return;
+                                    }
+                                    if(equipList.contains(dc.getDocument().get("modelName").toString())){
+                                        EquipmentRegistration equipmentRegistration = new EquipmentRegistration(
+                                                dc.getDocument().get("modelName").toString().trim(),
+                                                dc.getDocument().get("modelInform").toString().trim(),
+                                                dc.getDocument().get("rentalImage").toString().trim(),
+                                                dc.getDocument().get("rentalType").toString().trim(),
+                                                dc.getDocument().get("rentalCost").toString().trim(),
+                                                dc.getDocument().get("rentalAddress").toString().trim(),
+                                                dc.getDocument().get("userEmail").toString().trim(),
+                                                dc.getDocument().get("rentalDate").toString().trim(),
+                                                dc.getDocument().get("modelCategory1").toString().trim(),
+                                                dc.getDocument().get("modelCategory2").toString().trim());
+                                        cartRegistrationList.add(equipmentRegistration);
+                                        registrationAdapter.notifyDataSetChanged();
+                                    }
+                                    Log.e("Event", "New city: " + dc.getDocument().getData());
+                                    break;
+                                case MODIFIED:
+                                    Log.e("Event", "Modified city: " + dc.getDocument().getData());
+                                    break;
+                                case REMOVED:
+                                    if(dc.getDocument().get("modelName") == null){
+                                        return;
+                                    }
+                                    if(equipList.contains(dc.getDocument().get("modelName").toString())){
+                                        EquipmentRegistration equipmentRegistration = new EquipmentRegistration(
+                                                dc.getDocument().get("modelName").toString().trim(),
+                                                dc.getDocument().get("modelInform").toString().trim(),
+                                                dc.getDocument().get("rentalImage").toString().trim(),
+                                                dc.getDocument().get("rentalType").toString().trim(),
+                                                dc.getDocument().get("rentalCost").toString().trim(),
+                                                dc.getDocument().get("rentalAddress").toString().trim(),
+                                                dc.getDocument().get("userEmail").toString().trim(),
+                                                dc.getDocument().get("rentalDate").toString().trim(),
+                                                dc.getDocument().get("modelCategory1").toString().trim(),
+                                                dc.getDocument().get("modelCategory2").toString().trim());
+                                        cartRegistrationList.add(equipmentRegistration);
+                                        registrationAdapter.notifyDataSetChanged();
+                                    }
+                                    Log.e("Event", "Removed city: " + dc.getDocument().getData());
+                                    break;
+                            }
+                        }
+
+//                        for (DocumentChange dc : snapshots.getDocumentChanges()) {
+//                            if (dc.getType() == Type.ADDED) {
+//                                Log.d(TAG, "New city: " + dc.getDocument().getData());
+//                            }
+//                        }
+
+                    }
+                });
+
+
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -208,23 +285,23 @@ public class CartRecyclerview extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 String searchText = etSearch.getText().toString();
                 // 검색 필터링 구현
-                equipmentRegistrationList.clear();
+                cartRegistrationList.clear();
                 if(searchText.length()==0){
-                    equipmentRegistrationList.addAll(filteredEquipementList);
+                    cartRegistrationList.addAll(filteredCartList);
                 }
                 else{
-                    for( EquipmentRegistration equipment : filteredEquipementList)
+                    for( EquipmentRegistration equipment : filteredCartList)
                     {
                         if(equipment.getModelName().contains(searchText)||equipment.getModelInform().contains(searchText))
                         {
-                            equipmentRegistrationList.add(equipment);
+                            cartRegistrationList.add(equipment);
                         }
                     }
                 }
                 registrationAdapter.notifyDataSetChanged();
             }
         });
-         */
+
 
 //        btnModelEnroll.setOnClickListener(new View.OnClickListener(){
 //            @Override

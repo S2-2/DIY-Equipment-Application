@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import kr.ac.kpu.diyequipmentapplication.MainActivity;
 import kr.ac.kpu.diyequipmentapplication.R;
 import kr.ac.kpu.diyequipmentapplication.cart.CartActivty;
+import kr.ac.kpu.diyequipmentapplication.cart.CartRecyclerview;
 import kr.ac.kpu.diyequipmentapplication.chat.ChatActivity;
 import kr.ac.kpu.diyequipmentapplication.chat.ChatStartActivity;
 import kr.ac.kpu.diyequipmentapplication.community.CommunityRecyclerview;
@@ -171,18 +172,6 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                     }
                 });
 
-//        equipmentDetailFirebaseFirestore.collection("DIY_Equipment_Cart")
-//                .whereEqualTo("userEmail", equipmentDetailFirebaseAuth.getCurrentUser().getEmail().toString().trim())
-//                .get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if (task.isSuccessful()) {
-//
-//                            }
-//                        }
-//                });
-
         btnChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -285,7 +274,13 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                     Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(EquipmentDetailActivity.this, CommunityRecyclerview.class);
                     startActivity(intent);
-                } else if(id == R.id.logout){
+                } else  if(id == R.id.mycart){
+                    Intent intent = new Intent(EquipmentDetailActivity.this, CartRecyclerview.class);
+                    startActivity(intent);
+                    finish();
+                }
+
+                else if(id == R.id.logout){
                     //Toast.makeText(context, title + ": 로그아웃", Toast.LENGTH_SHORT).show();
                     AlertDialog.Builder dlg = new AlertDialog.Builder(EquipmentDetailActivity.this);
                     dlg.setTitle("로그아웃");
