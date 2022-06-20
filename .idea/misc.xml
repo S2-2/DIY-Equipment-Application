@@ -80,6 +80,7 @@
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_menu.xml" value="0.25885416666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_menu_setting.xml" value="0.4" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_mycart_recyclerview.xml" value="0.25885416666666666" />
+        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_menu_setting.xml" value="0.4" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_profile.xml" value="0.2548717948717949" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_registration_recyclerview.xml" value="0.13958333333333334" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_rental_google_map.xml" value="0.13802083333333334" />
@@ -89,8 +90,7 @@
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_start_chat.xml" value="0.25885416666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/community_recyclerview_comment_item.xml" value="0.25885416666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/community_recyclerview_item.xml" value="0.25885416666666666" />
-        <entry key="..\:/DIY_test00/app/src/main/res/layout/registration_recyclerview_item.xml" value="0.2548717948717949" />
-        <entry key="..\:/DIY_test00/app/src/main/res/layout/rental_google_map_window_item.xml" value="0.2" />
+        <entry key="..\:/DIY_test00/app/src/main/res/layout/rental_google_map_window_item.xml" value="0.25092592592592594" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/rental_history_recyclerview_item.xml" value="0.4" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/schedule_lendingperiod_window_item.xml" value="0.4" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/schedule_rent_window_item.xml" value="0.25885416666666666" />
