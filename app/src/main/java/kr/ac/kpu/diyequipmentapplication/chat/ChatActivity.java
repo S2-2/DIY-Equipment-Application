@@ -1,24 +1,20 @@
 package kr.ac.kpu.diyequipmentapplication.chat;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -29,9 +25,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
@@ -71,6 +69,9 @@ public class ChatActivity extends AppCompatActivity {
     private FirebaseFirestore userFS = null;
 
     private Button btnTransactionSchedule;      //거래일정 버튼튼
+
+    private String getModelCollectionId;    //해당 장비 컬렉션 Id
+    private FirebaseFirestore chattingFirebaseFirestore;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -162,10 +163,106 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //채팅 액티비티에서 거래설정 페이지로 이동!
+                Intent getIntent = getIntent();
                 Intent transactionScheduleIntent = new Intent(ChatActivity.this, ScheduleActivity.class);
+                transactionScheduleIntent.putExtra("ModelCollectionId", getIntent.getStringExtra("ModelCollectionId"));
+                transactionScheduleIntent.putExtra("CHAT_NUM", CHAT_NUM);
                 startActivity(transactionScheduleIntent);
             }
         });
+
+        //채팅 액티비티에서 공구정보 보여주는 기능
+        getModelCollectionId = intent.getStringExtra("ModelCollectionId");
+        final String[] getImgaeUrl = new String[1];
+        final String[] getEmail = new String[1];
+        chattingFirebaseFirestore = FirebaseFirestore.getInstance();
+        ImageView imgView = findViewById(R.id.chatting_imgView);
+        TextView tvCatecory = findViewById(R.id.chatting_tv_category);
+        TextView tvModelName = findViewById(R.id.chatting_tv_modelName);
+        TextView tvUserName = findViewById(R.id.chatting_tv_userName);
+        TextView tvRentalType = findViewById(R.id.chatting_tv_rentalType);
+        TextView tvRentalDate = findViewById(R.id.chatting_tv_rentalDate);
+        TextView tvRentalCost = findViewById(R.id.chatting_tv_rentalCost);
+
+        if (getModelCollectionId != null) {
+            chattingFirebaseFirestore.collection("DIY_Equipment_Rental")
+                    .document(getModelCollectionId)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            getImgaeUrl[0] = task.getResult().getString("rentalImage");
+                            Picasso.get().load(getImgaeUrl[0]).into(imgView);
+                            getEmail[0] = task.getResult().getString("userEmail");
+                            tvCatecory.setText(task.getResult().getString("modelCategory1")+",\n"+
+                                    task.getResult().getString("modelCategory2").toString().trim());
+                            tvModelName.setText(task.getResult().getString("modelName"));
+                            tvRentalType.setText(task.getResult().getString("rentalType"));
+                            tvRentalDate.setText(task.getResult().getString("rentalDate"));
+                            tvRentalCost.setText(task.getResult().getString("rentalCost"));
+
+                            chattingFirebaseFirestore.collection("DIY_Signup")
+                                    .whereEqualTo("userEmail",getEmail[0])
+                                    .get()
+                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                                                    tvUserName.setText(queryDocumentSnapshot.get("userName").toString().trim());
+                                                }
+                                            }
+                                        }
+                                    });
+                        }
+                    });
+
+        } else {
+            //Toast.makeText(ChatActivity.this, "장비 상세페이지에서 거래자 채팅 먼저 설정해주세요!", Toast.LENGTH_SHORT).show();
+            chattingFirebaseFirestore.collection("DIY_Schedule")
+                    .whereEqualTo("sChatNum", CHAT_NUM)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                                    chattingFirebaseFirestore.collection("DIY_Equipment_Rental")
+                                            .document(queryDocumentSnapshot.get("sCollectionId").toString().trim())
+                                            .get()
+                                            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                    getImgaeUrl[0] = task.getResult().getString("rentalImage");
+                                                    Picasso.get().load(getImgaeUrl[0]).into(imgView);
+                                                    getEmail[0] = task.getResult().getString("userEmail");
+                                                    tvCatecory.setText(task.getResult().getString("modelCategory1")+",\n"+
+                                                            task.getResult().getString("modelCategory2").toString().trim());
+                                                    tvModelName.setText(task.getResult().getString("modelName"));
+                                                    tvRentalType.setText(task.getResult().getString("rentalType"));
+                                                    tvRentalDate.setText(task.getResult().getString("rentalDate"));
+                                                    tvRentalCost.setText(task.getResult().getString("rentalCost"));
+
+                                                    chattingFirebaseFirestore.collection("DIY_Signup")
+                                                            .whereEqualTo("userEmail",getEmail[0])
+                                                            .get()
+                                                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                                @Override
+                                                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                                    if (task.isSuccessful()) {
+                                                                        for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                                                                            tvUserName.setText(queryDocumentSnapshot.get("userName").toString().trim());
+                                                                        }
+                                                                    }
+                                                                }
+                                                            });
+                                                }
+                                            });
+                                }
+                            }
+                        }
+                    });
+        }
     }
 
     private void chatWithUser(String chat_num) {

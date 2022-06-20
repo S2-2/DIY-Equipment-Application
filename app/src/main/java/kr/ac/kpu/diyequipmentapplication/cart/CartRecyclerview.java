@@ -45,7 +45,6 @@ import kr.ac.kpu.diyequipmentapplication.R;
 import kr.ac.kpu.diyequipmentapplication.chat.ChatStartActivity;
 import kr.ac.kpu.diyequipmentapplication.community.CommunityRecyclerview;
 import kr.ac.kpu.diyequipmentapplication.equipment.EquipmentRegistration;
-import kr.ac.kpu.diyequipmentapplication.equipment.EquipmentRegistrationActivity;
 import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationAdapter;
 import kr.ac.kpu.diyequipmentapplication.equipment.RentalGoogleMap;
 import kr.ac.kpu.diyequipmentapplication.login.LoginActivity;

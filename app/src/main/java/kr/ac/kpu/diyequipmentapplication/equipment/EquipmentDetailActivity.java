@@ -57,6 +57,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
     private ImageButton imgBtnCart = null;
     private Boolean Ok = true;                  // 찜여부 확인
     private CartActivty cartActivty = null;
+    private String getModelCollectionId;
 
     //네비게이션 드로어 참조 변수
     private DrawerLayout mDrawerLayout;
@@ -98,6 +99,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
         temp = intent.getStringExtra("RentalCost");
         getRentalAddress = intent.getStringExtra("RentalAddress");
         etUserLocation.setText(getRentalAddress);
+        getModelCollectionId = intent.getStringExtra("ModelCollectionId");
 
         if (temp.equals("무료"))
             etRentalCost.setText("RentalCost : "+temp);
@@ -176,7 +178,10 @@ public class EquipmentDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(EquipmentDetailActivity.this, ChatActivity.class);
-                startActivity(intent); }
+                //intent.putExtra("RentalCost", temp);
+                intent.putExtra("ModelCollectionId", getModelCollectionId);
+                startActivity(intent);
+            }
         });
 
         //뒤로가기 버튼 클릭시 장비 목록 페이지에서 장비 메인 페이지 이동

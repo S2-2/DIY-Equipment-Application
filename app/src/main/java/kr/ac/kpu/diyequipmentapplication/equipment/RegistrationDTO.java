@@ -2,10 +2,7 @@ package kr.ac.kpu.diyequipmentapplication.equipment;
 
 import java.io.Serializable;
 
-//Firebase RealTime DB에서 등록된 데이터들을 JSON타입으로 가져오기 때문에 이것을 읽어오기 위한 클래스 구현
-public class EquipmentRegistration implements Serializable {
-    //해당 필드명은 Firebase RealTime DB에 등록된 속성명과 동일해야 함!
-    //필드명과 Firebase RealTime DB에 등록된 속성명과 동일하지 않으면 DB에서 데이터를 읽을 수 없음!
+public class RegistrationDTO implements Serializable {
     private String ModelName;       //장비 모델명
     private String ModelInform;     //장비 모델 정보
     private String RentalImage;     //장비 이미지
@@ -16,11 +13,14 @@ public class EquipmentRegistration implements Serializable {
     private String RentalDate;      //장비 등록일
     private String ModelCategory1;  //장비 카테고리1
     private String ModelCategory2;  //장비 카테고리2
+    private String ModelCollectionId;   //장비 컬렉션 아이디;
 
-    public EquipmentRegistration() {}   //기본 생성자
+    public RegistrationDTO() {
+    }
 
-    public EquipmentRegistration(String modelName, String modelInform, String rentalImage, String rentalType, String rentalCost,
-                                 String rentalAddress, String userEmail, String rentalDate, String modelCategory1, String modelCategory2) {
+    public RegistrationDTO(String modelName, String modelInform, String rentalImage, String rentalType, String rentalCost,
+                           String rentalAddress, String userEmail, String rentalDate, String modelCategory1, String modelCategory2,
+                           String modelCollectionId) {
         ModelName = modelName;
         ModelInform = modelInform;
         RentalImage = rentalImage;
@@ -31,10 +31,13 @@ public class EquipmentRegistration implements Serializable {
         RentalDate = rentalDate;
         ModelCategory1 = modelCategory1;
         ModelCategory2 = modelCategory2;
+        ModelCollectionId = modelCollectionId;
     }
 
-    //장비 필드에 대한 Getter / Setter 메서드 기능 구현
-    public String getModelName() { return ModelName; }
+    public String getModelName() {
+        return ModelName;
+    }
+
     public void setModelName(String modelName) {
         ModelName = modelName;
     }
@@ -42,6 +45,7 @@ public class EquipmentRegistration implements Serializable {
     public String getModelInform() {
         return ModelInform;
     }
+
     public void setModelInform(String modelInform) {
         ModelInform = modelInform;
     }
@@ -49,6 +53,7 @@ public class EquipmentRegistration implements Serializable {
     public String getRentalImage() {
         return RentalImage;
     }
+
     public void setRentalImage(String rentalImage) {
         RentalImage = rentalImage;
     }
@@ -56,6 +61,7 @@ public class EquipmentRegistration implements Serializable {
     public String getRentalType() {
         return RentalType;
     }
+
     public void setRentalType(String rentalType) {
         RentalType = rentalType;
     }
@@ -63,6 +69,7 @@ public class EquipmentRegistration implements Serializable {
     public String getRentalCost() {
         return RentalCost;
     }
+
     public void setRentalCost(String rentalCost) {
         RentalCost = rentalCost;
     }
@@ -70,6 +77,7 @@ public class EquipmentRegistration implements Serializable {
     public String getRentalAddress() {
         return RentalAddress;
     }
+
     public void setRentalAddress(String rentalAddress) {
         RentalAddress = rentalAddress;
     }
@@ -77,6 +85,7 @@ public class EquipmentRegistration implements Serializable {
     public String getUserEmail() {
         return UserEmail;
     }
+
     public void setUserEmail(String userEmail) {
         UserEmail = userEmail;
     }
@@ -84,12 +93,32 @@ public class EquipmentRegistration implements Serializable {
     public String getRentalDate() {
         return RentalDate;
     }
-    public void setRentalDate(String rentalDate) { RentalDate = rentalDate; }
 
-    public String getModelCategory1() { return ModelCategory1; }
-    public void setModelCategory1(String modelCategory1) { ModelCategory1 = modelCategory1; }
+    public void setRentalDate(String rentalDate) {
+        RentalDate = rentalDate;
+    }
 
-    public String getModelCategory2() { return ModelCategory2; }
-    public void setModelCategory2(String modelCategory2) { ModelCategory2 = modelCategory2; }
+    public String getModelCategory1() {
+        return ModelCategory1;
+    }
 
+    public void setModelCategory1(String modelCategory1) {
+        ModelCategory1 = modelCategory1;
+    }
+
+    public String getModelCategory2() {
+        return ModelCategory2;
+    }
+
+    public void setModelCategory2(String modelCategory2) {
+        ModelCategory2 = modelCategory2;
+    }
+
+    public String getModelCollectionId() {
+        return ModelCollectionId;
+    }
+
+    public void setModelCollectionId(String modelCollectionId) {
+        ModelCollectionId = modelCollectionId;
+    }
 }

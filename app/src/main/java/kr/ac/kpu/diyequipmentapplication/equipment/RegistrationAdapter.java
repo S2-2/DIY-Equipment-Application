@@ -22,9 +22,9 @@ import kr.ac.kpu.diyequipmentapplication.R;
 public class RegistrationAdapter extends RecyclerView.Adapter<RegistrationAdapter.ViewHolder> {
 
     Context context;
-    List<EquipmentRegistration> equipmentRegistrationList;
+    List<RegistrationDTO> equipmentRegistrationList;
 
-    public RegistrationAdapter(Context context, List<EquipmentRegistration> equipmentRegistrationList) {
+    public RegistrationAdapter(Context context, List<RegistrationDTO> equipmentRegistrationList) {
         this.context = context;
         this.equipmentRegistrationList = equipmentRegistrationList;
     }
@@ -39,12 +39,12 @@ public class RegistrationAdapter extends RecyclerView.Adapter<RegistrationAdapte
     @Override
     public void onBindViewHolder(@NonNull RegistrationAdapter.ViewHolder holder, int position) {
 
-        EquipmentRegistration equipmentRegistration = equipmentRegistrationList.get(position);
-        holder.tvModelText.setText("Model Inform \n"+equipmentRegistration.getModelInform()+"\n");
-        holder.tvModelName.setText("Model Name \n"+equipmentRegistration.getModelName());
+        RegistrationDTO registrationDTO = equipmentRegistrationList.get(position);
+        holder.tvModelText.setText("Model Inform \n"+registrationDTO.getModelInform()+"\n");
+        holder.tvModelName.setText("Model Name \n"+registrationDTO.getModelName());
 
         String imageUri = null;
-        imageUri=equipmentRegistration.getRentalImage();
+        imageUri=registrationDTO.getRentalImage();
         Picasso.get().load(imageUri).into(holder.imageView);
 
     }
@@ -73,18 +73,19 @@ public class RegistrationAdapter extends RecyclerView.Adapter<RegistrationAdapte
                 public void onClick(View view) {
                     int pos = getBindingAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION) {
-                        EquipmentRegistration equipmentRegistration = equipmentRegistrationList.get(pos);
+                        RegistrationDTO registrationDTO = equipmentRegistrationList.get(pos);
                         Intent intent = new Intent(context, EquipmentDetailActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.putExtra("ModelName", equipmentRegistration.getModelName());
-                        intent.putExtra("ModelInform", equipmentRegistration.getModelInform());
-                        intent.putExtra("RentalImage",equipmentRegistration.getRentalImage());
-                        intent.putExtra("RentalType", equipmentRegistration.getRentalType());
-                        intent.putExtra("RentalCost", equipmentRegistration.getRentalCost());
-                        intent.putExtra("RentalAddress", equipmentRegistration.getRentalAddress());
-                        intent.putExtra("UserEmail", equipmentRegistration.getUserEmail());
-                        intent.putExtra("RentalDate", equipmentRegistration.getRentalDate());
-                        intent.putExtra("ModelCategory1",equipmentRegistration.getModelCategory1());
-                        intent.putExtra("ModelCategory2",equipmentRegistration.getModelCategory2());
+                        intent.putExtra("ModelName", registrationDTO.getModelName());
+                        intent.putExtra("ModelInform", registrationDTO.getModelInform());
+                        intent.putExtra("RentalImage",registrationDTO.getRentalImage());
+                        intent.putExtra("RentalType", registrationDTO.getRentalType());
+                        intent.putExtra("RentalCost", registrationDTO.getRentalCost());
+                        intent.putExtra("RentalAddress", registrationDTO.getRentalAddress());
+                        intent.putExtra("UserEmail", registrationDTO.getUserEmail());
+                        intent.putExtra("RentalDate", registrationDTO.getRentalDate());
+                        intent.putExtra("ModelCategory1",registrationDTO.getModelCategory1());
+                        intent.putExtra("ModelCategory2",registrationDTO.getModelCategory2());
+                        intent.putExtra("ModelCollectionId",registrationDTO.getModelCollectionId());
                         context.startActivity(intent);
                     }
                 }
