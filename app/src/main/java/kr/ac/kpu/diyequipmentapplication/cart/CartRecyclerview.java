@@ -44,7 +44,7 @@ import kr.ac.kpu.diyequipmentapplication.MainActivity;
 import kr.ac.kpu.diyequipmentapplication.R;
 import kr.ac.kpu.diyequipmentapplication.chat.ChatStartActivity;
 import kr.ac.kpu.diyequipmentapplication.community.CommunityRecyclerview;
-import kr.ac.kpu.diyequipmentapplication.equipment.EquipmentRegistration;
+import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationDTO;
 import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationAdapter;
 import kr.ac.kpu.diyequipmentapplication.equipment.RentalGoogleMap;
 import kr.ac.kpu.diyequipmentapplication.login.LoginActivity;
@@ -55,8 +55,8 @@ public class CartRecyclerview extends AppCompatActivity {
     FirebaseStorage mStorage;
     RecyclerView recyclerView;
     RegistrationAdapter registrationAdapter;
-    ArrayList<EquipmentRegistration> cartRegistrationList;
-    ArrayList<EquipmentRegistration> filteredCartList;
+    ArrayList<RegistrationDTO> cartRegistrationList;
+    ArrayList<RegistrationDTO> filteredCartList;
     ArrayList<String> equipList;
 
     private FirebaseFirestore cartFirebaseFirestoreDB = null;
@@ -89,13 +89,13 @@ public class CartRecyclerview extends AppCompatActivity {
         //recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)); //리사이클러뷰 가로 화면
 
         //RecyclerView에 RegistrationAdapter 클래스 등록 구현
-        cartRegistrationList = new ArrayList<EquipmentRegistration>();
+        cartRegistrationList = new ArrayList<RegistrationDTO>();
         registrationAdapter = new RegistrationAdapter(CartRecyclerview.this,cartRegistrationList);
 
         //찜에 의해 필터링 될 EquipmentRegistration 리스트
         equipList = new ArrayList<String>();
         //검색에 의해 필터링 될 EquipmentRegistration 리스트
-        filteredCartList = new ArrayList<EquipmentRegistration>();
+        filteredCartList = new ArrayList<RegistrationDTO>();
 
         recyclerView.setAdapter(registrationAdapter);
         btnModelEnroll = findViewById(R.id.registrationRecyclerview_fab);      // 장비등록 버튼
@@ -182,7 +182,7 @@ public class CartRecyclerview extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
                                 if(equipList.contains(queryDocumentSnapshot.get("modelName").toString())){
-                                    EquipmentRegistration equipmentRegistration = new EquipmentRegistration(
+                                    RegistrationDTO registrationDTO = new RegistrationDTO(
                                             queryDocumentSnapshot.get("modelName").toString().trim(),
                                             queryDocumentSnapshot.get("modelInform").toString().trim(),
                                             queryDocumentSnapshot.get("rentalImage").toString().trim(),
@@ -192,9 +192,11 @@ public class CartRecyclerview extends AppCompatActivity {
                                             queryDocumentSnapshot.get("userEmail").toString().trim(),
                                             queryDocumentSnapshot.get("rentalDate").toString().trim(),
                                             queryDocumentSnapshot.get("modelCategory1").toString().trim(),
-                                            queryDocumentSnapshot.get("modelCategory2").toString().trim());
-                                    cartRegistrationList.add(equipmentRegistration);
-                                    filteredCartList.add(equipmentRegistration);
+                                            queryDocumentSnapshot.get("modelCategory2").toString().trim(),
+                                            queryDocumentSnapshot.getId()
+                                            );
+                                    cartRegistrationList.add(registrationDTO);
+                                    filteredCartList.add(registrationDTO);
                                     registrationAdapter.notifyDataSetChanged();
                                 }
                             }
@@ -217,7 +219,7 @@ public class CartRecyclerview extends AppCompatActivity {
                                         return;
                                     }
                                     if(equipList.contains(dc.getDocument().get("modelName").toString())){
-                                        EquipmentRegistration equipmentRegistration = new EquipmentRegistration(
+                                        RegistrationDTO registrationDTO = new RegistrationDTO(
                                                 dc.getDocument().get("modelName").toString().trim(),
                                                 dc.getDocument().get("modelInform").toString().trim(),
                                                 dc.getDocument().get("rentalImage").toString().trim(),
@@ -227,8 +229,9 @@ public class CartRecyclerview extends AppCompatActivity {
                                                 dc.getDocument().get("userEmail").toString().trim(),
                                                 dc.getDocument().get("rentalDate").toString().trim(),
                                                 dc.getDocument().get("modelCategory1").toString().trim(),
-                                                dc.getDocument().get("modelCategory2").toString().trim());
-                                        cartRegistrationList.add(equipmentRegistration);
+                                                dc.getDocument().get("modelCategory2").toString().trim(),
+                                                dc.getDocument().getId());
+                                        cartRegistrationList.add(registrationDTO);
                                         registrationAdapter.notifyDataSetChanged();
                                     }
                                     Log.e("Event", "New city: " + dc.getDocument().getData());
@@ -241,7 +244,7 @@ public class CartRecyclerview extends AppCompatActivity {
                                         return;
                                     }
                                     if(equipList.contains(dc.getDocument().get("modelName").toString())){
-                                        EquipmentRegistration equipmentRegistration = new EquipmentRegistration(
+                                        RegistrationDTO registrationDTO = new RegistrationDTO(
                                                 dc.getDocument().get("modelName").toString().trim(),
                                                 dc.getDocument().get("modelInform").toString().trim(),
                                                 dc.getDocument().get("rentalImage").toString().trim(),
@@ -251,8 +254,9 @@ public class CartRecyclerview extends AppCompatActivity {
                                                 dc.getDocument().get("userEmail").toString().trim(),
                                                 dc.getDocument().get("rentalDate").toString().trim(),
                                                 dc.getDocument().get("modelCategory1").toString().trim(),
-                                                dc.getDocument().get("modelCategory2").toString().trim());
-                                        cartRegistrationList.add(equipmentRegistration);
+                                                dc.getDocument().get("modelCategory2").toString().trim(),
+                                                dc.getDocument().getId());
+                                        cartRegistrationList.add(registrationDTO);
                                         registrationAdapter.notifyDataSetChanged();
                                     }
                                     Log.e("Event", "Removed city: " + dc.getDocument().getData());
@@ -289,7 +293,7 @@ public class CartRecyclerview extends AppCompatActivity {
                     cartRegistrationList.addAll(filteredCartList);
                 }
                 else{
-                    for( EquipmentRegistration equipment : filteredCartList)
+                    for( RegistrationDTO equipment : filteredCartList)
                     {
                         if(equipment.getModelName().contains(searchText)||equipment.getModelInform().contains(searchText))
                         {

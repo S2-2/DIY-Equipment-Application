@@ -36,6 +36,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import java.util.ArrayList;
 
 import kr.ac.kpu.diyequipmentapplication.MainActivity;
+import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationDTO;
 import kr.ac.kpu.diyequipmentapplication.R;
 import kr.ac.kpu.diyequipmentapplication.chat.ChatStartActivity;
 import kr.ac.kpu.diyequipmentapplication.community.CommunityRecyclerview;
@@ -187,7 +188,7 @@ public class RegistrationRecyclerview extends AppCompatActivity {
                     equipmentRegistrationList.addAll(filteredEquipementList);
                 }
                 else{
-                    for( EquipmentRegistration equipment : filteredEquipementList)
+                    for( RegistrationDTO equipment : filteredEquipementList)
                     {
                         if(equipment.getModelName().contains(searchText)||equipment.getModelInform().contains(searchText))
                         {
