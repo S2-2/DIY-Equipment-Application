@@ -69,7 +69,7 @@
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/communityCommentRecyclerview_recyclerview"
+                android:id="@+id/rentalHistoryRecyclerview_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"

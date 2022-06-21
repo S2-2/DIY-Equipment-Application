@@ -176,13 +176,14 @@
             android:backgroundTint="#676d17" />
 
         <Button
+            android:id="@+id/chatting_btn_transaction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:text="거래 후기"
+            android:text="거래"
             android:backgroundTint="#676d17" />
 
     </LinearLayout>
