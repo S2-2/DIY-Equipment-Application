@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -94,6 +95,28 @@ public class CommunityRegistrationActivity extends AppCompatActivity {
             }
         });
 
+        //Insert 버튼 이벤트 구현
+        btnCommunityReg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //공급자가 입력한 모델명 및 공구 설명
+                final String title = etTitle.getText().toString().trim();
+                final String content = etContent.getText().toString().trim();
+                final String nickname = communityNickname;
+                final String dateAndTime = communityGetDate;
+                final String tempImage= "no";
+
+                //공급자가 입력한 데이터 등록 성공
+                if (!(title.isEmpty() && content.isEmpty()))
+                {
+                    CommunityRegistration communityRegistration = new CommunityRegistration(title,content,tempImage, nickname, dateAndTime);
+                    communityRegFirebaseFirestoreDB.collection("DIY_Equipment_Community").document().set(communityRegistration);
+                    Toast.makeText(CommunityRegistrationActivity.this, "커뮤니티 등록 완료되었습니다!", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+        });
+
         //Image 버튼 클릭 이벤트 구현
         imgBtnImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,7 +152,7 @@ public class CommunityRegistrationActivity extends AppCompatActivity {
                 final String dateAndTime = communityGetDate;
 
                 //공급자가 입력한 데이터 등록 성공
-                if (!(title.isEmpty() && content.isEmpty() && registrationImageUrl != null))
+                if (!(title.isEmpty() && content.isEmpty()))
                 {
                     registrationProgressDialog.setTitle("DIY Community Uploading...");
                     registrationProgressDialog.show();
