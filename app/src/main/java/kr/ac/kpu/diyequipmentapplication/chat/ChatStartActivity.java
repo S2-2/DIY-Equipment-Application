@@ -60,6 +60,7 @@ public class ChatStartActivity extends AppCompatActivity  {
         chatStartLists = new ArrayList<ChatDTO>();
         chatStartAdapter = new ChatStartAdapter(ChatStartActivity.this,chatStartLists, getLayoutInflater());
         lvChatList.setAdapter(chatStartAdapter);
+        CHAT_OTHER_NICKNAME = CHAT_USER_EMAIL;
 
 
         chatRef.addValueEventListener(new ValueEventListener() {
@@ -70,14 +71,17 @@ public class ChatStartActivity extends AppCompatActivity  {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     for(DataSnapshot ds : snapshot.getChildren() ){
                         chatDTO = ds.getValue(ChatDTO.class);
-                        CHAT_OTHER_NICKNAME = chatDTO.getUserNickname();
                         if(!chatDTO.getUserEmail().equals(CHAT_USER_EMAIL)){
                             CHAT_OTHER_NICKNAME = chatDTO.getUserNickname();
+                        }else{
+                            myRoom = true;
                         }
                     }
 
                     chatDTO.setUserNickname(CHAT_OTHER_NICKNAME);
-                    chatStartLists.add(chatDTO);
+                    if(myRoom){
+                        chatStartLists.add(chatDTO);
+                    }
                 }
                 chatStartAdapter.notifyDataSetChanged();
             }
