@@ -30,14 +30,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:text="DIY Equipment Rental"
-                    android:textSize="30dp"
-                    android:textStyle="bold|italic" />
+                <ImageView
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/title" />
 
                 <ImageButton
                     android:id="@+id/registrationRecyclerview_btn_search"
@@ -118,8 +115,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/style_tv_default_black18dp"
-                    android:textStyle="bold"
+                    style="@style/style_tv_bold_darkGreen18dp"
                     android:text="실시간 공구 거래" />
 
                 <ImageButton
@@ -164,8 +160,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/style_tv_default_black18dp"
-                        android:textStyle="bold"
+                        style="@style/style_tv_bold_darkGreen18dp"
                         android:text="커뮤니티" />
 
                     <ImageButton
