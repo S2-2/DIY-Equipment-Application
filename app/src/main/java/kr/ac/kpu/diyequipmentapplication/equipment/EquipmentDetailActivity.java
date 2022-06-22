@@ -230,12 +230,16 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                     imgBtnCart.setImageResource(R.drawable.ic_baseline_favorite_border_red_24);
                     Ok = false;
                     Toast.makeText(view.getContext(), "찜 목록에 추가!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), "찜 목록에 추가", Toast.LENGTH_SHORT).show();
+                    Log.e("Click","ImageButton is Clicked");
                     cartActivty.addCart(userEmail.substring(0, userEmail.indexOf('@')),getTitle);
                 }
                 else{
                     imgBtnCart.setImageResource(R.drawable.ic_baseline_favorite_border_dark_24);
                     Ok = true;
                     Toast.makeText(view.getContext(), "찜 목록에서 삭제!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), "찜 목록에서 삭제", Toast.LENGTH_SHORT).show();
+                    Log.e("Click","ImageButton is Clicked2");
                     cartActivty.removeCart(userEmail.substring(0, userEmail.indexOf('@')),getTitle);
                 }
             }

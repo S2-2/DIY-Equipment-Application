@@ -21,10 +21,10 @@
             android:id="@+id/communityRecyclerviewCommentItem_tv_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:hint="댓글을 입력해주세요."
-            android:textColor="@color/black"
-            android:textSize="16dp" />
+            android:hint="댓글을 입력해 주세요."
+            style="@style/style_tv_default_black18dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -38,8 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="닉네임"
-            android:textColor="@color/black"
-            android:textSize="13dp" />
+            style="@style/style_tv_default_black14dp" />
 
         <TextView
             android:id="@+id/communityRecyclerviewCommentItem_tv_date"
@@ -47,8 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:hint="날짜"
-            android:textColor="@color/black"
-            android:textSize="13dp" />
+            style="@style/style_tv_default_black14dp"  />
 
     </LinearLayout>
 </LinearLayout>

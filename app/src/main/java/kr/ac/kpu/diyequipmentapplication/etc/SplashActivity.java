@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.LinearLayout;
 
@@ -23,56 +24,26 @@ import kr.ac.kpu.diyequipmentapplication.R;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private LinearLayout linearLayout;
-    private FirebaseRemoteConfig mFirebaseRemoteConfig;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
 
-        linearLayout = (LinearLayout)findViewById(R.id.splashactivity_linearlayout);
-
-        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
-                .setMinimumFetchIntervalInSeconds(3600)
-                .build();
-        mFirebaseRemoteConfig.setConfigSettingsAsync(configSettings);
-        mFirebaseRemoteConfig.setDefaultsAsync(R.xml.default_config);
-
-        mFirebaseRemoteConfig.fetchAndActivate()
-                .addOnCompleteListener(this, new OnCompleteListener<Boolean>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Boolean> task) {
-                        if (task.isSuccessful()) {
-                            boolean updated = task.getResult();
-                            Log.d(TAG, "Config params updated: " + updated);
-
-                        } else {
-
-                        }
-                        displayMessage();
-                    }
-                });
+        moveMain(1);	//1초 후 main activity 로 넘어감
     }
-    void displayMessage(){
-        String splash_background = mFirebaseRemoteConfig.getString("splash_background");
-        boolean caps = mFirebaseRemoteConfig.getBoolean("splash_message_caps");
-        String splash_message = mFirebaseRemoteConfig.getString("splash_message");
 
-        linearLayout.setBackgroundColor(Color.parseColor(splash_background));
+    private void moveMain(int sec) {
+        new Handler().postDelayed(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                //new Intent(현재 context, 이동할 activity)
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
 
-        if(caps){
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage(splash_message).setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    finish();
-                }
-            });
-            builder.create().show();
-        }else {
-            startActivity(new Intent(this, LoginActivity.class));
-        }
+                startActivity(intent);	//intent 에 명시된 액티비티로 이동
+
+                finish();	//현재 액티비티 종료
+            }
+        }, 1000 * sec); // sec초 정도 딜레이를 준 후 시작
     }
 }

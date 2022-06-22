@@ -16,9 +16,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="PROFILE"
+            android:text="프로필 설정"
             android:layout_marginBottom="20dp"
-            android:textSize="20dp" />
+            style="@style/style_tv_default_black24dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,10 +29,12 @@
             <Button
                 android:id="@+id/menuSetting_btn_profile"
                 android:layout_width="match_parent"
+                style="@style/style_tv_default_black18dp"
                 android:layout_height="wrap_content"
                 android:text="프로필 설정" />
 
             <Button
+                style="@style/style_tv_default_black18dp"
                 android:id="@+id/menuSetting_btn_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

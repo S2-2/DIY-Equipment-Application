@@ -107,23 +107,23 @@
                             android:layout_marginLeft="10dp">
 
                             <TextView
+                                style="@style/style_tv_default_black16dp"
                                 android:id="@+id/communityDetail_tv_nickname"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="작성자"
-                                android:textColor="@color/black" />
+                                android:text="작성자" />
                             <TextView
+                                style="@style/style_tv_default_black16dp"
                                 android:id="@+id/communityDetail_tv_location"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="작성자 위치"
-                                android:textColor="@color/black" />
+                                android:text="작성자 위치" />
                             <TextView
+                                style="@style/style_tv_default_black16dp"
                                 android:id="@+id/communityDetail_tv_time"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="작성 시간"
-                                android:textColor="@color/black" />
+                                android:text="작성 시간" />
                         </LinearLayout>
 
 
@@ -143,6 +143,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        style="@style/style_tv_default_black18dp"
                         android:id="@+id/communityDetail_tv_contents"
                         android:layout_width="match_parent"
                         android:layout_height="200dp" />
@@ -165,16 +166,18 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:hint="댓글을 입력해주세요."
-                            android:textColor="@color/black"
-                            android:textSize="16dp" />
+                            style="@style/style_tv_default_black18dp" />
 
                         <Button
+                            style="@style/style_tv_default_black16dp"
                             android:id="@+id/communityDetail_btn_commentAdd"
                             android:layout_width="wrap_content"
                             android:layout_height="45dp"
                             android:text="댓글달기" />
                     </LinearLayout>
+
                     <Button
+                        style="@style/style_tv_default_black16dp"
                         android:id="@+id/communityDetail_btn_commentList"
                         android:layout_width="wrap_content"
                         android:layout_height="45dp"

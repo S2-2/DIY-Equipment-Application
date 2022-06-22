@@ -40,8 +40,8 @@ public class RegistrationAdapter extends RecyclerView.Adapter<RegistrationAdapte
     public void onBindViewHolder(@NonNull RegistrationAdapter.ViewHolder holder, int position) {
 
         RegistrationDTO registrationDTO = equipmentRegistrationList.get(position);
-        holder.tvModelText.setText("Model Inform \n"+registrationDTO.getModelInform()+"\n");
-        holder.tvModelName.setText("Model Name \n"+registrationDTO.getModelName());
+        holder.tvModelText.setText(registrationDTO.getModelInform());
+        holder.tvModelName.setText(registrationDTO.getModelName());
 
         String imageUri = null;
         imageUri=registrationDTO.getRentalImage();
