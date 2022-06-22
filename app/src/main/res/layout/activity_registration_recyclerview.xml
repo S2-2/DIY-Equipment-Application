@@ -27,8 +27,8 @@
                     android:id="@+id/view_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="@android:color/black"
-                    android:layout_below="@+id/toolbar"/>
+                    android:layout_below="@+id/toolbar"
+                    android:background="@android:color/black" />
 
                 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
                     android:id="@+id/toolbar"
@@ -56,26 +56,31 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:gravity="center_vertical">
 
-                <ImageButton
-                    android:background="@android:color/transparent"
-                    android:layout_gravity="center_vertical"
-                    android:id="@+id/registrationRecyclerview_btn_back"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24"
-                    tools:layout_editor_absoluteX="28dp"
-                    tools:layout_editor_absoluteY="43dp" />
+                    android:layout_height="match_parent">
+                    <ImageButton
+                        android:background="@android:color/transparent"
+                        android:layout_gravity="center_vertical"
+                        android:id="@+id/registrationRecyclerview_btn_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24"
+                        tools:layout_editor_absoluteX="28dp"
+                        tools:layout_editor_absoluteY="43dp" />
 
-                <ImageButton
-                    android:background="@android:color/transparent"
-                    android:layout_gravity="center_vertical"
-                    android:id="@+id/registrationRecyclerview_btn_home"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_baseline_home_24" />
+                    <ImageButton
+                        android:background="@android:color/transparent"
+                        android:layout_gravity="center_vertical"
+                        android:id="@+id/registrationRecyclerview_btn_home"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_baseline_home_24" />
+
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/registrationRecyclerview_et_search"

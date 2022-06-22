@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,7 +29,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -37,8 +44,8 @@ import kr.ac.kpu.diyequipmentapplication.MainActivity;
 import kr.ac.kpu.diyequipmentapplication.R;
 import kr.ac.kpu.diyequipmentapplication.chat.ChatStartActivity;
 import kr.ac.kpu.diyequipmentapplication.community.CommunityRecyclerview;
-import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationAdapter;
 import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationDTO;
+import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationAdapter;
 import kr.ac.kpu.diyequipmentapplication.equipment.RentalGoogleMap;
 import kr.ac.kpu.diyequipmentapplication.login.LoginActivity;
 import kr.ac.kpu.diyequipmentapplication.menu.MenuSettingActivity;
@@ -48,12 +55,11 @@ public class CartRecyclerview extends AppCompatActivity {
     FirebaseStorage mStorage;
     RecyclerView recyclerView;
     RegistrationAdapter registrationAdapter;
-    ArrayList<RegistrationDTO> equipmentRegistrationList;
-    ArrayList<RegistrationDTO> filteredEquipementList;
+    ArrayList<RegistrationDTO> cartRegistrationList;
+    ArrayList<RegistrationDTO> filteredCartList;
     ArrayList<String> equipList;
 
-    private FirebaseFirestore rRfirebaseFirestoreDB = null;
-    private FirebaseFirestore cartFirebaseFirestore = null;
+    private FirebaseFirestore cartFirebaseFirestoreDB = null;
 
     // 장비등록 페이지로 이동하는 버튼
     FloatingActionButton btnModelEnroll;
@@ -66,6 +72,7 @@ public class CartRecyclerview extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private Context context = this;
     private FirebaseAuth registrationListFirebaseAuth;     //FirebaseAuth 참조 변수 선언
+    private String userEmail;
 
 
     @Override
@@ -74,7 +81,7 @@ public class CartRecyclerview extends AppCompatActivity {
         setContentView(R.layout.activity_mycart_recyclerview);
 
         //RecyclerView 필드 참조
-        rRfirebaseFirestoreDB = FirebaseFirestore.getInstance();
+        cartFirebaseFirestoreDB = FirebaseFirestore.getInstance();
         mStorage = FirebaseStorage.getInstance();
         recyclerView = findViewById(R.id.communityRecyclerview_recyclerview);
         recyclerView.setHasFixedSize(true);
@@ -82,18 +89,17 @@ public class CartRecyclerview extends AppCompatActivity {
         //recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)); //리사이클러뷰 가로 화면
 
         //RecyclerView에 RegistrationAdapter 클래스 등록 구현
-        equipmentRegistrationList = new ArrayList<RegistrationDTO>();
-        registrationAdapter = new RegistrationAdapter(CartRecyclerview.this,equipmentRegistrationList);
+        cartRegistrationList = new ArrayList<RegistrationDTO>();
+        registrationAdapter = new RegistrationAdapter(CartRecyclerview.this,cartRegistrationList);
 
-
-        // 필터링 기준이 될 배열 리스트
+        //찜에 의해 필터링 될 EquipmentRegistration 리스트
         equipList = new ArrayList<String>();
         //검색에 의해 필터링 될 EquipmentRegistration 리스트
-        filteredEquipementList = new ArrayList<RegistrationDTO>();
+        filteredCartList = new ArrayList<RegistrationDTO>();
 
         recyclerView.setAdapter(registrationAdapter);
         btnModelEnroll = findViewById(R.id.registrationRecyclerview_fab);      // 장비등록 버튼
-        etSearch = findViewById(R.id.registrationRecyclerview_et_search);
+        etSearch = findViewById(R.id.cartRecyclerview_et_search);
 
         imgBtn_back = (ImageButton)findViewById(R.id.registrationRecyclerview_btn_back);
         imgBtn_home = (ImageButton)findViewById(R.id.registrationRecyclerview_btn_home);
@@ -113,11 +119,12 @@ public class CartRecyclerview extends AppCompatActivity {
         });
 
         registrationListFirebaseAuth = FirebaseAuth.getInstance();                  //FirebaseAuth 초기화 및 객체 참조
+        userEmail = registrationListFirebaseAuth.getCurrentUser().getEmail().toString().trim();
 
         //DIY_Signup DB에서 사용자 계정에 맞는 닉네임 가져오는 기능 구현.
         //사용자 이메일 정보와 일치하는 데이터를 DIY_Signup DB에서 찾아서 etNickname 참조 변수에 닉네임 값 참조.
-        rRfirebaseFirestoreDB.collection("DIY_Signup")
-                .whereEqualTo("userEmail", registrationListFirebaseAuth.getCurrentUser().getEmail().toString().trim())
+        cartFirebaseFirestoreDB.collection("DIY_Signup")
+                .whereEqualTo("userEmail", userEmail)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -131,8 +138,8 @@ public class CartRecyclerview extends AppCompatActivity {
                     }
                 });
 
-        rRfirebaseFirestoreDB.collection("DIY_Equipment_Rental")
-                .whereEqualTo("userEmail", registrationListFirebaseAuth.getCurrentUser().getEmail().toString().trim())
+        cartFirebaseFirestoreDB.collection("DIY_Equipment_Rental")
+                .whereEqualTo("userEmail", userEmail)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -146,49 +153,127 @@ public class CartRecyclerview extends AppCompatActivity {
                 });
 
         //Firestore DB 변경
-        rRfirebaseFirestoreDB.collection("DIY_MyCart")
+        cartFirebaseFirestoreDB.collection("DIY_MyCart")
+                .whereEqualTo("userEmail", userEmail.substring(0,userEmail.indexOf('@')))
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
-                        if(queryDocumentSnapshot.get("equipTitle").toString().trim() != null){
-                            equipList.add(queryDocumentSnapshot.get("equipTitle").toString());
-                            Log.e("DB","Is this work?"+equipList);
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
+                                if(queryDocumentSnapshot.get("equipTitle") != null){
+                                    equipList.add(queryDocumentSnapshot.get("equipTitle").toString().trim());
+                                    Log.e("DB","Is this work?"+equipList);
+                                }else{
+                                    Log.e("DB","It is empty");
+                                }
+                            }
                         }
                     }
-                }
-            });
 
+                });
 
         //Firestore DB에 등록된 장비 등록 정보 읽기 기능 구현
-        rRfirebaseFirestoreDB.collection("DIY_Equipment_Rental")
+        cartFirebaseFirestoreDB.collection("DIY_Equipment_Rental")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
-                                RegistrationDTO registrationDTO = new RegistrationDTO(
-                                        queryDocumentSnapshot.get("modelName").toString().trim(),
-                                        queryDocumentSnapshot.get("modelInform").toString().trim(),
-                                        queryDocumentSnapshot.get("rentalImage").toString().trim(),
-                                        queryDocumentSnapshot.get("rentalType").toString().trim(),
-                                        queryDocumentSnapshot.get("rentalCost").toString().trim(),
-                                        queryDocumentSnapshot.get("rentalAddress").toString().trim(),
-                                        queryDocumentSnapshot.get("userEmail").toString().trim(),
-                                        queryDocumentSnapshot.get("rentalDate").toString().trim(),
-                                        queryDocumentSnapshot.get("modelCategory1").toString().trim(),
-                                        queryDocumentSnapshot.get("modelCategory2").toString().trim(),
-                                        queryDocumentSnapshot.getId());
-                                equipmentRegistrationList.add(registrationDTO);
-                                filteredEquipementList.add(registrationDTO);
-                                registrationAdapter.notifyDataSetChanged();
+                                if(equipList.contains(queryDocumentSnapshot.get("modelName").toString())){
+                                    RegistrationDTO registrationDTO = new RegistrationDTO(
+                                            queryDocumentSnapshot.get("modelName").toString().trim(),
+                                            queryDocumentSnapshot.get("modelInform").toString().trim(),
+                                            queryDocumentSnapshot.get("rentalImage").toString().trim(),
+                                            queryDocumentSnapshot.get("rentalType").toString().trim(),
+                                            queryDocumentSnapshot.get("rentalCost").toString().trim(),
+                                            queryDocumentSnapshot.get("rentalAddress").toString().trim(),
+                                            queryDocumentSnapshot.get("userEmail").toString().trim(),
+                                            queryDocumentSnapshot.get("rentalDate").toString().trim(),
+                                            queryDocumentSnapshot.get("modelCategory1").toString().trim(),
+                                            queryDocumentSnapshot.get("modelCategory2").toString().trim(),
+                                            queryDocumentSnapshot.getId()
+                                            );
+                                    cartRegistrationList.add(registrationDTO);
+                                    filteredCartList.add(registrationDTO);
+                                    registrationAdapter.notifyDataSetChanged();
+                                }
                             }
                         }
                     }
                 });
-        /*
+
+        cartFirebaseFirestoreDB.collection("DIY_MyCart")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException error) {
+                        if(error != null){
+                            Log.e("Event",error.toString());
+                        }
+
+                        for (DocumentChange dc : snapshots.getDocumentChanges()) {
+                            switch (dc.getType()) {
+                                case ADDED:
+                                    if(dc.getDocument().get("modelName") == null){
+                                        return;
+                                    }
+                                    if(equipList.contains(dc.getDocument().get("modelName").toString())){
+                                        RegistrationDTO registrationDTO = new RegistrationDTO(
+                                                dc.getDocument().get("modelName").toString().trim(),
+                                                dc.getDocument().get("modelInform").toString().trim(),
+                                                dc.getDocument().get("rentalImage").toString().trim(),
+                                                dc.getDocument().get("rentalType").toString().trim(),
+                                                dc.getDocument().get("rentalCost").toString().trim(),
+                                                dc.getDocument().get("rentalAddress").toString().trim(),
+                                                dc.getDocument().get("userEmail").toString().trim(),
+                                                dc.getDocument().get("rentalDate").toString().trim(),
+                                                dc.getDocument().get("modelCategory1").toString().trim(),
+                                                dc.getDocument().get("modelCategory2").toString().trim(),
+                                                dc.getDocument().getId());
+                                        cartRegistrationList.add(registrationDTO);
+                                        registrationAdapter.notifyDataSetChanged();
+                                    }
+                                    Log.e("Event", "New city: " + dc.getDocument().getData());
+                                    break;
+                                case MODIFIED:
+                                    Log.e("Event", "Modified city: " + dc.getDocument().getData());
+                                    break;
+                                case REMOVED:
+                                    if(dc.getDocument().get("modelName") == null){
+                                        return;
+                                    }
+                                    if(equipList.contains(dc.getDocument().get("modelName").toString())){
+                                        RegistrationDTO registrationDTO = new RegistrationDTO(
+                                                dc.getDocument().get("modelName").toString().trim(),
+                                                dc.getDocument().get("modelInform").toString().trim(),
+                                                dc.getDocument().get("rentalImage").toString().trim(),
+                                                dc.getDocument().get("rentalType").toString().trim(),
+                                                dc.getDocument().get("rentalCost").toString().trim(),
+                                                dc.getDocument().get("rentalAddress").toString().trim(),
+                                                dc.getDocument().get("userEmail").toString().trim(),
+                                                dc.getDocument().get("rentalDate").toString().trim(),
+                                                dc.getDocument().get("modelCategory1").toString().trim(),
+                                                dc.getDocument().get("modelCategory2").toString().trim(),
+                                                dc.getDocument().getId());
+                                        cartRegistrationList.add(registrationDTO);
+                                        registrationAdapter.notifyDataSetChanged();
+                                    }
+                                    Log.e("Event", "Removed city: " + dc.getDocument().getData());
+                                    break;
+                            }
+                        }
+
+//                        for (DocumentChange dc : snapshots.getDocumentChanges()) {
+//                            if (dc.getType() == Type.ADDED) {
+//                                Log.d(TAG, "New city: " + dc.getDocument().getData());
+//                            }
+//                        }
+
+                    }
+                });
+
+
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -203,23 +288,23 @@ public class CartRecyclerview extends AppCompatActivity {
             public void afterTextChanged(Editable editable) {
                 String searchText = etSearch.getText().toString();
                 // 검색 필터링 구현
-                equipmentRegistrationList.clear();
+                cartRegistrationList.clear();
                 if(searchText.length()==0){
-                    equipmentRegistrationList.addAll(filteredEquipementList);
+                    cartRegistrationList.addAll(filteredCartList);
                 }
                 else{
-                    for( EquipmentRegistration equipment : filteredEquipementList)
+                    for( RegistrationDTO equipment : filteredCartList)
                     {
                         if(equipment.getModelName().contains(searchText)||equipment.getModelInform().contains(searchText))
                         {
-                            equipmentRegistrationList.add(equipment);
+                            cartRegistrationList.add(equipment);
                         }
                     }
                 }
                 registrationAdapter.notifyDataSetChanged();
             }
         });
-         */
+
 
 //        btnModelEnroll.setOnClickListener(new View.OnClickListener(){
 //            @Override
@@ -341,6 +426,24 @@ public class CartRecyclerview extends AppCompatActivity {
             }
         });
     }
+
+    public void readCart(){
+//        //Firestore DB 변경
+//        rRfirebaseFirestoreDB.collection("DIY_MyCart")
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
+//                            if(queryDocumentSnapshot.get("equipTitle").toString().trim() != null){
+//                                equipList.add(queryDocumentSnapshot.get("equipTitle").toString());
+//                                Log.e("DB","Is this work?"+equipList);
+//                            }
+//                        }
+//                    }
+//                });
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
