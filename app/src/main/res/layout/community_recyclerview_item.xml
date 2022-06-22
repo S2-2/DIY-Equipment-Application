@@ -28,11 +28,12 @@
             style="@style/style_tv_default_black14dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="356dp"
             android:ellipsize="end"
             android:gravity="left"
             android:hint="닉네임"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.043"
+            app:layout_constraintStart_toStartOf="parent"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteY="0dp" />
 
