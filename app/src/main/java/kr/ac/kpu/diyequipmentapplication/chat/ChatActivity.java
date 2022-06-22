@@ -60,8 +60,8 @@ public class ChatActivity extends AppCompatActivity {
     private String CHAT_USER_NICKNAME = null;
     private String CHAT_USER_TEXT = null;
 
-    private ArrayList<ChatDTO> chatModels;
-    private ChatDTO chatModel;
+    private ArrayList<ChatDTO> chatDTOS;
+    private ChatDTO chatDTO;
     private ChatAdapter chatAdapter;
 
     private ListView lvChatList;
@@ -111,8 +111,8 @@ public class ChatActivity extends AppCompatActivity {
         etChatMsg = (EditText) findViewById(R.id.chat_et_msg_box);
         btnChatSend = (Button) findViewById(R.id.chat_btn_msg_send);
         tvChatNum = (TextView) findViewById(R.id.chat_tv_room_num);
-        chatModels = new ArrayList<ChatDTO>();
-        chatAdapter = new ChatAdapter(chatModels, getLayoutInflater());
+        chatDTOS = new ArrayList<ChatDTO>();
+        chatAdapter = new ChatAdapter(chatDTOS, getLayoutInflater());
         lvChatList.setAdapter(chatAdapter);
         btnTransaction = (Button) findViewById(R.id.chatting_btn_transaction);
 
@@ -150,32 +150,32 @@ public class ChatActivity extends AppCompatActivity {
         tvChatNum.setText("ROOM" + "-" + CHAT_NUM);
         Log.e("LOG", "chatnum:"+CHAT_NUM);
         chatWithUser(CHAT_NUM);
-        
+
         btnChatSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            // 이름 비어있을시 리턴
-            if(etChatMsg.getText().toString().equals(""))
-                return;
-            else{
-                CHAT_USER_TEXT = etChatMsg.getText().toString();
-            }
+                // 이름 비어있을시 리턴
+                if(etChatMsg.getText().toString().equals(""))
+                    return;
+                else{
+                    CHAT_USER_TEXT = etChatMsg.getText().toString();
+                }
 
-            // 캘랜더 시간 가져오기
-            Calendar calendar = Calendar.getInstance();
-            String timestamp = calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE);
+                // 캘랜더 시간 가져오기
+                Calendar calendar = Calendar.getInstance();
+                String timestamp = calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE);
 
-            // firebaseDB에 데이터 저장
-            chatModel = new ChatDTO(CHAT_NUM, CHAT_USER_NICKNAME, CHAT_USER_EMAIL ,CHAT_USER_TEXT,timestamp);
-            chatRef.child(CHAT_NUM).push().setValue(chatModel);
+                // firebaseDB에 데이터 저장
+                chatDTO = new ChatDTO(CHAT_NUM, CHAT_USER_NICKNAME, CHAT_USER_EMAIL ,CHAT_USER_TEXT,timestamp);
+                chatRef.child(CHAT_NUM).push().setValue(chatDTO);
 
-            // 채팅알림 보내기
+                // 채팅알림 보내기
                 sendNotification(CHAT_USER_NICKNAME, CHAT_USER_EMAIL ,CHAT_USER_TEXT);
 
-            // 입력한 메세지 보냈으면 초기화
-            etChatMsg.setText("");
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
+                // 입력한 메세지 보냈으면 초기화
+                etChatMsg.setText("");
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
             }
         });
 
@@ -319,7 +319,7 @@ public class ChatActivity extends AppCompatActivity {
         final String[] getEmail = new String[1];
         chattingFirebaseFirestore = FirebaseFirestore.getInstance();
         ImageView imgView = findViewById(R.id.chatting_imgView);
-        TextView tvCategory = findViewById(R.id.chatting_tv_category);
+        TextView tvCatecory = findViewById(R.id.chatting_tv_category);
         TextView tvModelName = findViewById(R.id.chatting_tv_modelName);
         TextView tvUserName = findViewById(R.id.chatting_tv_userName);
         TextView tvRentalType = findViewById(R.id.chatting_tv_rentalType);
@@ -336,7 +336,7 @@ public class ChatActivity extends AppCompatActivity {
                             getImgaeUrl[0] = task.getResult().getString("rentalImage");
                             Picasso.get().load(getImgaeUrl[0]).into(imgView);
                             getEmail[0] = task.getResult().getString("userEmail");
-                            tvCategory.setText(task.getResult().getString("modelCategory1")+",\n"+
+                            tvCatecory.setText(task.getResult().getString("modelCategory1")+",\n"+
                                     task.getResult().getString("modelCategory2").toString().trim());
                             tvModelName.setText(task.getResult().getString("modelName"));
                             tvRentalType.setText(task.getResult().getString("rentalType"));
@@ -387,7 +387,7 @@ public class ChatActivity extends AppCompatActivity {
                                                     getImgaeUrl[0] = task.getResult().getString("rentalImage");
                                                     Picasso.get().load(getImgaeUrl[0]).into(imgView);
                                                     getEmail[0] = task.getResult().getString("userEmail");
-                                                    tvCategory.setText(task.getResult().getString("modelCategory1")+",\n"+
+                                                    tvCatecory.setText(task.getResult().getString("modelCategory1")+",\n"+
                                                             task.getResult().getString("modelCategory2").toString().trim());
                                                     tvModelName.setText(task.getResult().getString("modelName"));
                                                     tvRentalType.setText(task.getResult().getString("rentalType"));
@@ -431,9 +431,9 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 ChatDTO item = snapshot.getValue(ChatDTO.class);
-                chatModels.add(item);
+                chatDTOS.add(item);
                 chatAdapter.notifyDataSetChanged();;
-                lvChatList.setSelection(chatModels.size()-1);
+                lvChatList.setSelection(chatDTOS.size()-1);
             }
 
             @Override
@@ -500,39 +500,39 @@ public class ChatActivity extends AppCompatActivity {
 
     //거래 상세 페이지 커스텀 다이얼로그 기능 메소드
     private void showTransactionDialog() {
-            transactionFirebaseFirestore.collection("DIY_Schedule")
-                    .document(getTransactionDBId)
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            transactionDTO.settScheduleId(getTransactionDBId);
-                            transactionDTO.settStartDate(task.getResult().getString("sStartDate"));
-                            transactionDTO.settExpirationDate(task.getResult().getString("sExpirationDate"));
-                            transactionDTO.settTotalLendingPeriod(task.getResult().getString("sTotalLendingPeriod"));
-                            transactionDTO.settTotalRental(task.getResult().getString("sTotalRental"));
-                            transactionDTO.settTransactionDate(task.getResult().getString("sTransactionDate"));
-                            transactionDTO.settTransactionTime(task.getResult().getString("sTransactionTime"));
-                            transactionDTO.settTransactionLocation(task.getResult().getString("sTransactionLocation"));
+        transactionFirebaseFirestore.collection("DIY_Schedule")
+                .document(getTransactionDBId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        transactionDTO.settScheduleId(getTransactionDBId);
+                        transactionDTO.settStartDate(task.getResult().getString("sStartDate"));
+                        transactionDTO.settExpirationDate(task.getResult().getString("sExpirationDate"));
+                        transactionDTO.settTotalLendingPeriod(task.getResult().getString("sTotalLendingPeriod"));
+                        transactionDTO.settTotalRental(task.getResult().getString("sTotalRental"));
+                        transactionDTO.settTransactionDate(task.getResult().getString("sTransactionDate"));
+                        transactionDTO.settTransactionTime(task.getResult().getString("sTransactionTime"));
+                        transactionDTO.settTransactionLocation(task.getResult().getString("sTransactionLocation"));
 
-                            Picasso.get().load(transactionDTO.gettImgView()).into(imgViewT);
-                            tvTcategory.setText(transactionDTO.gettCategory());
-                            tvTmodelName.setText(transactionDTO.gettModelName());
-                            tvTuserName.setText(transactionDTO.gettUserName());
-                            tvTrentalType.setText(transactionDTO.gettRentalType());
-                            tvTrentalDate.setText(transactionDTO.gettRentalDate());
-                            tvTrentalCost.setText(transactionDTO.gettRentalCost());
+                        Picasso.get().load(transactionDTO.gettImgView()).into(imgViewT);
+                        tvTcategory.setText(transactionDTO.gettCategory());
+                        tvTmodelName.setText(transactionDTO.gettModelName());
+                        tvTuserName.setText(transactionDTO.gettUserName());
+                        tvTrentalType.setText(transactionDTO.gettRentalType());
+                        tvTrentalDate.setText(transactionDTO.gettRentalDate());
+                        tvTrentalCost.setText(transactionDTO.gettRentalCost());
 
-                            tvTstartDate.setText(transactionDTO.gettStartDate());
-                            tvTexpirationDate.setText(transactionDTO.gettExpirationDate());
-                            tvTtotalLendingPeriod.setText(transactionDTO.gettTotalLendingPeriod());
-                            tvTtotalRental.setText(transactionDTO.gettTotalRental());
-                            tvTtransactionDate.setText(transactionDTO.gettTransactionDate());
-                            tvTtransactionTime.setText(transactionDTO.gettTransactionTime());
-                            tvTtransactionLocation.setText(transactionDTO.gettTransactionLocation());
+                        tvTstartDate.setText(transactionDTO.gettStartDate());
+                        tvTexpirationDate.setText(transactionDTO.gettExpirationDate());
+                        tvTtotalLendingPeriod.setText(transactionDTO.gettTotalLendingPeriod());
+                        tvTtotalRental.setText(transactionDTO.gettTotalRental());
+                        tvTtransactionDate.setText(transactionDTO.gettTransactionDate());
+                        tvTtransactionTime.setText(transactionDTO.gettTransactionTime());
+                        tvTtransactionLocation.setText(transactionDTO.gettTransactionLocation());
 
-                        }
-                    });
+                    }
+                });
         transactionDialog.show();
     }
 }
