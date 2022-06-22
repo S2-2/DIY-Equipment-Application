@@ -24,6 +24,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -89,6 +90,7 @@ public class RentalHistoryAdapter extends RecyclerView.Adapter<RentalHistoryAdap
 
         Button btnTchatting, btnTreturn;
         String getTransactionDBId;
+        String getTransactionChatNum;
 
         //ViewHolder 클래스 생성자
         public ViewHolder(@NonNull View itemView) {
@@ -129,10 +131,13 @@ public class RentalHistoryAdapter extends RecyclerView.Adapter<RentalHistoryAdap
             btnTchatting = transactionDialog.findViewById(R.id.transaction_btn_chatting);
             btnTreturn = transactionDialog.findViewById(R.id.transaction_btn_return);
 
+
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int pos = getBindingAdapterPosition();
+
                     if (pos != RecyclerView.NO_POSITION) {
                         TransactionDTO transactionDTO = transactionDTOList.get(pos);
 
@@ -145,10 +150,22 @@ public class RentalHistoryAdapter extends RecyclerView.Adapter<RentalHistoryAdap
                                         if (task.isSuccessful()) {
                                             for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
                                                 getTransactionDBId = queryDocumentSnapshot.getId();
+
+                                                transactionFirebaseFirestore.collection("DIY_Schedule")
+                                                        .document(transactionDTO.gettScheduleId())
+                                                        .get()
+                                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                getTransactionChatNum = task.getResult().getString("sChatNum");
+                                                            }
+                                                        });
                                             }
                                         }
                                     }
                                 });
+
+
 
                         Picasso.get().load(transactionDTO.gettImgView()).into(imgViewT);
                         tvTcategory.setText(transactionDTO.gettCategory());
@@ -172,8 +189,9 @@ public class RentalHistoryAdapter extends RecyclerView.Adapter<RentalHistoryAdap
                             @Override
                             public void onClick(View view) {
                                 Intent intent = new Intent(context, ChatActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                //intent.putExtra("ModelCollectionId", transactionDTO.getid.getCommunityContent());
+                                intent.putExtra("chatNum", getTransactionChatNum);
                                 context.startActivity(intent);
+                                Log.d("getChatnum", getTransactionChatNum);
                             }
                         });
 
@@ -195,7 +213,7 @@ public class RentalHistoryAdapter extends RecyclerView.Adapter<RentalHistoryAdap
                                         Map<String, Object> rentalHistoryUpdate = new HashMap<String, Object>();
                                         rentalHistoryUpdate.put("tTransactionCondition", transactionDTO.gettTransactionCondition());
 
-                                        if (transactionDTO.gettTransactionCondition() != null) {
+                                        if (!(transactionDTO.gettTransactionCondition().equals(transactionCondition))) {
                                             transactionFirebaseFirestore.collection("DIY_Transaction")
                                                     .document(getTransactionDBId)
                                                     .update(rentalHistoryUpdate)
@@ -215,8 +233,7 @@ public class RentalHistoryAdapter extends RecyclerView.Adapter<RentalHistoryAdap
                                             Toast.makeText(context, "공구 반납 완료 되었습니다!", Toast.LENGTH_SHORT).show();
 
                                         } else {
-                                            Toast.makeText(context, "반납 정보 설정을 할 수 없습니다!", Toast.LENGTH_SHORT).show();
-                                            Toast.makeText(context, "반납 설정 다시 입력하세요!", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(context, "반납 완료된 공구입니다!", Toast.LENGTH_SHORT).show();
                                         }
                                         transactionDialog.dismiss();
                                     }
