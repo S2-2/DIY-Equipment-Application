@@ -391,7 +391,6 @@ public class ScheduleActivity extends AppCompatActivity {
                     }
                 });
                 dlg.show();
-
             }
         });
     }
