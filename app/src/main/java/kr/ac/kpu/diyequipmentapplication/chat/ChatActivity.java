@@ -53,8 +53,8 @@ public class ChatActivity extends AppCompatActivity {
     private String CHAT_USER_NICKNAME = null;
     private String CHAT_USER_TEXT = null;
 
-    private ArrayList<ChatModel> chatModels;
-    private ChatModel chatModel;
+    private ArrayList<ChatDTO> chatModels;
+    private ChatDTO chatModel;
     private ChatAdapter chatAdapter;
 
     private ListView lvChatList;
@@ -90,7 +90,7 @@ public class ChatActivity extends AppCompatActivity {
         etChatMsg = (EditText) findViewById(R.id.chat_et_msg_box);
         btnChatSend = (Button) findViewById(R.id.chat_btn_msg_send);
         tvChatNum = (TextView) findViewById(R.id.chat_tv_room_num);
-        chatModels = new ArrayList<ChatModel>();
+        chatModels = new ArrayList<ChatDTO>();
         chatAdapter = new ChatAdapter(chatModels, getLayoutInflater());
         lvChatList.setAdapter(chatAdapter);
 
@@ -144,7 +144,7 @@ public class ChatActivity extends AppCompatActivity {
             String timestamp = calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE);
 
             // firebaseDB에 데이터 저장
-            chatModel = new ChatModel(CHAT_NUM, CHAT_USER_NICKNAME, CHAT_USER_EMAIL ,CHAT_USER_TEXT,timestamp);
+            chatModel = new ChatDTO(CHAT_NUM, CHAT_USER_NICKNAME, CHAT_USER_EMAIL ,CHAT_USER_TEXT,timestamp);
             chatRef.child(CHAT_NUM).push().setValue(chatModel);
 
             // 채팅알림 보내기
@@ -177,7 +177,7 @@ public class ChatActivity extends AppCompatActivity {
         final String[] getEmail = new String[1];
         chattingFirebaseFirestore = FirebaseFirestore.getInstance();
         ImageView imgView = findViewById(R.id.chatting_imgView);
-        TextView tvCatecory = findViewById(R.id.chatting_tv_category);
+        TextView tvCategory = findViewById(R.id.chatting_tv_category);
         TextView tvModelName = findViewById(R.id.chatting_tv_modelName);
         TextView tvUserName = findViewById(R.id.chatting_tv_userName);
         TextView tvRentalType = findViewById(R.id.chatting_tv_rentalType);
@@ -194,7 +194,7 @@ public class ChatActivity extends AppCompatActivity {
                             getImgaeUrl[0] = task.getResult().getString("rentalImage");
                             Picasso.get().load(getImgaeUrl[0]).into(imgView);
                             getEmail[0] = task.getResult().getString("userEmail");
-                            tvCatecory.setText(task.getResult().getString("modelCategory1")+",\n"+
+                            tvCategory.setText(task.getResult().getString("modelCategory1")+",\n"+
                                     task.getResult().getString("modelCategory2").toString().trim());
                             tvModelName.setText(task.getResult().getString("modelName"));
                             tvRentalType.setText(task.getResult().getString("rentalType"));
@@ -236,7 +236,7 @@ public class ChatActivity extends AppCompatActivity {
                                                     getImgaeUrl[0] = task.getResult().getString("rentalImage");
                                                     Picasso.get().load(getImgaeUrl[0]).into(imgView);
                                                     getEmail[0] = task.getResult().getString("userEmail");
-                                                    tvCatecory.setText(task.getResult().getString("modelCategory1")+",\n"+
+                                                    tvCategory.setText(task.getResult().getString("modelCategory1")+",\n"+
                                                             task.getResult().getString("modelCategory2").toString().trim());
                                                     tvModelName.setText(task.getResult().getString("modelName"));
                                                     tvRentalType.setText(task.getResult().getString("rentalType"));
@@ -270,7 +270,7 @@ public class ChatActivity extends AppCompatActivity {
         chatRef.child(chat_num).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                ChatModel item = snapshot.getValue(ChatModel.class);
+                ChatDTO item = snapshot.getValue(ChatDTO.class);
                 chatModels.add(item);
                 chatAdapter.notifyDataSetChanged();;
                 lvChatList.setSelection(chatModels.size()-1);
@@ -295,7 +295,7 @@ public class ChatActivity extends AppCompatActivity {
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        final FcmDataModel userData = dataSnapshot.getValue(FcmDataModel.class);
+                        final FcmDTO userData = dataSnapshot.getValue(FcmDTO.class);
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
