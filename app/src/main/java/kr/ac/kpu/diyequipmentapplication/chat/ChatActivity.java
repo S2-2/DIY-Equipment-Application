@@ -179,6 +179,18 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+//        private void systemMsg(){
+//            String sysMessage = null;
+//            // 캘랜더 시간 가져오기
+//            Calendar calendar = Calendar.getInstance();
+//            String timestamp = calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE);
+//
+//            // firebaseDB에 데이터 저장
+//            chatDTO = new ChatDTO(CHAT_NUM, "거래도우미", "-" ,sysMessage,timestamp);
+//            chatRef.child(CHAT_NUM).push().setValue(chatDTO);
+//
+//        };
+
         //거래일정 버튼 클릭 이벤트
         btnTransactionSchedule = (Button) findViewById(R.id.chatting_btn_transactionSchedule);
         btnTransactionSchedule.setOnClickListener(new View.OnClickListener() {
