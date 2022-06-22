@@ -4,9 +4,12 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +38,7 @@ import java.util.ArrayList;
 import kr.ac.kpu.diyequipmentapplication.MainActivity;
 import kr.ac.kpu.diyequipmentapplication.R;
 import kr.ac.kpu.diyequipmentapplication.chat.ChatStartActivity;
+import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationDTO;
 import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationRecyclerview;
 import kr.ac.kpu.diyequipmentapplication.equipment.RentalGoogleMap;
 import kr.ac.kpu.diyequipmentapplication.login.LoginActivity;
@@ -53,6 +57,7 @@ public class CommunityRecyclerview extends AppCompatActivity {
 
     private ImageButton imgBtn_back = null;
     private ImageButton imgBtn_home = null;
+    private EditText edtCommunity = null;
 
     //네비게이션 드로어 참조 변수
     private DrawerLayout mDrawerLayout;
@@ -84,6 +89,7 @@ public class CommunityRecyclerview extends AppCompatActivity {
 
         imgBtn_back = (ImageButton)findViewById(R.id.registrationRecyclerview_btn_back);
         imgBtn_home = (ImageButton)findViewById(R.id.registrationRecyclerview_btn_home);
+        edtCommunity = (EditText)findViewById(R.id.communityRecyclerview_et_search);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View nav_header_view = navigationView.getHeaderView(0);
@@ -155,6 +161,37 @@ public class CommunityRecyclerview extends AppCompatActivity {
                     }
                 });
 
+        edtCommunity.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String searchText = edtCommunity.getText().toString();
+                // 검색 필터링 구현
+                communityRegistrationArrayList.clear();
+                if(searchText.length()==0){
+                    communityRegistrationArrayList.addAll(filteredCommunityRegistrationArrayList);
+                }
+                else{
+                    for( CommunityRegistration equipment : filteredCommunityRegistrationArrayList)
+                    {
+                        if(equipment.getCommunityContent().toUpperCase().contains(searchText.toUpperCase()) || equipment.getCommunityTitle().toUpperCase().contains(searchText.toUpperCase()))
+                        {
+                            communityRegistrationArrayList.add(equipment);
+                        }
+                    }
+                }
+                communityAdapter.notifyDataSetChanged();
+            }
+        });
+
         btnModelEnroll.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -180,8 +217,6 @@ public class CommunityRecyclerview extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
 
         //네비게이션 드로어 기능 구현
         androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
