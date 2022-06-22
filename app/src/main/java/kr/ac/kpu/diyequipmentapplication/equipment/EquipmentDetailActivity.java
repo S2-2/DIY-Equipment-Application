@@ -24,6 +24,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -48,7 +49,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
     private ImageView ivRentalImage;
     private TextView etUserNickname, etTitle, etExplanation, etRentalType, etRentalCost, etUserLocation, etRentalPeriod, etCategory;
     private Button btnChat;
-    private String getImageUrl, userEmail, getTitle = null;
+    private String getImageUrl, userEmail, otherEmail, getTitle = null;
     private DecimalFormat decimalFormat;
     private String getRentalFeeCost, temp, getRentalAddress;
     private int temNum;
@@ -142,6 +143,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
         equipmentDetailFirebaseFirestore = FirebaseFirestore.getInstance();        //파이어스토어 초기화 및 객체 참조
         cartFirebaseFirestoreDB = FirebaseFirestore.getInstance();
         userEmail = equipmentDetailFirebaseAuth.getCurrentUser().getEmail().toString().trim();
+        otherEmail = intent.getStringExtra("UserEmail");
 
         //DIY_Signup DB에서 사용자 계정에 맞는 닉네임 가져오는 기능 구현.
         //사용자 이메일 정보와 일치하는 데이터를 DIY_Signup DB에서 찾아서 etNickname 참조 변수에 닉네임 값 참조.
@@ -180,8 +182,9 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                 Intent intent = new Intent(EquipmentDetailActivity.this, ChatActivity.class);
                 //intent.putExtra("RentalCost", temp);
                 intent.putExtra("ModelCollectionId", getModelCollectionId);
-                intent.putExtra("ModelOwnerEmail", intent.getStringExtra("UserEmail"));
-                Log.e("ModelOwner", "Email " + intent.getStringExtra("UserEmail"));
+
+                intent.putExtra("ModelOwnerEmail", otherEmail);
+                Log.e("ModelOwner", "Email " + otherEmail);
                 startActivity(intent);
             }
         });

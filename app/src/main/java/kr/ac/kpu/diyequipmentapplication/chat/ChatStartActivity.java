@@ -26,18 +26,17 @@ public class ChatStartActivity extends AppCompatActivity  {
 
     private static final String TAG = "ChatStartAct";
 
-    private EditText edtChatNum;
-    private Button btnGo;
     private ListView lvChatList;
 
     private FirebaseAuth chatAuth = null;
     private FirebaseDatabase chatFDB = FirebaseDatabase.getInstance();
     private DatabaseReference chatRef = chatFDB.getReference().child("DIY_Chat");
-    private FirebaseFirestore signFDB = FirebaseFirestore.getInstance();
 
     // chat 리스트에 입력될 변수들
     private String CHAT_USER_EMAIL = null;
     private String CHAT_OTHER_NICKNAME = null;
+
+    private Boolean myRoom = false;
 
     private ArrayList<ChatDTO> chatStartLists;
     private ChatDTO chatDTO;
@@ -71,11 +70,12 @@ public class ChatStartActivity extends AppCompatActivity  {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     for(DataSnapshot ds : snapshot.getChildren() ){
                         chatDTO = ds.getValue(ChatDTO.class);
+                        CHAT_OTHER_NICKNAME = chatDTO.getUserNickname();
                         if(!chatDTO.getUserEmail().equals(CHAT_USER_EMAIL)){
                             CHAT_OTHER_NICKNAME = chatDTO.getUserNickname();
                         }
-
                     }
+
                     chatDTO.setUserNickname(CHAT_OTHER_NICKNAME);
                     chatStartLists.add(chatDTO);
                 }
