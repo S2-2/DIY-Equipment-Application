@@ -143,11 +143,12 @@ public class CommunityDetailActivity extends AppCompatActivity {
                 final String getComment = etComment.getText().toString();
                 final String getNickname = nav_header_nickname.getText().toString();
                 final String getDate = commentGetDate;
+                final String getHostNickname = tempNickname;
 
                 //공급자가 입력한 데이터 등록 성공
                 if (!(getComment.isEmpty()))
                 {
-                    CommunityComment communityComment = new CommunityComment(getLike, getComment, getNickname, getDate);
+                    CommunityComment communityComment = new CommunityComment(getLike, getComment, getNickname, getDate, getHostNickname);
                     communityDetailFirebaseFirestore.collection("DIY_Equipment_CommunityComment").document().set(communityComment);
                     Toast.makeText(getApplicationContext(), "댓글 추가했습니다!", Toast.LENGTH_SHORT).show();
                 } else {
@@ -160,6 +161,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(CommunityDetailActivity.this, CommunityCommentRecyclerview.class);
+                intent.putExtra("hostNickname", tempNickname);
                 startActivity(intent);
             }
         });

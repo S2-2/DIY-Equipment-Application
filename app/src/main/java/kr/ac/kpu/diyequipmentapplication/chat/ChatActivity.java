@@ -115,7 +115,6 @@ public class ChatActivity extends AppCompatActivity {
         chatDTOS = new ArrayList<ChatDTO>();
         chatAdapter = new ChatAdapter(chatDTOS, getLayoutInflater());
         lvChatList.setAdapter(chatAdapter);
-        btnTransaction = (Button) findViewById(R.id.chatting_btn_transactionSchedule);
 
         // 사용자 이메일 및 닉네임 가져오기
         CHAT_USER_EMAIL = chatAuth.getCurrentUser().getEmail().toString();
@@ -298,6 +297,7 @@ public class ChatActivity extends AppCompatActivity {
                 });
 
         //거래 버큰 클릭 이벤트
+        btnTransaction = (Button) findViewById(R.id.chatting_btn_transaction);
         btnTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

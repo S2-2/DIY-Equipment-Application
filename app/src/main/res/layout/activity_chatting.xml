@@ -197,6 +197,7 @@
             android:text="거래 일정" />
 
         <Button
+            android:id="@+id/chatting_btn_transaction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
