@@ -60,7 +60,7 @@ public class ChatStartActivity extends AppCompatActivity  {
         chatStartLists = new ArrayList<ChatDTO>();
         chatStartAdapter = new ChatStartAdapter(ChatStartActivity.this,chatStartLists, getLayoutInflater());
         lvChatList.setAdapter(chatStartAdapter);
-        CHAT_OTHER_NICKNAME = " ";
+        CHAT_OTHER_NICKNAME = "(응답대기중)";
 
 
         chatRef.addValueEventListener(new ValueEventListener() {
@@ -82,9 +82,8 @@ public class ChatStartActivity extends AppCompatActivity  {
                     }
 
                     chatDTO.setUserNickname(CHAT_OTHER_NICKNAME);
-                    if(myRoom){
-                        chatStartLists.add(chatDTO);
-                    }
+
+                    chatStartLists.add(chatDTO);
                 }
                 chatStartAdapter.notifyDataSetChanged();
             }
