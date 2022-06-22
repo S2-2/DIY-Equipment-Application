@@ -117,15 +117,13 @@
                                 android:id="@+id/communityDetail_tv_location"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="작성자 위치"
-                                android:textColor="@color/black" />
+                                android:text="작성자 위치" />
                             <TextView
                                 style="@style/style_tv_default_black16dp"
                                 android:id="@+id/communityDetail_tv_time"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="작성 시간"
-                                android:textColor="@color/black" />
+                                android:text="작성 시간" />
                         </LinearLayout>
 
 
@@ -145,6 +143,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        style="@style/style_tv_default_black18dp"
                         android:id="@+id/communityDetail_tv_contents"
                         android:layout_width="match_parent"
                         android:layout_height="200dp" />
