@@ -271,6 +271,10 @@ public class ChatActivity extends AppCompatActivity {
                             //firestore DB에 저장
                             transactionFirebaseFirestore.collection("DIY_Transaction").document().set(transactionDTO);
                             Toast.makeText(ChatActivity.this, "거래가 완료 되었습니다!", Toast.LENGTH_SHORT).show();
+
+                            // 시스템메시지 출력
+                            systemTransMsg(transactionDTO, CHAT_NUM);
+
                             Intent transactionIntent = new Intent(ChatActivity.this, RentalHistoryRecyclerviewActivity.class);
                             startActivity(transactionIntent);
 
@@ -547,5 +551,25 @@ public class ChatActivity extends AppCompatActivity {
                     }
                 });
         transactionDialog.show();
+    }
+
+    private void systemTransMsg(TransactionDTO transactionDTO, String chatNum) {
+         chatFDB= FirebaseDatabase.getInstance();
+         chatRef = chatFDB.getReference().child("DIY_Chat");
+        String result = null;
+
+        Calendar calendar = Calendar.getInstance();
+        String timestamp = calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE);
+
+//            result = String.format("거래일정이 수정되었습니다.\n 총 대여일: %s\n 총 비용: %s\n 거래일: %s\n 거래시간: %s\n 거래장소: %s",
+//                    transactionDTO.getsTotalLendingPeriod(),
+//                    transactionDTO.getsTotalRental(),
+//                    transactionDTO.getsTransactionDate(),
+//                    transactionDTO.getsTransactionTime(),
+//                    transactionDTO.getsTransactionLocation());
+        result = String.format("거래가 성립되었습니다.\n 서로가 서로를 존중하는 아름다운 거래되시길 바랍니다..");
+
+        chatDTO = new ChatDTO(chatNum, "거래도우미", "-", result, timestamp);
+        chatRef.child(chatNum).push().setValue(chatDTO);
     }
 }
