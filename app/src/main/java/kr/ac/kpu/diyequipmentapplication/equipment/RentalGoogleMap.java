@@ -19,6 +19,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -171,6 +172,14 @@ public class RentalGoogleMap extends AppCompatActivity implements OnMapReadyCall
     @Override
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;       //구글맵 객체 참조
+
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(
+                new LatLng(37.555744, 126.970431)   // 서울역 근처 위도, 경도
+        ));
+
+        // 구글지도(지구) 에서의 zoom 레벨은 1~23 까지 가능
+        CameraUpdate zoom = CameraUpdateFactory.zoomTo(10);
+        googleMap.animateCamera(zoom);
 
         rentalMapFirebaseFirestore.collection("DIY_Equipment_Rental")
                 .get()
