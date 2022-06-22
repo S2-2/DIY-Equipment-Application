@@ -215,7 +215,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
                             for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
                                 if(queryDocumentSnapshot.get("equipTitle") != null && queryDocumentSnapshot.get("equipTitle").equals(getTitle)){
-                                    imgBtnCart.setImageResource(R.drawable.ic_baseline_favorite_border_red_24);
+                                    imgBtnCart.setImageResource(R.drawable.ic_baseline_favorite_24);
                                     Ok = false;
                                 }else{
                                     Log.e("DB","It is empty");
@@ -230,7 +230,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 cartActivty = new CartActivty();
                 if(Ok== true){
-                    imgBtnCart.setImageResource(R.drawable.ic_baseline_favorite_border_red_24);
+                    imgBtnCart.setImageResource(R.drawable.ic_baseline_favorite_24);
                     Ok = false;
                     Toast.makeText(view.getContext(), "찜 목록에 추가", Toast.LENGTH_SHORT).show();
                     Log.e("Click","ImageButton is Clicked");
