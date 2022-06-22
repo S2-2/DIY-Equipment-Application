@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +36,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import java.util.ArrayList;
 
 import kr.ac.kpu.diyequipmentapplication.MainActivity;
+import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationDTO;
 import kr.ac.kpu.diyequipmentapplication.R;
 import kr.ac.kpu.diyequipmentapplication.chat.ChatStartActivity;
 import kr.ac.kpu.diyequipmentapplication.community.CommunityRecyclerview;
@@ -85,7 +88,7 @@ public class RegistrationRecyclerview extends AppCompatActivity {
 
         recyclerView.setAdapter(registrationAdapter);
         btnModelEnroll = findViewById(R.id.registrationRecyclerview_fab);      // 장비등록 버튼
-        etSearch = findViewById(R.id.registrationRecyclerview_et_search);
+        etSearch = findViewById(R.id.communityRecyclerview_et_search);
 
         imgBtn_back = (ImageButton)findViewById(R.id.registrationRecyclerview_btn_back);
         imgBtn_home = (ImageButton)findViewById(R.id.registrationRecyclerview_btn_home);
@@ -165,7 +168,7 @@ public class RegistrationRecyclerview extends AppCompatActivity {
                         }
                     }
                 });
-        /*
+
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -185,7 +188,7 @@ public class RegistrationRecyclerview extends AppCompatActivity {
                     equipmentRegistrationList.addAll(filteredEquipementList);
                 }
                 else{
-                    for( EquipmentRegistration equipment : filteredEquipementList)
+                    for( RegistrationDTO equipment : filteredEquipementList)
                     {
                         if(equipment.getModelName().contains(searchText)||equipment.getModelInform().contains(searchText))
                         {
@@ -196,7 +199,7 @@ public class RegistrationRecyclerview extends AppCompatActivity {
                 registrationAdapter.notifyDataSetChanged();
             }
         });
-         */
+
 
         btnModelEnroll.setOnClickListener(new View.OnClickListener(){
             @Override
