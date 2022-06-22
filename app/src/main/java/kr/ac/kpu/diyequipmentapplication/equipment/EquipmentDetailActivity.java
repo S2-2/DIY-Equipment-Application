@@ -94,7 +94,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
         etCategory.setText(intent.getStringExtra("ModelCategory1") + " > " + intent.getStringExtra("ModelCategory2"));
         etRentalType.setText(intent.getStringExtra("RentalType"));
         //etRentalAddress.setText("RentalAddress : "+intent.getStringExtra("RentalAddress"));
-        etUserNickname.setText("등록자 이메일: " + intent.getStringExtra("UserEmail"));
+        etUserNickname.setText("등록자: " + intent.getStringExtra("UserEmail"));
         etRentalPeriod.setText(intent.getStringExtra("RentalDate"));
         //etRentalCost.setText("RentalCost : "+intent.getStringExtra("RentalCost"));
         temp = intent.getStringExtra("RentalCost");

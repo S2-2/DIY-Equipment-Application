@@ -99,12 +99,6 @@
                         android:layout_height="wrap_content" />
 
                     <TextView
-                        style="@style/style_tv_bold_black18dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="원 " />
-
-                    <TextView
                         style="@style/style_tv_default_black18dp"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
