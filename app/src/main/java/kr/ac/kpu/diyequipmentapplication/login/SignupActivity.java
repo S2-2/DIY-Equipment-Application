@@ -166,12 +166,11 @@ public class SignupActivity extends AppCompatActivity {
                                             tvCheckEmail.setTextColor(Color.RED);
                                             tvCheckEmail.setText("등록된 이메일 계정입니다!");
                                             etUserEmail.setBackgroundResource(R.drawable.red_etittext);
-
+                                            break;
                                         } else if (getEmail.isEmpty()) {
                                             flagEmail = false;
                                             tvCheckEmail.setText("");
                                             etUserEmail.setBackgroundResource(R.drawable.white_edittext);
-
                                         } else if (android.util.Patterns.EMAIL_ADDRESS.matcher(editable.toString()).matches()){
                                             flagEmail = true;
                                             tvCheckEmail.setTextColor(Color.BLUE);
