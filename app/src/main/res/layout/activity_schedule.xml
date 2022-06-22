@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".equipment.ScheduleActivity">
-<!-- 채팅에서 버튼으로 넘어와 거래 관련 일정을 설정하는 첫 거래 액티비티 -->
+    <!-- 채팅에서 버튼으로 넘어와 거래 관련 일정을 설정하는 첫 거래 액티비티 -->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,11 +22,11 @@
             app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24" />
 
         <TextView
-                android:layout_width="match_parent"
-                android:gravity="center"
-                android:layout_height="wrap_content"
-                android:text="거래 정보 설정"
-                android:textSize="24dp" />
+            style="@style/style_tv_default_black24dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="거래 정보 설정" />
     </LinearLayout>
 
     <!---->
@@ -45,24 +45,23 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="20dp"
-                android:orientation="vertical" >
+                android:orientation="vertical"
+                android:padding="20dp">
 
                 <TextView
+                    style="@style/style_tv_default_black18dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
                     android:gravity="center_horizontal"
                     android:text="대여 기간 설정 및 가격"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
+                    android:textSize="20dp" />
 
                 <TextView
+                    style="@style/style_tv_default_black18dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="18dp"
-                    android:textStyle="bold"
                     android:text="대여 기간" />
 
                 <LinearLayout
@@ -72,6 +71,7 @@
 
                     <TextView
                         android:id="@+id/schedule_tv_lendingPeriod"
+                        style="@style/style_tv_default_black14dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -79,16 +79,16 @@
 
                     <Button
                         android:id="@+id/schedule_btn_lendingPeriod"
+                        style="@style/style_tv_default_black14dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="대여 기간 설정" />
                 </LinearLayout>
 
                 <TextView
+                    style="@style/style_tv_default_black18dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="18dp"
-                    android:textStyle="bold"
                     android:text="대여비 확인" />
 
                 <LinearLayout
@@ -98,6 +98,7 @@
 
                     <TextView
                         android:id="@+id/schedule_tv_rental"
+                        style="@style/style_tv_default_black14dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -105,6 +106,7 @@
 
                     <Button
                         android:id="@+id/schedule_btn_rental"
+                        style="@style/style_tv_default_black14dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="대여비 계산" />
@@ -117,20 +119,19 @@
                     android:background="@color/black" />
 
                 <TextView
+                    style="@style/style_tv_default_black18dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="거래 일시 및 장소 설정"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
+                    android:gravity="center_horizontal"
+                    android:text="거래 일시 및 장소 설정"
+                    android:textSize="20dp" />
 
                 <TextView
+                    style="@style/style_tv_default_black18dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="18dp"
-                    android:textStyle="bold"
                     android:text="거래 날짜" />
 
                 <LinearLayout
@@ -140,6 +141,7 @@
 
                     <TextView
                         android:id="@+id/schedule_tv_transactionDate"
+                        style="@style/style_tv_default_black14dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -147,16 +149,16 @@
 
                     <Button
                         android:id="@+id/schedule_btn_transactionDate"
+                        style="@style/style_tv_default_black14dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="거래 날짜 설정" />
                 </LinearLayout>
 
                 <TextView
+                    style="@style/style_tv_default_black18dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="18dp"
-                    android:textStyle="bold"
                     android:text="거래 시간" />
 
                 <LinearLayout
@@ -166,6 +168,7 @@
 
                     <TextView
                         android:id="@+id/schedule_tv_transactionTime"
+                        style="@style/style_tv_default_black14dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -173,16 +176,16 @@
 
                     <Button
                         android:id="@+id/schedule_btn_transactionTime"
+                        style="@style/style_tv_default_black14dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="거래 시간 설정" />
                 </LinearLayout>
 
                 <TextView
+                    style="@style/style_tv_default_black18dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="18dp"
-                    android:textStyle="bold"
                     android:text="거래 장소" />
 
                 <LinearLayout
@@ -192,6 +195,7 @@
 
                     <TextView
                         android:id="@+id/schedule_tv_transactionLocation"
+                        style="@style/style_tv_default_black14dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -199,6 +203,7 @@
 
                     <Button
                         android:id="@+id/schedule_btn_transactionLocation"
+                        style="@style/style_tv_default_black14dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="거래 장소 설정" />
@@ -210,28 +215,31 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:gravity="center"
-                    android:layout_marginTop="20dp"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
                     android:orientation="horizontal">
+
                     <Button
                         android:id="@+id/schedule_btn_update"
-                        android:layout_margin="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
                         android:text="수정" />
-                    <Button
-                        android:id="@+id/schedule_btn_setup"
-                        android:layout_margin="10dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="설정" />
+
                     <Button
                         android:id="@+id/schedule_btn_delete"
-                        android:layout_margin="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="삭제" />
+                        android:layout_margin="10dp"
+                        android:text="재설정" />
+
+                    <Button
+                        android:id="@+id/schedule_btn_setup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="확인" />
                 </LinearLayout>
 
                 <!---->

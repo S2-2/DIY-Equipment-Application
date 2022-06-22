@@ -13,10 +13,10 @@
 
         <ImageButton
             android:id="@+id/signup_btn_back"
-            android:background="@android:color/transparent"
-            android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/transparent"
             app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24" />
 
         <LinearLayout
@@ -26,12 +26,13 @@
             android:orientation="vertical">
 
             <TextView
+                style="@style/style_tv_bold_black24dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="아이디 찾기"
-                android:textSize="24dp" />
+                android:text="아이디 찾기" />
 
             <TextView
+                style="@style/style_tv_bold_black16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="아이디 확인"
@@ -46,6 +47,7 @@
         android:padding="20dp">
 
         <TextView
+            style="@style/style_tv_default_black14dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="고객님의 정보와 일치하는 아이디는 다음과 같습니다." />
@@ -59,12 +61,14 @@
             android:orientation="horizontal">
 
             <TextView
+                style="@style/style_tv_default_black18dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="아이디 : " />
 
-            <EditText
-                android:id="@+id/checkId_et_checkId"
+            <TextView
+                android:id="@+id/checkId_tv_checkId"
+                style="@style/style_tv_default_black18dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="text"
@@ -81,24 +85,26 @@
         <!--btn_checkId_login은 activity_login하고 연결-->
         <Button
             android:id="@+id/checkId_btn_login"
+            style="@style/style_tv_default_black18dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
             android:layout_marginBottom="20dp"
-            android:text="로그인하기"
-            android:textSize="20dp" />
+            android:text="로그인하기" />
 
         <!--btn_checkId_changePwd은 activity_change_pwd하고 연결-->
         <Button
             android:id="@+id/checkId_btn_changePwd"
+            style="@style/style_tv_default_black18dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
-            android:text="비밀번호찾기"
-            android:textSize="20dp" />
+            android:text="비밀번호찾기" />
     </LinearLayout>
 
 </LinearLayout>

@@ -16,14 +16,14 @@
 
     <!--maxLength는 글자수 제한, ellipsize는 끝에 ...(maxLine도 있음!)-->
     <EditText
+        style="@style/style_tv_default_black18dp"
         android:id="@+id/communityRegistration_et_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="제목"
+        android:hint="제목을 입력하세요."
         android:maxLength="20"
         android:ellipsize="end"
-        android:inputType="text"
-        android:textSize="20dp" />
+        android:inputType="text" />
 
     <ImageButton
         android:id="@+id/communityRegistration_btn_image"
@@ -32,19 +32,19 @@
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <EditText
+        style="@style/style_tv_default_black18dp"
         android:id="@+id/communityRegistration_et_contents"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:hint="내용을 입력하세요."
         android:gravity="left"
-        android:inputType="textImeMultiLine"
-        android:textSize="20dp" />
+        android:inputType="textImeMultiLine" />
 
     <Button
+        style="@style/style_tv_default_black18dp"
         android:id="@+id/communityRegistration_btn_registration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="등록하기"
-        android:layout_gravity="center"
-        android:textSize="20dp" />
+        android:layout_gravity="center" />
 </LinearLayout>

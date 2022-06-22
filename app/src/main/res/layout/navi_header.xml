@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    android:background="@color/cardview_dark_background"
+    android:background="#72a18a"
     android:gravity="center"
     android:orientation="vertical"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
@@ -28,11 +28,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="별명"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            style="@style/style_tv_default_white18dp" />
         <ImageButton
             android:id="@+id/navi_header_btn_setting"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:background="#618D5E"
             android:src="@drawable/ic_baseline_settings_24"/>
     </LinearLayout>
 
@@ -43,6 +45,6 @@
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="20dp"
             android:text="사용자 위치"
-            android:textSize="16dp" />
+            style="@style/style_tv_default_white16dp" />
 
 </LinearLayout>
