@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center_vertical"
-        android:text="DIY Equipment Rental"
+        android:text="공구를 공유하는 人"
         android:textSize="24dp" />
 
     <LinearLayout

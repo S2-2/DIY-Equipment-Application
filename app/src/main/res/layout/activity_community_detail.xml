@@ -39,14 +39,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:text="DIY Equipment Rental"
-                            android:textSize="30dp"
-                            android:textStyle="bold|italic" />
+                        <ImageView
+                            android:layout_width="300dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center_horizontal"
+                            android:src="@drawable/title" />
 
                         <ImageButton
                             android:id="@+id/registrationRecyclerview_btn_search"
@@ -112,12 +109,12 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="작성자" />
-                            <TextView
-                                style="@style/style_tv_default_black16dp"
-                                android:id="@+id/communityDetail_tv_location"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="작성자 위치" />
+<!--                            <TextView-->
+<!--                                style="@style/style_tv_default_black16dp"-->
+<!--                                android:id="@+id/communityDetail_tv_location"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="작성자 위치" />-->
                             <TextView
                                 style="@style/style_tv_default_black16dp"
                                 android:id="@+id/communityDetail_tv_time"
