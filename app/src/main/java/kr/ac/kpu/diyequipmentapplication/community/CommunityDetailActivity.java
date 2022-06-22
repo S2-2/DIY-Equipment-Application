@@ -120,21 +120,6 @@ public class CommunityDetailActivity extends AppCompatActivity {
             }
         });
 
-        //커뮤니티 댓글 좋아요 이미지 버튼 클릭 이벤트 기능 구현
-        imgBtnCommentLike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (likeFlag != true) {
-                    imgBtnCommentLike.setImageResource(R.drawable.ic_baseline_favorite_border_red_24);
-                    likeFlag = true;
-                } else {
-                    imgBtnCommentLike.setImageResource(R.drawable.ic_baseline_favorite_border_dark_24);
-                    likeFlag = false;
-                }
-            }
-        });
-
         btnComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -16,7 +16,7 @@
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_check_id.xml" value="0.2677083333333333" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_community.xml" value="0.2677083333333333" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_community_comment_recyclerview.xml" value="0.17806484295845998" />
-        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_community_detail.xml" value="0.27853260869565216" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_community_detail.xml" value="0.17770034843205576" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_community_recyclerview.xml" value="0.24895833333333334" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_community_registration.xml" value="0.2677083333333333" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_equipment_detail.xml" value="0.2677083333333333" />
@@ -53,7 +53,7 @@
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/community.xml" value="0.28125" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/community_detail_page.xml" value="0.28125" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/community_recyclerview_comment_item.xml" value="0.36614583333333334" />
-        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/community_recyclerview_item.xml" value="0.22" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/community_recyclerview_item.xml" value="0.33" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/eq_detail_page.xml" value="0.28125" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/eq_detail_page_comment.xml" value="0.28125" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/eq_list.xml" value="0.28125" />

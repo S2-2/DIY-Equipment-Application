@@ -5,8 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-    <!-- 작성자(별명), 게시물 종류, 게시일시, 내용 등으로 수정해야 함! -->
-
     <TextView
         android:id="@+id/communityRecyclerviewItem_tv_title"
         style="@style/style_tv_default_black18dp"
@@ -26,30 +24,15 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/communityForm_tv_text"
-            style="@style/style_tv_default_black14dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:ellipsize="end"
-            android:gravity="left"
-            android:text="작성자 "
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteY="0dp" />
-
-        <TextView
             android:id="@+id/communityRecyclerviewItem_tv_nickname"
             style="@style/style_tv_default_black14dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginEnd="356dp"
             android:ellipsize="end"
             android:gravity="left"
             android:hint="닉네임"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/communityForm_tv_text"
             tools:ignore="MissingConstraints"
             tools:layout_editor_absoluteY="0dp" />
 
