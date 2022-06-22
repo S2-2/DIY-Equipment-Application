@@ -3,7 +3,30 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1955" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/drawable/et_back_mychatbox.xml" value="0.2315" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.2315" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/drawable/ic_baseline_arrow_back_ios_new_24.xml" value="0.2315" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/drawable/ic_baseline_arrow_forward_ios_24.xml" value="0.2315" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/drawable/ic_baseline_cancel_24.xml" value="0.2315" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/drawable/ic_baseline_dehaze_48.xml" value="0.2315" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/drawable/ic_baseline_east_24.xml" value="0.2315" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/drawable/ic_baseline_emoji_emotions_24.xml" value="0.2315" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/drawable/ic_baseline_favorite_24.xml" value="0.2315" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.271" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/drawable/ic_baseline_favorite_border_dark_24.xml" value="0.2315" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/drawable/ic_baseline_favorite_border_red_24.xml" value="0.2315" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.1955" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/drawable/ic_baseline_keyboard_arrow_right_24.xml" value="0.1955" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/drawable/ic_baseline_map_24.xml" value="0.1955" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/drawable/ic_baseline_menu_24.xml" value="0.1955" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/drawable/ic_baseline_notifications_active_24.xml" value="0.1955" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.1955" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.1955" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1955" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/drawable/ic_launcher_test_foreground.xml" value="0.1955" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/drawable/red_etittext.xml" value="0.1955" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/drawable/white_edittext.xml" value="0.1955" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_all_rental_google_map.xml" value="0.22916666666666666" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_auth_login.xml" value="0.22083333333333333" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_auth_main.xml" value="0.22083333333333333" />
@@ -15,6 +38,8 @@
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_chatting.xml" value="0.25" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_check_id.xml" value="0.2677083333333333" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_community.xml" value="0.2677083333333333" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_community_comment_recyclerview.xml" value="0.17806484295845998" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_community_detail.xml" value="0.17770034843205576" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_community_recyclerview.xml" value="0.24895833333333334" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_community_registration.xml" value="0.2677083333333333" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_equipment_detail.xml" value="0.2677083333333333" />
@@ -26,6 +51,8 @@
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_main2222222222222.xml" value="0.22083333333333333" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_menu.xml" value="0.25" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_menu_setting.xml" value="0.19927536231884058" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_mycart_recyclerview.xml" value="0.25" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_navigation_drawer.xml" value="0.1" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_propile.xml" value="0.24895833333333334" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/activity_registration.xml" value="0.2640449438202247" />
@@ -44,6 +71,8 @@
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/community.xml" value="0.28125" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/community_detail_page.xml" value="0.28125" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/community_recyclerview_item.xml" value="0.22" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/community_recyclerview_comment_item.xml" value="0.36614583333333334" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/community_recyclerview_item.xml" value="0.33" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/eq_detail_page.xml" value="0.28125" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/eq_detail_page_comment.xml" value="0.28125" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/eq_list.xml" value="0.28125" />

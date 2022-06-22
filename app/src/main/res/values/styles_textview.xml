@@ -4,12 +4,12 @@
     <!--기본-->
     <style name = "style_tv_default_black24dp">
         <item name = "android:textSize">24dp</item>
-        <item name = "android:textColor">#000000</item>
+        <item name = "android:textColor">#191919</item>
     </style>
 
     <style name = "style_tv_default_black18dp">
         <item name = "android:textSize">18dp</item>
-        <item name = "android:textColor">#000000</item>
+        <item name = "android:textColor">#191919</item>
     </style>
 
     <style name = "style_tv_default_white18dp">
@@ -19,7 +19,7 @@
 
     <style name = "style_tv_default_black16dp">
         <item name = "android:textSize">16dp</item>
-        <item name = "android:textColor">#000000</item>
+        <item name = "android:textColor">#191919</item>
     </style>
 
     <style name = "style_tv_default_white16dp">
@@ -29,26 +29,33 @@
 
     <style name = "style_tv_default_black14dp">
         <item name = "android:textSize">14dp</item>
-        <item name = "android:textColor">#000000</item>
+        <item name = "android:textColor">#191919</item>
     </style>
 
     <!--볼드-->
     <style name = "style_tv_bold_black24dp">
         <item name = "android:textSize">24dp</item>
         <item name="android:textStyle">bold</item>
-        <item name = "android:textColor">#000000</item>
+        <item name = "android:textColor">#191919</item>
     </style>
 
     <style name = "style_tv_bold_black18dp">
         <item name = "android:textSize">18dp</item>
         <item name="android:textStyle">bold</item>
-        <item name = "android:textColor">#000000</item>
+        <item name = "android:textColor">#191919</item>
     </style>
 
     <style name = "style_tv_bold_black16dp">
         <item name = "android:textSize">16dp</item>
         <item name="android:textStyle">bold</item>
-        <item name = "android:textColor">#000000</item>
+        <item name = "android:textColor">#191919</item>
+    </style>
+
+    <!--볼드_메인-->
+    <style name = "style_tv_bold_darkGreen18dp">
+        <item name = "android:textSize">18dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name = "android:textColor">#0C1C02</item>
     </style>
 
 </resources>

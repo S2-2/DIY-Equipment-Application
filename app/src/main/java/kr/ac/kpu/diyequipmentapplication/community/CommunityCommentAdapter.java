@@ -41,7 +41,7 @@ public class CommunityCommentAdapter extends RecyclerView.Adapter<CommunityComme
         holder.tvComment.setText(communityComment.getComment());
 
         if (tempLike == true)
-            holder.imgBtnLike.setImageResource(R.drawable.ic_baseline_favorite_border_red_24);
+            holder.imgBtnLike.setImageResource(R.drawable.ic_baseline_favorite_24);
         else
             holder.imgBtnLike.setImageResource(R.drawable.ic_baseline_favorite_border_dark_24);
 
@@ -62,7 +62,6 @@ public class CommunityCommentAdapter extends RecyclerView.Adapter<CommunityComme
             super(itemView);
 
             //community_recyclerview_comment_item.xml파일에 있는 뷰 객체 참조
-            imgBtnLike = itemView.findViewById(R.id.communityRecyclerviewItem_btn_like);
             tvComment = itemView.findViewById(R.id.communityRecyclerviewCommentItem_tv_comment);
             tvNickname = itemView.findViewById(R.id.communityRecyclerviewCommentItem_tv_nickname);
             tvDate = itemView.findViewById(R.id.communityRecyclerviewCommentItem_tv_date);

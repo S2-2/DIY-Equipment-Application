@@ -9,14 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageButton
-            android:id="@+id/communityRecyclerviewItem_btn_like"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_vertical"
-            android:background="@android:color/transparent"
-            app:srcCompat="@drawable/ic_baseline_favorite_border_dark_24" />
-
         <TextView
             android:id="@+id/communityRecyclerviewCommentItem_tv_comment"
             android:layout_width="wrap_content"

@@ -84,7 +84,6 @@ public class CommunityDetailActivity extends AppCompatActivity {
         imgBtn_home = (ImageButton) findViewById(R.id.registrationRecyclerview_btn_home);
 
         btnCommentList = (Button) findViewById(R.id.communityDetail_btn_commentList);
-        imgBtnCommentLike = (ImageButton) findViewById(R.id.communityDetail_imgBtn_like);
         etComment = (EditText) findViewById(R.id.communityDetail_et_comment);
         btnComment = (Button) findViewById(R.id.communityDetail_btn_commentAdd);
         likeFlag = false;
@@ -117,21 +116,6 @@ public class CommunityDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(CommunityDetailActivity.this, MenuSettingActivity.class);
                 startActivity(intent);
-            }
-        });
-
-        //커뮤니티 댓글 좋아요 이미지 버튼 클릭 이벤트 기능 구현
-        imgBtnCommentLike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (likeFlag != true) {
-                    imgBtnCommentLike.setImageResource(R.drawable.ic_baseline_favorite_border_red_24);
-                    likeFlag = true;
-                } else {
-                    imgBtnCommentLike.setImageResource(R.drawable.ic_baseline_favorite_border_dark_24);
-                    likeFlag = false;
-                }
             }
         });
 
