@@ -34,7 +34,7 @@
             android:exported="false" />
 
 
-        <!--스플래시 설정정-->
+        <!--스플래시 설정-->
         <activity
             android:name=".etc.SplashActivity"
             android:theme="@style/SplashTheme"
