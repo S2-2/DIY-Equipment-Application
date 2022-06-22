@@ -41,7 +41,7 @@ public class CommunityCommentAdapter extends RecyclerView.Adapter<CommunityComme
         holder.tvComment.setText(communityComment.getComment());
 
         if (tempLike == true)
-            holder.imgBtnLike.setImageResource(R.drawable.ic_baseline_favorite_border_red_24);
+            holder.imgBtnLike.setImageResource(R.drawable.ic_baseline_favorite_24);
         else
             holder.imgBtnLike.setImageResource(R.drawable.ic_baseline_favorite_border_dark_24);
 
