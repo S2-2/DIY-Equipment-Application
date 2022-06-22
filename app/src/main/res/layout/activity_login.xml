@@ -23,29 +23,29 @@
 
         <EditText
             android:id="@+id/login_et_id"
+            style="@style/style_tv_default_black18dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="아이디를 입력하세요."
-            android:singleLine="true"
-            android:textSize="18dp" />
+            android:singleLine="true" />
 
         <EditText
             android:id="@+id/login_et_pwd"
+            style="@style/style_tv_default_black18dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="비밀번호을 입력하세요."
             android:inputType="textPassword"
-            android:singleLine="true"
-            android:textSize="18dp" />
+            android:singleLine="true" />
 
         <Button
             android:id="@+id/login_btn_login"
+            style="@style/style_tv_default_black18dp"
             android:layout_width="206dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:text="로그인"
-            android:textSize="18dp" />
+            android:text="로그인" />
     </LinearLayout>
 
     <LinearLayout
@@ -56,10 +56,10 @@
         android:orientation="vertical">
 
         <TextView
+            style="@style/style_tv_default_black14dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SNS 계정으로 로그인"
-            android:textSize="14dp" />
+            android:text="SNS 계정으로 로그인" />
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/login_btn_loginGoogle"
@@ -75,10 +75,10 @@
         android:orientation="horizontal">
 
         <TextView
+            style="@style/style_tv_default_black14dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="계정을 잊으셨나요? "
-            android:textSize="14dp" />
+            android:text="계정을 잊으셨나요? " />
 
         <Button
             android:id="@+id/login_btn_findId"
@@ -88,13 +88,14 @@
             android:text="ID 찾기"
             android:textColor="@color/black"
             android:textSize="14dp"
+            android:textStyle="bold"
             app:backgroundTint="#00FFFFFF" />
 
         <TextView
+            style="@style/style_tv_default_black14dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=" 또는 "
-            android:textSize="14dp" />
+            android:text=" 또는 " />
 
         <Button
             android:id="@+id/login_btn_findPwd"
@@ -104,6 +105,7 @@
             android:text="비밀번호 찾기"
             android:textColor="@color/black"
             android:textSize="14dp"
+            android:textStyle="bold"
             app:backgroundTint="#00FFFFFF" />
     </LinearLayout>
 
@@ -113,10 +115,10 @@
         android:gravity="center|bottom">
 
         <TextView
+            style="@style/style_tv_default_black14dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="아직 회원이 아니신가요? "
-            android:textSize="14dp" />
+            android:text="아직 회원이 아니신가요? " />
 
         <Button
             android:id="@+id/login_btn_signup"
@@ -125,7 +127,8 @@
             android:background="#00FFFFFF"
             android:text="회원가입"
             android:textColor="@color/black"
-            android:textSize="14dp" />
+            android:textSize="14dp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>

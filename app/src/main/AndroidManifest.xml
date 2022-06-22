@@ -27,8 +27,25 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DIYEquipmentApplication"
+        android:theme="@style/Theme.basic"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".login.LoginActivity"
+            android:exported="false" />
+
+
+        <!--스플래시 설정정-->
+        <activity
+            android:name=".etc.SplashActivity"
+            android:theme="@style/SplashTheme"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
         <activity
             android:name=".RentalHistoryRecyclerviewActivity"
             android:exported="false" />
@@ -65,15 +82,6 @@
         <activity
             android:name=".community.CommunityRecyclerview"
             android:exported="false" />
-        <activity
-            android:name=".login.LoginActivity"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".equipment.RegistrationRecyclerview"
             android:exported="false" />

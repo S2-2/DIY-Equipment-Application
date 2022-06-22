@@ -42,8 +42,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="PROFILE"
-            android:textSize="24dp" />
+            android:text="프로필 수정"
+           style="@style/style_tv_default_black24dp" />
 
         <ImageButton
             android:id="@+id/profile_btn_profile"
@@ -57,18 +57,9 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="별명"
-            android:textSize="22dp" />
+            style="@style/style_tv_default_black18dp" />
 
         <!-- 버튼 클릭 시 'activity_menu'로 이동하면서 새로 입력한 프로필 사진과 별명으로 수정됨. -->
-        <Button
-            android:id="@+id/profile_btn_update"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="프로필 수정"
-            android:textSize="16dp" />
-
         <Button
             android:id="@+id/profile_btn_delete"
             android:layout_width="match_parent"
@@ -76,7 +67,16 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:text="프로필 삭제"
-            android:textSize="16dp" />
+            style="@style/style_tv_default_black18dp" />
+
+        <Button
+            android:id="@+id/profile_btn_update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="프로필 수정"
+            style="@style/style_tv_default_black18dp" />
 
     </LinearLayout>
 </androidx.drawerlayout.widget.DrawerLayout>

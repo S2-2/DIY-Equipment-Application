@@ -319,7 +319,7 @@ public class ChatActivity extends AppCompatActivity {
         final String[] getEmail = new String[1];
         chattingFirebaseFirestore = FirebaseFirestore.getInstance();
         ImageView imgView = findViewById(R.id.chatting_imgView);
-        TextView tvCatecory = findViewById(R.id.chatting_tv_category);
+        TextView tvCategory = findViewById(R.id.chatting_tv_category);
         TextView tvModelName = findViewById(R.id.chatting_tv_modelName);
         TextView tvUserName = findViewById(R.id.chatting_tv_userName);
         TextView tvRentalType = findViewById(R.id.chatting_tv_rentalType);
@@ -336,7 +336,7 @@ public class ChatActivity extends AppCompatActivity {
                             getImgaeUrl[0] = task.getResult().getString("rentalImage");
                             Picasso.get().load(getImgaeUrl[0]).into(imgView);
                             getEmail[0] = task.getResult().getString("userEmail");
-                            tvCatecory.setText(task.getResult().getString("modelCategory1")+",\n"+
+                            tvCategory.setText(task.getResult().getString("modelCategory1")+",\n"+
                                     task.getResult().getString("modelCategory2").toString().trim());
                             tvModelName.setText(task.getResult().getString("modelName"));
                             tvRentalType.setText(task.getResult().getString("rentalType"));
@@ -387,7 +387,7 @@ public class ChatActivity extends AppCompatActivity {
                                                     getImgaeUrl[0] = task.getResult().getString("rentalImage");
                                                     Picasso.get().load(getImgaeUrl[0]).into(imgView);
                                                     getEmail[0] = task.getResult().getString("userEmail");
-                                                    tvCatecory.setText(task.getResult().getString("modelCategory1")+",\n"+
+                                                    tvCategory.setText(task.getResult().getString("modelCategory1")+",\n"+
                                                             task.getResult().getString("modelCategory2").toString().trim());
                                                     tvModelName.setText(task.getResult().getString("modelName"));
                                                     tvRentalType.setText(task.getResult().getString("rentalType"));

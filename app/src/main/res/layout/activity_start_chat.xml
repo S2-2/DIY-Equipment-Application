@@ -19,12 +19,11 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <TextView
-                android:background="#BD6403"
-                android:textColor="@color/white"
+                android:background="#72a18a"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:textSize="20dp"
-                android:text="현재 개설된 채팅방"
+                style="@style/style_tv_default_white18dp"
+                android:text="채팅"
                 android:layout_marginBottom="20dp"
                 android:gravity="center"/>
             <ListView

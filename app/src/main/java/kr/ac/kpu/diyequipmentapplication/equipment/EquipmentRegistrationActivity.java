@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -61,7 +62,7 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
     private ProgressDialog registrationProgressDialog = null;          //progressDialog 뷰 참조 변수
     private RadioGroup registrationRentalGroup = null;                  //라디오그룹 뷰 참조 변수
     private RadioButton registrationFreeRental = null, registrationFeeRental = null;   //라디오버튼 뷰 참조 변수
-    private EditText registrationUserEmail = null, registrationRentalCost = null,      //이메일, 렌탈가격, 렌탈주소, 렌탈종류 뷰 참조변수
+    private TextView registrationUserEmail = null, registrationRentalCost = null,      //이메일, 렌탈가격, 렌탈주소, 렌탈종류 뷰 참조변수
             registrationRentalAddress = null, registrationRentalType = null;
     private String registrationGetUserEmail = null;     //사용자 이메일을 참조할 변수
     private SimpleDateFormat registrationDateFormat = null;   //등록 날짜 형식 참조할 변수
@@ -87,8 +88,8 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
 
         //DIY장비 등록 액티비티 필드 초기화
         registrationImgBtn = findViewById(R.id.imgBtn_diyRental);
-        registrationUserEmail = findViewById(R.id.equipmentRegistration_et_nickname);
-        registrationModelName = findViewById(R.id.et_registrationModelName);
+        registrationUserEmail = findViewById(R.id.equipmentRegistration_tv_nickname);
+        registrationModelName = findViewById(R.id.equipmentRegistration_et_modelName);
         registrationModelInform = findViewById(R.id.et_registrationModelInform);
         registrationBtnAdd = findViewById(R.id.equipmentRegistration_btn_registration);
         registrationRentalGroup = findViewById(R.id.rg_registrationRentalGroup);

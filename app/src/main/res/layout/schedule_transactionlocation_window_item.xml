@@ -54,13 +54,13 @@
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:text="거래장소 :"
-                        android:textSize="16dp" />
+                        style="@style/style_tv_default_black18dp" />
                     <TextView
                         android:id="@+id/transactionLocationWindow_tv_transactionLocation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:textSize="16dp"
+                        style="@style/style_tv_default_black18dp"
                         android:text="거래장소 설정해주세요."/>
                 </LinearLayout>
             </LinearLayout>
