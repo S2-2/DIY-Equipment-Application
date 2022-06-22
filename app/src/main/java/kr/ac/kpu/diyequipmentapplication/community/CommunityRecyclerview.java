@@ -182,7 +182,7 @@ public class CommunityRecyclerview extends AppCompatActivity {
                 else{
                     for( CommunityRegistration equipment : filteredCommunityRegistrationArrayList)
                     {
-                        if(equipment.getCommunityContent().toUpperCase().contains(searchText.toUpperCase()) || equipment.getCommunityTitle().toUpperCase().contains(searchText.toUpperCase()))
+                        if(equipment.getCommunityTitle().toUpperCase().contains(searchText.toUpperCase()))
                         {
                             communityRegistrationArrayList.add(equipment);
                         }

@@ -176,6 +176,12 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                     }
                 });
 
+        // 내가 올린 게시물이면 비활성화
+       if(userEmail.equals(otherEmail)){
+            btnChat.setEnabled(false);
+            btnChat.setVisibility(View.INVISIBLE);
+        }
+
         btnChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
