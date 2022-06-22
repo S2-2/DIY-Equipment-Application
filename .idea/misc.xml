@@ -78,6 +78,8 @@
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/sign_in.xml" value="0.33" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/sign_up.xml" value="0.28125" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/single_eq_list.xml" value="0.3328804347826087" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/transaction_window_item.xml" value="0.24166666666666667" />
+        <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/layout/transactiondetail_window_item.xml" value="0.24166666666666667" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/menu/navi_menu.xml" value="0.36614583333333334" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/xml/default_config.xml" value="0.20652173913043478" />
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/xml/xml.xml" value="0.20652173913043478" />
@@ -96,12 +98,10 @@
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_menu.xml" value="0.25885416666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_menu_setting.xml" value="0.4" />
-        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_mycart_recyclerview.xml" value="0.25885416666666666" />
-        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_menu_setting.xml" value="0.4" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_profile.xml" value="0.2548717948717949" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_registration_recyclerview.xml" value="0.13958333333333334" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_rental_google_map.xml" value="0.13802083333333334" />
-        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_rental_history_recyclerview.xml" value="0.264" />
+        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_rental_history_recyclerview.xml" value="0.13177083333333334" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_schedule.xml" value="0.264" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_signup.xml" value="0.16799999999999998" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_start_chat.xml" value="0.25885416666666666" />
@@ -115,8 +115,6 @@
         <entry key="..\:/DIY_test00/app/src/main/res/layout/schedule_transactiondate_window_item.xml" value="0.25885416666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/schedule_transactionlocation_window_item.xml" value="0.13802083333333334" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/schedule_transactiontime_window_item.xml" value="0.264" />
-        <entry key="..\:/DIY_test00/app/src/main/res/layout/transaction_window_item.xml" value="0.264" />
-        <entry key="..\:/DIY_test00/app/src/main/res/layout/transactiondetail_window_item.xml" value="0.25885416666666666" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/drawable/blue_etittext.xml" value="0.1635" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/drawable/chat_et_chatbox.xml" value="0.2225" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/drawable/et_back_chatbox.xml" value="0.2225" />
@@ -138,8 +136,6 @@
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_chatting.xml" value="0.264" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_check_id.xml" value="0.2677083333333333" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_community.xml" value="0.2677083333333333" />
-        <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_community_comment_recyclerview.xml" value="0.23802083333333332" />
-        <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_community_recyclerview.xml" value="0.264" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_community_recyclerview.xml" value="0.18229166666666666" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_community_registration.xml" value="0.2677083333333333" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_equipment_detail.xml" value="0.2677083333333333" />
@@ -154,7 +150,7 @@
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_navigation_drawer.xml" value="0.1" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_registration.xml" value="0.2640449438202247" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_registration_recycler_view.xml" value="0.25" />
-        <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_registration_recyclerview.xml" value="0.4" />
+        <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_registration_recyclerview.xml" value="0.2" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_rental_detail.xml" value="0.1" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_rental_google_map.xml" value="0.22083333333333333" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_signup.xml" value="0.21" />
