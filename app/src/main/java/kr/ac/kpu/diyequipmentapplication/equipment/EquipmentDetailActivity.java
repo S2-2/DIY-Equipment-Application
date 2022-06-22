@@ -148,6 +148,20 @@ public class EquipmentDetailActivity extends AppCompatActivity {
         userEmail = equipmentDetailFirebaseAuth.getCurrentUser().getEmail().toString().trim();
         otherEmail = intent.getStringExtra("UserEmail");
 
+        equipmentDetailFirebaseFirestore.collection("DIY_Signup")
+                .whereEqualTo("userEmail",otherEmail)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for (QueryDocumentSnapshot queryDocumentSnapshot: task.getResult()){
+                                tvUserNickname.setText("등록자: "+ queryDocumentSnapshot.get("userNickname").toString().trim());
+                            }
+                        }
+                    }
+                });
+
         //DIY_Signup DB에서 사용자 계정에 맞는 닉네임 가져오는 기능 구현.
         //사용자 이메일 정보와 일치하는 데이터를 DIY_Signup DB에서 찾아서 etNickname 참조 변수에 닉네임 값 참조.
         equipmentDetailFirebaseFirestore.collection("DIY_Signup")
@@ -183,6 +197,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
        if(userEmail.equals(otherEmail)){
             btnChat.setEnabled(false);
             btnChat.setVisibility(View.INVISIBLE);
+            imgBtnCart.setVisibility(View.INVISIBLE);
         }
 
         btnChat.setOnClickListener(new View.OnClickListener() {

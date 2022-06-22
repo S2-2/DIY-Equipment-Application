@@ -77,7 +77,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
         ivUserProfilePhoto = (ImageView) findViewById(R.id.iv_UserProfilePhoto);
         ivEquipmentImage = (ImageView) findViewById(R.id.iv_EquipmentImage);
         tvNickname = (TextView) findViewById(R.id.communityDetail_tv_nickname);
-        tvLocation = (TextView) findViewById(R.id.communityDetail_tv_location);
+//        tvLocation = (TextView) findViewById(R.id.communityDetail_tv_location);
         tvTime = (TextView) findViewById(R.id.communityDetail_tv_time);
         tvContents = (TextView) findViewById(R.id.communityDetail_tv_contents);
         imgBtn_back = (ImageButton) findViewById(R.id.signup_btn_back);
@@ -192,19 +192,21 @@ public class CommunityDetailActivity extends AppCompatActivity {
                                 Log.d("main SignupDB", queryDocumentSnapshot.get("userEmail").toString().trim());
                                 getUserEmail = queryDocumentSnapshot.get("userEmail").toString().trim();
 
-                                communityDetailFirebaseFirestore.collection("DIY_Equipment_Rental")
-                                        .whereEqualTo("userEmail", getUserEmail)
-                                        .get()
-                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                if (task.isSuccessful()) {
-                                                    for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
-                                                        tvLocation.setText("작성자 위치: "+queryDocumentSnapshot.get("rentalAddress").toString().trim());
-                                                    }
-                                                }
-                                            }
-                                        });
+//                                communityDetailFirebaseFirestore.collection("DIY_Equipment_Rental")
+//                                        .whereEqualTo("userEmail", getUserEmail)
+//                                        .get()
+//                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                                            @Override
+//                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                                                if (task.isSuccessful()) {
+//                                                    for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+//                                                        tvLocation.setText("작성자 위치: "+queryDocumentSnapshot.get("rentalAddress").toString().trim());
+//                                                    }
+//                                                }
+//                                            }
+//                                        });
+//
+//                                tvLocation.setVisibility(View.INVISIBLE);
                             }
                         }
                     }

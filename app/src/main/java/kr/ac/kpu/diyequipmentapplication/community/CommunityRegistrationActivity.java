@@ -29,7 +29,9 @@ import com.google.firebase.storage.UploadTask;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import kr.ac.kpu.diyequipmentapplication.MainActivity;
 import kr.ac.kpu.diyequipmentapplication.R;
+import kr.ac.kpu.diyequipmentapplication.equipment.EquipmentRegistrationActivity;
 
 public class CommunityRegistrationActivity extends AppCompatActivity {
     //커뮤니티 등록 참조 변수 선언
@@ -171,6 +173,9 @@ public class CommunityRegistrationActivity extends AppCompatActivity {
                                     communityRegFirebaseFirestoreDB.collection("DIY_Equipment_Community").document().set(communityRegistration);
                                     registrationProgressDialog.dismiss();
 
+                                    //공급자가 입력한 DIY 등록 액티비티에서 DIY 메인 액티비티로 이동
+                                    Intent intent = new Intent(CommunityRegistrationActivity.this, CommunityRecyclerview.class);
+                                    startActivity(intent);
                                     finish();
                                 }
                             });
