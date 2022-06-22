@@ -32,6 +32,8 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -62,7 +64,8 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
     private ProgressDialog registrationProgressDialog = null;          //progressDialog 뷰 참조 변수
     private RadioGroup registrationRentalGroup = null;                  //라디오그룹 뷰 참조 변수
     private RadioButton registrationFreeRental = null, registrationFeeRental = null;   //라디오버튼 뷰 참조 변수
-    private TextView registrationUserEmail = null, registrationRentalCost = null,      //이메일, 렌탈가격, 렌탈주소, 렌탈종류 뷰 참조변수
+    private TextView registrationUserNickname;
+    private EditText  registrationRentalCost = null,      //이메일, 렌탈가격, 렌탈주소, 렌탈종류 뷰 참조변수
             registrationRentalAddress = null, registrationRentalType = null;
     private String registrationGetUserEmail = null;     //사용자 이메일을 참조할 변수
     private SimpleDateFormat registrationDateFormat = null;   //등록 날짜 형식 참조할 변수
@@ -88,7 +91,7 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
 
         //DIY장비 등록 액티비티 필드 초기화
         registrationImgBtn = findViewById(R.id.imgBtn_diyRental);
-        registrationUserEmail = findViewById(R.id.equipmentRegistration_tv_nickname);
+        registrationUserNickname = findViewById(R.id.equipmentRegistration_tv_nickname);
         registrationModelName = findViewById(R.id.equipmentRegistration_et_modelName);
         registrationModelInform = findViewById(R.id.et_registrationModelInform);
         registrationBtnAdd = findViewById(R.id.equipmentRegistration_btn_registration);
@@ -185,7 +188,20 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
         if (registrationFirebaseAuth != null)   //firebase인증에 등록된 계정이 null이 아닌 경우
         {
             registrationGetUserEmail = registrationFirebaseAuth.getEmail(); //등록된 계정 정보에서 이메일 값 참조
-            registrationUserEmail.setText(registrationGetUserEmail);        //등록 이메일 에디트텍스트 뷰에  이메일 설정
+
+            registrationFirebaseFirestoreDB.collection("DIY_Signup")
+                    .whereEqualTo("userEmail", registrationGetUserEmail)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                                    registrationUserNickname.setText(queryDocumentSnapshot.get("userNickname").toString().trim());
+                                }
+                            }
+                        }
+                    });
         }
         else{       //계정 정보가 없는 경우
             Toast.makeText(EquipmentRegistrationActivity.this, "인증 이메일 가져오기 실패!", Toast.LENGTH_SHORT).show();

@@ -61,8 +61,8 @@ public class ChatActivity extends AppCompatActivity {
     private String CHAT_USER_NICKNAME = null;
     private String CHAT_USER_TEXT = null;
 
-    private ArrayList<ChatDTO> chatDTOS;
-    private ChatDTO chatDTO;
+    private ArrayList<ChatDTO> chatModels;
+    private ChatDTO chatModel;
     private ChatAdapter chatAdapter;
 
     private ListView lvChatList;
@@ -112,10 +112,9 @@ public class ChatActivity extends AppCompatActivity {
         etChatMsg = (EditText) findViewById(R.id.chat_et_msg_box);
         btnChatSend = (Button) findViewById(R.id.chat_btn_msg_send);
         tvChatNum = (TextView) findViewById(R.id.chat_tv_room_num);
-        chatDTOS = new ArrayList<ChatDTO>();
-        chatAdapter = new ChatAdapter(chatDTOS, getLayoutInflater());
+        chatModels = new ArrayList<ChatDTO>();
+        chatAdapter = new ChatAdapter(chatModels, getLayoutInflater());
         lvChatList.setAdapter(chatAdapter);
-        btnTransaction = (Button) findViewById(R.id.chatting_btn_transactionSchedule);
 
         // 사용자 이메일 및 닉네임 가져오기
         CHAT_USER_EMAIL = chatAuth.getCurrentUser().getEmail().toString();
@@ -166,9 +165,6 @@ public class ChatActivity extends AppCompatActivity {
                 Calendar calendar = Calendar.getInstance();
                 String timestamp = calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE);
 
-                // firebaseDB에 데이터 저장
-                chatDTO = new ChatDTO(CHAT_NUM, CHAT_USER_NICKNAME, CHAT_USER_EMAIL ,CHAT_USER_TEXT,timestamp);
-                chatRef.child(CHAT_NUM).push().setValue(chatDTO);
             // firebaseDB에 데이터 저장
             chatModel = new ChatDTO(CHAT_NUM, CHAT_USER_NICKNAME, CHAT_USER_EMAIL , CHAT_USER_TEXT, timestamp);
             chatRef.child(CHAT_NUM).push().setValue(chatModel);
@@ -301,6 +297,7 @@ public class ChatActivity extends AppCompatActivity {
                 });
 
         //거래 버큰 클릭 이벤트
+        btnTransaction = (Button) findViewById(R.id.chatting_btn_transaction);
         btnTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -435,9 +432,9 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 ChatDTO item = snapshot.getValue(ChatDTO.class);
-                chatDTOS.add(item);
+                chatModels.add(item);
                 chatAdapter.notifyDataSetChanged();;
-                lvChatList.setSelection(chatDTOS.size()-1);
+                lvChatList.setSelection(chatModels.size()-1);
             }
 
             @Override
