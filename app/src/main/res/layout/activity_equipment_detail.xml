@@ -99,20 +99,13 @@
                             android:layout_height="40dp"
                             tools:srcCompat="@tools:sample/avatars" />
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <EditText
-                                android:id="@+id/equipmentDetail_et_nickname"
+                            <TextView
+                                android:id="@+id/equipmentDetail_tv_nickname"
                                 style="@style/style_tv_default_black18dp"
+                                android:layout_weight="1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="(작성자 별명)" />
-
-                        </LinearLayout>
 
                         <Button
                             android:id="@+id/equipmentDetail_btn_chatting"
@@ -138,21 +131,20 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="60dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <EditText
-                            android:id="@+id/et_title"
-                            style="@style/style_tv_default_black18dp"
+                        <TextView
+                            android:id="@+id/equipmentDetail_tv_title"
+                            style="@style/style_tv_bold_black18dp"
+                            android:textSize="22dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="(제목)\nex) 코메론 줄자 필요하신 분 가져가세요"
-                            android:textStyle="bold" />
+                            android:text="(제목)\nex) 코메론 줄자 필요하신 분 가져가세요" />
 
                         <!--찜 버튼-->
-                        <!--클릭 시 하트가 채워지고 유저의 DB 찜 목록에 저장되도록 할 것!-->
                         <ImageButton
                             android:id="@+id/equipmentDetail_btn_like"
                             android:layout_width="wrap_content"
@@ -164,18 +156,38 @@
 
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="40dp">
 
                         <TextView
                             style="@style/style_tv_default_black16dp"
                             android:layout_width="120dp"
-                            android:layout_height="40dp"
+                            android:layout_height="match_parent"
                             android:background="@color/browser_actions_bg_grey"
                             android:gravity="center_vertical"
-                            android:text="거래 위치" />
+                            android:text="카테고리" />
 
-                        <EditText
-                            android:id="@+id/equipmentDetail_et_location"
+                        <TextView
+                            android:id="@+id/equipmentDetail_tv_category"
+                            style="@style/style_tv_default_black16dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ex) 측정공구 > 산업용줄자/각도기 " />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="60dp">
+
+                        <TextView
+                            style="@style/style_tv_default_black16dp"
+                            android:layout_width="120dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:background="@color/browser_actions_bg_grey"
+                            android:text="장비 위치" />
+
+                        <TextView
+                            android:id="@+id/equipmentDetail_tv_location"
                             style="@style/style_tv_default_black16dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -186,7 +198,7 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="40dp">
 
                     <TextView
                         style="@style/style_tv_default_black16dp"
@@ -196,38 +208,16 @@
                         android:gravity="center_vertical"
                         android:text="장비 등록일" />
 
-                    <EditText
-                        android:id="@+id/equipmentDetail_et_date"
-                        style="@style/style_tv_default_black16dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="(게시일시) ex) 2일 전" />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
                     <TextView
-                        style="@style/style_tv_default_black16dp"
-                        android:layout_width="120dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/browser_actions_bg_grey"
-                        android:gravity="center_vertical"
-                        android:text="카테고리" />
-
-                    <EditText
-                        android:id="@+id/equipmentDetail_et_category"
+                        android:id="@+id/equipmentDetail_tv_date"
                         style="@style/style_tv_default_black16dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="ex) 측정공구 > 산업용줄자/각도기 " />
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="40dp">
 
                     <TextView
                         style="@style/style_tv_default_black16dp"
@@ -237,8 +227,8 @@
                         android:gravity="center_vertical"
                         android:text="거래 종류" />
 
-                    <EditText
-                        android:id="@+id/equipmentDetail_et_rentalType"
+                    <TextView
+                        android:id="@+id/equipmentDetail_tv_rentalType"
                         style="@style/style_tv_default_black16dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -247,27 +237,7 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        style="@style/style_tv_default_black16dp"
-                        android:layout_width="120dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/browser_actions_bg_grey"
-                        android:gravity="center_vertical"
-                        android:text="장비 대여기간" />
-
-                    <EditText
-                        android:id="@+id/equipmentDetail_et_rentalPeriod"
-                        style="@style/style_tv_default_black16dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="ex) 2022년 3월 7일 ~ 2022년 4월" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="40dp">
 
                     <TextView
                         style="@style/style_tv_default_black16dp"
@@ -277,8 +247,8 @@
                         android:gravity="center_vertical"
                         android:text="대여료" />
 
-                    <EditText
-                        android:id="@+id/equipmentDetail_et_rentalCost"
+                    <TextView
+                        android:id="@+id/equipmentDetail_tv_rentalCost"
                         style="@style/style_tv_default_black16dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -287,11 +257,11 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:orientation="vertical">
 
-                    <EditText
-                        android:id="@+id/equipmentDetail_et_explanation"
+                    <TextView
+                        android:id="@+id/equipmentDetail_tv_explanation"
                         style="@style/style_tv_default_black16dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

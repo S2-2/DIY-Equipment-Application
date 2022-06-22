@@ -84,7 +84,6 @@ public class CommunityDetailActivity extends AppCompatActivity {
         imgBtn_home = (ImageButton) findViewById(R.id.registrationRecyclerview_btn_home);
 
         btnCommentList = (Button) findViewById(R.id.communityDetail_btn_commentList);
-        imgBtnCommentLike = (ImageButton) findViewById(R.id.communityDetail_imgBtn_like);
         etComment = (EditText) findViewById(R.id.communityDetail_et_comment);
         btnComment = (Button) findViewById(R.id.communityDetail_btn_commentAdd);
         likeFlag = false;

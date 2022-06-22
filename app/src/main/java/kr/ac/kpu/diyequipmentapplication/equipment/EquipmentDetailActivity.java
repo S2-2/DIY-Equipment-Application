@@ -46,7 +46,7 @@ import kr.ac.kpu.diyequipmentapplication.menu.MenuSettingActivity;
 // 목록 클릭시 상세화면으로 전환되는 액티비티클래스
 public class EquipmentDetailActivity extends AppCompatActivity {
     private ImageView ivRentalImage;
-    private TextView etUserNickname, etTitle, etExplanation, etRentalType, etRentalCost, etUserLocation, etRentalPeriod, etCategory;
+    private TextView tvUserNickname, tvTitle, tvExplanation, tvRentalType, tvRentalCost, tvUserLocation, tvRentalPeriod, tvCategory;
     private Button btnChat;
     private String getImageUrl, userEmail, getTitle = null;
     private DecimalFormat decimalFormat;
@@ -72,14 +72,14 @@ public class EquipmentDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_equipment_detail);
 
         ivRentalImage = findViewById(R.id.iv_EquipmentImage);
-        etUserNickname = findViewById(R.id.equipmentDetail_et_nickname);
-        etTitle = findViewById(R.id.et_title);
-        etExplanation = findViewById(R.id.equipmentDetail_et_explanation);
-        etCategory = findViewById(R.id.equipmentDetail_et_category);
-        etRentalType = findViewById(R.id.equipmentDetail_et_rentalType);
-        etRentalCost = findViewById(R.id.equipmentDetail_et_rentalCost);
-        etUserLocation = findViewById(R.id.equipmentDetail_et_location);
-        etRentalPeriod = findViewById(R.id.equipmentDetail_et_rentalPeriod);
+        tvUserNickname = findViewById(R.id.equipmentDetail_tv_nickname);
+        tvTitle = findViewById(R.id.equipmentDetail_tv_title);
+        tvExplanation = findViewById(R.id.equipmentDetail_tv_explanation);
+        tvCategory = findViewById(R.id.equipmentDetail_tv_category);
+        tvRentalType = findViewById(R.id.equipmentDetail_tv_rentalType);
+        tvRentalCost = findViewById(R.id.equipmentDetail_tv_rentalCost);
+        tvUserLocation = findViewById(R.id.equipmentDetail_tv_location);
+        tvRentalPeriod = findViewById(R.id.equipmentDetail_tv_date);
         btnChat =findViewById(R.id.equipmentDetail_btn_chatting);
         imgBtnCart = findViewById(R.id.equipmentDetail_btn_like);   //찜 아이콘
         decimalFormat = new DecimalFormat("###,###");
@@ -88,36 +88,39 @@ public class EquipmentDetailActivity extends AppCompatActivity {
         getTitle = intent.getStringExtra("ModelName");
         getImageUrl = intent.getStringExtra("RentalImage");
         Picasso.get().load(getImageUrl).into(ivRentalImage);
-        etTitle.setText("장비명: " + intent.getStringExtra("ModelName"));
-        etExplanation.setText(intent.getStringExtra("ModelInform"));
-        etCategory.setText(intent.getStringExtra("ModelCategory1") + " > " + intent.getStringExtra("ModelCategory2"));
-        etRentalType.setText(intent.getStringExtra("RentalType"));
+        tvTitle.setText(intent.getStringExtra("ModelName"));
+        tvExplanation.setText(intent.getStringExtra("ModelInform"));
+        tvCategory.setText(intent.getStringExtra("ModelCategory1") + " > " + intent.getStringExtra("ModelCategory2"));
+        tvRentalType.setText(intent.getStringExtra("RentalType"));
         //etRentalAddress.setText("RentalAddress : "+intent.getStringExtra("RentalAddress"));
-        etUserNickname.setText("등록자: " + intent.getStringExtra("UserEmail"));
-        etRentalPeriod.setText(intent.getStringExtra("RentalDate"));
+        tvUserNickname.setText(intent.getStringExtra("UserEmail"));
+        // ############################
+        // 작성자 이메일 대신 별명으로 수정하면 좋을 듯
+        // ############################
+        tvRentalPeriod.setText(intent.getStringExtra("RentalDate"));
         //etRentalCost.setText("RentalCost : "+intent.getStringExtra("RentalCost"));
         temp = intent.getStringExtra("RentalCost");
         getRentalAddress = intent.getStringExtra("RentalAddress");
-        etUserLocation.setText(getRentalAddress);
+        tvUserLocation.setText(getRentalAddress);
         getModelCollectionId = intent.getStringExtra("ModelCollectionId");
 
         if (temp.equals("무료"))
-            etRentalCost.setText("RentalCost : "+temp);
+            tvRentalCost.setText(temp);
         else {
             temNum = Integer.parseInt(temp);
             getRentalFeeCost = decimalFormat.format(temNum);
-            etRentalCost.setText("RentalCost : "+getRentalFeeCost+"원");
+            tvRentalCost.setText(getRentalFeeCost+"원");
         }
 
         // 수정불가능
-        etTitle.setEnabled(false);
-        etExplanation.setEnabled(false);
-        etUserNickname.setEnabled(false);
-        etRentalType.setEnabled(false);
-        etRentalPeriod.setEnabled(false);
-        etCategory.setEnabled(false);
-        etUserLocation.setEnabled(false);
-        etRentalCost.setEnabled(false);
+//        tvTitle.setEnabled(false);
+//        tvExplanation.setEnabled(false);
+//        tvUserNickname.setEnabled(false);
+//        tvRentalType.setEnabled(false);
+//        tvRentalPeriod.setEnabled(false);
+//        tvCategory.setEnabled(false);
+//        tvUserLocation.setEnabled(false);
+//        tvRentalCost.setEnabled(false);
 
         imgBtn_back = (ImageButton)findViewById(R.id.signup_btn_back);
         imgBtn_home = (ImageButton)findViewById(R.id.registrationRecyclerview_btn_home);
@@ -229,7 +232,6 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                 if(Ok== true){
                     imgBtnCart.setImageResource(R.drawable.ic_baseline_favorite_border_red_24);
                     Ok = false;
-                    Toast.makeText(view.getContext(), "찜 목록에 추가!", Toast.LENGTH_SHORT).show();
                     Toast.makeText(view.getContext(), "찜 목록에 추가", Toast.LENGTH_SHORT).show();
                     Log.e("Click","ImageButton is Clicked");
                     cartActivty.addCart(userEmail.substring(0, userEmail.indexOf('@')),getTitle);
@@ -237,7 +239,6 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                 else{
                     imgBtnCart.setImageResource(R.drawable.ic_baseline_favorite_border_dark_24);
                     Ok = true;
-                    Toast.makeText(view.getContext(), "찜 목록에서 삭제!", Toast.LENGTH_SHORT).show();
                     Toast.makeText(view.getContext(), "찜 목록에서 삭제", Toast.LENGTH_SHORT).show();
                     Log.e("Click","ImageButton is Clicked2");
                     cartActivty.removeCart(userEmail.substring(0, userEmail.indexOf('@')),getTitle);

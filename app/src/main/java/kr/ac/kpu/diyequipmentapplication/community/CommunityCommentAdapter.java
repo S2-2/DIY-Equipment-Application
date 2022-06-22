@@ -62,7 +62,6 @@ public class CommunityCommentAdapter extends RecyclerView.Adapter<CommunityComme
             super(itemView);
 
             //community_recyclerview_comment_item.xml파일에 있는 뷰 객체 참조
-            imgBtnLike = itemView.findViewById(R.id.communityRecyclerviewItem_btn_like);
             tvComment = itemView.findViewById(R.id.communityRecyclerviewCommentItem_tv_comment);
             tvNickname = itemView.findViewById(R.id.communityRecyclerviewCommentItem_tv_nickname);
             tvDate = itemView.findViewById(R.id.communityRecyclerviewCommentItem_tv_date);
