@@ -5,6 +5,7 @@ public class ChatDTO
     String chatNum;
     String userNickname;
     String userEmail;
+//    String otherEmail;
     String userMsg;
     String timestamp;
     Boolean userReceived;
@@ -15,6 +16,7 @@ public class ChatDTO
         this.chatNum = chatNum;
         this.userNickname = userNickname;
         this.userEmail = userEmail;
+//        this.otherEmail = otherEmail;
         this.userMsg = userMsg;
         this.timestamp = timestamp;
         this.userReceived = false;
@@ -43,6 +45,10 @@ public class ChatDTO
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
     }
+
+//    public String getOtherEmail() { return otherEmail; }
+//
+//    public void setOtherEmail(String otherEmail) { this.otherEmail = otherEmail; }
 
     public String getUserMsg() {
         return userMsg;
