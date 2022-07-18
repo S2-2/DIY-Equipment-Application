@@ -126,6 +126,19 @@
                                 android:text="작성 시간" />
                         </LinearLayout>
 
+                        <ImageButton
+                            android:id="@+id/communityDetail_btn_edit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            app:srcCompat="@drawable/ic_baseline_create_24"/>
+
+                        <ImageButton
+                            android:id="@+id/communityDetail_btn_delete"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            app:srcCompat="@drawable/ic_baseline_delete_24"/>
 
                     </LinearLayout>
 

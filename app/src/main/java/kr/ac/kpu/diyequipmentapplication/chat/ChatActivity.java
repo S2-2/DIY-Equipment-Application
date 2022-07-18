@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -46,8 +47,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
 
+import kr.ac.kpu.diyequipmentapplication.MainActivity;
 import kr.ac.kpu.diyequipmentapplication.R;
 import kr.ac.kpu.diyequipmentapplication.RentalHistoryRecyclerviewActivity;
+import kr.ac.kpu.diyequipmentapplication.community.CommunityDetailActivity;
 import kr.ac.kpu.diyequipmentapplication.equipment.ScheduleActivity;
 
 public class ChatActivity extends AppCompatActivity {
@@ -94,6 +97,8 @@ public class ChatActivity extends AppCompatActivity {
     private String getTransactionDBId;
     private TransactionDTO transactionDTO;
 
+    private ImageButton imgBtn_back, imgBtn_home; // 상단 뒤로가기, 홈 버튼
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,9 +120,28 @@ public class ChatActivity extends AppCompatActivity {
         chatAdapter = new ChatAdapter(chatModels, getLayoutInflater());
         lvChatList.setAdapter(chatAdapter);
         btnTransaction = (Button) findViewById(R.id.chatting_btn_transaction);
+        imgBtn_back = (ImageButton) findViewById(R.id.signup_btn_back);
+        imgBtn_home = (ImageButton) findViewById(R.id.registrationRecyclerview_btn_home);
 
         // 사용자 이메일 및 닉네임 가져오기
         CHAT_USER_EMAIL = chatAuth.getCurrentUser().getEmail().toString();
+
+        //뒤로가기 버튼 클릭시 채팅 목록 페이지에서 전 페이지로 이동
+        imgBtn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        //홈 버튼 클릭시 메인 페이지 이동
+        imgBtn_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ChatActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         userFS.collection("DIY_Signup")
                 .whereEqualTo("userEmail", chatAuth.getCurrentUser().getEmail().toString().trim())
