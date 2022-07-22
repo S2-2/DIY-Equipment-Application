@@ -197,7 +197,6 @@ public class CommunityRecyclerview extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(CommunityRecyclerview.this, CommunityRegistrationActivity.class); // 장비등록 페이지로 이동
                 startActivity(intent);  //MainActivity 이동
-                finish();
             }
         });
 

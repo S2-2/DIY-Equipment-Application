@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -76,6 +77,7 @@ public class ChatActivity extends AppCompatActivity {
     private DatabaseReference fcmRef = null;
     private FirebaseFirestore userFS = null;
 
+    private ImageButton imgBtn_back = null;
     private Button btnTransactionSchedule;      //거래일정 버튼
 
     private String getModelCollectionId;    //해당 장비 컬렉션 Id
@@ -108,6 +110,7 @@ public class ChatActivity extends AppCompatActivity {
         fcmRef = chatFDB.getReference().child("DIY_FcmUserData");
 
         // 위젯, 어댑터 참조
+        imgBtn_back = (ImageButton) findViewById(R.id.chat_btn_back);
         lvChatList = (ListView) findViewById(R.id.chat_lv_msg);
         etChatMsg = (EditText) findViewById(R.id.chat_et_msg_box);
         btnChatSend = (Button) findViewById(R.id.chat_btn_msg_send);
@@ -312,7 +315,16 @@ public class ChatActivity extends AppCompatActivity {
                     }
                 });
 
-        //거래 버큰 클릭 이벤트
+        // 뒤로가기 버튼
+        imgBtn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+
+        //거래 버튼 클릭 이벤트
         btnTransaction = (Button) findViewById(R.id.chatting_btn_transaction);
         btnTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -441,6 +453,7 @@ public class ChatActivity extends AppCompatActivity {
                     });
         }
     }
+
 
     private void chatWithUser(String chat_num) {
         // chat FDB 데이터 받아오기/추가/

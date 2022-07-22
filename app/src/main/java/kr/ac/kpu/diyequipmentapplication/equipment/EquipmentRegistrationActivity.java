@@ -57,6 +57,7 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
     private DocumentReference registrationDocRef2 = null;
     private FirebaseStorage registrationStorage = null;        //Storage 객체 참조 변수
     private ImageButton registrationImgBtn = null;             //이미지 버튼 뷰 참조 변수
+    private ImageButton imgBtn_back = null;
     private EditText registrationModelName = null, registrationModelInform = null;      //장비 모델명, 장비 정보 뷰 참조 변수
     private Button registrationBtnAdd = null;              //장비 등록 버튼 뷰 참조 변수
     private static final int Gallery_Code = 1;             //갤러리 코드 상수 및 초기화
@@ -100,6 +101,7 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
         registrationFreeRental = findViewById(R.id.rBtn_registrationFree);
         registrationRentalType = findViewById(R.id.et_registrationRentalType);
         registrationRentalCost = findViewById(R.id.et_registrationRentalCost);
+        imgBtn_back = (ImageButton) findViewById(R.id.equipmentRegistration_btn_back);
 
         registrationRentalAddress = findViewById(R.id.et_registrationRentalAddress);
         registrationStorage = FirebaseStorage.getInstance();
@@ -228,6 +230,13 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
                         registrationRentalType.setText(registrationFreeRental.getText().toString().trim());
                         break;
                 }
+            }
+        });
+
+        imgBtn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
 
