@@ -463,6 +463,10 @@ public class ScheduleActivity extends AppCompatActivity {
     //대여일, 반납일, 대여일수 계산 메소드
     private void updateLabel(Boolean controlFlag) {
         String myFormat = "yyyy/MM/dd";    // 출력형식   2021/07/26
+        Long bufLendingPeriod = null;
+        String month = "0달";
+        String week = "0주";
+        String day = "0일";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.KOREA);
 
         if (controlFlag == true) {  //대여기간 시작일인 경우
@@ -474,9 +478,34 @@ public class ScheduleActivity extends AppCompatActivity {
 
             if (scheduleDB.getsExpirationDate() != null) {
                 totLendingPeriod = Long.valueOf(scheduleDB.getFinishDate()) - Long.valueOf(scheduleDB.getStartDate());
-                scheduleDB.setsTotalLendingPeriod(Long.toString(totLendingPeriod)); //대여기간 총 대여일수
-                tvTotalLendingPeriod.setText(scheduleDB.getsTotalLendingPeriod()+"일");
-                tvTransPeriod.setText(scheduleDB.getsTotalLendingPeriod()+"일");
+                if(totLendingPeriod/30 < 1){
+                    if(totLendingPeriod/7<1){
+                        day = Long.toString(totLendingPeriod) + "일";
+                    }
+                    else{
+                        week = Long.toString(totLendingPeriod/7) + "주";
+                        bufLendingPeriod = totLendingPeriod%7;
+                        day = Long.toString(bufLendingPeriod) + "일";
+                        Log.e("LP", "bufLendingPeriod: " + bufLendingPeriod + " / totLendingPeriod: " + totLendingPeriod );
+                    }
+                }
+                else{
+                    month = Long.toString(totLendingPeriod/30) + "달";
+                    bufLendingPeriod = totLendingPeriod%30;
+                    if(bufLendingPeriod/7<1){
+                        day = Long.toString(bufLendingPeriod) + "일";
+                        Log.e("LP", "bufLendingPeriod: " + bufLendingPeriod + " / totLendingPeriod: " + totLendingPeriod );
+                    }
+                    else{
+                        week = Long.toString(bufLendingPeriod/7) + "주";
+                        bufLendingPeriod = totLendingPeriod%30%7;
+                        day = Long.toString(bufLendingPeriod) + "일";
+                        Log.e("LP", "bufLendingPeriod: " + bufLendingPeriod + " / totLendingPeriod: " + totLendingPeriod );
+                    }
+                }
+                scheduleDB.setsTotalLendingPeriod(month+ " " + week + " " + day+ " (총" + totLendingPeriod + "일)"); //대여기간 총 대여일수
+                tvTotalLendingPeriod.setText(scheduleDB.getsTotalLendingPeriod());
+                tvTransPeriod.setText(scheduleDB.getsTotalLendingPeriod());
             }
         } else {    //대여기간 반납일인 경우
             scheduleDB.setsExpirationDate(sdf.format(scheduleCalendar.getTime()));  //대여기간 종료일
@@ -486,9 +515,34 @@ public class ScheduleActivity extends AppCompatActivity {
 
             if (scheduleDB.getsStartDate() != null) {
                 totLendingPeriod = Long.valueOf(scheduleDB.getFinishDate()) - Long.valueOf(scheduleDB.getStartDate());
-                scheduleDB.setsTotalLendingPeriod(Long.toString(totLendingPeriod)); //대여기간 총 대여일수
-                tvTotalLendingPeriod.setText(scheduleDB.getsTotalLendingPeriod()+"일");
-                tvTransPeriod.setText(scheduleDB.getsTotalLendingPeriod()+"일");
+                if(totLendingPeriod/30 < 1){
+                    if(totLendingPeriod/7<1){
+                        day = Long.toString(totLendingPeriod) + "일";
+                    }
+                    else{
+                        week = Long.toString(totLendingPeriod/7) + "주";
+                        bufLendingPeriod = totLendingPeriod%7;
+                        day = Long.toString(bufLendingPeriod) + "일";
+                        Log.e("LP", "bufLendingPeriod: " + bufLendingPeriod + " / totLendingPeriod: " + totLendingPeriod );
+                    }
+                }
+                else{
+                    month = Long.toString(totLendingPeriod/30) + "달";
+                    bufLendingPeriod = totLendingPeriod%30;
+                    if(bufLendingPeriod/7<1){
+                        day = Long.toString(bufLendingPeriod) + "일";
+                        Log.e("LP", "bufLendingPeriod: " + bufLendingPeriod + " / totLendingPeriod: " + totLendingPeriod );
+                    }
+                    else{
+                        week = Long.toString(bufLendingPeriod/7) + "주";
+                        bufLendingPeriod = totLendingPeriod%30%7;
+                        day = Long.toString(bufLendingPeriod) + "일";
+                        Log.e("LP", "bufLendingPeriod: " + bufLendingPeriod + " / totLendingPeriod: " + totLendingPeriod );
+                    }
+                }
+                scheduleDB.setsTotalLendingPeriod(month +" " + week +" "+ day+ " (총 " + totLendingPeriod + "일)"); //대여기간 총 대여일수
+                tvTotalLendingPeriod.setText(scheduleDB.getsTotalLendingPeriod());
+                tvTransPeriod.setText(scheduleDB.getsTotalLendingPeriod());
             } else {
                 Toast.makeText(ScheduleActivity.this, "대여기간 시작일 먼저 선택해 주세요!", Toast.LENGTH_SHORT).show();
                 tvExpirationDate.setText("");
