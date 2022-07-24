@@ -2,8 +2,10 @@ package kr.ac.kpu.diyequipmentapplication.chat;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -26,18 +28,18 @@ public class ChatStartActivity extends AppCompatActivity  {
 
     private static final String TAG = "ChatStartAct";
 
-    private EditText edtChatNum;
-    private Button btnGo;
     private ListView lvChatList;
 
     private FirebaseAuth chatAuth = null;
     private FirebaseDatabase chatFDB = FirebaseDatabase.getInstance();
     private DatabaseReference chatRef = chatFDB.getReference().child("DIY_Chat");
-    private FirebaseFirestore signFDB = FirebaseFirestore.getInstance();
 
+    private ImageButton imgBtn_back = null;
     // chat 리스트에 입력될 변수들
     private String CHAT_USER_EMAIL = null;
     private String CHAT_OTHER_NICKNAME = null;
+
+    private Boolean myRoom = false;
 
     private ArrayList<ChatDTO> chatStartLists;
     private ChatDTO chatDTO;
@@ -48,12 +50,21 @@ public class ChatStartActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_chat);
 
+        imgBtn_back = (ImageButton) findViewById(R.id.chatStart_btn_back);
         chatAuth = FirebaseAuth.getInstance();
         lvChatList = (ListView) findViewById(R.id.start_lv_clist);
 
         CHAT_USER_EMAIL = chatAuth.getCurrentUser().getEmail().toString().trim();
 
         showChatList(CHAT_USER_EMAIL);
+
+        imgBtn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
     }
 
     private void showChatList(String email){
@@ -61,6 +72,7 @@ public class ChatStartActivity extends AppCompatActivity  {
         chatStartLists = new ArrayList<ChatDTO>();
         chatStartAdapter = new ChatStartAdapter(ChatStartActivity.this,chatStartLists, getLayoutInflater());
         lvChatList.setAdapter(chatStartAdapter);
+        CHAT_OTHER_NICKNAME = "(응답대기중)";
 
 
         chatRef.addValueEventListener(new ValueEventListener() {
@@ -71,12 +83,18 @@ public class ChatStartActivity extends AppCompatActivity  {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     for(DataSnapshot ds : snapshot.getChildren() ){
                         chatDTO = ds.getValue(ChatDTO.class);
-                        if(!chatDTO.getUserEmail().equals(CHAT_USER_EMAIL)){
-                            CHAT_OTHER_NICKNAME = chatDTO.getUserNickname();
-                        }
 
+                        if(chatDTO.getUserEmail().equals(CHAT_USER_EMAIL)){
+                            myRoom = true;
+                        }else{
+                            if(!chatDTO.getUserEmail().equals("-")){
+                                CHAT_OTHER_NICKNAME = chatDTO.getUserNickname();
+                            }
+                        }
                     }
+
                     chatDTO.setUserNickname(CHAT_OTHER_NICKNAME);
+
                     chatStartLists.add(chatDTO);
                 }
                 chatStartAdapter.notifyDataSetChanged();

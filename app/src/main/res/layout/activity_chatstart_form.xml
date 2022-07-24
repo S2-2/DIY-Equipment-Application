@@ -63,7 +63,7 @@
                 android:ellipsize="end"
                 android:gravity="left"
                 android:hint="채팅내역"
-                android:maxLength="20"
+                android:maxLength="15"
                 android:maxLines="1"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:layout_editor_absoluteY="0dp" />

@@ -24,6 +24,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -48,7 +49,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
     private ImageView ivRentalImage;
     private TextView tvUserNickname, tvTitle, tvExplanation, tvRentalType, tvRentalCost, tvUserLocation, tvRentalPeriod, tvCategory;
     private Button btnChat;
-    private String getImageUrl, userEmail, getTitle = null;
+    private String getImageUrl, userEmail, otherEmail, getTitle = null;
     private DecimalFormat decimalFormat;
     private String getRentalFeeCost, temp, getRentalAddress;
     private int temNum;
@@ -145,6 +146,21 @@ public class EquipmentDetailActivity extends AppCompatActivity {
         equipmentDetailFirebaseFirestore = FirebaseFirestore.getInstance();        //파이어스토어 초기화 및 객체 참조
         cartFirebaseFirestoreDB = FirebaseFirestore.getInstance();
         userEmail = equipmentDetailFirebaseAuth.getCurrentUser().getEmail().toString().trim();
+        otherEmail = intent.getStringExtra("UserEmail");
+
+        equipmentDetailFirebaseFirestore.collection("DIY_Signup")
+                .whereEqualTo("userEmail",otherEmail)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for (QueryDocumentSnapshot queryDocumentSnapshot: task.getResult()){
+                                tvUserNickname.setText("등록자: "+ queryDocumentSnapshot.get("userNickname").toString().trim());
+                            }
+                        }
+                    }
+                });
 
         //DIY_Signup DB에서 사용자 계정에 맞는 닉네임 가져오는 기능 구현.
         //사용자 이메일 정보와 일치하는 데이터를 DIY_Signup DB에서 찾아서 etNickname 참조 변수에 닉네임 값 참조.
@@ -177,14 +193,22 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                     }
                 });
 
+        // 내가 올린 게시물이면 비활성화
+       if(userEmail.equals(otherEmail)){
+            btnChat.setEnabled(false);
+            btnChat.setVisibility(View.INVISIBLE);
+            imgBtnCart.setVisibility(View.INVISIBLE);
+        }
+
         btnChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(EquipmentDetailActivity.this, ChatActivity.class);
                 //intent.putExtra("RentalCost", temp);
                 intent.putExtra("ModelCollectionId", getModelCollectionId);
-                intent.putExtra("ModelOwnerEmail", intent.getStringExtra("UserEmail"));
-                Log.e("ModelOwner", "Email " + intent.getStringExtra("UserEmail"));
+
+                intent.putExtra("ModelOwnerEmail", otherEmail);
+                Log.e("ModelOwner", "Email " + otherEmail);
                 startActivity(intent);
             }
         });
@@ -232,15 +256,13 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                 if(Ok== true){
                     imgBtnCart.setImageResource(R.drawable.ic_baseline_favorite_24);
                     Ok = false;
-                    Toast.makeText(view.getContext(), "찜 목록에 추가", Toast.LENGTH_SHORT).show();
-                    Log.e("Click","ImageButton is Clicked");
+                    Toast.makeText(view.getContext(), "찜 목록에 추가!", Toast.LENGTH_SHORT).show();
                     cartActivty.addCart(userEmail.substring(0, userEmail.indexOf('@')),getTitle);
                 }
                 else{
                     imgBtnCart.setImageResource(R.drawable.ic_baseline_favorite_border_dark_24);
                     Ok = true;
-                    Toast.makeText(view.getContext(), "찜 목록에서 삭제", Toast.LENGTH_SHORT).show();
-                    Log.e("Click","ImageButton is Clicked2");
+                    Toast.makeText(view.getContext(), "찜 목록에서 삭제!", Toast.LENGTH_SHORT).show();
                     cartActivty.removeCart(userEmail.substring(0, userEmail.indexOf('@')),getTitle);
                 }
             }

@@ -16,6 +16,7 @@
         android:paddingLeft="10dp"
         android:text="채팅" />
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,6 +47,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/chat_btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@android:color/transparent"
+                app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24" />
 
             <TextView
                 style="@style/style_tv_bold_black24dp"
@@ -165,7 +174,7 @@
                             android:layout_width="90dp"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="대여기간" />
+                            android:text="대여등록일" />
 
                         <TextView
                             android:id="@+id/chatting_tv_rentalDate"
@@ -224,7 +233,7 @@
             android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:backgroundTint="#618D5E"
-            android:text="거래 후기" />
+            android:text="거래" />
 
     </LinearLayout>
 

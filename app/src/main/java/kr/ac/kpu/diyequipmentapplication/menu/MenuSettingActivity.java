@@ -6,10 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import kr.ac.kpu.diyequipmentapplication.R;
 
 public class MenuSettingActivity extends AppCompatActivity {
+
+    private ImageButton imgBtn_back = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,7 +20,10 @@ public class MenuSettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu_setting);
 
         // 프로필 수정으로 이동
+        imgBtn_back = (ImageButton) findViewById(R.id.profileSetting_btn_back);
+
         Button btn_profile = findViewById(R.id.menuSetting_btn_profile);
+
         btn_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -36,5 +42,11 @@ public class MenuSettingActivity extends AppCompatActivity {
             }
         });
 
+        imgBtn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 }

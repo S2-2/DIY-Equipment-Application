@@ -295,7 +295,7 @@ public class CartRecyclerview extends AppCompatActivity {
                 else{
                     for( RegistrationDTO equipment : filteredCartList)
                     {
-                        if(equipment.getModelName().contains(searchText)||equipment.getModelInform().contains(searchText))
+                        if(equipment.getModelName().toUpperCase().contains(searchText.toUpperCase())||equipment.getModelInform().toUpperCase().contains(searchText.toUpperCase()))
                         {
                             cartRegistrationList.add(equipment);
                         }

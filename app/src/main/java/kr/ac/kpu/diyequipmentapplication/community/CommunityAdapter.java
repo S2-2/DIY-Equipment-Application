@@ -39,7 +39,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
         CommunityRegistration communityRegistration = communityRegistrationList.get(position);
         holder.tvNickname.setText(communityRegistration.getCommunityNickname());
         holder.tvDateAndTime.setText(communityRegistration.getCommunityDateAndTime());
-        holder.tvContent.setText(communityRegistration.getCommunityContent());
+        holder.tvTitle.setText(communityRegistration.getCommunityTitle());
 
     }
 
@@ -50,7 +50,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
 
     //ViewHolder 클래스 구현
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvNickname, tvDateAndTime, tvContent;
+        TextView tvNickname, tvDateAndTime, tvTitle;
 
         //ViewHolder 클래스 생성자
         public ViewHolder(@NonNull View itemView) {
@@ -59,7 +59,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.View
             //list_equipmentitem.xml파일에 있는 뷰 객체 참조
             tvNickname = itemView.findViewById(R.id.communityRecyclerviewItem_tv_nickname);
             tvDateAndTime = itemView.findViewById(R.id.communityRecyclerviewItem_dateAndTime);
-            tvContent = itemView.findViewById(R.id.communityRecyclerviewItem_tv_title);
+            tvTitle = itemView.findViewById(R.id.communityRecyclerviewItem_tv_title);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

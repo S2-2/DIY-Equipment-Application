@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
@@ -29,6 +31,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -41,6 +45,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import kr.ac.kpu.diyequipmentapplication.R;
+import kr.ac.kpu.diyequipmentapplication.chat.ChatDTO;
 import kr.ac.kpu.diyequipmentapplication.menu.LocationSearchActivity;
 
 public class ScheduleActivity extends AppCompatActivity {
@@ -71,11 +76,17 @@ public class ScheduleActivity extends AppCompatActivity {
     //Firebase 참조
     private FirebaseAuth scheduleFirebaseAuth;
     private FirebaseFirestore scheduleFirebaseFirestore;
+    private FirebaseDatabase scheduleFirebaseDatabase;
+    private DatabaseReference scheduleRef;
     private ProgressDialog scheduleProgressDialog;
 
     private ScheduleDB scheduleDB;
+    private ChatDTO chatDTO;
+
     private TextView tvStartDate, tvExpirationDate, tvTotalLendingPeriod, tvtTotalLendingPeriod, tvDailyRental,
             tvTotalRental, tvTransactionDate, tvTransactionTime, tvGetTransactionLocation;
+
+    private TextView tvTransPeriod, tvTransCost, tvTransDay, tvTransTime, tvTransPlace;
 
     //DatePickerDialog 사용 관련 참조위젯
     private Dialog lendingPeriodDialog;
@@ -114,6 +125,14 @@ public class ScheduleActivity extends AppCompatActivity {
         btnSetup = (Button) findViewById(R.id.schedule_btn_setup);
         btnUpdate = (Button) findViewById(R.id.schedule_btn_update);
         btnDelete = (Button) findViewById(R.id.schedule_btn_delete);
+
+        // 정보 설정시 변경될 텍스트뷰
+        tvTransPeriod = (TextView) findViewById(R.id.schedule_tv_lendingPeriod);
+        tvTransCost = (TextView) findViewById(R.id.schedule_tv_rental);
+        tvTransDay = (TextView) findViewById(R.id.schedule_tv_transactionDate);
+        tvTransTime = (TextView) findViewById(R.id.schedule_tv_transactionTime);
+        tvTransPlace = (TextView) findViewById(R.id.schedule_tv_transactionLocation);
+
 
         //firebase 참조
         scheduleFirebaseAuth = FirebaseAuth.getInstance();
@@ -187,6 +206,13 @@ public class ScheduleActivity extends AppCompatActivity {
                                 tvTransactionDate.setText(scheduleDB.getsTransactionDate());
                                 tvTransactionTime.setText(scheduleDB.getsTransactionTime());
                                 tvGetTransactionLocation.setText(scheduleDB.getsTransactionLocation());
+
+                                tvTransPeriod.setText(scheduleDB.getsTotalLendingPeriod());
+                                tvTransCost.setText(scheduleDB.getsTotalRental());
+                                tvTransDay.setText(scheduleDB.getsTransactionDate());
+                                tvTransTime.setText(scheduleDB.getsTransactionTime());
+                                tvTransPlace.setText(scheduleDB.getsTransactionLocation());
+
                             }
                         }
                     }
@@ -266,6 +292,8 @@ public class ScheduleActivity extends AppCompatActivity {
                             scheduleFirebaseFirestore.collection("DIY_Schedule").document().set(scheduleDB);
                             Toast.makeText(ScheduleActivity.this, "거래정보 설정 완료되었습니다!", Toast.LENGTH_SHORT).show();
 
+                            // 시스템 채팅 등록
+                            systemScheduleMsg(scheduleDB,"1");
                         } else {
                             Toast.makeText(ScheduleActivity.this, "거래정보 설정을 할 수 없습니다!", Toast.LENGTH_SHORT).show();
                             Toast.makeText(ScheduleActivity.this, "거래정보 설정 다시 입력하세요!", Toast.LENGTH_SHORT).show();
@@ -323,6 +351,7 @@ public class ScheduleActivity extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Log.d("거래정보 업데이트 성공!", "DocumentSnapshot successfully update!");
+                                            systemScheduleMsg(scheduleDB,"2");
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
@@ -434,6 +463,10 @@ public class ScheduleActivity extends AppCompatActivity {
     //대여일, 반납일, 대여일수 계산 메소드
     private void updateLabel(Boolean controlFlag) {
         String myFormat = "yyyy/MM/dd";    // 출력형식   2021/07/26
+        Long bufLendingPeriod = null;
+        String month = "0달";
+        String week = "0주";
+        String day = "0일";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.KOREA);
 
         if (controlFlag == true) {  //대여기간 시작일인 경우
@@ -445,8 +478,34 @@ public class ScheduleActivity extends AppCompatActivity {
 
             if (scheduleDB.getsExpirationDate() != null) {
                 totLendingPeriod = Long.valueOf(scheduleDB.getFinishDate()) - Long.valueOf(scheduleDB.getStartDate());
-                scheduleDB.setsTotalLendingPeriod(Long.toString(totLendingPeriod)); //대여기간 총 대여일수
-                tvTotalLendingPeriod.setText(scheduleDB.getsTotalLendingPeriod()+"일");
+                if(totLendingPeriod/30 < 1){
+                    if(totLendingPeriod/7<1){
+                        day = Long.toString(totLendingPeriod) + "일";
+                    }
+                    else{
+                        week = Long.toString(totLendingPeriod/7) + "주";
+                        bufLendingPeriod = totLendingPeriod%7;
+                        day = Long.toString(bufLendingPeriod) + "일";
+                        Log.e("LP", "bufLendingPeriod: " + bufLendingPeriod + " / totLendingPeriod: " + totLendingPeriod );
+                    }
+                }
+                else{
+                    month = Long.toString(totLendingPeriod/30) + "달";
+                    bufLendingPeriod = totLendingPeriod%30;
+                    if(bufLendingPeriod/7<1){
+                        day = Long.toString(bufLendingPeriod) + "일";
+                        Log.e("LP", "bufLendingPeriod: " + bufLendingPeriod + " / totLendingPeriod: " + totLendingPeriod );
+                    }
+                    else{
+                        week = Long.toString(bufLendingPeriod/7) + "주";
+                        bufLendingPeriod = totLendingPeriod%30%7;
+                        day = Long.toString(bufLendingPeriod) + "일";
+                        Log.e("LP", "bufLendingPeriod: " + bufLendingPeriod + " / totLendingPeriod: " + totLendingPeriod );
+                    }
+                }
+                scheduleDB.setsTotalLendingPeriod(month+ " " + week + " " + day+ " (총" + totLendingPeriod + "일)"); //대여기간 총 대여일수
+                tvTotalLendingPeriod.setText(scheduleDB.getsTotalLendingPeriod());
+                tvTransPeriod.setText(scheduleDB.getsTotalLendingPeriod());
             }
         } else {    //대여기간 반납일인 경우
             scheduleDB.setsExpirationDate(sdf.format(scheduleCalendar.getTime()));  //대여기간 종료일
@@ -456,8 +515,34 @@ public class ScheduleActivity extends AppCompatActivity {
 
             if (scheduleDB.getsStartDate() != null) {
                 totLendingPeriod = Long.valueOf(scheduleDB.getFinishDate()) - Long.valueOf(scheduleDB.getStartDate());
-                scheduleDB.setsTotalLendingPeriod(Long.toString(totLendingPeriod)); //대여기간 총 대여일수
-                tvTotalLendingPeriod.setText(scheduleDB.getsTotalLendingPeriod()+"일");
+                if(totLendingPeriod/30 < 1){
+                    if(totLendingPeriod/7<1){
+                        day = Long.toString(totLendingPeriod) + "일";
+                    }
+                    else{
+                        week = Long.toString(totLendingPeriod/7) + "주";
+                        bufLendingPeriod = totLendingPeriod%7;
+                        day = Long.toString(bufLendingPeriod) + "일";
+                        Log.e("LP", "bufLendingPeriod: " + bufLendingPeriod + " / totLendingPeriod: " + totLendingPeriod );
+                    }
+                }
+                else{
+                    month = Long.toString(totLendingPeriod/30) + "달";
+                    bufLendingPeriod = totLendingPeriod%30;
+                    if(bufLendingPeriod/7<1){
+                        day = Long.toString(bufLendingPeriod) + "일";
+                        Log.e("LP", "bufLendingPeriod: " + bufLendingPeriod + " / totLendingPeriod: " + totLendingPeriod );
+                    }
+                    else{
+                        week = Long.toString(bufLendingPeriod/7) + "주";
+                        bufLendingPeriod = totLendingPeriod%30%7;
+                        day = Long.toString(bufLendingPeriod) + "일";
+                        Log.e("LP", "bufLendingPeriod: " + bufLendingPeriod + " / totLendingPeriod: " + totLendingPeriod );
+                    }
+                }
+                scheduleDB.setsTotalLendingPeriod(month +" " + week +" "+ day+ " (총 " + totLendingPeriod + "일)"); //대여기간 총 대여일수
+                tvTotalLendingPeriod.setText(scheduleDB.getsTotalLendingPeriod());
+                tvTransPeriod.setText(scheduleDB.getsTotalLendingPeriod());
             } else {
                 Toast.makeText(ScheduleActivity.this, "대여기간 시작일 먼저 선택해 주세요!", Toast.LENGTH_SHORT).show();
                 tvExpirationDate.setText("");
@@ -472,6 +557,7 @@ public class ScheduleActivity extends AppCompatActivity {
 
         scheduleDB.setsTransactionDate(sdf.format(scheduleCalendar.getTime())); //거래일
         tvTransactionDate.setText(scheduleDB.getsTransactionDate());
+        tvTransDay.setText(scheduleDB.getsTransactionDate());
     }
 
     //대여비 커스텀 다이얼로그 기능 메소드
@@ -494,6 +580,7 @@ public class ScheduleActivity extends AppCompatActivity {
                                     tvTotalRental.setText(getRentalCost[0]);
                                     scheduleDB.setsDailyRental(getRentalCost[0]);  //일일 대여비
                                     scheduleDB.setsTotalRental(getRentalCost[0]);  //총 대여비
+                                    tvTransCost.setText(getRentalCost[0]);
                                 } else {    //일일대여비가 유료인 경우
                                     dailyRental[0] = Integer.parseInt(getRentalCost[0]);
                                     totalRental[0] = dailyRental[0] * Integer.parseInt(scheduleDB.getsTotalLendingPeriod());
@@ -501,6 +588,7 @@ public class ScheduleActivity extends AppCompatActivity {
                                     scheduleDB.setsTotalRental(Integer.toString(totalRental[0]));  //총 대여비
                                     tvDailyRental.setText(dailyRental[0] +"원");
                                     tvTotalRental.setText(totalRental[0] +"원");
+                                    tvTransCost.setText(totalRental[0] +"원");
                                 }
                                 tvtTotalLendingPeriod.setText(scheduleDB.getsTotalLendingPeriod()+"일");
                                 rentalDialog.getWindow().setGravity(Gravity.BOTTOM);
@@ -613,6 +701,7 @@ public class ScheduleActivity extends AppCompatActivity {
                         }
                         // EditText에 출력할 형식 지정
                         tvTransactionTime.setText(state + " " + selectedHour + "시 " + selectedMinute + "분");
+                        tvTransTime.setText(state + " " + selectedHour + "시 " + selectedMinute + "분");
                         scheduleDB.setsTransactionTime(tvTransactionTime.getText().toString()); //거래시간
                     }
                 }, hour, minute, false); // true의 경우 24시간 형식의 TimePicker 출현
@@ -664,9 +753,41 @@ public class ScheduleActivity extends AppCompatActivity {
                     if (result.getData() != null) {
                         String data = result.getData().getStringExtra("data");
                         tvGetTransactionLocation.setText(data);
+                        tvTransPlace.setText(data);
                         scheduleDB.setsTransactionLocation(data);
                     }
                 }
             }
     );
+
+    private void systemScheduleMsg(ScheduleDB scheduleDB, String tag){
+        scheduleFirebaseDatabase = FirebaseDatabase.getInstance();
+        scheduleRef = scheduleFirebaseDatabase.getReference().child("DIY_Chat");
+        String result = null;
+
+        Calendar calendar = Calendar.getInstance();
+        String timestamp = calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE);
+        if(tag.equals("1")){
+            result = String.format("거래일정 안내입니다.\n 총 대여일: %s\n 총 비용: %s\n 거래일: %s\n 거래시간: %s\n 거래장소: %s",
+                    scheduleDB.getsTotalLendingPeriod(),
+                    scheduleDB.getsTotalRental(),
+                    scheduleDB.getsTransactionDate(),
+                    scheduleDB.getsTransactionTime(),
+                    scheduleDB.getsTransactionLocation());
+        } else if(tag.equals("2")){
+            result = String.format("거래일정이 수정되었습니다.\n 총 대여일: %s\n 총 비용: %s\n 거래일: %s\n 거래시간: %s\n 거래장소: %s",
+                    scheduleDB.getsTotalLendingPeriod(),
+                    scheduleDB.getsTotalRental(),
+                    scheduleDB.getsTransactionDate(),
+                    scheduleDB.getsTransactionTime(),
+                    scheduleDB.getsTransactionLocation());
+        } else{
+            return;
+        }
+
+        chatDTO = new ChatDTO(scheduleDB.getsChatNum(), "거래도우미", "-", result, timestamp);
+        scheduleRef.child(scheduleDB.getsChatNum()).push().setValue(chatDTO);
+//        chatDTO = new ChatDTO(CHAT_NUM, CHAT_USER_NICKNAME, CHAT_USER_EMAIL ,CHAT_USER_TEXT,timestamp);
+//        chatRef.child(CHAT_NUM).push().setValue(chatDTO);
+    }
 }

@@ -60,11 +60,12 @@ public class ChatActivity extends AppCompatActivity {
 
     private String CHAT_NUM = null;
     private String CHAT_USER_EMAIL = null;
+    private String CHAT_OTHER_EMAIL = null;
     private String CHAT_USER_NICKNAME = null;
     private String CHAT_USER_TEXT = null;
 
-    private ArrayList<ChatDTO> chatModels;
-    private ChatDTO chatModel;
+    private ArrayList<ChatDTO> chatDTOS;
+    private ChatDTO chatDTO;
     private ChatAdapter chatAdapter;
 
     private ListView lvChatList;
@@ -78,6 +79,7 @@ public class ChatActivity extends AppCompatActivity {
     private DatabaseReference fcmRef = null;
     private FirebaseFirestore userFS = null;
 
+    private ImageButton imgBtn_back = null;
     private Button btnTransactionSchedule;      //거래일정 버튼
 
     private String getModelCollectionId;    //해당 장비 컬렉션 Id
@@ -112,16 +114,14 @@ public class ChatActivity extends AppCompatActivity {
         fcmRef = chatFDB.getReference().child("DIY_FcmUserData");
 
         // 위젯, 어댑터 참조
+        imgBtn_back = (ImageButton) findViewById(R.id.chat_btn_back);
         lvChatList = (ListView) findViewById(R.id.chat_lv_msg);
         etChatMsg = (EditText) findViewById(R.id.chat_et_msg_box);
         btnChatSend = (Button) findViewById(R.id.chat_btn_msg_send);
         tvChatNum = (TextView) findViewById(R.id.chat_tv_room_num);
-        chatModels = new ArrayList<ChatDTO>();
-        chatAdapter = new ChatAdapter(chatModels, getLayoutInflater());
+        chatDTOS = new ArrayList<ChatDTO>();
+        chatAdapter = new ChatAdapter(chatDTOS, getLayoutInflater());
         lvChatList.setAdapter(chatAdapter);
-        btnTransaction = (Button) findViewById(R.id.chatting_btn_transaction);
-        imgBtn_back = (ImageButton) findViewById(R.id.signup_btn_back);
-        imgBtn_home = (ImageButton) findViewById(R.id.registrationRecyclerview_btn_home);
 
         // 사용자 이메일 및 닉네임 가져오기
         CHAT_USER_EMAIL = chatAuth.getCurrentUser().getEmail().toString();
@@ -174,34 +174,46 @@ public class ChatActivity extends AppCompatActivity {
         tvChatNum.setText("ROOM" + "-" + CHAT_NUM);
         Log.e("LOG", "chatnum:"+CHAT_NUM);
         chatWithUser(CHAT_NUM);
-        
+
         btnChatSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            // 이름 비어있을시 리턴
-            if(etChatMsg.getText().toString().equals(""))
-                return;
-            else{
-                CHAT_USER_TEXT = etChatMsg.getText().toString();
-            }
+                // 이름 비어있을시 리턴
+                if(etChatMsg.getText().toString().equals(""))
+                    return;
+                else{
+                    CHAT_USER_TEXT = etChatMsg.getText().toString();
+                }
 
-            // 캘랜더 시간 가져오기
-            Calendar calendar = Calendar.getInstance();
-            String timestamp = calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE);
+                // 캘랜더 시간 가져오기
+                Calendar calendar = Calendar.getInstance();
+                String timestamp = calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE);
 
-            // firebaseDB에 데이터 저장
-            chatModel = new ChatDTO(CHAT_NUM, CHAT_USER_NICKNAME, CHAT_USER_EMAIL ,CHAT_USER_TEXT,timestamp);
-            chatRef.child(CHAT_NUM).push().setValue(chatModel);
+                // firebaseDB에 데이터 저장
+                chatDTO = new ChatDTO(CHAT_NUM, CHAT_USER_NICKNAME, CHAT_USER_EMAIL ,CHAT_USER_TEXT,timestamp);
+                chatRef.child(CHAT_NUM).push().setValue(chatDTO);
 
-            // 채팅알림 보내기
+                // 채팅알림 보내기
                 sendNotification(CHAT_USER_NICKNAME, CHAT_USER_EMAIL ,CHAT_USER_TEXT);
 
-            // 입력한 메세지 보냈으면 초기화
-            etChatMsg.setText("");
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
+                // 입력한 메세지 보냈으면 초기화
+                etChatMsg.setText("");
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
             }
         });
+
+//        private void systemMsg(){
+//            String sysMessage = null;
+//            // 캘랜더 시간 가져오기
+//            Calendar calendar = Calendar.getInstance();
+//            String timestamp = calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE);
+//
+//            // firebaseDB에 데이터 저장
+//            chatDTO = new ChatDTO(CHAT_NUM, "거래도우미", "-" ,sysMessage,timestamp);
+//            chatRef.child(CHAT_NUM).push().setValue(chatDTO);
+//
+//        };
 
         //거래일정 버튼 클릭 이벤트
         btnTransactionSchedule = (Button) findViewById(R.id.chatting_btn_transactionSchedule);
@@ -283,6 +295,10 @@ public class ChatActivity extends AppCompatActivity {
                             //firestore DB에 저장
                             transactionFirebaseFirestore.collection("DIY_Transaction").document().set(transactionDTO);
                             Toast.makeText(ChatActivity.this, "거래가 완료 되었습니다!", Toast.LENGTH_SHORT).show();
+
+                            // 시스템메시지 출력
+                            systemTransMsg(transactionDTO, CHAT_NUM);
+
                             Intent transactionIntent = new Intent(ChatActivity.this, RentalHistoryRecyclerviewActivity.class);
                             startActivity(transactionIntent);
 
@@ -320,7 +336,17 @@ public class ChatActivity extends AppCompatActivity {
                     }
                 });
 
-        //거래 버큰 클릭 이벤트
+        // 뒤로가기 버튼
+        imgBtn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+
+        //거래 버튼 클릭 이벤트
+        btnTransaction = (Button) findViewById(R.id.chatting_btn_transaction);
         btnTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -449,15 +475,16 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
+
     private void chatWithUser(String chat_num) {
         // chat FDB 데이터 받아오기/추가/
         chatRef.child(chat_num).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 ChatDTO item = snapshot.getValue(ChatDTO.class);
-                chatModels.add(item);
+                chatDTOS.add(item);
                 chatAdapter.notifyDataSetChanged();;
-                lvChatList.setSelection(chatModels.size()-1);
+                lvChatList.setSelection(chatDTOS.size()-1);
             }
 
             @Override
@@ -524,39 +551,59 @@ public class ChatActivity extends AppCompatActivity {
 
     //거래 상세 페이지 커스텀 다이얼로그 기능 메소드
     private void showTransactionDialog() {
-            transactionFirebaseFirestore.collection("DIY_Schedule")
-                    .document(getTransactionDBId)
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            transactionDTO.settScheduleId(getTransactionDBId);
-                            transactionDTO.settStartDate(task.getResult().getString("sStartDate"));
-                            transactionDTO.settExpirationDate(task.getResult().getString("sExpirationDate"));
-                            transactionDTO.settTotalLendingPeriod(task.getResult().getString("sTotalLendingPeriod"));
-                            transactionDTO.settTotalRental(task.getResult().getString("sTotalRental"));
-                            transactionDTO.settTransactionDate(task.getResult().getString("sTransactionDate"));
-                            transactionDTO.settTransactionTime(task.getResult().getString("sTransactionTime"));
-                            transactionDTO.settTransactionLocation(task.getResult().getString("sTransactionLocation"));
+        transactionFirebaseFirestore.collection("DIY_Schedule")
+                .document(getTransactionDBId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        transactionDTO.settScheduleId(getTransactionDBId);
+                        transactionDTO.settStartDate(task.getResult().getString("sStartDate"));
+                        transactionDTO.settExpirationDate(task.getResult().getString("sExpirationDate"));
+                        transactionDTO.settTotalLendingPeriod(task.getResult().getString("sTotalLendingPeriod"));
+                        transactionDTO.settTotalRental(task.getResult().getString("sTotalRental"));
+                        transactionDTO.settTransactionDate(task.getResult().getString("sTransactionDate"));
+                        transactionDTO.settTransactionTime(task.getResult().getString("sTransactionTime"));
+                        transactionDTO.settTransactionLocation(task.getResult().getString("sTransactionLocation"));
 
-                            Picasso.get().load(transactionDTO.gettImgView()).into(imgViewT);
-                            tvTcategory.setText(transactionDTO.gettCategory());
-                            tvTmodelName.setText(transactionDTO.gettModelName());
-                            tvTuserName.setText(transactionDTO.gettUserName());
-                            tvTrentalType.setText(transactionDTO.gettRentalType());
-                            tvTrentalDate.setText(transactionDTO.gettRentalDate());
-                            tvTrentalCost.setText(transactionDTO.gettRentalCost());
+                        Picasso.get().load(transactionDTO.gettImgView()).into(imgViewT);
+                        tvTcategory.setText(transactionDTO.gettCategory());
+                        tvTmodelName.setText(transactionDTO.gettModelName());
+                        tvTuserName.setText(transactionDTO.gettUserName());
+                        tvTrentalType.setText(transactionDTO.gettRentalType());
+                        tvTrentalDate.setText(transactionDTO.gettRentalDate());
+                        tvTrentalCost.setText(transactionDTO.gettRentalCost());
 
-                            tvTstartDate.setText(transactionDTO.gettStartDate());
-                            tvTexpirationDate.setText(transactionDTO.gettExpirationDate());
-                            tvTtotalLendingPeriod.setText(transactionDTO.gettTotalLendingPeriod());
-                            tvTtotalRental.setText(transactionDTO.gettTotalRental());
-                            tvTtransactionDate.setText(transactionDTO.gettTransactionDate());
-                            tvTtransactionTime.setText(transactionDTO.gettTransactionTime());
-                            tvTtransactionLocation.setText(transactionDTO.gettTransactionLocation());
+                        tvTstartDate.setText(transactionDTO.gettStartDate());
+                        tvTexpirationDate.setText(transactionDTO.gettExpirationDate());
+                        tvTtotalLendingPeriod.setText(transactionDTO.gettTotalLendingPeriod());
+                        tvTtotalRental.setText(transactionDTO.gettTotalRental());
+                        tvTtransactionDate.setText(transactionDTO.gettTransactionDate());
+                        tvTtransactionTime.setText(transactionDTO.gettTransactionTime());
+                        tvTtransactionLocation.setText(transactionDTO.gettTransactionLocation());
 
-                        }
-                    });
+                    }
+                });
         transactionDialog.show();
+    }
+
+    private void systemTransMsg(TransactionDTO transactionDTO, String chatNum) {
+         chatFDB= FirebaseDatabase.getInstance();
+         chatRef = chatFDB.getReference().child("DIY_Chat");
+        String result = null;
+
+        Calendar calendar = Calendar.getInstance();
+        String timestamp = calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE);
+
+//            result = String.format("거래일정이 수정되었습니다.\n 총 대여일: %s\n 총 비용: %s\n 거래일: %s\n 거래시간: %s\n 거래장소: %s",
+//                    transactionDTO.getsTotalLendingPeriod(),
+//                    transactionDTO.getsTotalRental(),
+//                    transactionDTO.getsTransactionDate(),
+//                    transactionDTO.getsTransactionTime(),
+//                    transactionDTO.getsTransactionLocation());
+        result = String.format("거래가 성립되었습니다.\n 서로가 서로를 존중하는 아름다운 거래되시길 바랍니다..");
+
+        chatDTO = new ChatDTO(chatNum, "거래도우미", "-", result, timestamp);
+        chatRef.child(chatNum).push().setValue(chatDTO);
     }
 }

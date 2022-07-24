@@ -54,10 +54,16 @@ public class CommunityCommentRecyclerview extends AppCompatActivity {
     private Context context = this;
     private FirebaseAuth registrationListFirebaseAuth;     //FirebaseAuth 참조 변수 선언
 
+    private String getHostNickname; //커뮤니티 작성자 별명
+    private String getHostCommunityId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_community_comment_recyclerview);
+
+        Intent intent = getIntent();
+        getHostNickname = intent.getStringExtra("hostNickname");
 
         //RecyclerView 필드 참조
         communityCommentFirebaseFirestore = FirebaseFirestore.getInstance();
@@ -123,26 +129,33 @@ public class CommunityCommentRecyclerview extends AppCompatActivity {
                     }
                 });
 
-        //Firestore DB 변경
-        //Firestore DB에 등록된 장비 등록 정보 읽기 기능 구현
-        communityCommentFirebaseFirestore.collection("DIY_Equipment_CommunityComment")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
-                                CommunityComment communityComment = new CommunityComment(
-                                        (Boolean) queryDocumentSnapshot.get("commentLike"),
-                                        queryDocumentSnapshot.get("comment").toString().trim(),
-                                        queryDocumentSnapshot.get("commentNickname").toString().trim(),
-                                        queryDocumentSnapshot.get("commentDate").toString().trim());
-                                communityCommentArrayList.add(communityComment);
-                                communityCommentAdapter.notifyDataSetChanged();
-                            }
-                        }
-                    }
-                });
+                                //Firestore DB 변경
+                                //Firestore DB에 등록된 장비 등록 정보 읽기 기능 구현
+                                communityCommentFirebaseFirestore.collection("DIY_Equipment_CommunityComment")
+                                        .whereEqualTo("commentHostNickname", getHostNickname)
+                                        .get()
+                                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    for (QueryDocumentSnapshot queryDocumentSnapshot1 : task.getResult()) {
+                                                        CommunityComment communityComment = new CommunityComment(
+                                                                (Boolean) queryDocumentSnapshot1.get("commentLike"),
+                                                                queryDocumentSnapshot1.get("comment").toString().trim(),
+                                                                queryDocumentSnapshot1.get("commentNickname").toString().trim(),
+                                                                queryDocumentSnapshot1.get("commentDate").toString().trim(),
+                                                                queryDocumentSnapshot1.get("commentHostNickname").toString().trim());
+
+                                                        communityCommentArrayList.add(communityComment);
+                                                        communityCommentAdapter.notifyDataSetChanged();
+
+                                                    }
+                                                }
+
+                                            }
+                                        });
+
+
 
         //뒤로가기 버튼 클릭시 장비 목록 페이지에서 장비 메인 페이지 이동
         imgBtn_back.setOnClickListener(new View.OnClickListener() {

@@ -190,7 +190,7 @@ public class RegistrationRecyclerview extends AppCompatActivity {
                 else{
                     for( RegistrationDTO equipment : filteredEquipementList)
                     {
-                        if(equipment.getModelName().contains(searchText)||equipment.getModelInform().contains(searchText))
+                        if(equipment.getModelName().toUpperCase().contains(searchText.toUpperCase())||equipment.getModelInform().toUpperCase().contains(searchText.toUpperCase()))
                         {
                             equipmentRegistrationList.add(equipment);
                         }
