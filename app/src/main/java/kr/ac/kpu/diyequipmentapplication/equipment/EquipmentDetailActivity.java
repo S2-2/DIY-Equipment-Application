@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -47,7 +48,7 @@ import kr.ac.kpu.diyequipmentapplication.menu.MenuSettingActivity;
 // 목록 클릭시 상세화면으로 전환되는 액티비티클래스
 public class EquipmentDetailActivity extends AppCompatActivity {
     private ImageView ivRentalImage;
-    private TextView tvUserNickname, tvTitle, tvExplanation, tvRentalType, tvRentalCost, tvUserLocation, tvRentalPeriod, tvCategory;
+    private TextView tvUserNickname, tvTitle, tvExplanation, tvRentalType, tvRentalCost, tvUserLocation, tvRentalPeriod, tvCategory, tvLikeNum;
     private Button btnChat;
     private String getImageUrl, userEmail, otherEmail, getTitle = null;
     private DecimalFormat decimalFormat;
@@ -66,6 +67,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
     private FirebaseAuth equipmentDetailFirebaseAuth;     //FirebaseAuth 참조 변수 선언
     private FirebaseFirestore equipmentDetailFirebaseFirestore;
     private FirebaseFirestore cartFirebaseFirestoreDB;
+    private DocumentReference equipmentDetailRef = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
         tvRentalCost = findViewById(R.id.equipmentDetail_tv_rentalCost);
         tvUserLocation = findViewById(R.id.equipmentDetail_tv_location);
         tvRentalPeriod = findViewById(R.id.equipmentDetail_tv_date);
+        tvLikeNum = findViewById(R.id.equipmentDetail_tv_likenum);
         btnChat =findViewById(R.id.equipmentDetail_btn_chatting);
         imgBtnCart = findViewById(R.id.equipmentDetail_btn_like);   //찜 아이콘
         decimalFormat = new DecimalFormat("###,###");
@@ -145,6 +148,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
         equipmentDetailFirebaseAuth = FirebaseAuth.getInstance();                  //FirebaseAuth 초기화 및 객체 참조
         equipmentDetailFirebaseFirestore = FirebaseFirestore.getInstance();        //파이어스토어 초기화 및 객체 참조
         cartFirebaseFirestoreDB = FirebaseFirestore.getInstance();
+//        equipmentDetailRef = equipmentDetailFirebaseFirestore.collection("DIY_Equipment_Rental").document();
         userEmail = equipmentDetailFirebaseAuth.getCurrentUser().getEmail().toString().trim();
         otherEmail = intent.getStringExtra("UserEmail");
 
@@ -193,11 +197,31 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                     }
                 });
 
+        equipmentDetailFirebaseFirestore.collection("DIY_Equipment_Rental")
+                .whereEqualTo("rentalImage",getImageUrl)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                                if (queryDocumentSnapshot.get("modelLikeNum") != null) {
+                                    tvLikeNum.setText(queryDocumentSnapshot.get("modelLikeNum").toString().trim());
+                                }
+                                else{
+                                    tvLikeNum.setText("0");
+
+                                }
+                            }
+                        }
+                    }
+                });
+
         // 내가 올린 게시물이면 비활성화
        if(userEmail.equals(otherEmail)){
             btnChat.setEnabled(false);
             btnChat.setVisibility(View.INVISIBLE);
-            imgBtnCart.setVisibility(View.INVISIBLE);
+            imgBtnCart.setEnabled(false);
         }
 
         btnChat.setOnClickListener(new View.OnClickListener() {
@@ -258,6 +282,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                     Ok = false;
                     Toast.makeText(view.getContext(), "찜 목록에 추가!", Toast.LENGTH_SHORT).show();
                     cartActivty.addCart(userEmail.substring(0, userEmail.indexOf('@')),getTitle);
+
                 }
                 else{
                     imgBtnCart.setImageResource(R.drawable.ic_baseline_favorite_border_dark_24);

@@ -163,9 +163,8 @@ public class CartRecyclerview extends AppCompatActivity {
                             for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
                                 if(queryDocumentSnapshot.get("equipTitle") != null){
                                     equipList.add(queryDocumentSnapshot.get("equipTitle").toString().trim());
-                                    Log.e("DB","Is this work?"+equipList);
                                 }else{
-                                    Log.e("DB","It is empty");
+                                    Log.e("cartDB","It is empty");
                                 }
                             }
                         }
@@ -182,22 +181,44 @@ public class CartRecyclerview extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
                                 if(equipList.contains(queryDocumentSnapshot.get("modelName").toString())){
-                                    RegistrationDTO registrationDTO = new RegistrationDTO(
-                                            queryDocumentSnapshot.get("modelName").toString().trim(),
-                                            queryDocumentSnapshot.get("modelInform").toString().trim(),
-                                            queryDocumentSnapshot.get("rentalImage").toString().trim(),
-                                            queryDocumentSnapshot.get("rentalType").toString().trim(),
-                                            queryDocumentSnapshot.get("rentalCost").toString().trim(),
-                                            queryDocumentSnapshot.get("rentalAddress").toString().trim(),
-                                            queryDocumentSnapshot.get("userEmail").toString().trim(),
-                                            queryDocumentSnapshot.get("rentalDate").toString().trim(),
-                                            queryDocumentSnapshot.get("modelCategory1").toString().trim(),
-                                            queryDocumentSnapshot.get("modelCategory2").toString().trim(),
-                                            queryDocumentSnapshot.getId()
-                                            );
-                                    cartRegistrationList.add(registrationDTO);
-                                    filteredCartList.add(registrationDTO);
+                                    if(queryDocumentSnapshot.get("modelLikeNum")!=null){        // 정보 최신화 후 수정 필요
+                                        RegistrationDTO registrationDTO = new RegistrationDTO(
+                                                queryDocumentSnapshot.get("modelName").toString().trim(),
+                                                queryDocumentSnapshot.get("modelInform").toString().trim(),
+                                                queryDocumentSnapshot.get("rentalImage").toString().trim(),
+                                                queryDocumentSnapshot.get("rentalType").toString().trim(),
+                                                queryDocumentSnapshot.get("rentalCost").toString().trim(),
+                                                queryDocumentSnapshot.get("rentalAddress").toString().trim(),
+                                                queryDocumentSnapshot.get("userEmail").toString().trim(),
+                                                queryDocumentSnapshot.get("rentalDate").toString().trim(),
+                                                queryDocumentSnapshot.get("modelCategory1").toString().trim(),
+                                                queryDocumentSnapshot.get("modelCategory2").toString().trim(),
+                                                queryDocumentSnapshot.get("modelLikeNum").toString().trim(),
+                                                queryDocumentSnapshot.getId()
+                                        );
+                                        cartRegistrationList.add(registrationDTO);
+                                        filteredCartList.add(registrationDTO);
+                                    }
+                                    else{
+                                        RegistrationDTO registrationDTO = new RegistrationDTO(
+                                                queryDocumentSnapshot.get("modelName").toString().trim(),
+                                                queryDocumentSnapshot.get("modelInform").toString().trim(),
+                                                queryDocumentSnapshot.get("rentalImage").toString().trim(),
+                                                queryDocumentSnapshot.get("rentalType").toString().trim(),
+                                                queryDocumentSnapshot.get("rentalCost").toString().trim(),
+                                                queryDocumentSnapshot.get("rentalAddress").toString().trim(),
+                                                queryDocumentSnapshot.get("userEmail").toString().trim(),
+                                                queryDocumentSnapshot.get("rentalDate").toString().trim(),
+                                                queryDocumentSnapshot.get("modelCategory1").toString().trim(),
+                                                queryDocumentSnapshot.get("modelCategory2").toString().trim(),
+                                                "0",
+                                                queryDocumentSnapshot.getId()
+                                        );
+                                        cartRegistrationList.add(registrationDTO);
+                                        filteredCartList.add(registrationDTO);
+                                    }
                                     registrationAdapter.notifyDataSetChanged();
+
                                 }
                             }
                         }
@@ -219,19 +240,37 @@ public class CartRecyclerview extends AppCompatActivity {
                                         return;
                                     }
                                     if(equipList.contains(dc.getDocument().get("modelName").toString())){
-                                        RegistrationDTO registrationDTO = new RegistrationDTO(
-                                                dc.getDocument().get("modelName").toString().trim(),
-                                                dc.getDocument().get("modelInform").toString().trim(),
-                                                dc.getDocument().get("rentalImage").toString().trim(),
-                                                dc.getDocument().get("rentalType").toString().trim(),
-                                                dc.getDocument().get("rentalCost").toString().trim(),
-                                                dc.getDocument().get("rentalAddress").toString().trim(),
-                                                dc.getDocument().get("userEmail").toString().trim(),
-                                                dc.getDocument().get("rentalDate").toString().trim(),
-                                                dc.getDocument().get("modelCategory1").toString().trim(),
-                                                dc.getDocument().get("modelCategory2").toString().trim(),
-                                                dc.getDocument().getId());
-                                        cartRegistrationList.add(registrationDTO);
+                                        if(dc.getDocument().get("modelLikeNum")!=null){             // 정보 최신화 후 수정 필요
+                                            RegistrationDTO registrationDTO = new RegistrationDTO(
+                                                    dc.getDocument().get("modelName").toString().trim(),
+                                                    dc.getDocument().get("modelInform").toString().trim(),
+                                                    dc.getDocument().get("rentalImage").toString().trim(),
+                                                    dc.getDocument().get("rentalType").toString().trim(),
+                                                    dc.getDocument().get("rentalCost").toString().trim(),
+                                                    dc.getDocument().get("rentalAddress").toString().trim(),
+                                                    dc.getDocument().get("userEmail").toString().trim(),
+                                                    dc.getDocument().get("rentalDate").toString().trim(),
+                                                    dc.getDocument().get("modelCategory1").toString().trim(),
+                                                    dc.getDocument().get("modelCategory2").toString().trim(),
+                                                    dc.getDocument().get("modelLikeNum").toString().trim(),
+                                                    dc.getDocument().getId());
+                                            cartRegistrationList.add(registrationDTO);
+                                        }else{
+                                            RegistrationDTO registrationDTO = new RegistrationDTO(
+                                                    dc.getDocument().get("modelName").toString().trim(),
+                                                    dc.getDocument().get("modelInform").toString().trim(),
+                                                    dc.getDocument().get("rentalImage").toString().trim(),
+                                                    dc.getDocument().get("rentalType").toString().trim(),
+                                                    dc.getDocument().get("rentalCost").toString().trim(),
+                                                    dc.getDocument().get("rentalAddress").toString().trim(),
+                                                    dc.getDocument().get("userEmail").toString().trim(),
+                                                    dc.getDocument().get("rentalDate").toString().trim(),
+                                                    dc.getDocument().get("modelCategory1").toString().trim(),
+                                                    dc.getDocument().get("modelCategory2").toString().trim(),
+                                                    "0",
+                                                    dc.getDocument().getId());
+                                            cartRegistrationList.add(registrationDTO);
+                                        }
                                         registrationAdapter.notifyDataSetChanged();
                                     }
                                     Log.e("Event", "New city: " + dc.getDocument().getData());
@@ -244,19 +283,37 @@ public class CartRecyclerview extends AppCompatActivity {
                                         return;
                                     }
                                     if(equipList.contains(dc.getDocument().get("modelName").toString())){
-                                        RegistrationDTO registrationDTO = new RegistrationDTO(
-                                                dc.getDocument().get("modelName").toString().trim(),
-                                                dc.getDocument().get("modelInform").toString().trim(),
-                                                dc.getDocument().get("rentalImage").toString().trim(),
-                                                dc.getDocument().get("rentalType").toString().trim(),
-                                                dc.getDocument().get("rentalCost").toString().trim(),
-                                                dc.getDocument().get("rentalAddress").toString().trim(),
-                                                dc.getDocument().get("userEmail").toString().trim(),
-                                                dc.getDocument().get("rentalDate").toString().trim(),
-                                                dc.getDocument().get("modelCategory1").toString().trim(),
-                                                dc.getDocument().get("modelCategory2").toString().trim(),
-                                                dc.getDocument().getId());
-                                        cartRegistrationList.add(registrationDTO);
+                                        if(dc.getDocument().get("modelLikeNum")!=null){             // 정보 최신화 후 수정 필요
+                                            RegistrationDTO registrationDTO = new RegistrationDTO(
+                                                    dc.getDocument().get("modelName").toString().trim(),
+                                                    dc.getDocument().get("modelInform").toString().trim(),
+                                                    dc.getDocument().get("rentalImage").toString().trim(),
+                                                    dc.getDocument().get("rentalType").toString().trim(),
+                                                    dc.getDocument().get("rentalCost").toString().trim(),
+                                                    dc.getDocument().get("rentalAddress").toString().trim(),
+                                                    dc.getDocument().get("userEmail").toString().trim(),
+                                                    dc.getDocument().get("rentalDate").toString().trim(),
+                                                    dc.getDocument().get("modelCategory1").toString().trim(),
+                                                    dc.getDocument().get("modelCategory2").toString().trim(),
+                                                    dc.getDocument().get("modelLikeNum").toString().trim(),
+                                                    dc.getDocument().getId());
+                                            cartRegistrationList.add(registrationDTO);
+                                        }else{
+                                            RegistrationDTO registrationDTO = new RegistrationDTO(
+                                                    dc.getDocument().get("modelName").toString().trim(),
+                                                    dc.getDocument().get("modelInform").toString().trim(),
+                                                    dc.getDocument().get("rentalImage").toString().trim(),
+                                                    dc.getDocument().get("rentalType").toString().trim(),
+                                                    dc.getDocument().get("rentalCost").toString().trim(),
+                                                    dc.getDocument().get("rentalAddress").toString().trim(),
+                                                    dc.getDocument().get("userEmail").toString().trim(),
+                                                    dc.getDocument().get("rentalDate").toString().trim(),
+                                                    dc.getDocument().get("modelCategory1").toString().trim(),
+                                                    dc.getDocument().get("modelCategory2").toString().trim(),
+                                                    "0",
+                                                    dc.getDocument().getId());
+                                            cartRegistrationList.add(registrationDTO);
+                                        }
                                         registrationAdapter.notifyDataSetChanged();
                                     }
                                     Log.e("Event", "Removed city: " + dc.getDocument().getData());

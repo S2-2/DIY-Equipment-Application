@@ -14,13 +14,14 @@ public class RegistrationDTO implements Serializable {
     private String ModelCategory1;  //장비 카테고리1
     private String ModelCategory2;  //장비 카테고리2
     private String ModelCollectionId;   //장비 컬렉션 아이디;
+    private String ModelLikeNum;       // 찜 횟수
 
     public RegistrationDTO() {
     }
 
     public RegistrationDTO(String modelName, String modelInform, String rentalImage, String rentalType, String rentalCost,
                            String rentalAddress, String userEmail, String rentalDate, String modelCategory1, String modelCategory2,
-                           String modelCollectionId) {
+                           String modelLikeNum, String modelCollectionId) {
         ModelName = modelName;
         ModelInform = modelInform;
         RentalImage = rentalImage;
@@ -32,6 +33,7 @@ public class RegistrationDTO implements Serializable {
         ModelCategory1 = modelCategory1;
         ModelCategory2 = modelCategory2;
         ModelCollectionId = modelCollectionId;
+        ModelLikeNum = modelLikeNum;
     }
 
     public String getModelName() {
@@ -120,5 +122,13 @@ public class RegistrationDTO implements Serializable {
 
     public void setModelCollectionId(String modelCollectionId) {
         ModelCollectionId = modelCollectionId;
+    }
+
+    public String getModelLikeNum() {
+        return ModelLikeNum;
+    }
+
+    public void setModelLikeNum(String modelLikeNum) {
+        ModelLikeNum = modelLikeNum;
     }
 }

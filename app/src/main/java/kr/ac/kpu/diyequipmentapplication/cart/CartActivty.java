@@ -13,7 +13,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firestore.v1.WriteResult;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,12 +23,14 @@ import java.util.Map;
 public class CartActivty {
 
     private FirebaseFirestore cartFirebaseFirestore;                  // 파이어스토어 초기화 및 객체 참조
+    private DocumentReference equipFirestoreDocRef;
     private CartDTO cartDTO;
-    private String cartDocID;
+    private String cartDocID, equipDocID;
 
     public CartActivty() {
         this.cartFirebaseFirestore = FirebaseFirestore.getInstance();
         this.cartDocID = null;
+        this.equipDocID = null;
         this.cartDTO = new CartDTO();
     }
 
@@ -44,6 +48,29 @@ public class CartActivty {
                 Log.e("DB-Add", "DocumentSnapshot added failed!");
             }
         });
+
+        cartFirebaseFirestore.collection("DIY_Equipment_Rental")
+                .whereEqualTo("modelName",title)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        String likeNum = null;
+                        int operator = 0;
+                        if(task.isSuccessful()){
+                            for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
+                                likeNum = queryDocumentSnapshot.get("modelLikeNum").toString().trim();
+                                operator = Integer.parseInt(likeNum);
+                                operator++;
+                                likeNum = Integer.toString(operator);
+                            }
+                        }
+                        equipDocID = task.getResult().getDocuments().get(0).getId();
+                        equipFirestoreDocRef = cartFirebaseFirestore.collection("DIY_Equipment_Rental").document(equipDocID);
+                        equipFirestoreDocRef.update("modelLikeNum",likeNum);
+                    }
+                });
+
     }
 
     public void removeCart(String email, String title){
@@ -75,9 +102,30 @@ public class CartActivty {
             }
         });
 
+        cartFirebaseFirestore.collection("DIY_Equipment_Rental")
+                .whereEqualTo("modelName",title)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        String likeNum = null;
+                        int operator = 0;
+                        if(task.isSuccessful()){
+                            for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
+                                if(queryDocumentSnapshot.get("modelLikeNum")!=null){
+                                    likeNum = queryDocumentSnapshot.get("modelLikeNum").toString().trim();
+                                    operator = Integer.parseInt(likeNum);
+                                    operator--;
+                                    likeNum = Integer.toString(operator);
+                                }
+                            }
+                        }
+                        equipDocID = task.getResult().getDocuments().get(0).getId();
+                        equipFirestoreDocRef = cartFirebaseFirestore.collection("DIY_Equipment_Rental").document(equipDocID);
+                        equipFirestoreDocRef.update("modelLikeNum",likeNum);
+                    }
+                });
+
 
     }
-
-
-
 }

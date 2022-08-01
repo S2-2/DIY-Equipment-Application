@@ -140,6 +140,13 @@ public class ChatActivity extends AppCompatActivity {
         // 채팅 시작방에서 받아온 채팅방 번호, 상대유저 이름 저장
         Intent intent = getIntent();
         CHAT_NUM = intent.getStringExtra("chatNum");
+        if(intent.getStringExtra("ModelOwnerEmail") != null){
+            CHAT_OTHER_EMAIL = intent.getStringExtra("ModelOwnerEmail");
+        }
+        if(intent.getStringExtra("chatOtherEmail")!= null){
+            CHAT_OTHER_EMAIL = intent.getStringExtra("chatOtherEmail");
+        }
+
 
         if(CHAT_NUM == null){
             Random rand = new Random();
@@ -169,7 +176,7 @@ public class ChatActivity extends AppCompatActivity {
                 String timestamp = calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE);
 
                 // firebaseDB에 데이터 저장
-                chatDTO = new ChatDTO(CHAT_NUM, CHAT_USER_NICKNAME, CHAT_USER_EMAIL ,CHAT_USER_TEXT,timestamp);
+                chatDTO = new ChatDTO(CHAT_NUM, CHAT_USER_NICKNAME, CHAT_USER_EMAIL, CHAT_OTHER_EMAIL ,CHAT_USER_TEXT,timestamp);
                 chatRef.child(CHAT_NUM).push().setValue(chatDTO);
 
                 // 채팅알림 보내기
@@ -582,7 +589,7 @@ public class ChatActivity extends AppCompatActivity {
 //                    transactionDTO.getsTransactionLocation());
         result = String.format("거래가 성립되었습니다.\n 서로가 서로를 존중하는 아름다운 거래되시길 바랍니다..");
 
-        chatDTO = new ChatDTO(chatNum, "거래도우미", "-", result, timestamp);
+        chatDTO = new ChatDTO(chatNum, "거래도우미", "-", "-", result, timestamp);
         chatRef.child(chatNum).push().setValue(chatDTO);
     }
 }

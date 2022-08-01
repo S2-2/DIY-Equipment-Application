@@ -185,20 +185,42 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
-                                RegistrationDTO registrationDTO = new RegistrationDTO(
-                                        queryDocumentSnapshot.get("modelName").toString().trim(),
-                                        queryDocumentSnapshot.get("modelInform").toString().trim(),
-                                        queryDocumentSnapshot.get("rentalImage").toString().trim(),
-                                        queryDocumentSnapshot.get("rentalType").toString().trim(),
-                                        queryDocumentSnapshot.get("rentalCost").toString().trim(),
-                                        queryDocumentSnapshot.get("rentalAddress").toString().trim(),
-                                        queryDocumentSnapshot.get("userEmail").toString().trim(),
-                                        queryDocumentSnapshot.get("rentalDate").toString().trim(),
-                                        queryDocumentSnapshot.get("modelCategory1").toString().trim(),
-                                        queryDocumentSnapshot.get("modelCategory2").toString().trim(),
-                                        queryDocumentSnapshot.getId());
-                                equipmentRegistrationList.add(registrationDTO);
-                                filteredEquipementList.add(registrationDTO);
+                                if(queryDocumentSnapshot.get("modelLikeNum")!= null) {
+                                    Log.e("MainActivity","null아님");
+                                    RegistrationDTO registrationDTO = new RegistrationDTO(
+                                            queryDocumentSnapshot.get("modelName").toString().trim(),
+                                            queryDocumentSnapshot.get("modelInform").toString().trim(),
+                                            queryDocumentSnapshot.get("rentalImage").toString().trim(),
+                                            queryDocumentSnapshot.get("rentalType").toString().trim(),
+                                            queryDocumentSnapshot.get("rentalCost").toString().trim(),
+                                            queryDocumentSnapshot.get("rentalAddress").toString().trim(),
+                                            queryDocumentSnapshot.get("userEmail").toString().trim(),
+                                            queryDocumentSnapshot.get("rentalDate").toString().trim(),
+                                            queryDocumentSnapshot.get("modelCategory1").toString().trim(),
+                                            queryDocumentSnapshot.get("modelCategory2").toString().trim(),
+                                            queryDocumentSnapshot.get("modelLikeNum").toString().trim(),
+                                            queryDocumentSnapshot.getId());
+                                    equipmentRegistrationList.add(registrationDTO);
+                                    filteredEquipementList.add(registrationDTO);
+                                }
+                                else{
+                                    Log.e("MainActivity","null");
+                                    RegistrationDTO registrationDTO = new RegistrationDTO(
+                                            queryDocumentSnapshot.get("modelName").toString().trim(),
+                                            queryDocumentSnapshot.get("modelInform").toString().trim(),
+                                            queryDocumentSnapshot.get("rentalImage").toString().trim(),
+                                            queryDocumentSnapshot.get("rentalType").toString().trim(),
+                                            queryDocumentSnapshot.get("rentalCost").toString().trim(),
+                                            queryDocumentSnapshot.get("rentalAddress").toString().trim(),
+                                            queryDocumentSnapshot.get("userEmail").toString().trim(),
+                                            queryDocumentSnapshot.get("rentalDate").toString().trim(),
+                                            queryDocumentSnapshot.get("modelCategory1").toString().trim(),
+                                            queryDocumentSnapshot.get("modelCategory2").toString().trim(),
+                                            "00",
+                                            queryDocumentSnapshot.getId());
+                                    equipmentRegistrationList.add(registrationDTO);
+                                    filteredEquipementList.add(registrationDTO);
+                                }
                                 registrationAdapter.notifyDataSetChanged();
                             }
                         }

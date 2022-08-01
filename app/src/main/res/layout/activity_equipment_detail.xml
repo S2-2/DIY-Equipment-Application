@@ -149,6 +149,12 @@
                             android:layout_gravity="center_vertical"
                             android:background="@android:color/transparent"
                             app:srcCompat="@drawable/ic_baseline_favorite_border_dark_24" />
+
+                        <TextView
+                            android:id="@+id/equipmentDetail_tv_likenum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            />
                     </LinearLayout>
 
                     <LinearLayout

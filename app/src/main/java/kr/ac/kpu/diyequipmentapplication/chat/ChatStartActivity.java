@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,6 +21,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -33,6 +37,7 @@ public class ChatStartActivity extends AppCompatActivity  {
     private FirebaseAuth chatAuth = null;
     private FirebaseDatabase chatFDB = FirebaseDatabase.getInstance();
     private DatabaseReference chatRef = chatFDB.getReference().child("DIY_Chat");
+    private FirebaseFirestore chatFS = FirebaseFirestore.getInstance();
 
     private ImageButton imgBtn_back = null;
     // chat 리스트에 입력될 변수들
@@ -55,6 +60,7 @@ public class ChatStartActivity extends AppCompatActivity  {
         lvChatList = (ListView) findViewById(R.id.start_lv_clist);
 
         CHAT_USER_EMAIL = chatAuth.getCurrentUser().getEmail().toString().trim();
+        Log.e("ChatList",CHAT_USER_EMAIL);
 
         showChatList(CHAT_USER_EMAIL);
 
@@ -83,20 +89,52 @@ public class ChatStartActivity extends AppCompatActivity  {
                 for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                     for(DataSnapshot ds : snapshot.getChildren() ){
                         chatDTO = ds.getValue(ChatDTO.class);
-
-                        if(chatDTO.getUserEmail().equals(CHAT_USER_EMAIL)){
+                        myRoom = false;
+                        // 내가 포함된 채팅만 필터링
+                        if(chatDTO.getUserEmail().equals(CHAT_USER_EMAIL)||chatDTO.getOtherEmail().equals(CHAT_USER_EMAIL)){
                             myRoom = true;
-                        }else{
-                            if(!chatDTO.getUserEmail().equals("-")){
-                                CHAT_OTHER_NICKNAME = chatDTO.getUserNickname();
-                            }
+                        }
+                        // 상대방 닉네임 가져오기
+                        if(!chatDTO.getOtherEmail().equals(CHAT_USER_EMAIL)&&!chatDTO.getOtherEmail().equals("-")){
+                            chatFS.collection("DIY_Signup")
+                                    .whereEqualTo("userEmail",chatDTO.getOtherEmail())
+                                    .get()
+                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            if(task.isSuccessful()){
+                                                for(QueryDocumentSnapshot db : task.getResult()){
+                                                    CHAT_OTHER_NICKNAME = db.get("userNickname").toString().trim();
+                                                    chatDTO.setUserNickname(CHAT_OTHER_NICKNAME);
+                                                }
+                                            }
+                                        }
+                                    });
+                        }
+                        else{
+                            chatFS.collection("DIY_Signup")
+                                    .whereEqualTo("userEmail",chatDTO.getUserEmail())
+                                    .get()
+                                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            if(task.isSuccessful()){
+                                                for(QueryDocumentSnapshot db : task.getResult()){
+                                                    CHAT_OTHER_NICKNAME = db.get("userNickname").toString().trim();
+                                                    chatDTO.setUserNickname(CHAT_OTHER_NICKNAME);
+                                                }
+                                            }
+                                        }
+                                    });
                         }
                     }
 
-                    chatDTO.setUserNickname(CHAT_OTHER_NICKNAME);
-
-                    chatStartLists.add(chatDTO);
+//                    chatStartLists.add(chatDTO);
+                    if(myRoom){
+                        chatStartLists.add(chatDTO);
+                    }
                 }
+
                 chatStartAdapter.notifyDataSetChanged();
             }
 
