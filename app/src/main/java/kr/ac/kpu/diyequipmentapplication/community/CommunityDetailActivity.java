@@ -94,9 +94,25 @@ public class CommunityDetailActivity extends AppCompatActivity {
         communityDetailFirebaseAuth = FirebaseAuth.getInstance();                  //FirebaseAuth 초기화 및 객체 참조
         communityDetailFirebaseFirestore = FirebaseFirestore.getInstance();        //파이어스토어 초기화 및 객체 참조
 
+
+        communityDetailFirebaseFirestore.collection("DIY_Profile")
+                .whereEqualTo("profileEmail", communityDetailFirebaseAuth.getCurrentUser().getEmail().toString().trim())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                                getUserProfileImageUrl = queryDocumentSnapshot.get("profileImage").toString().trim();
+                                Picasso.get().load(getUserProfileImageUrl).into(ivUserProfilePhoto);
+                            }
+                        }
+                    }
+                });
+
         Intent intent = getIntent();
         getUserProfileImageUrl = intent.getStringExtra("CommunityImage");
-        Picasso.get().load(getUserProfileImageUrl).into(ivUserProfilePhoto);
+        //Picasso.get().load(getUserProfileImageUrl).into(ivUserProfilePhoto);
         getEquipmentImageUrl = getUserProfileImageUrl;
         Picasso.get().load(getEquipmentImageUrl).into(ivEquipmentImage);
         tempNickname = intent.getStringExtra("CommunityNickname");
