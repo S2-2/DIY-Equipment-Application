@@ -64,6 +64,7 @@ public class CommunityCommentRecyclerview extends AppCompatActivity {
 
         Intent intent = getIntent();
         getHostNickname = intent.getStringExtra("hostNickname");
+        getHostCommunityId = intent.getStringExtra("hostId");
 
         //RecyclerView 필드 참조
         communityCommentFirebaseFirestore = FirebaseFirestore.getInstance();
@@ -132,7 +133,7 @@ public class CommunityCommentRecyclerview extends AppCompatActivity {
                                 //Firestore DB 변경
                                 //Firestore DB에 등록된 장비 등록 정보 읽기 기능 구현
                                 communityCommentFirebaseFirestore.collection("DIY_Equipment_CommunityComment")
-                                        .whereEqualTo("commentHostNickname", getHostNickname)
+                                        .whereEqualTo("communityHostId", getHostCommunityId)
                                         .get()
                                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                             @Override
@@ -144,7 +145,8 @@ public class CommunityCommentRecyclerview extends AppCompatActivity {
                                                                 queryDocumentSnapshot1.get("comment").toString().trim(),
                                                                 queryDocumentSnapshot1.get("commentNickname").toString().trim(),
                                                                 queryDocumentSnapshot1.get("commentDate").toString().trim(),
-                                                                queryDocumentSnapshot1.get("commentHostNickname").toString().trim());
+                                                                queryDocumentSnapshot1.get("commentHostNickname").toString().trim(),
+                                                                queryDocumentSnapshot1.get("communityHostId").toString().trim());
 
                                                         communityCommentArrayList.add(communityComment);
                                                         communityCommentAdapter.notifyDataSetChanged();

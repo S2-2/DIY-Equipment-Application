@@ -7,16 +7,18 @@ public class CommunityComment implements Serializable {
     private String commentNickname;
     private String commentDate;
     private String commentHostNickname;
+    private String communityHostId;
 
     public CommunityComment() {
     }
 
-    public CommunityComment(Boolean commentLike, String comment, String commentNickname, String commentDate, String commentHostNickname) {
+    public CommunityComment(Boolean commentLike, String comment, String commentNickname, String commentDate, String commentHostNickname, String communityHostId) {
         this.commentLike = commentLike;
         this.comment = comment;
         this.commentNickname = commentNickname;
         this.commentDate = commentDate;
         this.commentHostNickname = commentHostNickname;
+        this.communityHostId = communityHostId;
     }
 
     public Boolean getCommentLike() {
@@ -57,5 +59,13 @@ public class CommunityComment implements Serializable {
 
     public void setCommentHostNickname(String commentHostNickname) {
         this.commentHostNickname = commentHostNickname;
+    }
+
+    public String getCommunityHostId() {
+        return communityHostId;
+    }
+
+    public void setCommunityHostId(String communityHostId) {
+        this.communityHostId = communityHostId;
     }
 }
