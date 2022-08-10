@@ -120,7 +120,7 @@
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_community.xml" value="0.2677083333333333" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_community_comment_recyclerview.xml" value="0.23802083333333332" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_community_detail.xml" value="0.25364583333333335" />
-        <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_community_recyclerview.xml" value="0.18229166666666666" />
+        <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_community_recyclerview.xml" value="0.1" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_community_registration.xml" value="0.2677083333333333" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_equipment_detail.xml" value="0.1" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/activity_equipment_details.xml" value="0.2677083333333333" />
@@ -160,6 +160,7 @@
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/eq_list.xml" value="0.28125" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/eq_register.xml" value="0.28125" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/first.xml" value="0.2625" />
+        <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/fragment_sort_spr.xml" value="0.15729166666666666" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/home.xml" value="0.22" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/list_equipmentitem.xml" value="0.22083333333333333" />
         <entry key="..\:/Users/mcar1/AndroidStudioProjects/DIY-Equipment-Application/app/src/main/res/layout/message.xml" value="0.28125" />

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sort_item">
+        <item>등록순(▼)</item>
+        <item>등록순(▲)</item>
+        <item>가격순(▼)</item>
+        <item>가격순(▲)</item>
+        <item>찜순</item>
+        <item>거리순</item>
+    </string-array>
+</resources>

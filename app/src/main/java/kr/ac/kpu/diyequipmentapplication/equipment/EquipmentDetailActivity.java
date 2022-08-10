@@ -57,7 +57,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
     private ImageButton imgBtn_back = null;
     private ImageButton imgBtn_home = null;
     private ImageButton imgBtnCart = null;
-    private Boolean Ok = true;                  // 찜여부 확인
+    private Boolean Ok = false;                  // 찜여부 확인
     private CartActivty cartActivty = null;
     private String getModelCollectionId;
 
@@ -264,7 +264,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
                                 if(queryDocumentSnapshot.get("equipTitle") != null && queryDocumentSnapshot.get("equipTitle").equals(getTitle)){
                                     imgBtnCart.setImageResource(R.drawable.ic_baseline_favorite_24);
-                                    Ok = false;
+                                    Ok = true;
                                 }else{
                                     Log.e("DB","It is empty");
                                 }
@@ -277,18 +277,18 @@ public class EquipmentDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 cartActivty = new CartActivty();
-                if(Ok== true){
-                    imgBtnCart.setImageResource(R.drawable.ic_baseline_favorite_24);
+                if(Ok){
+                    imgBtnCart.setImageResource(R.drawable.ic_baseline_favorite_border_dark_24);
                     Ok = false;
-                    Toast.makeText(view.getContext(), "찜 목록에 추가!", Toast.LENGTH_SHORT).show();
-                    cartActivty.addCart(userEmail.substring(0, userEmail.indexOf('@')),getTitle);
+                    Toast.makeText(view.getContext(), "찜 목록에서 삭제!", Toast.LENGTH_SHORT).show();
+                    cartActivty.removeCart(userEmail.substring(0, userEmail.indexOf('@')),getTitle);
 
                 }
                 else{
-                    imgBtnCart.setImageResource(R.drawable.ic_baseline_favorite_border_dark_24);
+                    imgBtnCart.setImageResource(R.drawable.ic_baseline_favorite_24);
                     Ok = true;
-                    Toast.makeText(view.getContext(), "찜 목록에서 삭제!", Toast.LENGTH_SHORT).show();
-                    cartActivty.removeCart(userEmail.substring(0, userEmail.indexOf('@')),getTitle);
+                    Toast.makeText(view.getContext(), "찜 목록에 추가!", Toast.LENGTH_SHORT).show();
+                    cartActivty.addCart(userEmail.substring(0, userEmail.indexOf('@')),getTitle);
                 }
             }
         });
