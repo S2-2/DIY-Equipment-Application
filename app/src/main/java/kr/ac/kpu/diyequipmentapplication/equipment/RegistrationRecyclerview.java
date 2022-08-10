@@ -105,6 +105,13 @@ public class RegistrationRecyclerview extends AppCompatActivity {
         TextView nav_header_address = (TextView) nav_header_view.findViewById(R.id.navi_header_tv_userlocation);
         ImageButton nav_header_setting = (ImageButton) nav_header_view.findViewById(R.id.navi_header_btn_setting);
 
+        Intent intent = new Intent();
+        intent = getIntent();
+
+        if(intent.getStringExtra("EquipmentDetail") != null){
+            Toast.makeText(RegistrationRecyclerview.this,"게시물이 삭제되었습니다!",Toast.LENGTH_SHORT).show();
+        }
+
         nav_header_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
