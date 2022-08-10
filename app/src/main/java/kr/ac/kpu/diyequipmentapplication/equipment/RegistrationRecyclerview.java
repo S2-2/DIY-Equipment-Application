@@ -3,23 +3,29 @@ package kr.ac.kpu.diyequipmentapplication.equipment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,6 +40,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import kr.ac.kpu.diyequipmentapplication.MainActivity;
 import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationDTO;
@@ -45,6 +52,7 @@ import kr.ac.kpu.diyequipmentapplication.menu.MenuSettingActivity;
 
 //공급자가 입력한 데이터를 RecyclerView를 이용해 DIY-목록으로 보여주는 액티비티 클래스 구현
 public class RegistrationRecyclerview extends AppCompatActivity {
+
     FirebaseStorage mStorage;
     RecyclerView recyclerView;
     RegistrationAdapter registrationAdapter;
@@ -65,7 +73,6 @@ public class RegistrationRecyclerview extends AppCompatActivity {
     private Context context = this;
     private FirebaseAuth registrationListFirebaseAuth;     //FirebaseAuth 참조 변수 선언
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +84,6 @@ public class RegistrationRecyclerview extends AppCompatActivity {
         recyclerView = findViewById(R.id.communityRecyclerview_recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));   //리사이클러뷰 세로 화면
-        //recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)); //리사이클러뷰 가로 화면
 
         //RecyclerView에 RegistrationAdapter 클래스 등록 구현
         equipmentRegistrationList = new ArrayList<RegistrationDTO>();
@@ -98,6 +104,13 @@ public class RegistrationRecyclerview extends AppCompatActivity {
         TextView nav_header_nickname = (TextView) nav_header_view.findViewById(R.id.navi_header_tv_nickname);
         TextView nav_header_address = (TextView) nav_header_view.findViewById(R.id.navi_header_tv_userlocation);
         ImageButton nav_header_setting = (ImageButton) nav_header_view.findViewById(R.id.navi_header_btn_setting);
+
+        Intent intent = new Intent();
+        intent = getIntent();
+
+        if(intent.getStringExtra("EquipmentDetail") != null){
+            Toast.makeText(RegistrationRecyclerview.this,"게시물이 삭제되었습니다!",Toast.LENGTH_SHORT).show();
+        }
 
         nav_header_setting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -190,6 +203,8 @@ public class RegistrationRecyclerview extends AppCompatActivity {
                     }
                 });
 
+
+
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -220,7 +235,6 @@ public class RegistrationRecyclerview extends AppCompatActivity {
                 registrationAdapter.notifyDataSetChanged();
             }
         });
-
 
         btnModelEnroll.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -351,5 +365,44 @@ public class RegistrationRecyclerview extends AppCompatActivity {
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void sprFiltering(String item){
+        if(item!=null){
+            equipmentRegistrationList.clear();
+
+            if(item.equals("등록순(▼)")){
+                Collections.sort(filteredEquipementList, new RegistrationDateComparator());
+            }
+            else if(item.equals("등록순(▲)")){
+                Collections.sort(filteredEquipementList, new RegistrationDateComparator().reversed());
+            }
+            else if(item.equals("가격순(▼)")){
+                Collections.sort(filteredEquipementList, new RegistrationPriceComparator().reversed());
+
+            }
+            else if(item.equals("가격순(▲)")){
+                Collections.sort(filteredEquipementList, new RegistrationPriceComparator());
+
+            }
+            else if(item.equals("찜순")){
+                Collections.sort(filteredEquipementList, new RegistrationLikeComparator());
+
+            }
+            else if(item.equals("거리순")){
+                Toast.makeText(RegistrationRecyclerview.this, "아직 구현되지 않았습니다!", Toast.LENGTH_SHORT).show();
+            }else{
+                Collections.sort(filteredEquipementList, new RegistrationDateComparator());
+            }
+
+
+            for( RegistrationDTO equipment : filteredEquipementList)
+            {
+                    equipmentRegistrationList.add(equipment);
+            }
+
+            registrationAdapter.notifyDataSetChanged();
+        }
     }
 }
