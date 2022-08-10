@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".equipment.ScheduleActivity">
+    <!-- 채팅에서 버튼으로 넘어와 거래 관련 일정을 설정하는 첫 거래 액티비티 -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/schedule_btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24" />
+
+        <TextView
+            style="@style/style_tv_default_black24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="거래 정보 설정" />
+
+        <View
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    style="@style/style_tv_default_black18dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center_horizontal"
+                    android:text="반납 일시 및 장소 설정"
+                    android:textSize="20dp" />
+
+                <TextView
+                    style="@style/style_tv_default_black18dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="반납 날짜" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <!-- 초기 거래 일정 설정 시 설정한 반납일이 뜨도록 설정해 주세요! -->
+                    <TextView
+                        android:id="@+id/schedule_tv_transactionDate"
+                        style="@style/style_tv_default_black14dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="반납일" />
+
+                </LinearLayout>
+
+                <TextView
+                    style="@style/style_tv_default_black18dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="반납 시간" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/schedule_tv_transactionTime"
+                        style="@style/style_tv_default_black14dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="반납 시간을 설정해주세요 ▶" />
+
+                    <Button
+                        android:id="@+id/schedule_btn_transactionTime"
+                        style="@style/style_tv_default_black14dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="반납 시간 설정" />
+                </LinearLayout>
+
+                <TextView
+                    style="@style/style_tv_default_black18dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="반납 장소" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/schedule_tv_transactionLocation"
+                        style="@style/style_tv_default_black14dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="반납 장소를 설정해주세요 ▶"
+                        android:maxLength="20"/>
+
+                    <Button
+                        android:id="@+id/schedule_btn_transactionLocation"
+                        style="@style/style_tv_default_black14dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="반납 장소 설정" />
+                </LinearLayout>
+
+                <!---->
+                <!---->
+                <!---->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/schedule_btn_update"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="수정" />
+
+                    <Button
+                        android:id="@+id/schedule_btn_delete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="재설정" />
+
+                    <Button
+                        android:id="@+id/schedule_btn_setup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="확인" />
+                </LinearLayout>
+
+                <!---->
+                <!---->
+                <!---->
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <!---->
+    <!---->
+    <!---->
+
+</LinearLayout>
