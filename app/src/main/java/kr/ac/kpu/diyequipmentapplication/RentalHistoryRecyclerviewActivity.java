@@ -154,7 +154,8 @@ public class RentalHistoryRecyclerviewActivity extends AppCompatActivity {
                                         queryDocumentSnapshot.get("tTransactionTime").toString().trim(),
                                         queryDocumentSnapshot.get("tTransactionLocation").toString().trim(),
                                         queryDocumentSnapshot.get("tTransactionCondition").toString().trim(),
-                                        queryDocumentSnapshot.get("tUserEmail").toString().trim());
+                                        queryDocumentSnapshot.get("tUserEmail").toString().trim(),
+                                        queryDocumentSnapshot.get("tOtherEmail").toString().trim());
                                 transactionDTOArrayList.add(transactionDTO);
                                 filteredTransactionDTOArrayList.add(transactionDTO);
                                 rentalHistoryAdapter.notifyDataSetChanged();
