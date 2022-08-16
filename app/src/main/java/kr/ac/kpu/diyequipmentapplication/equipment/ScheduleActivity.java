@@ -65,7 +65,7 @@ public class ScheduleActivity extends AppCompatActivity {
     private Long totLendingPeriod;          //대여기간 총 대여일수
     private String getScheduleDBID;
     final String[] getRentalCost = new String[1];
-    private String getChatNum;
+    private String getChatNum;            // 방번호, 자신 이메일, 상대방 이메일(
 
     //커스텀 다이얼로그 참조위젯
     private Dialog rentalDialog;                //대여비 커스텀 다이얼로그
@@ -114,6 +114,7 @@ public class ScheduleActivity extends AppCompatActivity {
         Intent getIntent = getIntent();
         getChatNum = getIntent.getStringExtra("CHAT_NUM");
         scheduleDB.setsChatNum(getChatNum);
+        scheduleDB.setsOtherEmail(getIntent.getStringExtra("OTHER_EMAIL"));
         scheduleDB.setsCollectionId(getIntent.getStringExtra("ModelCollectionId"));
         //scheduleDB.setsChatNum(getIntent.getStringExtra("CHAT_NUM"));
         imgBtnBack = (ImageButton) findViewById(R.id.schedule_btn_back);
@@ -195,6 +196,7 @@ public class ScheduleActivity extends AppCompatActivity {
                                 scheduleDB.setsTransactionLocation(queryDocumentSnapshot.get("sTransactionLocation").toString().trim());
                                 scheduleDB.setsCollectionId(queryDocumentSnapshot.get("sCollectionId").toString().trim());
                                 scheduleDB.setsChatNum(queryDocumentSnapshot.get("sChatNum").toString().trim());
+                                scheduleDB.setsOtherEmail(queryDocumentSnapshot.get("sOtherEmail").toString().trim());
 
                                 tvStartDate.setText(scheduleDB.getsStartDate());
                                 tvExpirationDate.setText(scheduleDB.getsExpirationDate());
@@ -284,7 +286,8 @@ public class ScheduleActivity extends AppCompatActivity {
                                 && scheduleDB.getStartDate() != null && scheduleDB.getFinishDate() != null
                                 && scheduleDB.getsDailyRental() != null && scheduleDB.getsTotalRental() != null && scheduleDB.getsTransactionDate() != null
                                 && scheduleDB.getsTransactionTime() != null && scheduleDB.getsTransactionLocation() != null
-                                && scheduleDB.getsCollectionId() != null && scheduleDB.getsChatNum() != null) {
+                                && scheduleDB.getsCollectionId() != null && scheduleDB.getsChatNum() != null
+                                && scheduleDB.getsOtherEmail() != null) {
                             scheduleProgressDialog.setTitle("DIY Schedule Uploading...");
                             scheduleProgressDialog.show();
 
@@ -343,7 +346,8 @@ public class ScheduleActivity extends AppCompatActivity {
                         if (scheduleDB.getsStartDate() != null && scheduleDB.getsExpirationDate() != null && scheduleDB.getsTotalLendingPeriod() != null
                                 && scheduleDB.getStartDate() != null && scheduleDB.getFinishDate() != null
                                 && scheduleDB.getsDailyRental() != null && scheduleDB.getsTotalRental() != null && scheduleDB.getsTransactionDate() != null
-                                && scheduleDB.getsTransactionTime() != null && scheduleDB.getsTransactionLocation() != null) {
+                                && scheduleDB.getsTransactionTime() != null && scheduleDB.getsTransactionLocation() != null
+                                && scheduleDB.getsOtherEmail() != null) {
                             scheduleFirebaseFirestore.collection("DIY_Schedule")
                                     .document(getScheduleDBID)
                                     .update(scheduleUpdate)
@@ -768,14 +772,16 @@ public class ScheduleActivity extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         String timestamp = calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE);
         if(tag.equals("1")){
-            result = String.format("거래일정 안내입니다.\n 총 대여일: %s\n 총 비용: %s\n 거래일: %s\n 거래시간: %s\n 거래장소: %s",
+            result = String.format("거래일정 안내입니다. \n 거래일정 요청자: %s\n \n 총 대여일: %s\n 총 비용: %s\n 거래일: %s\n 거래시간: %s\n 거래장소: %s",
+                    scheduleDB.getsUserEmail(),
                     scheduleDB.getsTotalLendingPeriod(),
                     scheduleDB.getsTotalRental(),
                     scheduleDB.getsTransactionDate(),
                     scheduleDB.getsTransactionTime(),
                     scheduleDB.getsTransactionLocation());
         } else if(tag.equals("2")){
-            result = String.format("거래일정이 수정되었습니다.\n 총 대여일: %s\n 총 비용: %s\n 거래일: %s\n 거래시간: %s\n 거래장소: %s",
+            result = String.format("거래일정이 수정되었습니다.\n 거래일정 요청자: %s\n 총 대여일: %s\n 총 비용: %s\n 거래일: %s\n 거래시간: %s\n 거래장소: %s",
+                    scheduleDB.getsUserEmail(),
                     scheduleDB.getsTotalLendingPeriod(),
                     scheduleDB.getsTotalRental(),
                     scheduleDB.getsTransactionDate(),
@@ -785,7 +791,7 @@ public class ScheduleActivity extends AppCompatActivity {
             return;
         }
 
-        chatDTO = new ChatDTO(scheduleDB.getsChatNum(), "거래도우미", "-", "-",result, timestamp);
+        chatDTO = new ChatDTO(scheduleDB.getsChatNum(), "거래도우미", scheduleDB.getsUserEmail(), scheduleDB.getsOtherEmail(),result, timestamp);
         scheduleRef.child(scheduleDB.getsChatNum()).push().setValue(chatDTO);
 //        chatDTO = new ChatDTO(CHAT_NUM, CHAT_USER_NICKNAME, CHAT_USER_EMAIL ,CHAT_USER_TEXT,timestamp);
 //        chatRef.child(CHAT_NUM).push().setValue(chatDTO);

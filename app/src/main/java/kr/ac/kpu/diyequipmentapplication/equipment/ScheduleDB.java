@@ -3,7 +3,10 @@ package kr.ac.kpu.diyequipmentapplication.equipment;
 import java.io.Serializable;
 
 public class ScheduleDB implements Serializable {
-    private String sUserEmail;              //사용자 이메일
+
+    //<거래자>
+    private String sUserEmail;              // 본인 이메일
+    private String sOtherEmail;             // 상대방 이메일
 
     //<대여기간>
     private String sStartDate;              //대여일
@@ -31,10 +34,11 @@ public class ScheduleDB implements Serializable {
     public ScheduleDB() {
     }
 
-    public ScheduleDB(String sUserEmail, String sStartDate, String sExpirationDate, String sTotalLendingPeriod, String startDate,
+    public ScheduleDB(String sUserEmail, String sOtherEmail, String sStartDate, String sExpirationDate, String sTotalLendingPeriod, String startDate,
                       String finishDate, String sDailyRental, String sTotalRental, String sTransactionDate, String sTransactionTime,
                       String sTransactionLocation, String sCollectionId, String sChatNum) {
         this.sUserEmail = sUserEmail;
+        this.sOtherEmail = sOtherEmail;
         this.sStartDate = sStartDate;
         this.sExpirationDate = sExpirationDate;
         this.sTotalLendingPeriod = sTotalLendingPeriod;
@@ -55,6 +59,14 @@ public class ScheduleDB implements Serializable {
 
     public void setsUserEmail(String sUserEmail) {
         this.sUserEmail = sUserEmail;
+    }
+
+    public String getsOtherEmail() {
+        return sOtherEmail;
+    }
+
+    public void setsOtherEmail(String sOtherEmail) {
+        this.sOtherEmail = sOtherEmail;
     }
 
     public String getsStartDate() {
