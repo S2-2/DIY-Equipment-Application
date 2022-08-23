@@ -84,6 +84,7 @@
         <entry key="..\:/AndroidStudio/DIY-Equipment-Application/app/src/main/res/xml/xml.xml" value="0.20652173913043478" />
         <entry key="..\:/DIY_test00/app/src/main/res/drawable/ic_baseline_arrow_back_ios_new_24.xml" value="0.14947916666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/drawable/ic_baseline_arrow_forward_ios_24.xml" value="0.27076923076923076" />
+        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_change_pwd.xml" value="0.25885416666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_chatstart_form.xml" value="0.25885416666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_chatting.xml" value="0.25885416666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_community_comment_recyclerview.xml" value="0.25885416666666666" />
@@ -91,6 +92,8 @@
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_community_recyclerview.xml" value="0.25092592592592594" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_equipment_detail.xml" value="0.25885416666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_equipment_registration.xml" value="0.25885416666666666" />
+        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_find_id.xml" value="0.25885416666666666" />
+        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_find_pwd.xml" value="0.25885416666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_location.xml" value="0.25885416666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_location_search.xml" value="0.25885416666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_login.xml" value="0.2" />
@@ -99,11 +102,12 @@
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_menu_setting.xml" value="0.4" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_mycart_recyclerview.xml" value="0.25885416666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_profile.xml" value="0.2548717948717949" />
+        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_profile_change_pwd.xml" value="0.4" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_registration_recyclerview.xml" value="0.13958333333333334" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_rental_google_map.xml" value="0.13802083333333334" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_rental_history_recyclerview.xml" value="0.13177083333333334" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_schedule.xml" value="0.264" />
-        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_signup.xml" value="0.16799999999999998" />
+        <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_signup.xml" value="0.264" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/activity_start_chat.xml" value="0.25885416666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/community_recyclerview_comment_item.xml" value="0.25885416666666666" />
         <entry key="..\:/DIY_test00/app/src/main/res/layout/community_recyclerview_item.xml" value="0.25885416666666666" />
@@ -206,7 +210,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

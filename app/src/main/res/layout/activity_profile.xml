@@ -59,6 +59,15 @@
             android:text="별명"
             style="@style/style_tv_default_black18dp" />
 
+        <Button
+            android:id="@+id/profile_btn_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="비밀번호 변경"
+            style="@style/style_tv_default_black18dp" />
+
         <!-- 버튼 클릭 시 'activity_menu'로 이동하면서 새로 입력한 프로필 사진과 별명으로 수정됨. -->
         <Button
             android:id="@+id/profile_btn_delete"

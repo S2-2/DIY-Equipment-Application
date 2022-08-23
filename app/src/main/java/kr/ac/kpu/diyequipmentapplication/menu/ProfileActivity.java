@@ -52,6 +52,7 @@ public class ProfileActivity extends AppCompatActivity {
     private String getProfileID;
     private String getSignupDBID;
     private String getProfileEmail;
+    private Button btnChangePwd;
 
     private static final int Gallery_Code = 1;             //갤러리 코드 상수 및 초기화
     private Uri profileImageUrl;                           //프로필 이미지 Url 참조 변수
@@ -73,6 +74,15 @@ public class ProfileActivity extends AppCompatActivity {
         btnDelete = (Button) findViewById(R.id.profile_btn_delete);
         profileProgressDialog = new ProgressDialog(this);
         profileFirebaseStorage = FirebaseStorage.getInstance();
+        btnChangePwd = (Button) findViewById(R.id.profile_btn_pwd);
+
+        btnChangePwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProfileActivity.this, ProfileChangePwdActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //뒤로가기 버튼 클릭 이벤트
         imgBtnBack.setOnClickListener(new View.OnClickListener() {

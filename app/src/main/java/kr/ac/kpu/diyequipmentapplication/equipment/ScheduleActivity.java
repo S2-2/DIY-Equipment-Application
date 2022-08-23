@@ -785,7 +785,7 @@ public class ScheduleActivity extends AppCompatActivity {
             return;
         }
 
-        chatDTO = new ChatDTO(scheduleDB.getsChatNum(), "거래도우미", "-", result, timestamp);
+        chatDTO = new ChatDTO(scheduleDB.getsChatNum(), "거래도우미", "-", "-",result, timestamp);
         scheduleRef.child(scheduleDB.getsChatNum()).push().setValue(chatDTO);
 //        chatDTO = new ChatDTO(CHAT_NUM, CHAT_USER_NICKNAME, CHAT_USER_EMAIL ,CHAT_USER_TEXT,timestamp);
 //        chatRef.child(CHAT_NUM).push().setValue(chatDTO);

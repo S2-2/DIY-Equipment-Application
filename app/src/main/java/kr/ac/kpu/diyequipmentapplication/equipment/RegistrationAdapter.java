@@ -2,16 +2,24 @@ package kr.ac.kpu.diyequipmentapplication.equipment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -23,10 +31,14 @@ public class RegistrationAdapter extends RecyclerView.Adapter<RegistrationAdapte
 
     Context context;
     List<RegistrationDTO> equipmentRegistrationList;
+    FirebaseFirestore cartFS;
+    FirebaseAuth cartAuth;
 
     public RegistrationAdapter(Context context, List<RegistrationDTO> equipmentRegistrationList) {
         this.context = context;
         this.equipmentRegistrationList = equipmentRegistrationList;
+        cartFS = FirebaseFirestore.getInstance();
+        cartAuth = FirebaseAuth.getInstance();
     }
 
     @NonNull
@@ -38,10 +50,30 @@ public class RegistrationAdapter extends RecyclerView.Adapter<RegistrationAdapte
 
     @Override
     public void onBindViewHolder(@NonNull RegistrationAdapter.ViewHolder holder, int position) {
+        String myEmail = cartAuth.getCurrentUser().getEmail();
 
         RegistrationDTO registrationDTO = equipmentRegistrationList.get(position);
         holder.tvModelText.setText(registrationDTO.getModelInform());
         holder.tvModelName.setText(registrationDTO.getModelName());
+        holder.tvLikeNum.setText(registrationDTO.getModelLikeNum());
+
+        cartFS.collection("DIY_MyCart")
+                .whereEqualTo("userEmail",myEmail.substring(0,myEmail.indexOf('@')))
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot db: task.getResult()){
+                        if(db.get("equipTitle")!=null&&db.get("equipTitle").equals(registrationDTO.getModelName())){
+                            holder.imgBtnLike.setImageResource(R.drawable.ic_baseline_favorite_24);
+                        }
+                        else{
+                            Log.e("DB","It is empty");
+                        }
+                    }
+                }
+            }
+        });
 
         String imageUri = null;
         imageUri=registrationDTO.getRentalImage();
@@ -57,7 +89,8 @@ public class RegistrationAdapter extends RecyclerView.Adapter<RegistrationAdapte
     //ViewHolder 클래스 구현
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
-        TextView tvModelName, tvModelText;
+        ImageButton imgBtnLike;
+        TextView tvModelName, tvModelText, tvLikeNum;
 
         //ViewHolder 클래스 생성자
         public ViewHolder(@NonNull View itemView) {
@@ -65,8 +98,10 @@ public class RegistrationAdapter extends RecyclerView.Adapter<RegistrationAdapte
 
             //list_equipmentitem.xml파일에 있는 뷰 객체 참조
             imageView = itemView.findViewById(R.id.registrationRecyclerviewItem_iv);
+            imgBtnLike = itemView.findViewById(R.id.registrationRecyclerviewItem_btn_like);
             tvModelName = itemView.findViewById(R.id.registrationRecyclerviewItem_tv_title);
             tvModelText = itemView.findViewById(R.id.registrationRecyclerviewItem_tv_modelText);
+            tvLikeNum = itemView.findViewById(R.id.registrationRecyclerviewItem_tv_likeNum);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -86,6 +121,7 @@ public class RegistrationAdapter extends RecyclerView.Adapter<RegistrationAdapte
                         intent.putExtra("ModelCategory1",registrationDTO.getModelCategory1());
                         intent.putExtra("ModelCategory2",registrationDTO.getModelCategory2());
                         intent.putExtra("ModelCollectionId",registrationDTO.getModelCollectionId());
+                        intent.putExtra("ModelLikeNum",registrationDTO.getModelLikeNum());
                         context.startActivity(intent);
                     }
                 }

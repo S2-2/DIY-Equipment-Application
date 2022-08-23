@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -32,18 +31,21 @@ public class CommunityCommentAdapter extends RecyclerView.Adapter<CommunityComme
 
     @Override
     public void onBindViewHolder(@NonNull CommunityCommentAdapter.ViewHolder holder, int position) {
-        Boolean tempLike;
+        //Boolean tempLike;
 
         CommunityComment communityComment = communityCommentList.get(position);
-        tempLike = communityComment.getCommentLike();
+        //tempLike = communityComment.getCommentLike();
         holder.tvNickname.setText(communityComment.getCommentNickname());
         holder.tvDate.setText(communityComment.getCommentDate());
         holder.tvComment.setText(communityComment.getComment());
 
+        /*
         if (tempLike == true)
             holder.imgBtnLike.setImageResource(R.drawable.ic_baseline_favorite_24);
         else
             holder.imgBtnLike.setImageResource(R.drawable.ic_baseline_favorite_border_dark_24);
+
+         */
 
     }
 
@@ -55,7 +57,7 @@ public class CommunityCommentAdapter extends RecyclerView.Adapter<CommunityComme
     //ViewHolder 클래스 구현
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvComment, tvNickname, tvDate;
-        ImageButton imgBtnLike;
+        //ImageButton imgBtnLike;
 
         //ViewHolder 클래스 생성자
         public ViewHolder(@NonNull View itemView) {

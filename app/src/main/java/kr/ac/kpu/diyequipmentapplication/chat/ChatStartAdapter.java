@@ -2,11 +2,21 @@ package kr.ac.kpu.diyequipmentapplication.chat;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -16,11 +26,14 @@ public class ChatStartAdapter extends BaseAdapter {
     ArrayList<ChatDTO> chattingStartList;
     LayoutInflater inflater;
     Context context;
+    FirebaseAuth chatAuth = FirebaseAuth.getInstance();
+    String chatEmail = null;
 
     public ChatStartAdapter(Context context, ArrayList<ChatDTO> chattingStartList, LayoutInflater inflater) {
         this.context = context;
         this.chattingStartList = chattingStartList;
         this.inflater = inflater;
+        this.chatEmail = chatAuth.getCurrentUser().getEmail();
     }
 
     @Override
@@ -51,6 +64,7 @@ public class ChatStartAdapter extends BaseAdapter {
         TextView tvPastime = itemView.findViewById(R.id.chatStartform_tv_lastchattime);
 
         tvNickname.setText(chat.getUserNickname());
+        Log.e("chat",chat.getUserNickname());
         tvLastchat.setText(chat.getUserMsg());
         tvPastime.setText(chat.getTimestamp());
         tvChatnum.setText(chat.getChatNum());
@@ -60,6 +74,12 @@ public class ChatStartAdapter extends BaseAdapter {
             public void onClick(View view) {
                 Intent intent = new Intent(context.getApplicationContext(), ChatActivity.class);
                 intent.putExtra("chatNum", chat.getChatNum());
+                if(!chatEmail.equals(chat.getOtherEmail())){
+                    intent.putExtra("chatOtherEmail",chat.getOtherEmail());
+                }
+                else{
+                    intent.putExtra("chatOtherEmail",chat.getUserEmail());
+                }
                 context.startActivity(intent);
             }
         });

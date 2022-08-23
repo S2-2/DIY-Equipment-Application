@@ -16,6 +16,7 @@ public class EquipmentRegistration implements Serializable {
     private String RentalDate;      //장비 등록일
     private String ModelCategory1;  //장비 카테고리1
     private String ModelCategory2;  //장비 카테고리2
+    private String ModelLikeNum;    //장비 찜횟수
 
     public EquipmentRegistration() {}   //기본 생성자
 
@@ -31,6 +32,7 @@ public class EquipmentRegistration implements Serializable {
         RentalDate = rentalDate;
         ModelCategory1 = modelCategory1;
         ModelCategory2 = modelCategory2;
+        ModelLikeNum = "0";
     }
 
     //장비 필드에 대한 Getter / Setter 메서드 기능 구현
@@ -92,4 +94,7 @@ public class EquipmentRegistration implements Serializable {
     public String getModelCategory2() { return ModelCategory2; }
     public void setModelCategory2(String modelCategory2) { ModelCategory2 = modelCategory2; }
 
+    public String getModelLikeNum() { return ModelLikeNum;}
+
+    public void setModelLikeNum(String modelLikeNum) {  ModelLikeNum = modelLikeNum;    }
 }

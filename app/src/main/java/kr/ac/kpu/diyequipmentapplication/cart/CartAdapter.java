@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -86,6 +87,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
                         intent.putExtra("RentalDate", equipmentRegistration.getRentalDate());
                         intent.putExtra("ModelCategory1",equipmentRegistration.getModelCategory1());
                         intent.putExtra("ModelCategory2",equipmentRegistration.getModelCategory2());
+                        intent.putExtra("ModelLikeNum",equipmentRegistration.getModelLikeNum());
                         context.startActivity(intent);
                     }
                 }

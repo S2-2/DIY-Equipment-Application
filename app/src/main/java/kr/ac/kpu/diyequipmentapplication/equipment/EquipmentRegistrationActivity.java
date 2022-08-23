@@ -19,6 +19,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,6 +47,7 @@ import java.util.List;
 
 import kr.ac.kpu.diyequipmentapplication.MainActivity;
 import kr.ac.kpu.diyequipmentapplication.R;
+import kr.ac.kpu.diyequipmentapplication.menu.LocationSearchActivity;
 
 //공급자가 DIY장비 등록하는 액티비티
 public class EquipmentRegistrationActivity extends AppCompatActivity {
@@ -84,6 +87,8 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
 
     //장비 등록 파이어스토어 DB 참조 변수 선언
     private FirebaseFirestore registrationFirebaseFirestoreDB = null;
+
+    private String myRentalAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +130,16 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
 
         //장비 등록 Firestore DB 참조 및 초기화
         registrationFirebaseFirestoreDB = FirebaseFirestore.getInstance();
+
+        registrationRentalAddress.setFocusable(false);
+        registrationRentalAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //주소 검색 웹뷰 화면으로 이동
+                Intent intent = new Intent(EquipmentRegistrationActivity.this, LocationSearchActivity.class);
+                getSearchResult.launch(intent);
+            }
+        });
 
         registrationDocRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -272,7 +287,8 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
                 final String mn = registrationModelName.getText().toString().trim();
                 final String mt = registrationModelInform.getText().toString().trim();
                 final String rt = registrationRentalType.getText().toString().trim();
-                final String ra = registrationRentalAddress.getText().toString().trim();
+                //final String ra = registrationRentalAddress.getText().toString().trim();
+                final String ra = myRentalAddress;
                 final String rc = registrationRentalCost.getText().toString().trim();
                 final String mc1 = sprModelCat1.getSelectedItem().toString().trim();
                 final String mc2 = sprModelCat2.getSelectedItem().toString().trim();
@@ -308,4 +324,18 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
             }
         });
     }
+
+    private final ActivityResultLauncher<Intent> getSearchResult = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                //LocationSearchActivity로부터 결과 값이 이곳으로 전달
+                if (result.getResultCode() == RESULT_OK) {
+                    if (result.getData() != null) {
+                        String data = result.getData().getStringExtra("data");
+                        myRentalAddress = data;
+                        registrationRentalAddress.setText(data);
+                    }
+                }
+            }
+    );
 }
