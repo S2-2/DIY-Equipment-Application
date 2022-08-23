@@ -55,14 +55,16 @@ public class CartActivty {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        String likeNum = null;
+                        String likeNum = "0";
                         int operator = 0;
                         if(task.isSuccessful()){
                             for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
-                                likeNum = queryDocumentSnapshot.get("modelLikeNum").toString().trim();
-                                operator = Integer.parseInt(likeNum);
-                                operator++;
-                                likeNum = Integer.toString(operator);
+                                if(queryDocumentSnapshot.get("modelLikeNum") != null){
+                                    likeNum = queryDocumentSnapshot.get("modelLikeNum").toString().trim();
+                                    operator = Integer.parseInt(likeNum);
+                                    operator++;
+                                    likeNum = Integer.toString(operator);
+                                }
                             }
                         }
                         equipDocID = task.getResult().getDocuments().get(0).getId();
@@ -108,7 +110,7 @@ public class CartActivty {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        String likeNum = null;
+                        String likeNum = "0";
                         int operator = 0;
                         if(task.isSuccessful()){
                             for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){

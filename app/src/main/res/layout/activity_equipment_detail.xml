@@ -110,6 +110,22 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="거래자와 채팅하기" />
+
+                        <Button
+                            android:id="@+id/equipmentDetail_modify"
+                            style="@style/style_tv_default_black14dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="3dp"
+                            android:text="수정" />
+
+                        <Button
+                            android:id="@+id/equipmentDetail_btn_delete"
+                            style="@style/style_tv_default_black14dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="삭제" />
+
                     </LinearLayout>
 
                 </LinearLayout>

@@ -21,6 +21,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,7 +51,7 @@ import kr.ac.kpu.diyequipmentapplication.menu.MenuSettingActivity;
 public class EquipmentDetailActivity extends AppCompatActivity {
     private ImageView ivRentalImage;
     private TextView tvUserNickname, tvTitle, tvExplanation, tvRentalType, tvRentalCost, tvUserLocation, tvRentalPeriod, tvCategory, tvLikeNum;
-    private Button btnChat;
+    private Button btnChat, btnDelete, btnModify;
     private String getImageUrl, userEmail, otherEmail, getTitle = null;
     private DecimalFormat decimalFormat;
     private String getRentalFeeCost, temp, getRentalAddress;
@@ -57,7 +59,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
     private ImageButton imgBtn_back = null;
     private ImageButton imgBtn_home = null;
     private ImageButton imgBtnCart = null;
-    private Boolean Ok = true;                  // 찜여부 확인
+    private Boolean Ok = false;                  // 찜여부 확인
     private CartActivty cartActivty = null;
     private String getModelCollectionId;
 
@@ -85,6 +87,8 @@ public class EquipmentDetailActivity extends AppCompatActivity {
         tvRentalPeriod = findViewById(R.id.equipmentDetail_tv_date);
         tvLikeNum = findViewById(R.id.equipmentDetail_tv_likenum);
         btnChat =findViewById(R.id.equipmentDetail_btn_chatting);
+        btnModify = findViewById(R.id.equipmentDetail_modify);
+        btnDelete = findViewById(R.id.equipmentDetail_btn_delete);
         imgBtnCart = findViewById(R.id.equipmentDetail_btn_like);   //찜 아이콘
         decimalFormat = new DecimalFormat("###,###");
 
@@ -116,19 +120,8 @@ public class EquipmentDetailActivity extends AppCompatActivity {
             tvRentalCost.setText(getRentalFeeCost+"원");
         }
 
-        // 수정불가능
-//        tvTitle.setEnabled(false);
-//        tvExplanation.setEnabled(false);
-//        tvUserNickname.setEnabled(false);
-//        tvRentalType.setEnabled(false);
-//        tvRentalPeriod.setEnabled(false);
-//        tvCategory.setEnabled(false);
-//        tvUserLocation.setEnabled(false);
-//        tvRentalCost.setEnabled(false);
-
         imgBtn_back = (ImageButton)findViewById(R.id.signup_btn_back);
         imgBtn_home = (ImageButton)findViewById(R.id.registrationRecyclerview_btn_home);
-
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View nav_header_view = navigationView.getHeaderView(0);
@@ -220,9 +213,14 @@ public class EquipmentDetailActivity extends AppCompatActivity {
         // 내가 올린 게시물이면 비활성화
        if(userEmail.equals(otherEmail)){
             btnChat.setEnabled(false);
-            btnChat.setVisibility(View.INVISIBLE);
+            btnChat.setVisibility(View.GONE);
             imgBtnCart.setEnabled(false);
-        }
+        }else{
+           btnDelete.setEnabled(false);
+           btnDelete.setVisibility(View.GONE);
+           btnModify.setEnabled(false);
+           btnModify.setVisibility(View.GONE);
+       }
 
         btnChat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -236,6 +234,71 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+       // 게시물 수정
+//       btnModify.setOnClickListener(new View.OnClickListener() {
+//           @Override
+//           public void onClick(View view) {
+//               Intent intent = new Intent(EquipmentDetailActivity.this, EquipmentRegistrationActivity.class);
+//               intent.putExtra("EquipmentDetail","102");
+//
+//               startActivity(intent);
+//               finish();
+//           }
+//       });
+
+        // 게시물 삭제
+       btnDelete.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               //Toast.makeText(context, title + ": 로그아웃", Toast.LENGTH_SHORT).show();
+               AlertDialog.Builder dlg = new AlertDialog.Builder(EquipmentDetailActivity.this);
+               dlg.setTitle("게시물 삭제");
+               dlg.setMessage("게시물을 삭제하시겠습니까?");
+               dlg.setIcon(R.mipmap.ic_launcher);
+
+               dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                   @Override
+                   public void onClick(DialogInterface dialogInterface, int i) {
+
+                       equipmentDetailFirebaseFirestore.collection("DIY_Equipment_Rental")
+                               .whereEqualTo("rentalImage",getImageUrl)
+                               .get()
+                               .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                   @Override
+                                   public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                       String cartDocID = task.getResult().getDocuments().get(0).getId();
+                                       equipmentDetailFirebaseFirestore.collection("DIY_Equipment_Rental").document(cartDocID).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                           @Override
+                                           public void onSuccess(Void unused) {
+                                               Log.e("DB-Removed", "DocumentSnapshot removed successfully!");
+                                           }
+                                       }).addOnFailureListener(new OnFailureListener() {
+                                           @Override
+                                           public void onFailure(@NonNull Exception e) {
+                                               Log.e("DB-Removed", "DocumentSnapshot removed failed!");
+                                           }
+                                       });
+                                   }
+                               });
+
+
+                       Intent intent = new Intent(EquipmentDetailActivity.this, RegistrationRecyclerview.class);
+                       intent.putExtra("EquipmentDetail","101");
+                       startActivity(intent);
+                       finish();
+                   }
+               });
+
+               dlg.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                   @Override
+                   public void onClick(DialogInterface dialogInterface, int i) {
+                       Toast.makeText(EquipmentDetailActivity.this, " 취소되었습니다!", Toast.LENGTH_SHORT).show();
+                   }
+               });
+               dlg.show();
+           }
+       });
 
         //뒤로가기 버튼 클릭시 장비 목록 페이지에서 장비 메인 페이지 이동
         imgBtn_back.setOnClickListener(new View.OnClickListener() {
@@ -264,7 +327,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()){
                                 if(queryDocumentSnapshot.get("equipTitle") != null && queryDocumentSnapshot.get("equipTitle").equals(getTitle)){
                                     imgBtnCart.setImageResource(R.drawable.ic_baseline_favorite_24);
-                                    Ok = false;
+                                    Ok = true;
                                 }else{
                                     Log.e("DB","It is empty");
                                 }
@@ -277,18 +340,18 @@ public class EquipmentDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 cartActivty = new CartActivty();
-                if(Ok== true){
-                    imgBtnCart.setImageResource(R.drawable.ic_baseline_favorite_24);
+                if(Ok){
+                    imgBtnCart.setImageResource(R.drawable.ic_baseline_favorite_border_dark_24);
                     Ok = false;
-                    Toast.makeText(view.getContext(), "찜 목록에 추가!", Toast.LENGTH_SHORT).show();
-                    cartActivty.addCart(userEmail.substring(0, userEmail.indexOf('@')),getTitle);
+                    Toast.makeText(view.getContext(), "찜 목록에서 삭제!", Toast.LENGTH_SHORT).show();
+                    cartActivty.removeCart(userEmail.substring(0, userEmail.indexOf('@')),getTitle);
 
                 }
                 else{
-                    imgBtnCart.setImageResource(R.drawable.ic_baseline_favorite_border_dark_24);
+                    imgBtnCart.setImageResource(R.drawable.ic_baseline_favorite_24);
                     Ok = true;
-                    Toast.makeText(view.getContext(), "찜 목록에서 삭제!", Toast.LENGTH_SHORT).show();
-                    cartActivty.removeCart(userEmail.substring(0, userEmail.indexOf('@')),getTitle);
+                    Toast.makeText(view.getContext(), "찜 목록에 추가!", Toast.LENGTH_SHORT).show();
+                    cartActivty.addCart(userEmail.substring(0, userEmail.indexOf('@')),getTitle);
                 }
             }
         });

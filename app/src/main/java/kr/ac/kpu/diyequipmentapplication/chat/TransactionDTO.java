@@ -20,6 +20,7 @@ public class TransactionDTO implements Serializable {
     private String tTransactionLocation;
     private String tTransactionCondition;
     private String tUserEmail;
+    private String tOtherEmail;
 
     public TransactionDTO() {
     }
@@ -27,7 +28,7 @@ public class TransactionDTO implements Serializable {
     public TransactionDTO(String tScheduleId, String tImgView, String tCategory, String tModelName, String tUserName,
                           String tRentalType, String tRentalDate, String tRentalCost, String tStartDate, String tExpirationDate,
                           String tTotalLendingPeriod, String tTotalRental, String tTransactionDate, String tTransactionTime,
-                          String tTransactionLocation, String tTransactionCondition, String tUserEmail) {
+                          String tTransactionLocation, String tTransactionCondition, String tUserEmail, String tOtherEmail) {
         this.tScheduleId = tScheduleId;
         this.tImgView = tImgView;
         this.tCategory = tCategory;
@@ -45,6 +46,7 @@ public class TransactionDTO implements Serializable {
         this.tTransactionLocation = tTransactionLocation;
         this.tTransactionCondition = tTransactionCondition;
         this.tUserEmail = tUserEmail;
+        this.tOtherEmail = tOtherEmail;
     }
 
     public String gettScheduleId() {
@@ -181,5 +183,13 @@ public class TransactionDTO implements Serializable {
 
     public void settUserEmail(String tUserEmail) {
         this.tUserEmail = tUserEmail;
+    }
+
+    public String gettOtherEmail() {
+        return tOtherEmail;
+    }
+
+    public void settOtherEmail(String tOtherEmail) {
+        this.tOtherEmail = tOtherEmail;
     }
 }

@@ -232,6 +232,8 @@ public class ChatActivity extends AppCompatActivity {
                 Intent transactionScheduleIntent = new Intent(ChatActivity.this, ScheduleActivity.class);
                 transactionScheduleIntent.putExtra("ModelCollectionId", getIntent.getStringExtra("ModelCollectionId"));
                 transactionScheduleIntent.putExtra("CHAT_NUM", CHAT_NUM);
+                transactionScheduleIntent.putExtra("USER_EMAIL", CHAT_USER_EMAIL);
+                transactionScheduleIntent.putExtra("OTHER_EMAIL", CHAT_OTHER_EMAIL);
                 startActivity(transactionScheduleIntent);
             }
         });
@@ -287,6 +289,7 @@ public class ChatActivity extends AppCompatActivity {
                         final String transactionCondition = "대여";
                         transactionDTO.settTransactionCondition(transactionCondition);
                         transactionDTO.settUserEmail(transactionFirebaseAuth.getCurrentUser().getEmail());
+                        transactionDTO.settOtherEmail(CHAT_OTHER_EMAIL);
 
                         if (transactionDTO.gettScheduleId() != null && transactionDTO.gettImgView() != null
                                 && transactionDTO.gettCategory() != null && transactionDTO.gettModelName() != null
@@ -295,7 +298,8 @@ public class ChatActivity extends AppCompatActivity {
                                 && transactionDTO.gettStartDate() != null && transactionDTO.gettExpirationDate() != null
                                 && transactionDTO.gettTotalLendingPeriod() != null && transactionDTO.gettTotalRental() != null
                                 && transactionDTO.gettTransactionDate() != null && transactionDTO.gettTransactionTime() != null
-                                && transactionDTO.gettTransactionLocation() != null && transactionDTO.gettUserEmail() != null) {
+                                && transactionDTO.gettTransactionLocation() != null && transactionDTO.gettUserEmail() != null
+                                && transactionDTO.gettOtherEmail() != null) {
                             transactionProgressDialog.setTitle("DIY Transaction Uploading...");
                             transactionProgressDialog.show();
 
@@ -572,6 +576,7 @@ public class ChatActivity extends AppCompatActivity {
                         transactionDTO.settTransactionDate(task.getResult().getString("sTransactionDate"));
                         transactionDTO.settTransactionTime(task.getResult().getString("sTransactionTime"));
                         transactionDTO.settTransactionLocation(task.getResult().getString("sTransactionLocation"));
+                        transactionDTO.settOtherEmail(task.getResult().getString("sOtherEmail"));
 
                         Picasso.get().load(transactionDTO.gettImgView()).into(imgViewT);
                         tvTcategory.setText(transactionDTO.gettCategory());
@@ -608,9 +613,9 @@ public class ChatActivity extends AppCompatActivity {
 //                    transactionDTO.getsTransactionDate(),
 //                    transactionDTO.getsTransactionTime(),
 //                    transactionDTO.getsTransactionLocation());
-        result = String.format("거래가 성립되었습니다.\n 서로가 서로를 존중하는 아름다운 거래되시길 바랍니다..");
+        result = String.format("거래가 성립되었습니다. \n 서로가 서로를 존중하는 아름다운 거래되시길 바랍니다..");
 
-        chatDTO = new ChatDTO(chatNum, "거래도우미", "-", "-", result, timestamp);
+        chatDTO = new ChatDTO(chatNum, "거래도우미", transactionDTO.gettUserEmail(), transactionDTO.gettOtherEmail(), result, timestamp);
         chatRef.child(chatNum).push().setValue(chatDTO);
     }
 }

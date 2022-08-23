@@ -1,6 +1,10 @@
 package kr.ac.kpu.diyequipmentapplication.equipment;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Comparator;
+import java.util.Date;
 
 public class RegistrationDTO implements Serializable {
     private String ModelName;       //장비 모델명
@@ -130,5 +134,73 @@ public class RegistrationDTO implements Serializable {
 
     public void setModelLikeNum(String modelLikeNum) {
         ModelLikeNum = modelLikeNum;
+    }
+}
+
+class RegistrationPriceComparator implements Comparator<RegistrationDTO>{
+    @Override
+    public int compare(RegistrationDTO t1, RegistrationDTO t2) {
+        int cost1= 0;
+        int cost2= 0;
+
+        if(!t1.getRentalCost().equals("무료")){
+            cost1 = Integer.parseInt(t1.getRentalCost());
+        }
+
+        if(!t2.getRentalCost().equals("무료")){
+            cost2 = Integer.parseInt(t2.getRentalCost());
+        }
+
+        if (cost1 > cost2) {
+            return 1;
+        }
+        else if (cost1 < cost2) {
+            return -1;
+        }
+        return 0;
+    }
+}
+
+class RegistrationLikeComparator implements Comparator<RegistrationDTO>{
+    @Override
+    public int compare(RegistrationDTO t1, RegistrationDTO t2) {
+        int like1 = 0;
+        int like2 = 0;
+
+        if(t1.getModelLikeNum()!=null){
+            like1 = Integer.parseInt(t1.getModelLikeNum());
+        }
+
+        if(t2.getModelLikeNum()!=null){
+            like2 = Integer.parseInt(t2.getModelLikeNum());
+        }
+
+        if (like1 < like2) {
+            return 1;
+        }
+        else if (like1 > like2) {
+            return -1;
+        }
+        return 0;
+    }
+}
+
+class RegistrationDateComparator implements Comparator<RegistrationDTO>{
+    @Override
+    public int compare(RegistrationDTO t1, RegistrationDTO t2) {
+
+        Date date1, date2;
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            date1 = new Date(dateFormat.parse(t1.getRentalDate()).getTime());
+            date2 = new Date(dateFormat.parse(t2.getRentalDate()).getTime());
+            int com = date1.compareTo(date2);
+            return com;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 }

@@ -68,6 +68,7 @@ public class RegistrationAdapter extends RecyclerView.Adapter<RegistrationAdapte
                             holder.imgBtnLike.setImageResource(R.drawable.ic_baseline_favorite_24);
                         }
                         else{
+                            holder.imgBtnLike.setImageResource(R.drawable.ic_baseline_favorite_border_dark_24);
                             Log.e("DB","It is empty");
                         }
                     }
