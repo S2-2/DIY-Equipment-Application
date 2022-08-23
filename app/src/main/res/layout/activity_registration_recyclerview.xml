@@ -15,7 +15,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
             android:orientation="vertical">
 
             <!-- 메뉴 네비게이션드로어 기능 -->
@@ -35,25 +34,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <ImageView
-                        android:layout_width="300dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center_horizontal"
-                        android:src="@drawable/title" />
-
-                    <ImageButton
-                        android:id="@+id/registrationRecyclerview_btn_search"
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:background="@android:color/transparent"
-                        app:srcCompat="@drawable/ic_baseline_search_24" />
+                        android:layout_gravity="center"
+                        android:text="공공인"
+                        android:textColor="@color/black"
+                        android:textSize="20dp" />
                 </androidx.appcompat.widget.Toolbar>
             </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:gravity="center_vertical">
 
                 <LinearLayout
@@ -70,11 +65,11 @@
                         tools:layout_editor_absoluteY="43dp" />
 
                     <ImageButton
-                        android:background="@android:color/transparent"
-                        android:layout_gravity="center_vertical"
                         android:id="@+id/registrationRecyclerview_btn_home"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="@android:color/transparent"
                         app:srcCompat="@drawable/ic_baseline_home_24" />
 
                 </LinearLayout>
@@ -92,6 +87,7 @@
                 android:id="@+id/registrationRecyclerview_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_margin="10dp"
                 android:clipToPadding="false"
                 android:scrollbars="vertical"
                 android:scrollbarFadeDuration="0"/>
