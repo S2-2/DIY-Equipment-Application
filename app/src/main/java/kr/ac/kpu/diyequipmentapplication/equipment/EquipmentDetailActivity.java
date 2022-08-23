@@ -236,16 +236,16 @@ public class EquipmentDetailActivity extends AppCompatActivity {
         });
 
        // 게시물 수정
-//       btnModify.setOnClickListener(new View.OnClickListener() {
-//           @Override
-//           public void onClick(View view) {
-//               Intent intent = new Intent(EquipmentDetailActivity.this, EquipmentRegistrationActivity.class);
-//               intent.putExtra("EquipmentDetail","102");
-//
-//               startActivity(intent);
-//               finish();
-//           }
-//       });
+       btnModify.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               Intent intent = new Intent(EquipmentDetailActivity.this, EquipmentRegistrationActivity.class);
+               intent.putExtra("EquipmentDetail","modify");
+               intent.putExtra("EquipmentObject",getImageUrl);
+               startActivity(intent);
+               finish();
+           }
+       });
 
         // 게시물 삭제
        btnDelete.setOnClickListener(new View.OnClickListener() {
@@ -284,7 +284,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
 
 
                        Intent intent = new Intent(EquipmentDetailActivity.this, RegistrationRecyclerview.class);
-                       intent.putExtra("EquipmentDetail","101");
+                       intent.putExtra("EquipmentDetail","delete");
                        startActivity(intent);
                        finish();
                    }
