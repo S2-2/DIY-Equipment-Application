@@ -78,6 +78,7 @@ public class ChatActivity extends AppCompatActivity {
     private FirebaseFirestore userFS = null;
 
     private ImageButton imgBtn_back = null;
+
     private Button btnTransactionSchedule;      //거래일정 버튼
 
     private String getModelCollectionId;    //해당 장비 컬렉션 Id
