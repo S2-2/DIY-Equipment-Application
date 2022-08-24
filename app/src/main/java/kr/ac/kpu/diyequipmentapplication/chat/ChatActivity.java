@@ -50,7 +50,6 @@ import java.util.Random;
 import kr.ac.kpu.diyequipmentapplication.MainActivity;
 import kr.ac.kpu.diyequipmentapplication.R;
 import kr.ac.kpu.diyequipmentapplication.RentalHistoryRecyclerviewActivity;
-import kr.ac.kpu.diyequipmentapplication.community.CommunityDetailActivity;
 import kr.ac.kpu.diyequipmentapplication.equipment.ScheduleActivity;
 
 public class ChatActivity extends AppCompatActivity {
@@ -99,7 +98,7 @@ public class ChatActivity extends AppCompatActivity {
     private String getTransactionDBId;
     private TransactionDTO transactionDTO;
 
-    private ImageButton imgBtn_back, imgBtn_home; // 상단 뒤로가기, 홈 버튼
+    private ImageButton imgBtn_home; // 상단 뒤로가기, 홈 버튼
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

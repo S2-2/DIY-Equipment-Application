@@ -50,7 +50,6 @@ import java.util.List;
 import kr.ac.kpu.diyequipmentapplication.MainActivity;
 import kr.ac.kpu.diyequipmentapplication.R;
 import kr.ac.kpu.diyequipmentapplication.menu.LocationSearchActivity;
-import kr.ac.kpu.diyequipmentapplication.cart.CartRecyclerview;
 
 //공급자가 DIY장비 등록하는 액티비티
 public class EquipmentRegistrationActivity extends AppCompatActivity {
@@ -97,6 +96,7 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
     private FirebaseFirestore registrationFirebaseFirestoreDB = null;
 
     private String myRentalAddress;
+    private FirebaseAuth mainFirebaseAuth;     //FirebaseAuth 참조 변수 선언
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,6 +139,22 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
 
         //장비 등록 Firestore DB 참조 및 초기화
         registrationFirebaseFirestoreDB = FirebaseFirestore.getInstance();
+        mainFirebaseAuth = FirebaseAuth.getInstance();                  //FirebaseAuth 초기화 및 객체 참조
+
+        registrationFirestore.collection("DIY_Location")
+                .whereEqualTo("locationEmail", mainFirebaseAuth.getCurrentUser().getEmail().toString().trim())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                                registrationRentalAddress.setText(queryDocumentSnapshot.get("location").toString().trim());
+                            }
+                        }
+
+                    }
+                });
 
         registrationRentalAddress.setFocusable(false);
         registrationRentalAddress.setOnClickListener(new View.OnClickListener() {
