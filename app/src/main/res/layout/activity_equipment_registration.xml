@@ -160,12 +160,27 @@
     <!--            android:layout_weight="1"/>-->
     <!--    </LinearLayout>-->
 
-    <Button
-        android:id="@+id/equipmentRegistration_btn_registration"
-        style="@style/style_tv_default_black18dp"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="등록하기" />
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+        <Button
+            android:id="@+id/equipmentRegistration_btn_registration"
+            style="@style/style_tv_default_black18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="등록하기" />
+
+        <Button
+            android:id="@+id/equipmentRegistration_btn_modification"
+            style="@style/style_tv_default_black18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="수정하기" />
+    </LinearLayout>
+
 
 </LinearLayout>

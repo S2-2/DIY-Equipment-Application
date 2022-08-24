@@ -2,6 +2,7 @@ package kr.ac.kpu.diyequipmentapplication.equipment;
 
 import static android.content.ContentValues.TAG;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -39,6 +40,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,6 +50,7 @@ import java.util.List;
 import kr.ac.kpu.diyequipmentapplication.MainActivity;
 import kr.ac.kpu.diyequipmentapplication.R;
 import kr.ac.kpu.diyequipmentapplication.menu.LocationSearchActivity;
+import kr.ac.kpu.diyequipmentapplication.cart.CartRecyclerview;
 
 //공급자가 DIY장비 등록하는 액티비티
 public class EquipmentRegistrationActivity extends AppCompatActivity {
@@ -63,6 +66,7 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
     private ImageButton imgBtn_back = null;
     private EditText registrationModelName = null, registrationModelInform = null;      //장비 모델명, 장비 정보 뷰 참조 변수
     private Button registrationBtnAdd = null;              //장비 등록 버튼 뷰 참조 변수
+    private Button registrationBtnModify = null;
     private static final int Gallery_Code = 1;             //갤러리 코드 상수 및 초기화
     private Uri registrationImageUrl = null;               //장비 이미지 Url 참조 변수
     private ProgressDialog registrationProgressDialog = null;          //progressDialog 뷰 참조 변수
@@ -85,6 +89,10 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
     private ArrayAdapter<String> cat2Adapter = null;
     private String cat1String = null;
 
+    // 게시물 수정시 이용될 변수 선언
+    private Boolean registrationModify = false;
+    private String  registrationModifyObject = null;
+
     //장비 등록 파이어스토어 DB 참조 변수 선언
     private FirebaseFirestore registrationFirebaseFirestoreDB = null;
 
@@ -101,6 +109,7 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
         registrationModelName = findViewById(R.id.equipmentRegistration_et_modelName);
         registrationModelInform = findViewById(R.id.et_registrationModelInform);
         registrationBtnAdd = findViewById(R.id.equipmentRegistration_btn_registration);
+        registrationBtnModify = findViewById(R.id.equipmentRegistration_btn_modification);
         registrationRentalGroup = findViewById(R.id.rg_registrationRentalGroup);
         registrationFeeRental = findViewById(R.id.rBtn_registrationFeeRental);
         registrationFreeRental = findViewById(R.id.rBtn_registrationFree);
@@ -248,6 +257,94 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
             }
         });
 
+        // 장비가 등록이 아닌 수정이면 아래 이벤트 발생
+        Intent intent = getIntent();
+        if(intent.getStringExtra("EquipmentDetail")!=null&&intent.getStringExtra("EquipmentDetail").equals("modify")){
+            final String[] modifyDocId = {null};
+            final String[] registrationLikeNum = {null};
+
+            registrationModify = true;
+            registrationModifyObject = intent.getStringExtra("EquipmentObject");
+            registrationBtnAdd.setEnabled(false);
+            registrationBtnAdd.setVisibility(View.GONE);
+
+            registrationFirebaseFirestoreDB.collection("DIY_Equipment_Rental")
+                    .whereEqualTo("rentalImage",registrationModifyObject)
+                    .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @SuppressLint("ResourceType")
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if(task.isSuccessful()){
+                        for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                            modifyDocId[0] = queryDocumentSnapshot.getId();
+                            registrationImageUrl = Uri.parse(registrationModifyObject);
+                            Picasso.get().load(registrationModifyObject).into(registrationImgBtn);
+                            registrationLikeNum[0] = queryDocumentSnapshot.get("modelLikeNum").toString().trim();
+
+                            registrationModelInform.setText(queryDocumentSnapshot.get("modelInform").toString().trim());
+                            registrationModelName.setText(queryDocumentSnapshot.get("modelName").toString().trim());
+                            registrationRentalAddress.setText(queryDocumentSnapshot.get("rentalAddress").toString().trim());
+                            sprModelCat1.setSelection(getIndex(sprModelCat1,queryDocumentSnapshot.get("modelCategory1")));
+                            sprModelCat2.setSelection(getIndex(sprModelCat2,queryDocumentSnapshot.get("modelCategory2")));
+
+                            if(queryDocumentSnapshot.get("rentalType").equals("무료나눔")){   // 대여비 무료인 경우
+                                registrationRentalGroup.check(R.id.rBtn_registrationFree);
+                                registrationRentalCost.setEnabled(false);
+                            }else{  // 유료인 경우
+                                registrationRentalGroup.check(R.id.rBtn_registrationFeeRental);
+                                registrationRentalCost.setEnabled(true);
+                            }
+                            registrationRentalType.setText(queryDocumentSnapshot.get("rentalType").toString().trim());
+                            registrationRentalCost.setText(queryDocumentSnapshot.get("rentalCost").toString().trim());
+                        }
+                    }
+                }
+            });
+            //            modifyEquipment(intent.getStringExtra("getImageUrl").toString());
+            // Modify 버튼 이벤트 구현
+            registrationBtnModify.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //공급자가 입력한 모델명 및 공구 설명
+                    final String mn = registrationModelName.getText().toString().trim();
+                    final String mt = registrationModelInform.getText().toString().trim();
+                    final String t = registrationImageUrl.toString().trim();
+                    final String rt = registrationRentalType.getText().toString().trim();
+                    final String ra = registrationRentalAddress.getText().toString().trim();
+                    final String rc = registrationRentalCost.getText().toString().trim();
+                    final String mc1 = sprModelCat1.getSelectedItem().toString().trim();
+                    final String mc2 = sprModelCat2.getSelectedItem().toString().trim();
+
+                    //공급자가 입력한 데이터 등록 성공
+                    if (!(mn.isEmpty() && mt.isEmpty() && rt.isEmpty() && ra.isEmpty() && rc.isEmpty() && mc1.isEmpty() && mc2.isEmpty() && registrationImageUrl != null))
+                    {
+                        registrationProgressDialog.setTitle("DIY Rental Registration Uploading...");
+                        registrationProgressDialog.show();
+
+                        EquipmentRegistration equipmentRegistration = new EquipmentRegistration(mn,mt,t, rt, rc, ra, registrationGetUserEmail, registrationGetDate, mc1, mc2);
+                        equipmentRegistration.setModelLikeNum(registrationLikeNum[0]);
+                        registrationFirebaseFirestoreDB.collection("DIY_Equipment_Rental").document(modifyDocId[0]).set(equipmentRegistration).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(EquipmentRegistrationActivity.this, "수정 되었습니다!", Toast.LENGTH_SHORT).show();
+                                registrationProgressDialog.dismiss();
+                            }
+                        });
+                        Intent intent = new Intent(EquipmentRegistrationActivity.this, MainActivity.class);
+                        startActivity(intent);
+
+                    }
+                    else{
+                        Log.e("modify-error","something is null");
+                    }
+                }
+            });
+        }
+        else{
+            registrationBtnModify.setEnabled(false);
+            registrationBtnModify.setVisibility(View.GONE);
+        }
+
         imgBtn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -266,6 +363,16 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
         });
     }
 
+    private int getIndex(Spinner spr, Object item) {
+        for (int i=0; i< spr.getCount(); i++){
+            if(spr.getItemAtPosition(i).toString().equalsIgnoreCase(item.toString())){
+                return i;
+            }
+        }
+        Log.e("getIndex","failed..");
+        return 0;
+    }
+
     //공급자가 입력한 데이터를 Firebase DB 및 Storage에 저장 구현
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -279,7 +386,7 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
             registrationImgBtn.setImageURI(registrationImageUrl);
         }
 
-        //Insert 버튼 이벤트 구현
+        // Insert 버튼 이벤트 구현
         registrationBtnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -320,6 +427,9 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
                             });
                         }
                     });
+                }
+                else{
+                    Log.e("modify-error","something is null");
                 }
             }
         });
