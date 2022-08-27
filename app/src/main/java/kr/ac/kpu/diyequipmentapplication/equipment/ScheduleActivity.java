@@ -202,7 +202,10 @@ public class ScheduleActivity extends AppCompatActivity {
                                 tvExpirationDate.setText(scheduleDB.getsExpirationDate());
                                 tvTotalLendingPeriod.setText(scheduleDB.getsTotalLendingPeriod());
                                 tvtTotalLendingPeriod.setText(scheduleDB.getsTotalLendingPeriod());
-                                totLendingPeriod = Long.parseLong(tvtTotalLendingPeriod.getText().toString().trim());
+                                String lendingPeriod = scheduleDB.getsTotalLendingPeriod();
+                                lendingPeriod = lendingPeriod.substring(lendingPeriod.lastIndexOf(' ')+1,lendingPeriod.lastIndexOf("일"));
+                                Log.e("lendingPeriod", lendingPeriod);
+                                totLendingPeriod = Long.parseLong(lendingPeriod);
                                 tvDailyRental.setText(scheduleDB.getsDailyRental());
                                 tvTotalRental.setText(scheduleDB.getsTotalRental());
                                 tvTransactionDate.setText(scheduleDB.getsTransactionDate());
@@ -587,7 +590,8 @@ public class ScheduleActivity extends AppCompatActivity {
                                     tvTransCost.setText(getRentalCost[0]);
                                 } else {    //일일대여비가 유료인 경우
                                     dailyRental[0] = Integer.parseInt(getRentalCost[0]);
-                                    totalRental[0] = dailyRental[0] * Integer.parseInt(scheduleDB.getsTotalLendingPeriod());
+                                    totalRental[0] = dailyRental[0] * totLendingPeriod.intValue();
+//                                    Integer.parseInt(scheduleDB.getsTotalLendingPeriod());
                                     scheduleDB.setsDailyRental(Integer.toString(dailyRental[0]));  //일일 대여비
                                     scheduleDB.setsTotalRental(Integer.toString(totalRental[0]));  //총 대여비
                                     tvDailyRental.setText(dailyRental[0] +"원");
