@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +34,6 @@ import java.util.List;
 import java.util.Map;
 
 import kr.ac.kpu.diyequipmentapplication.R;
-import kr.ac.kpu.diyequipmentapplication.chat.ChatActivity;
 import kr.ac.kpu.diyequipmentapplication.chat.TransactionDTO;
 
 public class RentalHistoryAdapter extends RecyclerView.Adapter<RentalHistoryAdapter.ViewHolder> {
@@ -88,7 +86,7 @@ public class RentalHistoryAdapter extends RecyclerView.Adapter<RentalHistoryAdap
         TextView tvTcategory, tvTmodelName, tvTuserName, tvTrentalType, tvTrentalDate, tvTrentalCost, tvTstartDate,
                 tvTexpirationDate, tvTtotalLendingPeriod, tvTtotalRental, tvTtransactionDate, tvTtransactionTime, tvTtransactionLocation;
 
-        Button btnTchatting, btnTreturn;
+        Button btnTreturn;
         String getTransactionDBId;
         String getTransactionChatNum;
 
@@ -128,7 +126,6 @@ public class RentalHistoryAdapter extends RecyclerView.Adapter<RentalHistoryAdap
             tvTtransactionDate = transactionDialog.findViewById(R.id.transaction_tv_transactionDate);
             tvTtransactionTime = transactionDialog.findViewById(R.id.transaction_tv_transactionTime);
             tvTtransactionLocation = transactionDialog.findViewById(R.id.transaction_tv_transactionLocation);
-            btnTchatting = transactionDialog.findViewById(R.id.transaction_btn_chatting);
             btnTreturn = transactionDialog.findViewById(R.id.transaction_btn_return);
 
 
@@ -183,17 +180,6 @@ public class RentalHistoryAdapter extends RecyclerView.Adapter<RentalHistoryAdap
                         tvTtransactionTime.setText(transactionDTO.gettTransactionTime());
                         tvTtransactionLocation.setText(transactionDTO.gettTransactionLocation());
                         transactionDialog.show();
-
-                        //거래 상세 페이지에서 거래자와 채팅 액티비티로 이동!
-                        btnTchatting.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Intent intent = new Intent(context, ChatActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                intent.putExtra("chatNum", getTransactionChatNum);
-                                context.startActivity(intent);
-                                Log.d("getChatnum", getTransactionChatNum);
-                            }
-                        });
 
                         //거래 상세 페이지 확인 버튼 클릭 이벤트
                         btnTreturn.setOnClickListener(new View.OnClickListener() {

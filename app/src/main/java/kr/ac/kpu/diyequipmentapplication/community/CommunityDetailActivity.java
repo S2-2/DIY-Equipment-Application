@@ -48,7 +48,8 @@ public class CommunityDetailActivity extends AppCompatActivity {
     private String getUserProfileImageUrl;
     private String getEquipmentImageUrl;
     private String getUserEmail;
-    private String tempNickname;
+    private String tempNickname;    //커뮤니티 등록한 사용자 닉네임
+    private String getCommunityId;  //커뮤니티 아이디
 
     private ImageButton imgBtn_back;
     private ImageButton imgBtn_home;
@@ -94,9 +95,25 @@ public class CommunityDetailActivity extends AppCompatActivity {
         communityDetailFirebaseAuth = FirebaseAuth.getInstance();                  //FirebaseAuth 초기화 및 객체 참조
         communityDetailFirebaseFirestore = FirebaseFirestore.getInstance();        //파이어스토어 초기화 및 객체 참조
 
+
+        communityDetailFirebaseFirestore.collection("DIY_Profile")
+                .whereEqualTo("profileEmail", communityDetailFirebaseAuth.getCurrentUser().getEmail().toString().trim())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                                getUserProfileImageUrl = queryDocumentSnapshot.get("profileImage").toString().trim();
+                                Picasso.get().load(getUserProfileImageUrl).into(ivUserProfilePhoto);
+                            }
+                        }
+                    }
+                });
+
         Intent intent = getIntent();
         getUserProfileImageUrl = intent.getStringExtra("CommunityImage");
-        Picasso.get().load(getUserProfileImageUrl).into(ivUserProfilePhoto);
+        //Picasso.get().load(getUserProfileImageUrl).into(ivUserProfilePhoto);
         getEquipmentImageUrl = getUserProfileImageUrl;
         Picasso.get().load(getEquipmentImageUrl).into(ivEquipmentImage);
         tempNickname = intent.getStringExtra("CommunityNickname");
@@ -104,6 +121,20 @@ public class CommunityDetailActivity extends AppCompatActivity {
         //tvLocation.setText("작성자 위치: ");
         tvTime.setText("작성 시간: " + intent.getStringExtra("CommunityDateAndTime"));
         tvContents.setText(intent.getStringExtra("CommunityContents"));
+
+        communityDetailFirebaseFirestore.collection("DIY_Equipment_Community")
+                .whereEqualTo("communityNickname", tempNickname)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                                getCommunityId = queryDocumentSnapshot.getId();
+                            }
+                        }
+                    }
+                });
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View nav_header_view = navigationView.getHeaderView(0);
@@ -129,15 +160,17 @@ public class CommunityDetailActivity extends AppCompatActivity {
                 final String getDate = commentGetDate;
                 final String getHostNickname = tempNickname;
 
-                //공급자가 입력한 데이터 등록 성공
+                //공급자가 입력한 댓글을 DIY_Equipment_CommunityComment DB에 등록
                 if (!(getComment.isEmpty()))
                 {
-                    CommunityComment communityComment = new CommunityComment(getLike, getComment, getNickname, getDate, getHostNickname);
+                    CommunityComment communityComment = new CommunityComment(getLike, getComment, getNickname, getDate, getHostNickname, getCommunityId);
                     communityDetailFirebaseFirestore.collection("DIY_Equipment_CommunityComment").document().set(communityComment);
                     Toast.makeText(getApplicationContext(), "댓글 추가했습니다!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "댓글 입력하세요!", Toast.LENGTH_SHORT).show();
                 }
+
+
             }
         });
 
@@ -146,6 +179,7 @@ public class CommunityDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(CommunityDetailActivity.this, CommunityCommentRecyclerview.class);
                 intent.putExtra("hostNickname", tempNickname);
+                intent.putExtra("hostId", getCommunityId);
                 startActivity(intent);
             }
         });

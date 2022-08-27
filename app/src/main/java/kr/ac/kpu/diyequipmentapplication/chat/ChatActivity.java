@@ -47,6 +47,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
 
+import kr.ac.kpu.diyequipmentapplication.MainActivity;
 import kr.ac.kpu.diyequipmentapplication.R;
 import kr.ac.kpu.diyequipmentapplication.RentalHistoryRecyclerviewActivity;
 import kr.ac.kpu.diyequipmentapplication.equipment.ScheduleActivity;
@@ -98,6 +99,8 @@ public class ChatActivity extends AppCompatActivity {
     private String getTransactionDBId;
     private TransactionDTO transactionDTO;
 
+    private ImageButton imgBtn_home; // 상단 뒤로가기, 홈 버튼
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,6 +125,23 @@ public class ChatActivity extends AppCompatActivity {
 
         // 사용자 이메일 및 닉네임 가져오기
         CHAT_USER_EMAIL = chatAuth.getCurrentUser().getEmail().toString();
+
+        //뒤로가기 버튼 클릭시 채팅 목록 페이지에서 전 페이지로 이동
+        imgBtn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        //홈 버튼 클릭시 메인 페이지 이동
+        imgBtn_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ChatActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
         userFS.collection("DIY_Signup")
                 .whereEqualTo("userEmail", chatAuth.getCurrentUser().getEmail().toString().trim())

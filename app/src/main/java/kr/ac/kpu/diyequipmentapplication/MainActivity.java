@@ -43,6 +43,7 @@ import kr.ac.kpu.diyequipmentapplication.chat.FcmDTO;
 import kr.ac.kpu.diyequipmentapplication.community.CommunityAdapter;
 import kr.ac.kpu.diyequipmentapplication.community.CommunityRecyclerview;
 import kr.ac.kpu.diyequipmentapplication.community.CommunityRegistration;
+import kr.ac.kpu.diyequipmentapplication.equipment.MyEquipmentListActivity;
 import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationAdapter;
 import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationDTO;
 import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationRecyclerview;
@@ -124,15 +125,15 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        mainFirebaseFirestore.collection("DIY_Equipment_Rental")
-                .whereEqualTo("userEmail", mainFirebaseAuth.getCurrentUser().getEmail().toString().trim())
+        mainFirebaseFirestore.collection("DIY_Location")
+                .whereEqualTo("locationEmail", mainFirebaseAuth.getCurrentUser().getEmail().toString().trim())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
-                                nav_header_address.setText(queryDocumentSnapshot.get("rentalAddress").toString().trim());
+                                nav_header_address.setText(queryDocumentSnapshot.get("location").toString().trim());
                             }
                         }
 
@@ -314,6 +315,10 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, CartRecyclerview.class);
                     startActivity(intent);
                     finish();
+                } else if(id == R.id.mytradelist) {
+                    Toast.makeText(MainActivity.this, "나의 거래목록으로 접속되었습니다!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MainActivity.this, MyEquipmentListActivity.class);
+                    startActivity(intent);
                 }
 //                else if(id == R.id.locationset){
 //                    Toast.makeText(context, title + ": 위치설정", Toast.LENGTH_SHORT).show();

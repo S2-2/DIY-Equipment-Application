@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="kr.ac.kpu.diyequipmentapplication" >
+    package="kr.ac.kpu.diyequipmentapplication">
 
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -30,22 +30,27 @@
         android:theme="@style/Theme.basic"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".login.LoginActivity"
+            android:name=".equipment.MyEquipmentListActivity"
             android:exported="false" />
-
-
-        <!--스플래시 설정정-->
+        <activity
+            android:name=".menu.ProfileChangePwdActivity"
+            android:exported="false" />
+        <activity
+            android:name=".login.LoginActivity"
+            android:exported="false" /> <!-- 스플래시 설정정 -->
+        <!-- 스플래시 설정 -->
         <activity
             android:name=".etc.SplashActivity"
-            android:theme="@style/SplashTheme"
-            android:exported="true" >
+            android:exported="true"
+            android:theme="@style/SplashTheme">
+            android:exported="true"
+            android:theme="@style/SplashTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
         <activity
             android:name=".RentalHistoryRecyclerviewActivity"
             android:exported="false" />
@@ -99,10 +104,10 @@
             android:exported="false" />
         <activity
             android:name=".equipment.RentalGoogleMap"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".equipment.ScheduleActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".chat.ChatActivity"
             android:exported="false" />
@@ -117,4 +122,5 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyBvUrmKbM3-AjxATu6LlIj1-mYq4RWuklM" />
     </application>
+
 </manifest>
