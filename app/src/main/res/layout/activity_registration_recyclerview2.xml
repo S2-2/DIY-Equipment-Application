@@ -74,12 +74,12 @@
                     android:layout_marginRight="5dp"
                     android:hint="검색어를 입력하세요."/>
 
-<!--                <fragment-->
-<!--                    class="kr.ac.kpu.diyequipmentapplication.equipment.EquipmentSortFragment"-->
-<!--                    android:id="@+id/registrationRecyclerviewItem_sort_spr"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content">-->
-<!--                </fragment>-->
+                <fragment
+                    class="kr.ac.kpu.diyequipmentapplication.equipment.EquipmentSortFragment"
+                    android:id="@+id/registrationRecyclerviewItem_sort_spr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </fragment>
 
             </LinearLayout>
 
