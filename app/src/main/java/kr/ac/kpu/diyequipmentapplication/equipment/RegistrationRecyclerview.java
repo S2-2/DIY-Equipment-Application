@@ -76,7 +76,7 @@ public class RegistrationRecyclerview extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_community_recyclerview);
+        setContentView(R.layout.activity_registration_recyclerview2);
 
         //RecyclerView 필드 참조
         rRfirebaseFirestoreDB = FirebaseFirestore.getInstance();
