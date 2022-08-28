@@ -90,13 +90,13 @@
                             android:layout_height="40dp"
                             tools:srcCompat="@tools:sample/avatars" />
 
-                            <TextView
-                                android:id="@+id/equipmentDetail_tv_nickname"
-                                style="@style/style_tv_default_black18dp"
-                                android:layout_weight="1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="(작성자 별명)" />
+                        <TextView
+                            android:id="@+id/equipmentDetail_tv_nickname"
+                            style="@style/style_tv_default_black18dp"
+                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="(작성자 별명)" />
 
                         <Button
                             android:id="@+id/equipmentDetail_btn_chatting"
@@ -295,5 +295,3 @@
         app:headerLayout="@layout/navi_header"
         app:menu="@menu/navi_menu" />
 </androidx.drawerlayout.widget.DrawerLayout>
-
-

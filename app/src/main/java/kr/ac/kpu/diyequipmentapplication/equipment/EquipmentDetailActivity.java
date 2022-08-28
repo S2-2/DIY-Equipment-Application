@@ -26,7 +26,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -34,7 +33,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 
 import kr.ac.kpu.diyequipmentapplication.MainActivity;
 import kr.ac.kpu.diyequipmentapplication.R;
@@ -49,7 +47,7 @@ import kr.ac.kpu.diyequipmentapplication.menu.MenuSettingActivity;
 
 // 목록 클릭시 상세화면으로 전환되는 액티비티클래스
 public class EquipmentDetailActivity extends AppCompatActivity {
-    private ImageView ivRentalImage;
+    private ImageView ivRentalImage, ivUserProfileImage;
     private TextView tvUserNickname, tvTitle, tvExplanation, tvRentalType, tvRentalCost, tvUserLocation, tvRentalPeriod, tvCategory, tvLikeNum;
     private Button btnChat, btnDelete, btnModify;
     private String getImageUrl, userEmail, otherEmail, getTitle = null;
@@ -62,6 +60,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
     private Boolean Ok = false;                  // 찜여부 확인
     private CartActivty cartActivty = null;
     private String getModelCollectionId;
+    private String getProfileUrl;
 
     //네비게이션 드로어 참조 변수
     private DrawerLayout mDrawerLayout;
@@ -76,6 +75,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment_detail);
 
+        ivUserProfileImage = findViewById(R.id.iv_UserProfilePhoto);
         ivRentalImage = findViewById(R.id.iv_EquipmentImage);
         tvUserNickname = findViewById(R.id.equipmentDetail_tv_nickname);
         tvTitle = findViewById(R.id.equipmentDetail_tv_title);
@@ -144,6 +144,22 @@ public class EquipmentDetailActivity extends AppCompatActivity {
 //        equipmentDetailRef = equipmentDetailFirebaseFirestore.collection("DIY_Equipment_Rental").document();
         userEmail = equipmentDetailFirebaseAuth.getCurrentUser().getEmail().toString().trim();
         otherEmail = intent.getStringExtra("UserEmail");
+
+        equipmentDetailFirebaseFirestore.collection("DIY_Profile")
+                .whereEqualTo("profileEmail", userEmail)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for (QueryDocumentSnapshot queryDocumentSnapshot: task.getResult()){
+
+                                getProfileUrl = queryDocumentSnapshot.get("profileImage").toString().trim();
+                                Picasso.get().load(getImageUrl).into(ivUserProfileImage);
+                            }
+                        }
+                    }
+                });
 
         equipmentDetailFirebaseFirestore.collection("DIY_Signup")
                 .whereEqualTo("userEmail",otherEmail)
@@ -236,16 +252,16 @@ public class EquipmentDetailActivity extends AppCompatActivity {
         });
 
        // 게시물 수정
-//       btnModify.setOnClickListener(new View.OnClickListener() {
-//           @Override
-//           public void onClick(View view) {
-//               Intent intent = new Intent(EquipmentDetailActivity.this, EquipmentRegistrationActivity.class);
-//               intent.putExtra("EquipmentDetail","102");
-//
-//               startActivity(intent);
-//               finish();
-//           }
-//       });
+       btnModify.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               Intent intent = new Intent(EquipmentDetailActivity.this, EquipmentRegistrationActivity.class);
+               intent.putExtra("EquipmentDetail","modify");
+               intent.putExtra("EquipmentObject",getImageUrl);
+               startActivity(intent);
+               finish();
+           }
+       });
 
         // 게시물 삭제
        btnDelete.setOnClickListener(new View.OnClickListener() {
@@ -284,7 +300,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
 
 
                        Intent intent = new Intent(EquipmentDetailActivity.this, RegistrationRecyclerview.class);
-                       intent.putExtra("EquipmentDetail","101");
+                       intent.putExtra("EquipmentDetail","delete");
                        startActivity(intent);
                        finish();
                    }

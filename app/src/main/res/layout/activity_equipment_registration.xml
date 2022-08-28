@@ -8,8 +8,8 @@
 
     <ImageButton
         android:id="@+id/equipmentRegistration_btn_back"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:background="@android:color/transparent"
         app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24" />
@@ -19,12 +19,6 @@
         android:layout_width="match_parent"
         android:layout_height="160dp"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:orientation="vertical">
 
     <TextView
         android:id="@+id/equipmentRegistration_tv_nickname"
@@ -121,14 +115,14 @@
         style="@style/style_tv_default_black18dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="거래 종류" />
+        android:hint="RentalType" />
 
     <EditText
         android:id="@+id/et_registrationRentalCost"
         style="@style/style_tv_default_black18dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="대여비"
+        android:hint="RentalCost"
         android:inputType="number" />
 
     <EditText
@@ -136,7 +130,7 @@
         style="@style/style_tv_default_black18dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="위치"
+        android:hint="RentalAddress"
         android:inputType="textPostalAddress" />
 
     <EditText
@@ -166,12 +160,27 @@
     <!--            android:layout_weight="1"/>-->
     <!--    </LinearLayout>-->
 
-    <Button
-        android:id="@+id/equipmentRegistration_btn_registration"
-        style="@style/style_tv_default_black18dp"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="등록하기" />
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+        <Button
+            android:id="@+id/equipmentRegistration_btn_registration"
+            style="@style/style_tv_default_black18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="등록하기" />
+
+        <Button
+            android:id="@+id/equipmentRegistration_btn_modification"
+            style="@style/style_tv_default_black18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="수정하기" />
     </LinearLayout>
+
+
 </LinearLayout>

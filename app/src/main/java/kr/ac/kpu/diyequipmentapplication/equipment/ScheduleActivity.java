@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
@@ -507,9 +505,14 @@ public class ScheduleActivity extends AppCompatActivity {
                         Log.e("LP", "bufLendingPeriod: " + bufLendingPeriod + " / totLendingPeriod: " + totLendingPeriod );
                     }
                 }
-                scheduleDB.setsTotalLendingPeriod(month+ " " + week + " " + day+ " (총" + totLendingPeriod + "일)"); //대여기간 총 대여일수
-                tvTotalLendingPeriod.setText(scheduleDB.getsTotalLendingPeriod());
-                tvTransPeriod.setText(scheduleDB.getsTotalLendingPeriod());
+                scheduleDB.setsTotalLendingPeriod(Long.toString(totLendingPeriod)); //대여기간 총 대여일수
+                //scheduleDB.setsTotalLendingPeriod(month+ " " + week + " " + day+ " (총" + totLendingPeriod + "일)"); //대여기간 총 대여일수
+
+                //tvTotalLendingPeriod.setText(scheduleDB.getsTotalLendingPeriod());
+                //tvTransPeriod.setText(scheduleDB.getsTotalLendingPeriod());
+
+                tvTotalLendingPeriod.setText(month+ " " + week + " " + day+ " (총" + totLendingPeriod + "일)");
+                tvTransPeriod.setText(month+ " " + week + " " + day+ " (총" + totLendingPeriod + "일)");
             }
         } else {    //대여기간 반납일인 경우
             scheduleDB.setsExpirationDate(sdf.format(scheduleCalendar.getTime()));  //대여기간 종료일
@@ -544,9 +547,15 @@ public class ScheduleActivity extends AppCompatActivity {
                         Log.e("LP", "bufLendingPeriod: " + bufLendingPeriod + " / totLendingPeriod: " + totLendingPeriod );
                     }
                 }
-                scheduleDB.setsTotalLendingPeriod(month +" " + week +" "+ day+ " (총 " + totLendingPeriod + "일)"); //대여기간 총 대여일수
-                tvTotalLendingPeriod.setText(scheduleDB.getsTotalLendingPeriod());
-                tvTransPeriod.setText(scheduleDB.getsTotalLendingPeriod());
+                //scheduleDB.setsTotalLendingPeriod(month +" " + week +" "+ day+ " (총 " + totLendingPeriod + "일)"); //대여기간 총 대여일수
+                //tvTotalLendingPeriod.setText(scheduleDB.getsTotalLendingPeriod());
+                //tvTransPeriod.setText(scheduleDB.getsTotalLendingPeriod());
+
+
+
+                scheduleDB.setsTotalLendingPeriod(Long.toString(totLendingPeriod)); //대여기간 총 대여일수
+                tvTotalLendingPeriod.setText(month+ " " + week + " " + day+ " (총" + totLendingPeriod + "일)");
+                tvTransPeriod.setText(month+ " " + week + " " + day+ " (총" + totLendingPeriod + "일)");
             } else {
                 Toast.makeText(ScheduleActivity.this, "대여기간 시작일 먼저 선택해 주세요!", Toast.LENGTH_SHORT).show();
                 tvExpirationDate.setText("");

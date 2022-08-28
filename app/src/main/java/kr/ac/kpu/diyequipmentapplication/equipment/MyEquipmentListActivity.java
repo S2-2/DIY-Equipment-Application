@@ -1,12 +1,15 @@
-package kr.ac.kpu.diyequipmentapplication;
+package kr.ac.kpu.diyequipmentapplication.equipment;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -31,22 +35,25 @@ import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 
+import kr.ac.kpu.diyequipmentapplication.MainActivity;
+import kr.ac.kpu.diyequipmentapplication.R;
 import kr.ac.kpu.diyequipmentapplication.chat.ChatStartActivity;
-import kr.ac.kpu.diyequipmentapplication.chat.TransactionDTO;
 import kr.ac.kpu.diyequipmentapplication.community.CommunityRecyclerview;
-import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationRecyclerview;
-import kr.ac.kpu.diyequipmentapplication.equipment.RentalGoogleMap;
 import kr.ac.kpu.diyequipmentapplication.login.LoginActivity;
 import kr.ac.kpu.diyequipmentapplication.menu.MenuSettingActivity;
-import kr.ac.kpu.diyequipmentapplication.menu.RentalHistoryAdapter;
 
-public class RentalHistoryRecyclerviewActivity extends AppCompatActivity {
-    FirebaseStorage rentalHistoryFirebaseStorage;
+public class MyEquipmentListActivity extends AppCompatActivity {
+    FirebaseStorage mStorage;
     RecyclerView recyclerView;
-    RentalHistoryAdapter rentalHistoryAdapter;
-    ArrayList<TransactionDTO> transactionDTOArrayList;
-    ArrayList<TransactionDTO> filteredTransactionDTOArrayList;
-    private FirebaseFirestore rentalHistoryFirebaseFirestore;
+    RegistrationAdapter registrationAdapter;
+    ArrayList<RegistrationDTO> equipmentRegistrationList;
+    ArrayList<RegistrationDTO> filteredEquipementList;
+
+    private FirebaseFirestore rRfirebaseFirestoreDB = null;
+
+    // 장비등록 페이지로 이동하는 버튼
+    FloatingActionButton btnModelEnroll;
+    protected EditText etSearch; //  검색필터링
 
     private ImageButton imgBtn_back = null;
     private ImageButton imgBtn_home = null;
@@ -59,24 +66,25 @@ public class RentalHistoryRecyclerviewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rental_history_recyclerview);
+        setContentView(R.layout.activity_my_equipment_list);
 
         //RecyclerView 필드 참조
-        rentalHistoryFirebaseFirestore = FirebaseFirestore.getInstance();
-        rentalHistoryFirebaseStorage = FirebaseStorage.getInstance();
-        recyclerView = findViewById(R.id.rentalHistoryRecyclerview_recyclerview);
+        rRfirebaseFirestoreDB = FirebaseFirestore.getInstance();
+        mStorage = FirebaseStorage.getInstance();
+        recyclerView = findViewById(R.id.myEquipmentRecyclerview_recyclerview);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));   //리사이클러뷰 세로 화면
-        //recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)); //리사이클러뷰 가로 화면
 
         //RecyclerView에 RegistrationAdapter 클래스 등록 구현
-        transactionDTOArrayList = new ArrayList<TransactionDTO>();
-        rentalHistoryAdapter = new RentalHistoryAdapter(RentalHistoryRecyclerviewActivity.this, transactionDTOArrayList);
+        equipmentRegistrationList = new ArrayList<RegistrationDTO>();
+        registrationAdapter = new RegistrationAdapter(MyEquipmentListActivity.this,equipmentRegistrationList);
 
         //검색에 의해 필터링 될 EquipmentRegistration 리스트
-        filteredTransactionDTOArrayList = new ArrayList<TransactionDTO>();
+        filteredEquipementList = new ArrayList<RegistrationDTO>();
 
-        recyclerView.setAdapter(rentalHistoryAdapter);
+        recyclerView.setAdapter(registrationAdapter);
+        btnModelEnroll = findViewById(R.id.registrationRecyclerview_fab);      // 장비등록 버튼
+        etSearch = findViewById(R.id.communityRecyclerview_et_search);
 
         imgBtn_back = (ImageButton)findViewById(R.id.registrationRecyclerview_btn_back);
         imgBtn_home = (ImageButton)findViewById(R.id.registrationRecyclerview_btn_home);
@@ -87,10 +95,17 @@ public class RentalHistoryRecyclerviewActivity extends AppCompatActivity {
         TextView nav_header_address = (TextView) nav_header_view.findViewById(R.id.navi_header_tv_userlocation);
         ImageButton nav_header_setting = (ImageButton) nav_header_view.findViewById(R.id.navi_header_btn_setting);
 
+        Intent intent = new Intent();
+        intent = getIntent();
+
+        if(intent.getStringExtra("EquipmentDetail") != null){
+            Toast.makeText(MyEquipmentListActivity.this,"게시물이 삭제되었습니다!",Toast.LENGTH_SHORT).show();
+        }
+
         nav_header_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RentalHistoryRecyclerviewActivity.this, MenuSettingActivity.class);
+                Intent intent = new Intent(MyEquipmentListActivity.this, MenuSettingActivity.class);
                 startActivity(intent);
             }
         });
@@ -99,7 +114,7 @@ public class RentalHistoryRecyclerviewActivity extends AppCompatActivity {
 
         //DIY_Signup DB에서 사용자 계정에 맞는 닉네임 가져오는 기능 구현.
         //사용자 이메일 정보와 일치하는 데이터를 DIY_Signup DB에서 찾아서 etNickname 참조 변수에 닉네임 값 참조.
-        rentalHistoryFirebaseFirestore.collection("DIY_Signup")
+        rRfirebaseFirestoreDB.collection("DIY_Signup")
                 .whereEqualTo("userEmail", registrationListFirebaseAuth.getCurrentUser().getEmail().toString().trim())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -114,7 +129,7 @@ public class RentalHistoryRecyclerviewActivity extends AppCompatActivity {
                     }
                 });
 
-        rentalHistoryFirebaseFirestore.collection("DIY_Equipment_Rental")
+        rRfirebaseFirestoreDB.collection("DIY_Equipment_Rental")
                 .whereEqualTo("userEmail", registrationListFirebaseAuth.getCurrentUser().getEmail().toString().trim())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -130,77 +145,95 @@ public class RentalHistoryRecyclerviewActivity extends AppCompatActivity {
 
         //Firestore DB 변경
         //Firestore DB에 등록된 장비 등록 정보 읽기 기능 구현
-        rentalHistoryFirebaseFirestore.collection("DIY_Transaction")
-                .whereEqualTo("tOtherEmail", registrationListFirebaseAuth.getCurrentUser().getEmail().toString().trim())
+        rRfirebaseFirestoreDB.collection("DIY_Equipment_Rental")
+                .whereEqualTo("userEmail", registrationListFirebaseAuth.getCurrentUser().getEmail().toString().trim())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
-                                TransactionDTO transactionDTO = new TransactionDTO(
-                                        queryDocumentSnapshot.get("tScheduleId").toString().trim(),
-                                        queryDocumentSnapshot.get("tImgView").toString().trim(),
-                                        queryDocumentSnapshot.get("tCategory").toString().trim(),
-                                        queryDocumentSnapshot.get("tModelName").toString().trim(),
-                                        queryDocumentSnapshot.get("tUserName").toString().trim(),
-                                        queryDocumentSnapshot.get("tRentalType").toString().trim(),
-                                        queryDocumentSnapshot.get("tRentalDate").toString().trim(),
-                                        queryDocumentSnapshot.get("tRentalCost").toString().trim(),
-                                        queryDocumentSnapshot.get("tStartDate").toString().trim(),
-                                        queryDocumentSnapshot.get("tExpirationDate").toString().trim(),
-                                        queryDocumentSnapshot.get("tTotalLendingPeriod").toString().trim(),
-                                        queryDocumentSnapshot.get("tTotalRental").toString().trim(),
-                                        queryDocumentSnapshot.get("tTransactionDate").toString().trim(),
-                                        queryDocumentSnapshot.get("tTransactionTime").toString().trim(),
-                                        queryDocumentSnapshot.get("tTransactionLocation").toString().trim(),
-                                        queryDocumentSnapshot.get("tTransactionCondition").toString().trim(),
-                                        queryDocumentSnapshot.get("tUserEmail").toString().trim(),
-                                        queryDocumentSnapshot.get("tOtherEmail").toString().trim());
-                                transactionDTOArrayList.add(transactionDTO);
-                                filteredTransactionDTOArrayList.add(transactionDTO);
-                                rentalHistoryAdapter.notifyDataSetChanged();
+                                if(queryDocumentSnapshot.get("modelLikeNum")!= null) {
+                                    RegistrationDTO registrationDTO = new RegistrationDTO(
+                                            queryDocumentSnapshot.get("modelName").toString().trim(),
+                                            queryDocumentSnapshot.get("modelInform").toString().trim(),
+                                            queryDocumentSnapshot.get("rentalImage").toString().trim(),
+                                            queryDocumentSnapshot.get("rentalType").toString().trim(),
+                                            queryDocumentSnapshot.get("rentalCost").toString().trim(),
+                                            queryDocumentSnapshot.get("rentalAddress").toString().trim(),
+                                            queryDocumentSnapshot.get("userEmail").toString().trim(),
+                                            queryDocumentSnapshot.get("rentalDate").toString().trim(),
+                                            queryDocumentSnapshot.get("modelCategory1").toString().trim(),
+                                            queryDocumentSnapshot.get("modelCategory2").toString().trim(),
+                                            queryDocumentSnapshot.get("modelLikeNum").toString().trim(),
+                                            queryDocumentSnapshot.getId());
+                                    equipmentRegistrationList.add(registrationDTO);
+                                    filteredEquipementList.add(registrationDTO);
+                                }
+                                else{
+                                    RegistrationDTO registrationDTO = new RegistrationDTO(
+                                            queryDocumentSnapshot.get("modelName").toString().trim(),
+                                            queryDocumentSnapshot.get("modelInform").toString().trim(),
+                                            queryDocumentSnapshot.get("rentalImage").toString().trim(),
+                                            queryDocumentSnapshot.get("rentalType").toString().trim(),
+                                            queryDocumentSnapshot.get("rentalCost").toString().trim(),
+                                            queryDocumentSnapshot.get("rentalAddress").toString().trim(),
+                                            queryDocumentSnapshot.get("userEmail").toString().trim(),
+                                            queryDocumentSnapshot.get("rentalDate").toString().trim(),
+                                            queryDocumentSnapshot.get("modelCategory1").toString().trim(),
+                                            queryDocumentSnapshot.get("modelCategory2").toString().trim(),
+                                            "00",
+                                            queryDocumentSnapshot.getId());
+                                    equipmentRegistrationList.add(registrationDTO);
+                                    filteredEquipementList.add(registrationDTO);
+
+                                }
+                                registrationAdapter.notifyDataSetChanged();
                             }
                         }
                     }
                 });
 
-        //Firestore DB 변경
-        //Firestore DB에 등록된 장비 등록 정보 읽기 기능 구현
-        rentalHistoryFirebaseFirestore.collection("DIY_Transaction")
-                .whereEqualTo("tUserEmail", registrationListFirebaseAuth.getCurrentUser().getEmail().toString().trim())
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
-                                TransactionDTO transactionDTO = new TransactionDTO(
-                                        queryDocumentSnapshot.get("tScheduleId").toString().trim(),
-                                        queryDocumentSnapshot.get("tImgView").toString().trim(),
-                                        queryDocumentSnapshot.get("tCategory").toString().trim(),
-                                        queryDocumentSnapshot.get("tModelName").toString().trim(),
-                                        queryDocumentSnapshot.get("tUserName").toString().trim(),
-                                        queryDocumentSnapshot.get("tRentalType").toString().trim(),
-                                        queryDocumentSnapshot.get("tRentalDate").toString().trim(),
-                                        queryDocumentSnapshot.get("tRentalCost").toString().trim(),
-                                        queryDocumentSnapshot.get("tStartDate").toString().trim(),
-                                        queryDocumentSnapshot.get("tExpirationDate").toString().trim(),
-                                        queryDocumentSnapshot.get("tTotalLendingPeriod").toString().trim(),
-                                        queryDocumentSnapshot.get("tTotalRental").toString().trim(),
-                                        queryDocumentSnapshot.get("tTransactionDate").toString().trim(),
-                                        queryDocumentSnapshot.get("tTransactionTime").toString().trim(),
-                                        queryDocumentSnapshot.get("tTransactionLocation").toString().trim(),
-                                        queryDocumentSnapshot.get("tTransactionCondition").toString().trim(),
-                                        queryDocumentSnapshot.get("tUserEmail").toString().trim(),
-                                        queryDocumentSnapshot.get("tOtherEmail").toString().trim());
-                                transactionDTOArrayList.add(transactionDTO);
-                                filteredTransactionDTOArrayList.add(transactionDTO);
-                                rentalHistoryAdapter.notifyDataSetChanged();
-                            }
+
+
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String searchText = etSearch.getText().toString();
+                // 검색 필터링 구현
+                equipmentRegistrationList.clear();
+                if(searchText.length()==0){
+                    equipmentRegistrationList.addAll(filteredEquipementList);
+                }
+                else{
+                    for( RegistrationDTO equipment : filteredEquipementList)
+                    {
+                        if(equipment.getModelName().toUpperCase().contains(searchText.toUpperCase())||equipment.getModelInform().toUpperCase().contains(searchText.toUpperCase()))
+                        {
+                            equipmentRegistrationList.add(equipment);
                         }
                     }
-                });
+                }
+                registrationAdapter.notifyDataSetChanged();
+            }
+        });
+
+        btnModelEnroll.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MyEquipmentListActivity.this, EquipmentRegistrationActivity.class); // 장비등록 페이지로 이동
+                startActivity(intent);  //MainActivity 이동
+            }
+        });
 
         //뒤로가기 버튼 클릭시 장비 목록 페이지에서 장비 메인 페이지 이동
         imgBtn_back.setOnClickListener(new View.OnClickListener() {
@@ -214,12 +247,10 @@ public class RentalHistoryRecyclerviewActivity extends AppCompatActivity {
         imgBtn_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RentalHistoryRecyclerviewActivity.this, MainActivity.class);
+                Intent intent = new Intent(MyEquipmentListActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
-
-
 
         //네비게이션 드로어 기능 구현
         androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
@@ -243,25 +274,29 @@ public class RentalHistoryRecyclerviewActivity extends AppCompatActivity {
                     Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
                 } else if(id == R.id.startchatting){
                     Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(RentalHistoryRecyclerviewActivity.this, ChatStartActivity.class);
+                    Intent intent = new Intent(MyEquipmentListActivity.this, ChatStartActivity.class);
                     startActivity(intent);
                 } else if (id == R.id.diymap) {
                     Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(RentalHistoryRecyclerviewActivity.this, RentalGoogleMap.class);
+                    Intent intent = new Intent(MyEquipmentListActivity.this, RentalGoogleMap.class);
                     startActivity(intent);
                 } else if(id == R.id.mycommunity){
                     Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
                 } else if(id == R.id.tradelist){
                     Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(RentalHistoryRecyclerviewActivity.this, RegistrationRecyclerview.class);
+                    Intent intent = new Intent(MyEquipmentListActivity.this, RegistrationRecyclerview.class);
                     startActivity(intent);
                 } else if(id == R.id.communitylist) {
                     Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(RentalHistoryRecyclerviewActivity.this, CommunityRecyclerview.class);
+                    Intent intent = new Intent(MyEquipmentListActivity.this, CommunityRecyclerview.class);
+                    startActivity(intent);
+                } else if(id == R.id.mytradelist) {
+                    Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MyEquipmentListActivity.this, MyEquipmentListActivity.class);
                     startActivity(intent);
                 } else if(id == R.id.logout){
                     //Toast.makeText(context, title + ": 로그아웃", Toast.LENGTH_SHORT).show();
-                    AlertDialog.Builder dlg = new AlertDialog.Builder(RentalHistoryRecyclerviewActivity.this);
+                    AlertDialog.Builder dlg = new AlertDialog.Builder(MyEquipmentListActivity.this);
                     dlg.setTitle("로그아웃");
                     dlg.setMessage("로그아웃 하시겠습니까?");
                     dlg.setIcon(R.mipmap.ic_launcher);
@@ -270,8 +305,8 @@ public class RentalHistoryRecyclerviewActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             registrationListFirebaseAuth.signOut();
-                            Toast.makeText(RentalHistoryRecyclerviewActivity.this, "로그아웃 되었습니다!", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(RentalHistoryRecyclerviewActivity.this, LoginActivity.class);
+                            Toast.makeText(MyEquipmentListActivity.this, "로그아웃 되었습니다!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(MyEquipmentListActivity.this, LoginActivity.class);
                             startActivity(intent);
                             finish();
                         }
@@ -280,7 +315,7 @@ public class RentalHistoryRecyclerviewActivity extends AppCompatActivity {
                     dlg.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(RentalHistoryRecyclerviewActivity.this, "로그아웃 취소되었습니다!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MyEquipmentListActivity.this, "로그아웃 취소되었습니다!", Toast.LENGTH_SHORT).show();
                         }
                     });
                     dlg.show();
@@ -288,7 +323,7 @@ public class RentalHistoryRecyclerviewActivity extends AppCompatActivity {
                 else if(id == R.id.withdraw){
                     //Toast.makeText(context, title + ": 회원탈퇴", Toast.LENGTH_SHORT).show();
 
-                    AlertDialog.Builder dlg = new AlertDialog.Builder(RentalHistoryRecyclerviewActivity.this);
+                    AlertDialog.Builder dlg = new AlertDialog.Builder(MyEquipmentListActivity.this);
                     dlg.setTitle("회원 탈퇴");
                     dlg.setMessage("회원 탈퇴하시겠습니까?");
                     dlg.setIcon(R.mipmap.ic_launcher);
@@ -297,8 +332,8 @@ public class RentalHistoryRecyclerviewActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             registrationListFirebaseAuth.getCurrentUser().delete();
-                            Toast.makeText(RentalHistoryRecyclerviewActivity.this, "회원 탈퇴되었습니다!", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(RentalHistoryRecyclerviewActivity.this, LoginActivity.class);
+                            Toast.makeText(MyEquipmentListActivity.this, "회원 탈퇴되었습니다!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(MyEquipmentListActivity.this, LoginActivity.class);
                             startActivity(intent);
                             finish();
                         }
@@ -307,7 +342,7 @@ public class RentalHistoryRecyclerviewActivity extends AppCompatActivity {
                     dlg.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(RentalHistoryRecyclerviewActivity.this, "회원 탈퇴 취소되었습니다!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MyEquipmentListActivity.this, "회원 탈퇴 취소되었습니다!", Toast.LENGTH_SHORT).show();
                         }
                     });
                     dlg.show();

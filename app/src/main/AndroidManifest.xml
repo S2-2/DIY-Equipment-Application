@@ -30,15 +30,21 @@
         android:theme="@style/Theme.basic"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".equipment.MyEquipmentListActivity"
+            android:exported="false" />
+        <activity
             android:name=".menu.ProfileChangePwdActivity"
             android:exported="false" />
         <activity
             android:name=".login.LoginActivity"
             android:exported="false" /> <!-- 스플래시 설정정 -->
+        <!-- 스플래시 설정 -->
         <activity
             android:name=".etc.SplashActivity"
             android:exported="true"
             android:theme="@style/SplashTheme">
+            android:exported="true"
+            android:theme="@style/SplashTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -92,6 +98,9 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ScheduleReturnActivity"
             android:exported="false" />
         <activity
             android:name=".equipment.EquipmentDetailActivity"

@@ -1,6 +1,7 @@
 package kr.ac.kpu.diyequipmentapplication.equipment;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import kr.ac.kpu.diyequipmentapplication.R;
@@ -40,6 +42,7 @@ public class EquipmentSortFragment extends Fragment {
         registrationSortSpr.setAdapter(registrationSprAdapter);
 
         registrationSortSpr.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String item = registrationSortSpr.getItemAtPosition(i).toString();
