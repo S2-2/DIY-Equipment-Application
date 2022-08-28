@@ -128,8 +128,6 @@ public class RentalHistoryRecyclerviewActivity extends AppCompatActivity {
                     }
                 });
 
-        //Firestore DB 변경
-        //Firestore DB에 등록된 장비 등록 정보 읽기 기능 구현
         rentalHistoryFirebaseFirestore.collection("DIY_Transaction")
                 .whereEqualTo("tOtherEmail", registrationListFirebaseAuth.getCurrentUser().getEmail().toString().trim())
                 .get()

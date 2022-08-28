@@ -70,18 +70,15 @@ public class RentalHistoryAdapter extends RecyclerView.Adapter<RentalHistoryAdap
         imageUri=transactionDTO.gettImgView();
         Picasso.get().load(imageUri).into(holder.imgViewRental);
 
-        //
+        //수요자 계정인 경우
         if(transactionDTO.gettUserEmail().equals(holder.transactionFirebaseAuth.getCurrentUser().getEmail())) {
+            holder.btnMyEquipmentDelete.setEnabled(false);
+            holder.btnMyEquipmentDelete.setVisibility(View.GONE);
             holder.btnReturnCheck.setEnabled(false);
             holder.btnReturnCheck.setVisibility(View.GONE);
         } else{
             holder.btnTreturn.setEnabled(false);
             holder.btnTreturn.setVisibility(View.GONE);
-        }
-
-        if(transactionDTO.gettTransactionCondition().equals("대여")) {
-            holder.btnMyEquipmentDelete.setEnabled(false);
-            holder.btnMyEquipmentDelete.setVisibility(View.GONE);
         }
     }
 
