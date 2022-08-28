@@ -149,6 +149,7 @@ public class EquipmentRegistrationActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                                myRentalAddress = queryDocumentSnapshot.get("location").toString().trim();
                                 registrationRentalAddress.setText(queryDocumentSnapshot.get("location").toString().trim());
                             }
                         }

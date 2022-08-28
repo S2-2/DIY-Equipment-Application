@@ -48,7 +48,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
 
-import kr.ac.kpu.diyequipmentapplication.MainActivity;
 import kr.ac.kpu.diyequipmentapplication.R;
 import kr.ac.kpu.diyequipmentapplication.RentalHistoryRecyclerviewActivity;
 import kr.ac.kpu.diyequipmentapplication.equipment.ScheduleActivity;
@@ -100,8 +99,6 @@ public class ChatActivity extends AppCompatActivity {
     private String getTransactionDBId;
     private TransactionDTO transactionDTO;
 
-    private ImageButton imgBtn_home; // 상단 뒤로가기, 홈 버튼
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,15 +130,6 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
-            }
-        });
-
-        //홈 버튼 클릭시 메인 페이지 이동
-        imgBtn_home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ChatActivity.this, MainActivity.class);
-                startActivity(intent);
             }
         });
 
@@ -334,20 +322,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        //DIY_Schedule DB에 sChatNum에 일치하는 CHAT_NUM이 있는지 확인하는 메소드
-        transactionFirebaseFirestore.collection("DIY_Schedule")
-                .whereEqualTo("sChatNum", CHAT_NUM)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
-                                getTransactionDBId = queryDocumentSnapshot.getId(); //DIY_Schedule DB Id 참조
-                            }
-                        }
-                    }
-                });
+
 
         // 뒤로가기 버튼
         imgBtn_back.setOnClickListener(new View.OnClickListener() {
@@ -364,15 +339,32 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (getTransactionDBId != null) {
-                    //DIY_Schedule에 sChatNum이 있는 경우 DIY_Transaction에 저장 후 출력
-                    showTransactionDialog();
+                //DIY_Schedule DB에 sChatNum에 일치하는 CHAT_NUM이 있는지 확인하는 메소드
+                transactionFirebaseFirestore.collection("DIY_Schedule")
+                        .whereEqualTo("sChatNum", CHAT_NUM)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                                        getTransactionDBId = queryDocumentSnapshot.getId(); //DIY_Schedule DB Id 참조
 
-                } else {
-                    //DIY_Schedule에 sChatNum이 없는 경우 상대방에게 토스트 메시지 출력
-                    Toast.makeText(ChatActivity.this, "해당 공구에 대한 거래일정 정보가 없습니다!", Toast.LENGTH_SHORT).show();
-                    Toast.makeText(ChatActivity.this, "거래일정 먼저 작업해 주세요!", Toast.LENGTH_SHORT).show();
-                }
+                                        if (getTransactionDBId != null) {
+                                            //DIY_Schedule에 sChatNum이 있는 경우 DIY_Transaction에 저장 후 출력
+                                            showTransactionDialog();
+
+                                        } else {
+                                            //DIY_Schedule에 sChatNum이 없는 경우 상대방에게 토스트 메시지 출력
+                                            Toast.makeText(ChatActivity.this, "해당 공구에 대한 거래일정 정보가 없습니다!", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(ChatActivity.this, "거래일정 먼저 작업해 주세요!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }
+                            }
+                        });
+
+
             }
         });
 

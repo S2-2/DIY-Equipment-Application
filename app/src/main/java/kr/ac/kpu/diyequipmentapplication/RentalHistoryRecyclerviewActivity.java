@@ -131,6 +131,44 @@ public class RentalHistoryRecyclerviewActivity extends AppCompatActivity {
         //Firestore DB 변경
         //Firestore DB에 등록된 장비 등록 정보 읽기 기능 구현
         rentalHistoryFirebaseFirestore.collection("DIY_Transaction")
+                .whereEqualTo("tOtherEmail", registrationListFirebaseAuth.getCurrentUser().getEmail().toString().trim())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                                TransactionDTO transactionDTO = new TransactionDTO(
+                                        queryDocumentSnapshot.get("tScheduleId").toString().trim(),
+                                        queryDocumentSnapshot.get("tImgView").toString().trim(),
+                                        queryDocumentSnapshot.get("tCategory").toString().trim(),
+                                        queryDocumentSnapshot.get("tModelName").toString().trim(),
+                                        queryDocumentSnapshot.get("tUserName").toString().trim(),
+                                        queryDocumentSnapshot.get("tRentalType").toString().trim(),
+                                        queryDocumentSnapshot.get("tRentalDate").toString().trim(),
+                                        queryDocumentSnapshot.get("tRentalCost").toString().trim(),
+                                        queryDocumentSnapshot.get("tStartDate").toString().trim(),
+                                        queryDocumentSnapshot.get("tExpirationDate").toString().trim(),
+                                        queryDocumentSnapshot.get("tTotalLendingPeriod").toString().trim(),
+                                        queryDocumentSnapshot.get("tTotalRental").toString().trim(),
+                                        queryDocumentSnapshot.get("tTransactionDate").toString().trim(),
+                                        queryDocumentSnapshot.get("tTransactionTime").toString().trim(),
+                                        queryDocumentSnapshot.get("tTransactionLocation").toString().trim(),
+                                        queryDocumentSnapshot.get("tTransactionCondition").toString().trim(),
+                                        queryDocumentSnapshot.get("tUserEmail").toString().trim(),
+                                        queryDocumentSnapshot.get("tOtherEmail").toString().trim());
+                                transactionDTOArrayList.add(transactionDTO);
+                                filteredTransactionDTOArrayList.add(transactionDTO);
+                                rentalHistoryAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
+                });
+
+        //Firestore DB 변경
+        //Firestore DB에 등록된 장비 등록 정보 읽기 기능 구현
+        rentalHistoryFirebaseFirestore.collection("DIY_Transaction")
+                .whereEqualTo("tUserEmail", registrationListFirebaseAuth.getCurrentUser().getEmail().toString().trim())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
