@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:background="#0c1c02"
         android:paddingLeft="10dp"
-        android:text="거래 상세 정보"
+        android:text="반납 상세 정보"
         android:textColor="@color/white"
         android:textSize="20dp" />
 
@@ -170,7 +170,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="거래 일정"
+                android:text="반납 일정"
                 android:textSize="24dp"
                 android:layout_marginBottom="10dp"
                 android:textStyle="bold"
@@ -200,71 +200,7 @@
                         <TextView
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
-                            android:text="대여일 : "
-                            android:textSize="16dp" />
-                        <TextView
-                            android:id="@+id/transaction_tv_startDate"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textSize="16dp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:layout_width="80dp"
-                            android:layout_height="wrap_content"
-                            android:text="반납일 : "
-                            android:textSize="16dp" />
-                        <TextView
-                            android:id="@+id/transaction_tv_expirationDate"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textSize="16dp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:layout_width="80dp"
-                            android:layout_height="wrap_content"
-                            android:text="대여일수 : "
-                            android:textSize="16dp" />
-                        <TextView
-                            android:id="@+id/transaction_tv_totalLendingPeriod"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textSize="16dp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:layout_width="80dp"
-                            android:layout_height="wrap_content"
-                            android:text="총 대여비 : "
-                            android:textSize="16dp" />
-                        <TextView
-                            android:id="@+id/transaction_tv_totalRental"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textSize="16dp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            android:layout_width="80dp"
-                            android:layout_height="wrap_content"
-                            android:text="거래날짜 : "
+                            android:text="반납날짜 : "
                             android:textSize="16dp" />
                         <TextView
                             android:id="@+id/transaction_tv_transactionDate"
@@ -280,7 +216,7 @@
                         <TextView
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
-                            android:text="거래 시간 : "
+                            android:text="반납 시간 : "
                             android:textSize="15dp" />
                         <TextView
                             android:id="@+id/transaction_tv_transactionTime"
@@ -296,7 +232,7 @@
                         <TextView
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
-                            android:text="거래 장소 : "
+                            android:text="반납 장소 : "
                             android:textSize="15dp" />
                         <TextView
                             android:id="@+id/transaction_tv_transactionLocation"
@@ -322,7 +258,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:text="반납 신청"
+            android:text="반납 완료"
             android:backgroundTint="#676d17" />
 
     </LinearLayout>
