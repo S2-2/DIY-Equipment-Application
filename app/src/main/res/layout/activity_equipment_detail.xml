@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="10dp">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,13 +38,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <TextView
+                        <ImageView
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="50dp"
                             android:layout_gravity="center"
-                            android:text="공공인"
-                            android:textColor="@color/black"
-                            android:textSize="20dp"/>
+                            android:src="@drawable/title" />
+
                     </androidx.appcompat.widget.Toolbar>
                 </RelativeLayout>
 
@@ -58,6 +56,7 @@
                         android:id="@+id/signup_btn_back"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
+                        android:layout_marginLeft="10dp"
                         android:background="@android:color/transparent"
                         app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24" />
 
@@ -73,6 +72,8 @@
                 <!--작성자 정보 및 채팅 연결 버튼-->
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
@@ -139,6 +140,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -174,6 +177,7 @@
                         <TextView
                             style="@style/style_tv_default_black16dp"
                             android:layout_width="120dp"
+                            android:paddingLeft="10dp"
                             android:layout_height="match_parent"
                             android:background="@color/browser_actions_bg_grey"
                             android:gravity="center_vertical"
@@ -182,6 +186,8 @@
                         <TextView
                             android:id="@+id/equipmentDetail_tv_category"
                             style="@style/style_tv_default_black16dp"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="ex) 측정공구 > 산업용줄자/각도기 " />
@@ -194,6 +200,7 @@
                         <TextView
                             style="@style/style_tv_default_black16dp"
                             android:layout_width="120dp"
+                            android:paddingLeft="10dp"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
                             android:background="@color/browser_actions_bg_grey"
@@ -203,6 +210,7 @@
                             android:id="@+id/equipmentDetail_tv_location"
                             style="@style/style_tv_default_black16dp"
                             android:layout_width="wrap_content"
+                            android:paddingLeft="10dp"
                             android:layout_height="wrap_content"
                             android:text="(작성자 위치)" />
 
@@ -225,6 +233,7 @@
                         android:id="@+id/equipmentDetail_tv_date"
                         style="@style/style_tv_default_black16dp"
                         android:layout_width="wrap_content"
+                        android:paddingLeft="10dp"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
@@ -236,6 +245,7 @@
                         style="@style/style_tv_default_black16dp"
                         android:layout_width="120dp"
                         android:layout_height="match_parent"
+                        android:paddingLeft="10dp"
                         android:background="@color/browser_actions_bg_grey"
                         android:gravity="center_vertical"
                         android:text="거래 종류" />
@@ -244,6 +254,7 @@
                         android:id="@+id/equipmentDetail_tv_rentalType"
                         style="@style/style_tv_default_black16dp"
                         android:layout_width="wrap_content"
+                        android:paddingLeft="10dp"
                         android:layout_height="wrap_content"
                         android:text="ex) 대여" />
                 </LinearLayout>
@@ -256,6 +267,7 @@
                         style="@style/style_tv_default_black16dp"
                         android:layout_width="120dp"
                         android:layout_height="match_parent"
+                        android:paddingLeft="10dp"
                         android:background="@color/browser_actions_bg_grey"
                         android:gravity="center_vertical"
                         android:text="대여료" />
@@ -264,6 +276,7 @@
                         android:id="@+id/equipmentDetail_tv_rentalCost"
                         style="@style/style_tv_default_black16dp"
                         android:layout_width="wrap_content"
+                        android:paddingLeft="10dp"
                         android:layout_height="wrap_content"
                         android:text="ex) 1일 / 1,000원" />
                 </LinearLayout>
@@ -277,6 +290,8 @@
                         android:id="@+id/equipmentDetail_tv_explanation"
                         style="@style/style_tv_default_black16dp"
                         android:layout_width="match_parent"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
                         android:layout_height="wrap_content"
                         android:text="(장비 설명)" />
                 </LinearLayout>
