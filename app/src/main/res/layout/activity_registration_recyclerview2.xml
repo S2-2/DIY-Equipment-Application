@@ -67,8 +67,9 @@
 
                 <EditText
                     android:id="@+id/communityRecyclerview_et_search"
-                    android:layout_width="280dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="50dp"
+                    android:layout_weight="1"
                     android:layout_marginRight="5dp"
                     android:hint="검색어를 입력하세요."
                     android:textSize="18dp" />
@@ -76,7 +77,7 @@
                 <fragment
                     android:id="@+id/registrationRecyclerviewItem_sort_spr"
                     class="kr.ac.kpu.diyequipmentapplication.equipment.EquipmentSortFragment"
-                    android:layout_width="wrap_content"
+                    android:layout_width="110dp"
                     android:layout_height="wrap_content"></fragment>
 
             </LinearLayout>
