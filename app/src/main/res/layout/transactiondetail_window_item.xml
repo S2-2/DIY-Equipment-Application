@@ -25,12 +25,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="공구 정보"
-                style="@style/style_tv_default_black24dp"
-                android:layout_weight="1"/>
+        <TextView
+            style="@style/style_tv_default_black24dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:text="공구 정보" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -168,9 +170,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:text="거래 일정"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
                 style="@style/style_tv_default_black24dp" />
         </LinearLayout>
 
