@@ -29,8 +29,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -41,6 +45,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import kr.ac.kpu.diyequipmentapplication.chat.ChatDTO;
 import kr.ac.kpu.diyequipmentapplication.menu.LocationSearchActivity;
 
 public class ScheduleReturnActivity extends AppCompatActivity {
@@ -56,7 +61,6 @@ public class ScheduleReturnActivity extends AppCompatActivity {
 
     private FirebaseAuth scheduleFirebaseAuth;
     private FirebaseFirestore scheduleFirebaseFirestore;
-    private FirebaseDatabase scheduleFirebaseDatabase;
     private DatabaseReference scheduleRef;
     private ProgressDialog scheduleProgressDialog;
 
@@ -66,12 +70,18 @@ public class ScheduleReturnActivity extends AppCompatActivity {
     private Boolean controlDateFlag;        //대여기간(true), 거래날짜(false) 제어변수
     private Boolean controlFlag;            //대여기간 시작일(true), 종료일(false) 제어변수
 
+    // 시스템 메세지를 위한 Database, Firestore, chatDTO 참조
+    private DatabaseReference scheduleReturnRef;
+    private FirebaseDatabase scheduleReturnDatabase;
+    private  ChatDTO chatDTO;   // 시스템 메세지
+
     private TextView tvTransactionDate, tvTransactionTime, tvGetTransactionLocation;
     private TextView tvTransDay, tvTransTime, tvTransPlace;
 
     private ScheduleReturnDB scheduleReturnDB;
     private String getTransactionId;
     private String getScheduleReturnId;
+    private String scheduleId;
 
     //DatePickerDialog 사용 관련 참조위젯
     private Dialog lendingPeriodDialog;
@@ -93,6 +103,7 @@ public class ScheduleReturnActivity extends AppCompatActivity {
 
         scheduleReturnDB = new ScheduleReturnDB();
         imgBtnBack = (ImageButton) findViewById(R.id.schedule_btn_back);
+
         btnTransactionDate = (Button) findViewById(R.id.schedule_btn_transactionDate);
         btnTransactionTime = (Button) findViewById(R.id.schedule_btn_transactionTime);
         btnTransactionLocation = (Button) findViewById(R.id.schedule_btn_transactionLocation);
@@ -124,11 +135,18 @@ public class ScheduleReturnActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         getTransactionId = intent.getStringExtra("RentalHistoryId");
+        scheduleReturnDB.setsChatNum(intent.getStringExtra("ReturnChatNum"));
+        scheduleId = intent.getStringExtra("ReturnScheduleID");
         scheduleReturnDB.setsTransactionId(getTransactionId);
 
         scheduleFirebaseAuth = FirebaseAuth.getInstance();
+        scheduleReturnDB.setsUserEmail(scheduleFirebaseAuth.getCurrentUser().getEmail().toString());
+
         scheduleFirebaseFirestore = FirebaseFirestore.getInstance();
         scheduleProgressDialog = new ProgressDialog(this);
+
+        scheduleReturnDatabase = FirebaseDatabase.getInstance();
+        scheduleReturnRef = scheduleReturnDatabase.getReference().child("DIY_Chat");
 
         //DIY_Schedule DB에서 sUserEmail에 해당하는 계정이 있는지 확인하는 메소드
         scheduleFirebaseFirestore.collection("DIY_ScheduleReturn")
@@ -199,19 +217,40 @@ public class ScheduleReturnActivity extends AppCompatActivity {
                 dlg.setMessage("반납정보 설정 하시겠습니까?");
                 dlg.setIcon(R.mipmap.ic_launcher);
 
+                scheduleFirebaseFirestore.collection("DIY_Transaction")
+                        .whereEqualTo("tScheduleId",scheduleId)
+                        .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for(QueryDocumentSnapshot snapshot : task.getResult()){
+                                if(snapshot.get("tOtherEmail").toString() != scheduleReturnDB.getsUserEmail()){
+                                    scheduleReturnDB.setsOtherEmail(snapshot.get("tOtherEmail").toString());
+                                    Log.e("scheduleReturnDB", snapshot.get("tOtherEmail").toString());
+                                }else{
+                                    scheduleReturnDB.setsOtherEmail(snapshot.get("tUserEmail").toString());
+                                    Log.e("scheduleReturnDB", snapshot.get("tUserEmail").toString());
+                                }
+                            }
+                        }
+                    }
+                });
+
                 dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        scheduleReturnDB.setsUserEmail(scheduleFirebaseAuth.getCurrentUser().getEmail().toString());
 
                         if (scheduleReturnDB.getsTransactionDate() != null && scheduleReturnDB.getsTransactionTime() != null
-                        && scheduleReturnDB.getsTransactionLocation() != null) {
+                        && scheduleReturnDB.getsTransactionLocation() != null && scheduleReturnDB.getsOtherEmail()!=null && scheduleReturnDB.getsChatNum() != null) {
                             scheduleProgressDialog.setTitle("DIY ScheduleReturn Uploading...");
                             scheduleProgressDialog.show();
 
                             //firestore DB에 저장
                             scheduleFirebaseFirestore.collection("DIY_ScheduleReturn").document().set(scheduleReturnDB);
                             Toast.makeText(ScheduleReturnActivity.this, "반납정보 설정 완료되었습니다!", Toast.LENGTH_SHORT).show();
+
+                            // 시스템 채팅 등록
+                            systemScheduleMsg(scheduleReturnDB, "1");
 
                         } else {
                             Toast.makeText(ScheduleReturnActivity.this, "반납정보 설정을 할 수 없습니다!", Toast.LENGTH_SHORT).show();
@@ -259,6 +298,9 @@ public class ScheduleReturnActivity extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Log.d("반납정보 업데이트 성공!", "DocumentSnapshot successfully update!");
+                                            // 시스템 채팅 등록
+                                            systemScheduleMsg(scheduleReturnDB, "2");
+
                                         }
                                     })
                                     .addOnFailureListener(new OnFailureListener() {
@@ -444,4 +486,29 @@ public class ScheduleReturnActivity extends AppCompatActivity {
                 }
             }
     );
+
+    private void systemScheduleMsg(ScheduleReturnDB scheduleReturnDB, String tag){
+        String result = null;
+
+        Calendar calendar = Calendar.getInstance();
+        String timestamp = calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE);
+        if(tag.equals("1")){
+            result = String.format("반납일정 안내입니다. \n 반납일정 요청자: %s\n \n 반납일: %s\n 반납시간: %s\n 반납장소: %s",
+                    scheduleReturnDB.getsUserEmail(),
+                    scheduleReturnDB.getsTransactionDate(),
+                    scheduleReturnDB.getsTransactionTime(),
+                    scheduleReturnDB.getsTransactionLocation());
+        } else if(tag.equals("2")){
+            result = String.format("반납일정이 수정되었습니다.\n 반납일정 요청자: %s\n \n 반납일: %s\n 반납시간: %s\n 반납장소: %s",
+                    scheduleReturnDB.getsUserEmail(),
+                    scheduleReturnDB.getsTransactionDate(),
+                    scheduleReturnDB.getsTransactionTime(),
+                    scheduleReturnDB.getsTransactionLocation());
+        } else{
+            return;
+        }
+        Log.e("scheduleReturnDB2", scheduleReturnDB.getsOtherEmail());
+        chatDTO = new ChatDTO(scheduleReturnDB.getsChatNum(), "거래도우미", scheduleReturnDB.getsUserEmail(), scheduleReturnDB.getsOtherEmail(),result, timestamp);
+        scheduleReturnRef.child(scheduleReturnDB.getsChatNum()).push().setValue(chatDTO);
+    }
 }

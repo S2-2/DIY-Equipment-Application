@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class ScheduleReturnDB implements Serializable {
     private String sUserEmail;              // 본인 이메일
+    private String sOtherEmail;             // 상대방 이메일
+
     //<거래날짜>
     private String sTransactionDate;        //거래일
 
@@ -15,15 +17,19 @@ public class ScheduleReturnDB implements Serializable {
 
     private String sTransactionId;
 
+    private String sChatNum;            // 채팅방번호
+
     public ScheduleReturnDB() {
     }
 
-    public ScheduleReturnDB(String sUserEmail, String sTransactionDate, String sTransactionTime, String sTransactionLocation, String sTransactionId) {
+    public ScheduleReturnDB(String sUserEmail, String sOtherEmail, String sTransactionDate, String sTransactionTime, String sTransactionLocation, String sTransactionId, String sChatNum) {
         this.sUserEmail = sUserEmail;
+        this.sOtherEmail = sOtherEmail;
         this.sTransactionDate = sTransactionDate;
         this.sTransactionTime = sTransactionTime;
         this.sTransactionLocation = sTransactionLocation;
         this.sTransactionId = sTransactionId;
+        this.sChatNum = sChatNum;
     }
 
     public String getsUserEmail() {
@@ -64,5 +70,21 @@ public class ScheduleReturnDB implements Serializable {
 
     public void setsTransactionId(String sTransactionId) {
         this.sTransactionId = sTransactionId;
+    }
+
+    public String getsOtherEmail() {
+        return sOtherEmail;
+    }
+
+    public void setsOtherEmail(String sOtherEmail) {
+        this.sOtherEmail = sOtherEmail;
+    }
+
+    public String getsChatNum() {
+        return sChatNum;
+    }
+
+    public void setsChatNum(String sChatNum) {
+        this.sChatNum = sChatNum;
     }
 }

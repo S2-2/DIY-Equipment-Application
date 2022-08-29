@@ -113,7 +113,6 @@ public class ChatActivity extends AppCompatActivity {
 
         // 위젯, 어댑터 참조
         imgBtn_back = (ImageButton) findViewById(R.id.chat_btn_back);
-        imgBtn_home = (ImageButton) findViewById(R.id.chatting_btn_home);
         lvChatList = (ListView) findViewById(R.id.chat_lv_msg);
         etChatMsg = (EditText) findViewById(R.id.chat_et_msg_box);
         btnChatSend = (Button) findViewById(R.id.chat_btn_msg_send);
