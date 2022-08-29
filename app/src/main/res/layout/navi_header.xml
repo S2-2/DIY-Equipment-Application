@@ -40,9 +40,10 @@
         <TextView
             android:id="@+id/navi_header_tv_userLocation"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="20dp"
+            android:layout_marginRight="10dp"
             android:text="사용자 위치"
             style="@style/style_tv_default_black16dp" />
 
