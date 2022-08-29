@@ -47,6 +47,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -601,13 +602,15 @@ public class ChatActivity extends AppCompatActivity {
         transactionDialog.show();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void systemTransMsg(TransactionDTO transactionDTO, String chatNum) {
          chatFDB= FirebaseDatabase.getInstance();
          chatRef = chatFDB.getReference().child("DIY_Chat");
         String result = null;
 
-        Calendar calendar = Calendar.getInstance();
-        String timestamp = calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE);
+        LocalTime now = LocalTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        String timestamp = now.format(formatter);
 
 //            result = String.format("거래일정이 수정되었습니다.\n 총 대여일: %s\n 총 비용: %s\n 거래일: %s\n 거래시간: %s\n 거래장소: %s",
 //                    transactionDTO.getsTotalLendingPeriod(),

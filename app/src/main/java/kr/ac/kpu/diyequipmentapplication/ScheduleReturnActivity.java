@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -40,6 +42,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
@@ -237,6 +241,7 @@ public class ScheduleReturnActivity extends AppCompatActivity {
                 });
 
                 dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -295,6 +300,7 @@ public class ScheduleReturnActivity extends AppCompatActivity {
                                     .document(getScheduleReturnId)
                                     .update(scheduleUpdate)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @RequiresApi(api = Build.VERSION_CODES.O)
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Log.d("반납정보 업데이트 성공!", "DocumentSnapshot successfully update!");
@@ -487,11 +493,14 @@ public class ScheduleReturnActivity extends AppCompatActivity {
             }
     );
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void systemScheduleMsg(ScheduleReturnDB scheduleReturnDB, String tag){
         String result = null;
 
-        Calendar calendar = Calendar.getInstance();
-        String timestamp = calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE);
+        LocalTime now = LocalTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        String timestamp = now.format(formatter);
+
         if(tag.equals("1")){
             result = String.format("반납일정 안내입니다. \n 반납일정 요청자: %s\n \n 반납일: %s\n 반납시간: %s\n 반납장소: %s",
                     scheduleReturnDB.getsUserEmail(),
