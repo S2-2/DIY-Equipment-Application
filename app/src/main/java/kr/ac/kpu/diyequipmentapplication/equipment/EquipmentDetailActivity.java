@@ -26,6 +26,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -33,12 +35,15 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
+import java.util.Calendar;
 
 import kr.ac.kpu.diyequipmentapplication.MainActivity;
 import kr.ac.kpu.diyequipmentapplication.R;
+import kr.ac.kpu.diyequipmentapplication.ScheduleReturnDB;
 import kr.ac.kpu.diyequipmentapplication.cart.CartActivty;
 import kr.ac.kpu.diyequipmentapplication.cart.CartRecyclerview;
 import kr.ac.kpu.diyequipmentapplication.chat.ChatActivity;
+import kr.ac.kpu.diyequipmentapplication.chat.ChatDTO;
 import kr.ac.kpu.diyequipmentapplication.chat.ChatStartActivity;
 import kr.ac.kpu.diyequipmentapplication.community.CommunityRecyclerview;
 import kr.ac.kpu.diyequipmentapplication.login.LoginActivity;
@@ -47,6 +52,7 @@ import kr.ac.kpu.diyequipmentapplication.menu.MenuSettingActivity;
 
 // 목록 클릭시 상세화면으로 전환되는 액티비티클래스
 public class EquipmentDetailActivity extends AppCompatActivity {
+
     private ImageView ivRentalImage, ivUserProfileImage;
     private TextView tvUserNickname, tvTitle, tvExplanation, tvRentalType, tvRentalCost, tvUserLocation, tvRentalPeriod, tvCategory, tvLikeNum;
     private Button btnChat, btnDelete, btnModify;
@@ -473,6 +479,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){

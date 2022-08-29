@@ -24,12 +24,15 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +40,8 @@ import java.util.Map;
 import kr.ac.kpu.diyequipmentapplication.R;
 import kr.ac.kpu.diyequipmentapplication.RentalHistoryRecyclerviewActivity;
 import kr.ac.kpu.diyequipmentapplication.ScheduleReturnActivity;
+import kr.ac.kpu.diyequipmentapplication.ScheduleReturnDB;
+import kr.ac.kpu.diyequipmentapplication.chat.ChatDTO;
 import kr.ac.kpu.diyequipmentapplication.chat.TransactionDTO;
 
 public class RentalHistoryAdapter extends RecyclerView.Adapter<RentalHistoryAdapter.ViewHolder> {
@@ -231,6 +236,8 @@ public class RentalHistoryAdapter extends RecyclerView.Adapter<RentalHistoryAdap
                             public void onClick(View view) {
                                 Intent intent = new Intent(context, ScheduleReturnActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 intent.putExtra("RentalHistoryId",getTransactionDBId);
+                                intent.putExtra("ReturnChatNum",getTransactionChatNum);
+                                intent.putExtra("ReturnScheduleID", transactionDTO.gettScheduleId());
                                 context.startActivity(intent);
                             }
                         });
@@ -348,6 +355,8 @@ public class RentalHistoryAdapter extends RecyclerView.Adapter<RentalHistoryAdap
                                                             });
 
                                                     Toast.makeText(context, "공구 반납 완료 되었습니다!", Toast.LENGTH_SHORT).show();
+                                                    systemScheduleMsg(transactionDTO,"1");
+
                                                 } else {
                                                     Toast.makeText(context, "반납 완료된 공구입니다!", Toast.LENGTH_SHORT).show();
                                                 }
@@ -367,6 +376,25 @@ public class RentalHistoryAdapter extends RecyclerView.Adapter<RentalHistoryAdap
                             }
                         });
                     }
+                }
+
+                private void systemScheduleMsg(TransactionDTO transactionDTO, String tag){
+                    String result = null;
+                    DatabaseReference transRef;
+                    FirebaseDatabase transDatabase;
+                    transDatabase = FirebaseDatabase.getInstance();
+                    transRef = transDatabase.getReference().child("DIY_Chat");
+
+
+                    Calendar calendar = Calendar.getInstance();
+                    String timestamp = calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE);
+                    if(tag.equals("1")){
+                        result = String.format("장비 반납이 완료되었습니다, 앞으로도 아름다운 거래를 만들어 나가시길 바랍니다..");
+                    } else{
+                        return;
+                    }
+                    ChatDTO chatDTO = new ChatDTO(getTransactionChatNum, "거래도우미", transactionDTO.gettUserEmail(), transactionDTO.gettOtherEmail(),result, timestamp);
+                    transRef.child(getTransactionChatNum).push().setValue(chatDTO);
                 }
             });
         }

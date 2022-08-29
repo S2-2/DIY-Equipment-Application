@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -28,6 +30,8 @@ public class ChatStartAdapter extends BaseAdapter {
     Context context;
     FirebaseAuth chatAuth = FirebaseAuth.getInstance();
     String chatEmail = null;
+    String getProfileUrl = null;
+    String profile = null;
 
     public ChatStartAdapter(Context context, ArrayList<ChatDTO> chattingStartList, LayoutInflater inflater) {
         this.context = context;
@@ -54,10 +58,12 @@ public class ChatStartAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
         ChatDTO chat = chattingStartList.get(position);
+        FirebaseFirestore chatStartFirestore = FirebaseFirestore.getInstance();
         View itemView = null;
 
         itemView = inflater.inflate(R.layout.activity_chatstart_form,viewGroup,false);
 
+        ImageView ivProfile = itemView.findViewById(R.id.chatStartform_iv_profile);
         TextView tvChatnum = itemView.findViewById(R.id.chatStartform_tv_chatnum);
         TextView tvNickname = itemView.findViewById(R.id.chatStartform_tv_userNickname);
         TextView tvLastchat = itemView.findViewById(R.id.chatStartform_tv_lastchat);
@@ -68,6 +74,29 @@ public class ChatStartAdapter extends BaseAdapter {
         tvLastchat.setText(chat.getUserMsg());
         tvPastime.setText(chat.getTimestamp());
         tvChatnum.setText(chat.getChatNum());
+
+        if(chatAuth.getCurrentUser().getEmail().equals(chat.getUserEmail())){
+            profile = chat.getOtherEmail();
+        } else if(chatAuth.getCurrentUser().getEmail().equals(chat.getOtherEmail())){
+            profile = chat.getUserEmail();
+        }
+
+        chatStartFirestore.collection("DIY_Profile")
+                .whereEqualTo("profileEmail", profile)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            for (QueryDocumentSnapshot queryDocumentSnapshot: task.getResult()){
+                                Log.e("profile-mine", chatAuth.getCurrentUser().getEmail().toString());
+                                Log.e("profile-other",profile);
+                                getProfileUrl = queryDocumentSnapshot.get("profileImage").toString().trim();
+                                Picasso.get().load(getProfileUrl).into(ivProfile);
+                            }
+                        }
+                    }
+                });
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override

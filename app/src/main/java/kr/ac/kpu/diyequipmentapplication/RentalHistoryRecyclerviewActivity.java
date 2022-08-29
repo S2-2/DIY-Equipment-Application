@@ -3,6 +3,7 @@ package kr.ac.kpu.diyequipmentapplication;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,10 +32,13 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import kr.ac.kpu.diyequipmentapplication.chat.ChatStartActivity;
 import kr.ac.kpu.diyequipmentapplication.chat.TransactionDTO;
+import kr.ac.kpu.diyequipmentapplication.chat.TransactionDateComparator;
 import kr.ac.kpu.diyequipmentapplication.community.CommunityRecyclerview;
+import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationDTO;
 import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationRecyclerview;
 import kr.ac.kpu.diyequipmentapplication.equipment.RentalGoogleMap;
 import kr.ac.kpu.diyequipmentapplication.login.LoginActivity;
@@ -78,8 +83,8 @@ public class RentalHistoryRecyclerviewActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(rentalHistoryAdapter);
 
-        imgBtn_back = (ImageButton)findViewById(R.id.registrationRecyclerview_btn_back);
-        imgBtn_home = (ImageButton)findViewById(R.id.registrationRecyclerview_btn_home);
+        imgBtn_back = (ImageButton) findViewById(R.id.registrationRecyclerview_btn_back);
+        imgBtn_home = (ImageButton) findViewById(R.id.registrationRecyclerview_btn_home);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View nav_header_view = navigationView.getHeaderView(0);
@@ -132,6 +137,7 @@ public class RentalHistoryRecyclerviewActivity extends AppCompatActivity {
                 .whereEqualTo("tOtherEmail", registrationListFirebaseAuth.getCurrentUser().getEmail().toString().trim())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
@@ -154,11 +160,13 @@ public class RentalHistoryRecyclerviewActivity extends AppCompatActivity {
                                         queryDocumentSnapshot.get("tTransactionLocation").toString().trim(),
                                         queryDocumentSnapshot.get("tTransactionCondition").toString().trim(),
                                         queryDocumentSnapshot.get("tUserEmail").toString().trim(),
-                                        queryDocumentSnapshot.get("tOtherEmail").toString().trim());
+                                        queryDocumentSnapshot.get("tOtherEmail").toString().trim(),
+                                        queryDocumentSnapshot.get("tLastTime").toString().trim());
                                 transactionDTOArrayList.add(transactionDTO);
                                 filteredTransactionDTOArrayList.add(transactionDTO);
                                 rentalHistoryAdapter.notifyDataSetChanged();
                             }
+                            sprFiltering();
                         }
                     }
                 });
@@ -169,6 +177,7 @@ public class RentalHistoryRecyclerviewActivity extends AppCompatActivity {
                 .whereEqualTo("tUserEmail", registrationListFirebaseAuth.getCurrentUser().getEmail().toString().trim())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
@@ -191,11 +200,13 @@ public class RentalHistoryRecyclerviewActivity extends AppCompatActivity {
                                         queryDocumentSnapshot.get("tTransactionLocation").toString().trim(),
                                         queryDocumentSnapshot.get("tTransactionCondition").toString().trim(),
                                         queryDocumentSnapshot.get("tUserEmail").toString().trim(),
-                                        queryDocumentSnapshot.get("tOtherEmail").toString().trim());
+                                        queryDocumentSnapshot.get("tOtherEmail").toString().trim(),
+                                        queryDocumentSnapshot.get("tLastTime").toString().trim());
                                 transactionDTOArrayList.add(transactionDTO);
                                 filteredTransactionDTOArrayList.add(transactionDTO);
                                 rentalHistoryAdapter.notifyDataSetChanged();
                             }
+                            sprFiltering();
                         }
                     }
                 });
@@ -218,7 +229,6 @@ public class RentalHistoryRecyclerviewActivity extends AppCompatActivity {
         });
 
 
-
         //네비게이션 드로어 기능 구현
         androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -237,9 +247,9 @@ public class RentalHistoryRecyclerviewActivity extends AppCompatActivity {
                 int id = menuItem.getItemId();
                 String title = menuItem.getTitle().toString();
 
-                if(id == R.id.tradedetail){
+                if (id == R.id.tradedetail) {
                     Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
-                } else if(id == R.id.startchatting){
+                } else if (id == R.id.startchatting) {
                     Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(RentalHistoryRecyclerviewActivity.this, ChatStartActivity.class);
                     startActivity(intent);
@@ -247,17 +257,17 @@ public class RentalHistoryRecyclerviewActivity extends AppCompatActivity {
                     Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(RentalHistoryRecyclerviewActivity.this, RentalGoogleMap.class);
                     startActivity(intent);
-                } else if(id == R.id.mycommunity){
+                } else if (id == R.id.mycommunity) {
                     Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
-                } else if(id == R.id.tradelist){
+                } else if (id == R.id.tradelist) {
                     Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(RentalHistoryRecyclerviewActivity.this, RegistrationRecyclerview.class);
                     startActivity(intent);
-                } else if(id == R.id.communitylist) {
+                } else if (id == R.id.communitylist) {
                     Toast.makeText(context, title + " 이동.", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(RentalHistoryRecyclerviewActivity.this, CommunityRecyclerview.class);
                     startActivity(intent);
-                } else if(id == R.id.logout){
+                } else if (id == R.id.logout) {
                     //Toast.makeText(context, title + ": 로그아웃", Toast.LENGTH_SHORT).show();
                     AlertDialog.Builder dlg = new AlertDialog.Builder(RentalHistoryRecyclerviewActivity.this);
                     dlg.setTitle("로그아웃");
@@ -282,8 +292,7 @@ public class RentalHistoryRecyclerviewActivity extends AppCompatActivity {
                         }
                     });
                     dlg.show();
-                }
-                else if(id == R.id.withdraw){
+                } else if (id == R.id.withdraw) {
                     //Toast.makeText(context, title + ": 회원탈퇴", Toast.LENGTH_SHORT).show();
 
                     AlertDialog.Builder dlg = new AlertDialog.Builder(RentalHistoryRecyclerviewActivity.this);
@@ -314,14 +323,29 @@ public class RentalHistoryRecyclerviewActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:{ // 왼쪽 상단 버튼 눌렀을 때
+        switch (item.getItemId()) {
+            case android.R.id.home: { // 왼쪽 상단 버튼 눌렀을 때
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void sprFiltering() {
+
+        transactionDTOArrayList.clear();
+
+        Collections.sort(filteredTransactionDTOArrayList, new TransactionDateComparator().reversed());
+
+        for (TransactionDTO equipment : filteredTransactionDTOArrayList) {
+            transactionDTOArrayList.add(equipment);
+        }
+
+        rentalHistoryAdapter.notifyDataSetChanged();
     }
 }
