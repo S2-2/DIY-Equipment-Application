@@ -37,7 +37,6 @@ public class LocationActivity extends AppCompatActivity {
     private EditText etAddress;
     private Button btnLocationUpdate;
     private ImageButton imgBtnBack;
-    private ImageButton imgBtnHome;
     private TextView tvMyAddress;
 
     private FirebaseAuth locationFirebaseAuth;               //FirebaseAuth 참조 변수 선언
@@ -57,7 +56,6 @@ public class LocationActivity extends AppCompatActivity {
         locationFirebaseFirestore = FirebaseFirestore.getInstance();        //파이어스토어 초기화 및 객체 참조
         locationProgressDialog = new ProgressDialog(this);
         imgBtnBack = (ImageButton) findViewById(R.id.location_btn_back);
-        imgBtnHome = (ImageButton) findViewById(R.id.location_btn_home);
         btnLocationUpdate = (Button) findViewById(R.id.location_btn_update);
         etAddress = (EditText) findViewById(R.id.location_et_address);
         tvMyAddress = (TextView) findViewById(R.id.location_et_myLocation);
@@ -92,15 +90,15 @@ public class LocationActivity extends AppCompatActivity {
             }
         });
 
-        //홈버튼 클릭 이벤트
-        imgBtnHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LocationActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+//        //홈버튼 클릭 이벤트
+//        imgBtnHome.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(LocationActivity.this, MainActivity.class);
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
 
 
         etAddress.setFocusable(false);

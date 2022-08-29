@@ -86,7 +86,7 @@ public class CommunityCommentRecyclerview extends AppCompatActivity {
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View nav_header_view = navigationView.getHeaderView(0);
         TextView nav_header_nickname = (TextView) nav_header_view.findViewById(R.id.navi_header_tv_nickname);
-        TextView nav_header_address = (TextView) nav_header_view.findViewById(R.id.navi_header_tv_userlocation);
+        TextView nav_header_address = (TextView) nav_header_view.findViewById(R.id.navi_header_tv_userLocation);
         ImageButton nav_header_setting = (ImageButton) nav_header_view.findViewById(R.id.navi_header_btn_setting);
 
         nav_header_setting.setOnClickListener(new View.OnClickListener() {
