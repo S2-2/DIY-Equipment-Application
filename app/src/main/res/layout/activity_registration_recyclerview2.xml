@@ -67,8 +67,9 @@
 
                 <EditText
                     android:id="@+id/communityRecyclerview_et_search"
-                    android:layout_width="280dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="50dp"
+                    android:layout_weight="1"
                     android:layout_marginRight="5dp"
                     android:hint="검색어를 입력하세요."
                     android:textSize="18dp" />
@@ -76,10 +77,58 @@
                 <fragment
                     android:id="@+id/registrationRecyclerviewItem_sort_spr"
                     class="kr.ac.kpu.diyequipmentapplication.equipment.EquipmentSortFragment"
-                    android:layout_width="wrap_content"
+                    android:layout_width="110dp"
                     android:layout_height="wrap_content"></fragment>
 
             </LinearLayout>
+
+            <!--카테고리 필터링 버튼-->
+            <HorizontalScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        style="@style/style_tv_default_black14dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="산업안전용품" />
+
+                    <Button
+                        style="@style/style_tv_default_black14dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="DIY/전기, 산업자재" />
+
+                    <Button
+                        style="@style/style_tv_default_black14dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="건전지/충전지" />
+
+                    <Button
+                        style="@style/style_tv_default_black14dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="작업공구" />
+
+                    <Button
+                        style="@style/style_tv_default_black14dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="전동/엔진/기계" />
+                </LinearLayout>
+            </HorizontalScrollView>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/communityRecyclerview_recyclerview"
