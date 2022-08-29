@@ -152,7 +152,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
         otherEmail = intent.getStringExtra("UserEmail");
 
         equipmentDetailFirebaseFirestore.collection("DIY_Profile")
-                .whereEqualTo("profileEmail", userEmail)
+                .whereEqualTo("profileEmail", otherEmail)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -161,7 +161,7 @@ public class EquipmentDetailActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot queryDocumentSnapshot: task.getResult()){
 
                                 getProfileUrl = queryDocumentSnapshot.get("profileImage").toString().trim();
-                                Picasso.get().load(getImageUrl).into(ivUserProfileImage);
+                                Picasso.get().load(getProfileUrl).into(ivUserProfileImage);
                             }
                         }
                     }
