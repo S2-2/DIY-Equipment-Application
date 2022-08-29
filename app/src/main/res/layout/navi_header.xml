@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:background="#72a18a"
+    android:layout_height="180dp"
+    android:background="#E8E8E8"
     android:gravity="center"
     android:orientation="vertical"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <TextView
-        android:id="@+id/navi_header_tv_title"
+    <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center_vertical"
-        android:text="공구를 공유하는 人"
-        android:textSize="24dp" />
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="15dp"
+        android:src="@drawable/title" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,7 +28,7 @@
             android:layout_weight="1"
             android:text="별명"
             android:textSize="20dp"
-            style="@style/style_tv_default_white18dp" />
+            style="@style/style_tv_default_black18dp" />
         <ImageButton
             android:id="@+id/navi_header_btn_setting"
             android:layout_width="30dp"
@@ -45,6 +44,6 @@
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="20dp"
             android:text="사용자 위치"
-            style="@style/style_tv_default_white16dp" />
+            style="@style/style_tv_default_black16dp" />
 
 </LinearLayout>

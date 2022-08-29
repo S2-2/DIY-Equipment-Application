@@ -6,17 +6,14 @@
         <item
             android:id="@+id/tradelist"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            android:icon="@drawable/ic_launcher_foreground"
             android:title="전체 거래 목록" />
         <item
             android:id="@+id/diymap"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            android:icon="@drawable/ic_launcher_foreground"
             android:title="장비대여맵" />
         <item
             android:id="@+id/communitylist"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            android:icon="@drawable/ic_launcher_foreground"
             android:title="커뮤니티 목록" />
     </group>
 
@@ -28,27 +25,22 @@
                 <item
                     android:id="@+id/mycart"
                     style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                    android:icon="@drawable/ic_launcher_foreground"
                     android:title="장바구니" />
                 <item
                     android:id="@+id/mytradelist"
                     style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                    android:icon="@drawable/ic_launcher_foreground"
-                    android:title="거래목록" />
+                    android:title="거래 목록" />
                 <item
                     android:id="@+id/tradedetail"
                     style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                    android:icon="@drawable/ic_launcher_foreground"
-                    android:title="거래내역" />
+                    android:title="거래 내역" />
                 <item
                     android:id="@+id/startchatting"
                     style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                    android:icon="@drawable/ic_launcher_foreground"
                     android:title="채팅" />
                 <item
                     android:id="@+id/mycommunity"
                     style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                    android:icon="@drawable/ic_launcher_foreground"
                     android:title="내가 쓴 커뮤니티" />
             </group>
         </menu>
@@ -62,12 +54,10 @@
                 <item
                     android:id="@+id/logout"
                     style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                    android:icon="@drawable/ic_launcher_foreground"
                     android:title="로그아웃" />
                 <item
                     android:id="@+id/withdraw"
                     style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                    android:icon="@drawable/ic_launcher_foreground"
                     android:title="회원탈퇴" />
             </group>
         </menu>
