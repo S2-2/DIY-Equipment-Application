@@ -11,166 +11,177 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:background="@android:color/transparent"
         app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24" />
 
-    <ImageButton
-        android:id="@+id/imgBtn_diyRental"
+    <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+        android:layout_height="621dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
 
-    <TextView
-        android:id="@+id/equipmentRegistration_tv_nickname"
-        style="@style/style_tv_default_black18dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="별명" />
-
-    <EditText
-        android:id="@+id/equipmentRegistration_et_modelName"
-        style="@style/style_tv_default_black18dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="제목을 입력하세요." />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="27dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/tv_registrationCat1"
-            style="@style/style_tv_default_black18dp"
-            android:layout_width="109dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:text="카테고리1"
-            android:textAlignment="center" />
+            android:orientation="vertical">
 
-        <Spinner
-            android:id="@+id/spr_registrationCat1"
-            style="@style/style_tv_default_black18dp"
-            android:layout_width="188dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1" />
 
-    </LinearLayout>
+            <ImageButton
+                android:id="@+id/imgBtn_diyRental"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:scaleType="centerCrop"
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_registrationCat2"
-            style="@style/style_tv_default_black18dp"
-            android:layout_width="109dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:text="카테고리2"
-            android:textAlignment="center" />
+                <TextView
+                    android:id="@+id/equipmentRegistration_tv_nickname"
+                    style="@style/style_tv_default_black18dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="별명" />
 
-        <Spinner
-            android:id="@+id/spr_registrationCat2"
-            style="@style/style_tv_default_black18dp"
-            android:layout_width="188dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1"
-            android:spinnerMode="dropdown" />
+                <EditText
+                    android:id="@+id/equipmentRegistration_et_modelName"
+                    style="@style/style_tv_default_black18dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="제목을 입력하세요." />
 
-    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="27dp"
+                    android:orientation="horizontal">
 
-    <RadioGroup
-        android:id="@+id/rg_registrationRentalGroup"
-        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/tv_registrationCat1"
+                        style="@style/style_tv_default_black18dp"
+                        android:layout_width="109dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:text="카테고리1"
+                        android:textAlignment="center" />
 
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+                    <Spinner
+                        android:id="@+id/spr_registrationCat1"
+                        style="@style/style_tv_default_black18dp"
+                        android:layout_width="188dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1" />
 
-        <RadioButton
-            android:id="@+id/rBtn_registrationFeeRental"
-            style="@style/style_tv_default_black18dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="대여" />
+                </LinearLayout>
 
-        <RadioButton
-            android:id="@+id/rBtn_registrationFree"
-            style="@style/style_tv_default_black18dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="무료나눔" />
-    </RadioGroup>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/et_registrationRentalType"
-        style="@style/style_tv_default_black18dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="RentalType" />
+                    <TextView
+                        android:id="@+id/tv_registrationCat2"
+                        style="@style/style_tv_default_black18dp"
+                        android:layout_width="109dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:text="카테고리2"
+                        android:textAlignment="center" />
 
-    <EditText
-        android:id="@+id/et_registrationRentalCost"
-        style="@style/style_tv_default_black18dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="RentalCost"
-        android:inputType="number" />
+                    <Spinner
+                        android:id="@+id/spr_registrationCat2"
+                        style="@style/style_tv_default_black18dp"
+                        android:layout_width="188dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:spinnerMode="dropdown" />
 
-    <EditText
-        android:id="@+id/et_registrationRentalAddress"
-        style="@style/style_tv_default_black18dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="RentalAddress"
-        android:inputType="textPostalAddress" />
+                </LinearLayout>
 
-    <EditText
-        android:id="@+id/et_registrationModelInform"
-        style="@style/style_tv_bold_black18dp"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:gravity="start"
-        android:hint="대여물품에 대한 설명을 입력해 주세요."
-        android:inputType="textImeMultiLine" />
+                <RadioGroup
+                    android:id="@+id/rg_registrationRentalGroup"
+                    android:layout_width="match_parent"
 
-    <!--    <LinearLayout-->
-    <!--        android:orientation="horizontal"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content">-->
-    <!--        <DatePicker-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:datePickerMode="spinner"-->
-    <!--            android:calendarViewShown="false"-->
-    <!--            android:layout_weight="1"/>-->
-    <!--        <DatePicker-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:datePickerMode="spinner"-->
-    <!--            android:calendarViewShown="false"-->
-    <!--            android:layout_weight="1"/>-->
-    <!--    </LinearLayout>-->
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rBtn_registrationFeeRental"
+                        style="@style/style_tv_default_black18dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="대여" />
+
+                    <RadioButton
+                        android:id="@+id/rBtn_registrationFree"
+                        style="@style/style_tv_default_black18dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="무료나눔" />
+                </RadioGroup>
+
+                <EditText
+                    android:id="@+id/et_registrationRentalType"
+                    style="@style/style_tv_default_black18dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="거래 종류" />
+
+                <EditText
+                    android:id="@+id/et_registrationRentalCost"
+                    style="@style/style_tv_default_black18dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="대여비"
+                    android:inputType="number" />
+
+                <EditText
+                    android:id="@+id/et_registrationRentalAddress"
+                    style="@style/style_tv_default_black18dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="장비 위치"
+                    android:inputType="textPostalAddress" />
+
+                <EditText
+                    android:id="@+id/et_registrationModelInform"
+                    style="@style/style_tv_bold_black18dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:gravity="start"
+                    android:hint="대여물품에 대한 설명을 입력해 주세요."
+                    android:inputType="textImeMultiLine" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
         <Button
             android:id="@+id/equipmentRegistration_btn_registration"
             style="@style/style_tv_default_black18dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginRight="5dp"
             android:text="등록하기" />
 
         <Button
@@ -179,6 +190,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
             android:text="수정하기" />
     </LinearLayout>
 

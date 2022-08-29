@@ -33,11 +33,8 @@
             android:name=".equipment.MyEquipmentListActivity"
             android:exported="false" />
         <activity
-            android:name=".menu.ProfileChangePwdActivity"
-            android:exported="false" />
-        <activity
             android:name=".login.LoginActivity"
-            android:exported="false" /> <!-- 스플래시 설정정 -->
+            android:exported="false" />
         <!-- 스플래시 설정 -->
         <activity
             android:name=".etc.SplashActivity"

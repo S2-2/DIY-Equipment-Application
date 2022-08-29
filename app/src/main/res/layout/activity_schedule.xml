@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="20dp"
     tools:context=".equipment.ScheduleActivity">
     <!-- 채팅에서 버튼으로 넘어와 거래 관련 일정을 설정하는 첫 거래 액티비티 -->
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="20dp">
+        android:layout_height="wrap_content">
 
         <ImageButton
             android:id="@+id/schedule_btn_back"
@@ -23,15 +23,16 @@
 
         <TextView
             style="@style/style_tv_default_black24dp"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
             android:text="거래 정보 설정" />
-    </LinearLayout>
 
-    <!---->
-    <!---->
-    <!---->
+        <View
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
