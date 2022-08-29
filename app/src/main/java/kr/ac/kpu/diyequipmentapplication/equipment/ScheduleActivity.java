@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -37,6 +39,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
@@ -279,6 +283,7 @@ public class ScheduleActivity extends AppCompatActivity {
                 dlg.setIcon(R.mipmap.ic_launcher);
 
                 dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         scheduleDB.setsUserEmail(scheduleFirebaseAuth.getCurrentUser().getEmail().toString());
@@ -353,6 +358,7 @@ public class ScheduleActivity extends AppCompatActivity {
                                     .document(getScheduleDBID)
                                     .update(scheduleUpdate)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @RequiresApi(api = Build.VERSION_CODES.O)
                                         @Override
                                         public void onSuccess(Void aVoid) {
                                             Log.d("거래정보 업데이트 성공!", "DocumentSnapshot successfully update!");
@@ -777,13 +783,18 @@ public class ScheduleActivity extends AppCompatActivity {
             }
     );
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void systemScheduleMsg(ScheduleDB scheduleDB, String tag){
         scheduleFirebaseDatabase = FirebaseDatabase.getInstance();
         scheduleRef = scheduleFirebaseDatabase.getReference().child("DIY_Chat");
         String result = null;
 
-        Calendar calendar = Calendar.getInstance();
-        String timestamp = calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE);
+        LocalTime now = LocalTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        String timestamp = now.format(formatter);
+
+//        Calendar calendar = Calendar.getInstance();
+//        String timestamp = calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE);
         if(tag.equals("1")){
             result = String.format("거래일정 안내입니다. \n 거래일정 요청자: %s\n \n 총 대여일: %s\n 총 비용: %s\n 거래일: %s\n 거래시간: %s\n 거래장소: %s",
                     scheduleDB.getsUserEmail(),

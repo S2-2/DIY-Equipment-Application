@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,6 +34,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -77,13 +81,13 @@ public class RentalHistoryAdapter extends RecyclerView.Adapter<RentalHistoryAdap
 
         //수요자 계정인 경우
         if(transactionDTO.gettUserEmail().equals(holder.transactionFirebaseAuth.getCurrentUser().getEmail())) {
+            holder.btnTreturn.setEnabled(false);
+            holder.btnTreturn.setVisibility(View.GONE);
+        } else{
             holder.btnMyEquipmentDelete.setEnabled(false);
             holder.btnMyEquipmentDelete.setVisibility(View.GONE);
             holder.btnReturnCheck.setEnabled(false);
             holder.btnReturnCheck.setVisibility(View.GONE);
-        } else{
-            holder.btnTreturn.setEnabled(false);
-            holder.btnTreturn.setVisibility(View.GONE);
         }
     }
 
@@ -325,6 +329,7 @@ public class RentalHistoryAdapter extends RecyclerView.Adapter<RentalHistoryAdap
                                         dlg.setIcon(R.mipmap.ic_launcher);
 
                                         dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                                            @RequiresApi(api = Build.VERSION_CODES.O)
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
                                                 final String transactionCondition = "반납";
@@ -378,6 +383,7 @@ public class RentalHistoryAdapter extends RecyclerView.Adapter<RentalHistoryAdap
                     }
                 }
 
+                @RequiresApi(api = Build.VERSION_CODES.O)
                 private void systemScheduleMsg(TransactionDTO transactionDTO, String tag){
                     String result = null;
                     DatabaseReference transRef;
@@ -385,9 +391,10 @@ public class RentalHistoryAdapter extends RecyclerView.Adapter<RentalHistoryAdap
                     transDatabase = FirebaseDatabase.getInstance();
                     transRef = transDatabase.getReference().child("DIY_Chat");
 
+                    LocalTime now = LocalTime.now();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+                    String timestamp = now.format(formatter);
 
-                    Calendar calendar = Calendar.getInstance();
-                    String timestamp = calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE);
                     if(tag.equals("1")){
                         result = String.format("장비 반납이 완료되었습니다, 앞으로도 아름다운 거래를 만들어 나가시길 바랍니다..");
                     } else{
