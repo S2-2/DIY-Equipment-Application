@@ -3,36 +3,43 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="20dp">
-
+    android:layout_height="match_parent">
 
     <ImageButton
         android:id="@+id/signup_btn_back"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
         android:background="@android:color/transparent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24" />
 
+    <!--회원가입 버튼-->
     <TextView
         android:id="@+id/textView"
         style="@style/style_tv_default_black24dp"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
         android:layout_weight="1"
         android:gravity="center_horizontal"
         android:text="회원가입"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/signup_btn_back"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!--회원가입 버튼-->
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="550dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.508"
         tools:layout_editor_absoluteX="0dp">
 
@@ -150,6 +157,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="가입하기"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
@@ -158,167 +166,166 @@
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-
-<!--
-    <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:layout_margin="20dp"
-android:orientation="vertical">
-
-<LinearLayout
+    <!--
+        <?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="20dp">
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    android:orientation="vertical">
 
-    <ImageButton
-        android:background="@android:color/transparent"
-        android:id="@+id/signup_btn_back"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:text="회원가입"
-        style="@style/style_tv_default_black24dp" />
-</LinearLayout>
-
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginBottom="20dp">
 
+        <ImageButton
+            android:background="@android:color/transparent"
+            android:id="@+id/signup_btn_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:srcCompat="@drawable/ic_baseline_arrow_back_ios_new_24" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+            android:text="회원가입"
+            style="@style/style_tv_default_black24dp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/style_tv_default_black18dp"
-                android:text="아이디" />
 
-            <EditText
-                android:id="@+id/signup_et_id"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/style_tv_default_black18dp"
+                    android:text="아이디" />
+
+                <EditText
+                    android:id="@+id/signup_et_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    style="@style/style_tv_default_black18dp" />
+
+                <TextView
+                    android:id="@+id/signup_tv_checkId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                android:textSize="18dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/style_tv_default_black18dp"
+                    android:text="비밀번호" />
+
+                <EditText
+                    android:id="@+id/signup_et_pwd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:inputType="textPassword"
+                    style="@style/style_tv_default_black18dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/style_tv_default_black18dp"
+                    android:text="비밀번호 재확인" />
+
+                <EditText
+                    android:id="@+id/signup_et_pwd2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:inputType="textPassword"
+                    style="@style/style_tv_default_black18dp" />
+
+                <TextView
+                    android:id="@+id/signup_tv_checkPwd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/style_tv_default_black18dp"
+                    android:text="이름" />
+
+                <EditText
+                    android:id="@+id/signup_et_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:inputType="text"
+                    style="@style/style_tv_default_black18dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/style_tv_default_black18dp"
+                    android:text="별명" />
+
+                <EditText
+                    android:id="@+id/signup_et_nickname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:inputType="text"
+                    style="@style/style_tv_default_black18dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/style_tv_default_black18dp"
+                    android:text="본인 확인 이메일" />
+
+                <EditText
+                    android:id="@+id/signup_et_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:inputType="text"
+                    style="@style/style_tv_default_black18dp"/>
+
+                <TextView
+                    android:id="@+id/signup_tv_checkEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            &lt;!&ndash;회원가입 버튼&ndash;&gt;
+            <Button
+                android:id="@+id/signup_btn_signup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="가입하기"
                 style="@style/style_tv_default_black18dp" />
 
-            <TextView
-                android:id="@+id/signup_tv_checkId"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            android:textSize="18dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/style_tv_default_black18dp"
-                android:text="비밀번호" />
-
-            <EditText
-                android:id="@+id/signup_et_pwd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:inputType="textPassword"
-                style="@style/style_tv_default_black18dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/style_tv_default_black18dp"
-                android:text="비밀번호 재확인" />
-
-            <EditText
-                android:id="@+id/signup_et_pwd2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:inputType="textPassword"
-                style="@style/style_tv_default_black18dp" />
-
-            <TextView
-                android:id="@+id/signup_tv_checkPwd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/style_tv_default_black18dp"
-                android:text="이름" />
-
-            <EditText
-                android:id="@+id/signup_et_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:inputType="text"
-                style="@style/style_tv_default_black18dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/style_tv_default_black18dp"
-                android:text="별명" />
-
-            <EditText
-                android:id="@+id/signup_et_nickname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:inputType="text"
-                style="@style/style_tv_default_black18dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/style_tv_default_black18dp"
-                android:text="본인 확인 이메일" />
-
-            <EditText
-                android:id="@+id/signup_et_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:inputType="text"
-                style="@style/style_tv_default_black18dp"/>
-
-            <TextView
-                android:id="@+id/signup_tv_checkEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
         </LinearLayout>
-
-        &lt;!&ndash;회원가입 버튼&ndash;&gt;
-        <Button
-            android:id="@+id/signup_btn_signup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="가입하기"
-            style="@style/style_tv_default_black18dp" />
-
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
 
 
-</LinearLayout>-->
+    </LinearLayout>-->
