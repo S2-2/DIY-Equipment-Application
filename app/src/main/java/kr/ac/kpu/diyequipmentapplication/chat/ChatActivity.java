@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.Image;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -44,6 +46,8 @@ import org.json.JSONObject;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
@@ -273,12 +277,17 @@ public class ChatActivity extends AppCompatActivity {
                 dlg.setIcon(R.mipmap.ic_launcher);
 
                 dlg.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         final String transactionCondition = "대여";
+                        LocalDateTime lastTime = LocalDateTime.now();
+                        String lastTimeForm = lastTime.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+
                         transactionDTO.settTransactionCondition(transactionCondition);
                         transactionDTO.settUserEmail(transactionFirebaseAuth.getCurrentUser().getEmail());
                         transactionDTO.settOtherEmail(CHAT_OTHER_EMAIL);
+                        transactionDTO.settLastTime(lastTimeForm);
 
                         if (transactionDTO.gettScheduleId() != null && transactionDTO.gettImgView() != null
                                 && transactionDTO.gettCategory() != null && transactionDTO.gettModelName() != null
@@ -288,7 +297,7 @@ public class ChatActivity extends AppCompatActivity {
                                 && transactionDTO.gettTotalLendingPeriod() != null && transactionDTO.gettTotalRental() != null
                                 && transactionDTO.gettTransactionDate() != null && transactionDTO.gettTransactionTime() != null
                                 && transactionDTO.gettTransactionLocation() != null && transactionDTO.gettUserEmail() != null
-                                && transactionDTO.gettOtherEmail() != null) {
+                                && transactionDTO.gettOtherEmail() != null && transactionDTO.gettLastTime() != null) {
                             transactionProgressDialog.setTitle("DIY Transaction Uploading...");
                             transactionProgressDialog.show();
 

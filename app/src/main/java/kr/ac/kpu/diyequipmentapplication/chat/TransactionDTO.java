@@ -1,6 +1,12 @@
 package kr.ac.kpu.diyequipmentapplication.chat;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Comparator;
+import java.util.Date;
+
+import kr.ac.kpu.diyequipmentapplication.equipment.RegistrationDTO;
 
 public class TransactionDTO implements Serializable {
     private String tScheduleId;
@@ -21,6 +27,7 @@ public class TransactionDTO implements Serializable {
     private String tTransactionCondition;
     private String tUserEmail;
     private String tOtherEmail;
+    private String tLastTime;
 
     public TransactionDTO() {
     }
@@ -28,7 +35,7 @@ public class TransactionDTO implements Serializable {
     public TransactionDTO(String tScheduleId, String tImgView, String tCategory, String tModelName, String tUserName,
                           String tRentalType, String tRentalDate, String tRentalCost, String tStartDate, String tExpirationDate,
                           String tTotalLendingPeriod, String tTotalRental, String tTransactionDate, String tTransactionTime,
-                          String tTransactionLocation, String tTransactionCondition, String tUserEmail, String tOtherEmail) {
+                          String tTransactionLocation, String tTransactionCondition, String tUserEmail, String tOtherEmail, String tLastTime) {
         this.tScheduleId = tScheduleId;
         this.tImgView = tImgView;
         this.tCategory = tCategory;
@@ -47,6 +54,7 @@ public class TransactionDTO implements Serializable {
         this.tTransactionCondition = tTransactionCondition;
         this.tUserEmail = tUserEmail;
         this.tOtherEmail = tOtherEmail;
+        this.tLastTime = tLastTime;
     }
 
     public String gettScheduleId() {
@@ -192,4 +200,14 @@ public class TransactionDTO implements Serializable {
     public void settOtherEmail(String tOtherEmail) {
         this.tOtherEmail = tOtherEmail;
     }
+
+    public String gettLastTime() {
+        return tLastTime;
+    }
+
+    public void settLastTime(String tLastTime) {
+        this.tLastTime = tLastTime;
+    }
+
 }
+
